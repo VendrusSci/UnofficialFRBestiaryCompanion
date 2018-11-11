@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Bestiary.Model;
+using Bestiary.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +25,7 @@ namespace Bestiary
         public MainWindow()
         {
             InitializeComponent();
+            DataContext = new MainViewModel(new XmlFamliarFetcher("BuiltinData.xml", "UserData.xml"));
         }
     }
 }

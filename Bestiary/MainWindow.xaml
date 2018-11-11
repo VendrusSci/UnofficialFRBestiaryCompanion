@@ -7,6 +7,101 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Menu Grid.Row="0" Height="20">
+            <MenuItem Width="Auto" Header="Options"/>
+            <MenuItem Width="Auto" Header="Views"/>
+        </Menu>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0" Grid.IsSharedSizeScope="True">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <GroupBox Grid.Row="0" Header="Filters" Margin="5">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" SharedSizeGroup="A"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Label Grid.Column="0" Grid.Row="0" Content="Ownership"/>
+                        <Label Grid.Column="0" Grid.Row="1" Content="Bonding Level"/>
+                        <Label Grid.Column="0" Grid.Row="2" Content="Source"/>
+                        <Label Grid.Column="0" Grid.Row="3" Content="Availability"/>
+                        <ComboBox Grid.Column="1" Grid.Row="0" Margin ="5" ItemsSource="{Binding AvailableOwnedStatus}" SelectedItem="{Binding SelectedOwnedStatus}" x:Name="OwnedStatus"/>
+                        <ComboBox Grid.Column="1" Grid.Row="1" Margin ="5" ItemsSource="{Binding AvailableBondingLevels}" SelectedItem="{Binding SelectedBondingLevel}"/>
+                        <ComboBox Grid.Column="1" Grid.Row="2" Margin ="5" ItemsSource="{Binding AvailableSources}" SelectedItem="{Binding SelectedSource}"/>
+                        <ComboBox Grid.Column="1" Grid.Row="3" Margin ="5" ItemsSource="{Binding AvailableAvailabilities}" SelectedItem="{Binding SelectedAvailability}"/>
+                        <Button Grid.Column="2" Grid.Row="0" Margin="5" Content="Clear" Command="{Binding ClearOption}" CommandParameter="{Binding SelectedOwnedStatus}"/>
+                        <Button Grid.Column="2" Grid.Row="1" Margin="5" Content="Clear" Command="{Binding ClearOption}" CommandParameter="{Binding SelectedBondingLevel}"/>
+                        <Button Grid.Column="2" Grid.Row="2" Margin="5" Content="Clear" Command="{Binding ClearOption}" CommandParameter="{Binding SelectedSource}"/>
+                        <Button Grid.Column="2" Grid.Row="3" Margin="5" Content="Clear" Command="{Binding ClearOption}" CommandParameter="{Binding SelectedAvailability}"/>
+                    </Grid>
+                </GroupBox>
+                <GroupBox Grid.Row="1" Header="Subfilters" Margin="5">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition SharedSizeGroup="A"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                    </Grid>
+                </GroupBox>
+                <Button Grid.Row="2" Content="Go" Margin="5" Command="{Binding FetchFamiliars}"/>
+            </Grid>
+            <GroupBox Grid.Column="1" Header="Familiars" Margin="5">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Column="0" Width="Auto" Content="Sort by:"/>
+                        <ComboBox Grid.Column="1" Width="Auto" Margin="5" ItemsSource="{Binding AvailableSortTypes}" SelectedItem="{Binding SelectedSortType}"/>
+                        <Button Grid.Column="2" Margin="5" Content="Clear" Command="{Binding ClearOption}" CommandParameter="{Binding SelectedSortType}"/>
+                    </Grid>
+                    <DataGrid Grid.Row ="1" Width="Auto" Height="Auto" AutoGenerateColumns="False" ItemsSource="{Binding FilteredFamiliars}">
+                        <DataGrid.Columns>
+                            <DataGridTemplateColumn Header="Icon" Width="Auto" IsReadOnly="True">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Image/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTextColumn Header="Name" Width="Auto" IsReadOnly="True" Binding="{Binding Familiar.Name}"/>
+                            <DataGridTextColumn Header="Ownership" Width="Auto" IsReadOnly="True" Binding="{Binding Owned}"/>
+                            <DataGridTextColumn Header="Bonding Level" Width="Auto" IsReadOnly="True" Binding="{Binding BondLevel}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </GroupBox>
+        </Grid>
     </Grid>
 </Window>
