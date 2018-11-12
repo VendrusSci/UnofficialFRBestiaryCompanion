@@ -20,7 +20,7 @@ namespace Bestiary.Model
                 },
                 new FamiliarInfo
                 {
-                    Familiar = new Familiar("Oliver1", Flights.Lightning, new Coliseum("Rainsong Forest", EnemyTypes.Boss), Availabilities.Always, "The bestest", "Gives great hugs", 3),
+                    Familiar = new Familiar("Oliver1", Flights.Lightning, new Coliseum("Rainsong Jungle", EnemyTypes.Boss), Availabilities.Always, "The bestest", "Gives great hugs", 3),
                     BondLevel = BondingLevels.Inquisitive,
                     Owned = OwnershipStatus.NotOwned,
                 },

@@ -11,6 +11,7 @@ namespace Bestiary.Model
         public Familiar Familiar { get; set; }
         public OwnershipStatus Owned { get; set; }
         public BondingLevels? BondLevel { get; set; }
+        public LocationTypes? Location { get; set; }
     }
 
     interface IFamiliarProvider

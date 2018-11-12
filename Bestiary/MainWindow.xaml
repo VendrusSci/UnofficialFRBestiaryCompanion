@@ -41,32 +41,42 @@
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
                         <Label Grid.Column="0" Grid.Row="0" Content="Ownership"/>
                         <Label Grid.Column="0" Grid.Row="1" Content="Bonding Level"/>
-                        <Label Grid.Column="0" Grid.Row="2" Content="Source"/>
+                        <Label Grid.Column="0" Grid.Row="2" Content="Location"/>
                         <Label Grid.Column="0" Grid.Row="3" Content="Availability"/>
-                        <ComboBox Grid.Column="1" Grid.Row="0" Margin ="5" ItemsSource="{Binding AvailableOwnedStatus}" SelectedItem="{Binding SelectedOwnedStatus}" x:Name="OwnedStatus"/>
-                        <ComboBox Grid.Column="1" Grid.Row="1" Margin ="5" ItemsSource="{Binding AvailableBondingLevels}" SelectedItem="{Binding SelectedBondingLevel}"/>
-                        <ComboBox Grid.Column="1" Grid.Row="2" Margin ="5" ItemsSource="{Binding AvailableSources}" SelectedItem="{Binding SelectedSource}"/>
-                        <ComboBox Grid.Column="1" Grid.Row="3" Margin ="5" ItemsSource="{Binding AvailableAvailabilities}" SelectedItem="{Binding SelectedAvailability}"/>
+                        <Label Grid.Column="0" Grid.Row="4" Content="Source"/>
+                        
+                        <ComboBox Grid.Column="1" Grid.Row="0" Margin="5" ItemsSource="{Binding AvailableOwnedStatus}" SelectedItem="{Binding SelectedOwnedStatus}" x:Name="OwnedStatus"/>
+                        <ComboBox Grid.Column="1" Grid.Row="1" Margin="5" ItemsSource="{Binding AvailableBondingLevels}" SelectedItem="{Binding SelectedBondingLevel}"/>
+                        <ComboBox Grid.Column="1" Grid.Row="2" Margin="5" ItemsSource="{Binding AvailableLocationTypes}" SelectedItem="{Binding SelectedLocationType}"/>
+                        <ComboBox Grid.Column="1" Grid.Row="3" Margin="5" ItemsSource="{Binding AvailableAvailabilities}" SelectedItem="{Binding SelectedAvailability}"/>
+                        <ComboBox Grid.Column="1" Grid.Row="4" Margin="5" ItemsSource="{Binding AvailableSources}" SelectedItem="{Binding SelectedSource}"/>
+                        
                         <Button Grid.Column="2" Grid.Row="0" Margin="5" Content="Clear" Command="{Binding ClearOption}" CommandParameter="{Binding SelectedOwnedStatus}"/>
                         <Button Grid.Column="2" Grid.Row="1" Margin="5" Content="Clear" Command="{Binding ClearOption}" CommandParameter="{Binding SelectedBondingLevel}"/>
-                        <Button Grid.Column="2" Grid.Row="2" Margin="5" Content="Clear" Command="{Binding ClearOption}" CommandParameter="{Binding SelectedSource}"/>
+                        <Button Grid.Column="2" Grid.Row="2" Margin="5" Content="Clear" Command="{Binding ClearOption}" CommandParameter="{Binding SelectedLocation}"/>
                         <Button Grid.Column="2" Grid.Row="3" Margin="5" Content="Clear" Command="{Binding ClearOption}" CommandParameter="{Binding SelectedAvailability}"/>
+                        <Button Grid.Column="2" Grid.Row="4" Margin="5" Content="Clear" Command="{Binding ClearOption}" CommandParameter="{Binding SelectedSource}"/>
                     </Grid>
                 </GroupBox>
                 <GroupBox Grid.Row="1" Header="Subfilters" Margin="5">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition SharedSizeGroup="A"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
-                    </Grid>
+                    <ItemsControl ItemsSource="{Binding SubFilterList}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition SharedSizeGroup="A"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Label Grid.Column="0" Content="{Binding Name}"/>
+                                    <ComboBox Grid.Column="1" Margin="5" ItemsSource="{Binding AvailableOptions}" SelectedItem="{Binding SelectedOption}"/>
+                                </Grid>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
                 </GroupBox>
                 <Button Grid.Row="2" Content="Go" Margin="5" Command="{Binding FetchFamiliars}"/>
             </Grid>

@@ -31,6 +31,7 @@ namespace Bestiary.Model
                         Familiar = f,
                         Owned = owned != null ? OwnershipStatus.Owned : OwnershipStatus.NotOwned,// owned != null,
                         BondLevel = owned?.BondingLevel,
+                        Location = owned?.Location,
                     };
                 })
                 .ToArray();
@@ -121,7 +122,9 @@ namespace Bestiary.Model
             typeof(SiteEvent),
             typeof(Festival),
             typeof(Marketplace),
-            typeof(JoxarSpareInventory)
+            typeof(JoxarSpareInventory),
+            typeof(Baldwin),
+            typeof(Swipp)
         };
 
         private static readonly string CustomNamespace = "http://example.com";
@@ -157,7 +160,7 @@ namespace Bestiary.Model
         {
             var fakeSource = new FakeFamiliarFetcher();
             var testData = fakeSource.FetchFamiliars()
-                .Select(f => new OwnedFamiliar(f.Familiar, BondingLevels.Awakened));
+                .Select(f => new OwnedFamiliar(f.Familiar));
 
             var result = new UserFamiliarInformation();
             result.OwnedFamiliars = testData.ToList();

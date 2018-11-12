@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
@@ -30,13 +31,16 @@ namespace Bestiary.Model
         Joxar,
         Event,
         Festival,
-        Gathering
+        Gathering,
+        Baldwin,
+        Swipp
     }
 
     enum Availabilities
     {
         Always,
         Festival,
+        Event,
         Cycling,
         Retired
     }
@@ -78,6 +82,13 @@ namespace Bestiary.Model
     {
         Owned,
         NotOwned
+    }
+
+    enum LocationTypes
+    {
+        OnDragon,
+        InHoard,
+        InVault
     }
 
     #endregion
@@ -158,6 +169,29 @@ namespace Bestiary.Model
     }
 
     [DataContract]
+    class Baldwin : IFamiliarSource
+    {
+        public Baldwin(RecipeItem[] recipe)
+        {
+            Recipe = recipe;
+        }
+        [DataMember]
+        public RecipeItem[] Recipe { get; set; }
+    }
+
+    [DataContract]
+    class Swipp : IFamiliarSource
+    {
+        public Swipp(RecipeItem item1, RecipeItem item2)
+        {
+            Recipe[0] = item1;
+            Recipe[1] = item2;
+        }
+        [DataMember]
+        public RecipeItem[] Recipe { get; set; }
+    }
+
+    [DataContract]
     class CycleYear
     {
         public CycleYear( int yearNumber)
@@ -167,5 +201,42 @@ namespace Bestiary.Model
         [DataMember]
         public int YearNumber { get; private set; }
     }
+
+    [DataContract]
+    class Venues
+    {
+        public Venues()
+        {
+            VenueNames =  File.ReadAllLines("Venues.txt");
+        }
+        [DataMember]
+        public string[] VenueNames { get; set; }
+    }
+
+    [DataContract]
+    class SiteEvents
+    {
+        public SiteEvents()
+        {
+            EventNames = File.ReadAllLines("Events.txt");
+        }
+        [DataMember]
+        public string[] EventNames { get; set; }
+    }
+
+    [DataContract]
+    class RecipeItem
+    {
+        public RecipeItem(string name, int count)
+        {
+            Name = name;
+            Count = count;
+        }
+        [DataMember]
+        public string Name { get; set; }
+        [DataMember]
+        public int Count { get; set; }
+    }
+
 }
 

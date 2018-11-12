@@ -42,10 +42,11 @@ namespace Bestiary.Model
     [DataContract]
     class OwnedFamiliar
     {
-        public OwnedFamiliar(Familiar familiar, BondingLevels bondingLevel)
+        public OwnedFamiliar(Familiar familiar)
         {
             Familiar = familiar;
-            BondingLevel = bondingLevel;
+            BondingLevel = BondingLevels.Wary;
+            Location = LocationTypes.InHoard;
         }
 
         [DataMember]
@@ -53,5 +54,8 @@ namespace Bestiary.Model
 
         [DataMember]
         public BondingLevels BondingLevel { get; set; }
+
+        [DataMember]
+        public LocationTypes Location { get; set; }
     }
 }
