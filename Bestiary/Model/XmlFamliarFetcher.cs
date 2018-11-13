@@ -124,7 +124,8 @@ namespace Bestiary.Model
             typeof(Marketplace),
             typeof(JoxarSpareInventory),
             typeof(Baldwin),
-            typeof(Swipp)
+            typeof(Swipp),
+            typeof(Gathering),
         };
 
         private static readonly string CustomNamespace = "http://example.com";

@@ -62,7 +62,10 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="LambdaCommand.cs" />
+    <Compile Include="Model\EnumDescConverter.cs" />
+    <Compile Include="Model\IdImageConverter.cs" />
     <Compile Include="Model\LocationType.cs" />
+    <Compile Include="Model\SubFilter.cs" />
     <Compile Include="Model\XmlFamliarFetcher.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="FamiliarAddWindow.xaml.cs">

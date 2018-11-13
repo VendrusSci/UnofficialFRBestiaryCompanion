@@ -30,7 +30,7 @@ namespace Bestiary.ViewModel
         public LocationTypes[] AvailableLocationTypes => ListEnumValues<LocationTypes>();
         public LocationTypes? SelectedLocationType { get; set; }
         public Availabilities[] AvailableAvailabilities => ListEnumValues<Availabilities>();
-        public Availabilities? SelectedAvailabilities { get; set; }
+        public Availabilities? SelectedAvailability { get; set; }
         public Sources[] AvailableSources => ListEnumValues<Sources>();
         private Sources? m_SelectedSource;
         public Sources? SelectedSource
@@ -51,11 +51,49 @@ namespace Bestiary.ViewModel
                             new EnumSubFilter<EnemyTypes, Coliseum>("Enemy Type", AvailableEnemyTypes, SelectedEnemyType, c => c.EnemyType),
                         };
                         break;
+                    case Sources.Event:
+                        SubFilterList = new List<IAmSubFilter>
+                        {
+                            new SubFilter<string, SiteEvent>("Events", AvailableSiteEvents, SelectedSiteEvent, e => e.EventName),
+                            new SubFilter<CycleYear, SiteEvent>("Year", AvailableCycleYears, SelectedCycleYear, e => e.Year),
+                        };
+                        break;
+                    case Sources.Festival:
+                        SubFilterList = new List<IAmSubFilter>
+                        {
+                            new EnumSubFilter<Flights, Festival>("Flights", AvailableFlights, SelectedFlight, f => f.Flight),
+                            new SubFilter<CycleYear, SiteEvent>("Year", AvailableCycleYears, SelectedCycleYear, f => f.Year)
+                        };
+                        break;
+                    case Sources.Gathering:
+                        SubFilterList = new List<IAmSubFilter>
+                        {
+                            new EnumSubFilter<GatherTypes, Gathering>("Gather Type", AvailableGatherTypes, SelectedGatherType, g => g.GatherType),
+                            new EnumSubFilter<Flights, Gathering>("Flight", AvailableFlights, SelectedFlight, g => g.Flight),
+                            new EnumSubFilter<int, Gathering>("Level", AvailableLevels, SelectedLevel, g => g.MinLevel, (a, b) => b >= a),
+                        };
+                        break;
+                    case Sources.Baldwin:
+                        SubFilterList = new List<IAmSubFilter>
+                        {
+                            new EnumSubFilter<int, Baldwin>("Level", AvailableLevels, SelectedLevel, b => b.MinLevel, (a, b) => b >=a),
+                        };
+                        break;
+                    case Sources.Marketplace:
+                        SubFilterList = new List<IAmSubFilter>
+                        {
+                            new EnumSubFilter<MarketPlaceTypes, Marketplace>("Currency", AvailableCurrencies, SelectedCurrency, m => m.Type),
+                        };
+                        break;
+                    default:
+                        SubFilterList = new List<IAmSubFilter>();
+                        break;
                 }
             }
         }
 
         //SubFilters
+        public List<IAmSubFilter> SubFilterList { get; set; } = new List<IAmSubFilter>();
         public string[] AvailableVenueNames => new Venues().VenueNames;
         public string SelectedVenueName { get; set; }
         public string[] AvailableSiteEvents => new SiteEvents().EventNames;
@@ -68,18 +106,21 @@ namespace Bestiary.ViewModel
         public MarketPlaceTypes? SelectedMarketPlaceType { get; set; }
         public EnemyTypes[] AvailableEnemyTypes => ListEnumValues<EnemyTypes>();
         public EnemyTypes? SelectedEnemyType { get; set; }
-        public int[] AvailableCycleYears
+        public CycleYear[] AvailableCycleYears
         {
             get
             {
-                return AvailableCycleYears;
-            }
-            set
-            {
                 int years = (int)Math.Floor(DateTime.Now.Subtract(new DateTime(2013, 6, 8)).TotalDays / 365.25);
-                AvailableCycleYears = Enumerable.Range(1, years).ToArray();
+                return Enumerable.Range(1, years)
+                    .Select(year => new CycleYear(year))
+                    .ToArray();
             }
         }
+        public CycleYear SelectedCycleYear { get; set; }
+        public int[] AvailableLevels => Enumerable.Range(1, 40).ToArray();
+        public int? SelectedLevel { get; set; }
+        public MarketPlaceTypes[] AvailableCurrencies => ListEnumValues<MarketPlaceTypes>();
+        public MarketPlaceTypes? SelectedCurrency { get; set; }
 
         //Sorting
         public SortTypes[] AvailableSortTypes => ListEnumValues<SortTypes>();
@@ -125,7 +166,7 @@ namespace Bestiary.ViewModel
                         {
                             switch (p)
                             {
-                                case bool b:
+                                case OwnershipStatus b:
                                     SelectedOwnedStatus = null;
                                     break;
                                 case BondingLevels bl:
@@ -135,10 +176,13 @@ namespace Bestiary.ViewModel
                                     SelectedSource = null;
                                     break;
                                 case Availabilities a:
-                                    SelectedAvailabilities = null;
+                                    SelectedAvailability = null;
                                     break;
                                 case SortTypes st:
                                     SelectedSortType = null;
+                                    break;
+                                case LocationTypes l:
+                                    SelectedLocationType = null;
                                     break;
                                 default:
                                     break;
@@ -162,9 +206,9 @@ namespace Bestiary.ViewModel
             {
                 filteredFamiliars = filteredFamiliars.Where(f => f.Owned == SelectedOwnedStatus);
             }
-            if (SelectedAvailabilities != null)
+            if (SelectedAvailability != null)
             {
-                filteredFamiliars = filteredFamiliars.Where(f => f.Familiar.Availability == SelectedAvailabilities);
+                filteredFamiliars = filteredFamiliars.Where(f => f.Familiar.Availability == SelectedAvailability);
             }
             if (SelectedSource != null)
             {
@@ -246,97 +290,5 @@ namespace Bestiary.ViewModel
             return Enum.GetValues(typeof(T)).Cast<T>()
                 .ToArray();
         }
-
-
-        public List<IAmSubFilter> SubFilterList { get; set; } = new List<IAmSubFilter>();
-    }
-
-    interface IAmSubFilter
-    {
-        IEnumerable<FamiliarInfo> Apply(IEnumerable<FamiliarInfo> toFilter);
-    }
-
-    class SubFilter<T, SourceType> : IAmSubFilter
-        where T : class
-        where SourceType : class
-    {
-        public string Name { get; set; }
-        public T[] AvailableOptions { get; set; }
-        public T SelectedOption { get; set; }
-
-        public SubFilter(string name, T[] availableOptions, T selectedOption, Func<SourceType, T> getKey)
-        {
-            Name = name;
-            AvailableOptions = availableOptions;
-            SelectedOption = selectedOption;
-            m_GetKey = getKey;
-        }
-
-        public IEnumerable<FamiliarInfo> Apply(IEnumerable<FamiliarInfo> toFilter)
-        {
-            if (SelectedOption == null)
-            {
-                return toFilter;
-            }
-
-            return toFilter
-                .Where(f =>
-                {
-                    var source = f.Familiar.Source as SourceType;
-                    if (source == null)
-                    {
-                        return false;
-                    }
-
-                    var key = m_GetKey(source);
-                    var matches = key.Equals(SelectedOption);
-
-                    return matches;
-                });
-        }
-
-        private Func<SourceType, T> m_GetKey;
-    }
-
-    class EnumSubFilter<T, SourceType> : IAmSubFilter
-        where T : struct
-        where SourceType : class
-    {
-        public string Name { get; set; }
-        public T[] AvailableOptions { get; set; }
-        public T? SelectedOption { get; set; }
-
-        public EnumSubFilter(string name, T[] availableOptions, T? selectedOption, Func<SourceType, T> getKey)
-        {
-            Name = name;
-            AvailableOptions = availableOptions;
-            SelectedOption = selectedOption;
-            m_GetKey = getKey;
-        }
-
-        public IEnumerable<FamiliarInfo> Apply(IEnumerable<FamiliarInfo> toFilter)
-        {
-            if (SelectedOption == null)
-            {
-                return toFilter;
-            }
-
-            return toFilter
-                .Where(f =>
-                {
-                    var source = f.Familiar.Source as SourceType;
-                    if (source == null)
-                    {
-                        return false;
-                    }
-
-                    var key = m_GetKey(source);
-                    var matches = key.Equals(SelectedOption);
-
-                    return matches;
-                });
-        }
-
-        private Func<SourceType, T> m_GetKey;
     }
 }

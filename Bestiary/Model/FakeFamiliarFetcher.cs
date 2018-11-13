@@ -14,22 +14,28 @@ namespace Bestiary.Model
             {
                 new FamiliarInfo
                 {
-                    Familiar = new Familiar("Oliver", Flights.Lightning, new SiteEvent("Anniversary", new CycleYear(2)), Availabilities.Always, "The bestest", "Gives great hugs", 0),
+                    Familiar = new Familiar("Agol", new SiteEvent("Anniversary", new CycleYear(2)), Availabilities.Event, "A backwards thinking creature.", 15298),
                     BondLevel = BondingLevels.Inquisitive,
                     Owned = OwnershipStatus.Owned,
                 },
                 new FamiliarInfo
                 {
-                    Familiar = new Familiar("Oliver1", Flights.Lightning, new Coliseum("Rainsong Jungle", EnemyTypes.Boss), Availabilities.Always, "The bestest", "Gives great hugs", 3),
+                    Familiar = new Familiar("Almandine Sturgeon", new Coliseum("Crystal Pools", EnemyTypes.Normal), Availabilities.Always, "Dwelling in the waters of the Crystal Pools has left the scales of this fish translucent and hard as a gemstone.", 13435),
                     BondLevel = BondingLevels.Inquisitive,
                     Owned = OwnershipStatus.NotOwned,
                 },
                 new FamiliarInfo
                 {
-                    Familiar = new Familiar("Oliver2", Flights.Lightning, new Festival(Flights.Lightning, new CycleYear(1)), Availabilities.Always, "The bestest", "Gives great hugs", 2),
+                    Familiar = new Familiar("Animated Armor", new SiteEvent("Night of the Nocturne" , new CycleYear(3)), Availabilities.Event, "A blessing and a curse, donning this armor will increase one's martial abilities, but also one's taste for battle.", 20827),
                     BondLevel = BondingLevels.Awakened,
                     Owned = OwnershipStatus.Owned,
-                }
+                },
+                new FamiliarInfo
+                {
+                    Familiar = new Familiar("Alstroemeria Fox", new Coliseum("Blooming Grove", EnemyTypes.Normal), Availabilities.Always, "The happiest fox.", 23849),
+                    BondLevel = BondingLevels.Awakened,
+                    Owned = OwnershipStatus.Owned,
+                },
             };
         }
     }

@@ -177,6 +177,8 @@ namespace Bestiary.Model
         }
         [DataMember]
         public RecipeItem[] Recipe { get; set; }
+        [DataMember]
+        public int MinLevel { get; private set; }
     }
 
     [DataContract]
@@ -200,6 +202,17 @@ namespace Bestiary.Model
         }
         [DataMember]
         public int YearNumber { get; private set; }
+        public override string ToString()
+        {
+            return YearNumber.ToString();
+        }
+        public override bool Equals(object obj)
+        {
+            if (obj == null) return false;
+            var other = obj as CycleYear;
+            if (other == null) return false;
+            return YearNumber == other.YearNumber;
+        }
     }
 
     [DataContract]
