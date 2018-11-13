@@ -5,8 +5,49 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Bestiary"
         mc:Ignorable="d"
-        Title="Window1" Height="450" Width="800">
+        Title="Window1" Height="500" Width="360">
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Label Grid.Row="0" HorizontalAlignment="Center" FontSize="16" Content="Add a familiar"/>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Label Grid.Column="0" Grid.Row="0" Content="Name:"/>
+            <Label Grid.Column="0" Grid.Row="1" Content="ID:"/>
+            <Label Grid.Column="0" Grid.Row="2" Content="Description:"/>
+            <Label Grid.Column="0" Grid.Row="3" Content="Availability:"/>
+            <Label Grid.Column="0" Grid.Row="4" Content="Source:"/>
+
+            <TextBox Grid.Column="1" Grid.Row="0"/>
+            <TextBox Grid.Column="1" Grid.Row="1"/>
+            <TextBox Grid.Column="1" Grid.Row="2"/>
+            <ComboBox Grid.Column="1" Grid.Row="3"/>
+            <ComboBox Grid.Column="2" Grid.Row="4"/>
+        </Grid>
+        <Grid Grid.Row="2">
+            
+        </Grid>
+        <Grid Grid.Row="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0" Margin="5" Content="Confirm"/>
+            <Button Grid.Column="1" Margin="5" Content="Cancel"/>
+        </Grid>
     </Grid>
 </Window>
