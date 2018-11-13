@@ -30,9 +30,27 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
-                <GroupBox Grid.Row="0" Header="Filters" Margin="5">
+                <GroupBox Grid.Row="0" Header="Search">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <TextBox Grid.Row="0" Text="{Binding SearchText}" />
+                        <Grid Grid.Row="1" HorizontalAlignment="Right" Width="174">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <CheckBox Grid.Column="0" VerticalAlignment="Center" IsChecked="{Binding ExactChecked}"/>
+                            <Label Grid.Column="1" VerticalAlignment="Center" Content="Exact"/>
+                        </Grid>
+                        
+                    </Grid>
+                    
+                </GroupBox>
+                <GroupBox Grid.Row="1" Header="Filters" Margin="5">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" SharedSizeGroup="A"/>
@@ -46,11 +64,11 @@
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
-                        <Label Grid.Column="0" Grid.Row="0" Content="Ownership"/>
-                        <Label Grid.Column="0" Grid.Row="1" Content="Bonding Level"/>
-                        <Label Grid.Column="0" Grid.Row="2" Content="Location"/>
-                        <Label Grid.Column="0" Grid.Row="3" Content="Availability"/>
-                        <Label Grid.Column="0" Grid.Row="4" Content="Source"/>
+                        <Label Grid.Column="0" Grid.Row="0" HorizontalContentAlignment="Center" Content="Ownership"/>
+                        <Label Grid.Column="0" Grid.Row="1" HorizontalContentAlignment="Center" Content="Bonding Level"/>
+                        <Label Grid.Column="0" Grid.Row="2" HorizontalContentAlignment="Center" Content="Location"/>
+                        <Label Grid.Column="0" Grid.Row="3" HorizontalContentAlignment="Center" Content="Availability"/>
+                        <Label Grid.Column="0" Grid.Row="4" HorizontalContentAlignment="Center" Content="Source"/>
                         
                         <ComboBox Grid.Column="1" Grid.Row="0" Margin="5" ItemsSource="{Binding AvailableOwnedStatus}" SelectedItem="{Binding SelectedOwnedStatus}" x:Name="OwnedStatus"/>
                         <ComboBox Grid.Column="1" Grid.Row="1" Margin="5" ItemsSource="{Binding AvailableBondingLevels}" SelectedItem="{Binding SelectedBondingLevel}"/>
@@ -65,7 +83,7 @@
                         <Button Grid.Column="2" Grid.Row="4" Margin="5" Content="Clear" Command="{Binding ClearOption}" CommandParameter="{Binding SelectedSource}"/>
                     </Grid>
                 </GroupBox>
-                <GroupBox Grid.Row="1" Header="Subfilters" Margin="5">
+                <GroupBox Grid.Row="2" Header="Subfilters" Margin="5">
                     <ItemsControl ItemsSource="{Binding SubFilterList}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
@@ -81,7 +99,7 @@
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
                 </GroupBox>
-                <Button Grid.Row="2" Content="Go" Margin="5" Command="{Binding FetchFamiliars}"/>
+                <Button Grid.Row="4" Content="Go" Margin="5" Command="{Binding FetchFamiliars}"/>
             </Grid>
             <GroupBox Grid.Column="1" Header="Familiars" Margin="5">
                 <Grid>
@@ -95,7 +113,7 @@
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
-                        <Label Grid.Column="0" Width="Auto" Content="Sort by:"/>
+                        <Label Grid.Column="0" Width="Auto" HorizontalContentAlignment="Center" Content="Sort by:"/>
                         <ComboBox Grid.Column="1" Width="Auto" Margin="5" ItemsSource="{Binding AvailableSortTypes}" SelectedItem="{Binding SelectedSortType}"/>
                         <Button Grid.Column="2" Margin="5" Content="Clear" Command="{Binding ClearOption}" CommandParameter="{Binding SelectedSortType}"/>
                     </Grid>
@@ -112,9 +130,30 @@
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
-                            <DataGridTextColumn Header="Name" Width="Auto" IsReadOnly="True" Binding="{Binding Familiar.Name}"/>
-                            <DataGridTextColumn Header="Ownership" Width="Auto" IsReadOnly="True" Binding="{Binding Owned}"/>
-                            <DataGridTextColumn Header="Bonding Level" Width="Auto" IsReadOnly="True" Binding="{Binding BondLevel}"/>
+                            <DataGridTextColumn Header="Name" Width="Auto" IsReadOnly="True" Binding="{Binding Familiar.Name}" TextBlock.TextAlignment="Center">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="HorizontalAlignment" Value="Center" />
+                                        <Setter Property="VerticalAlignment" Value="Center" />
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn Header="Ownership" Width="Auto" IsReadOnly="True" Binding="{Binding Owned}" TextBlock.TextAlignment="Center">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="HorizontalAlignment" Value="Center" />
+                                        <Setter Property="VerticalAlignment" Value="Center" />
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn Header="Bonding Level" Width="Auto" IsReadOnly="True" Binding="{Binding BondLevel}">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="HorizontalAlignment" Value="Center" />
+                                        <Setter Property="VerticalAlignment" Value="Center" />
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
                         </DataGrid.Columns>
                     </DataGrid>
                 </Grid>

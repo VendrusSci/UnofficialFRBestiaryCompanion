@@ -126,6 +126,10 @@ namespace Bestiary.ViewModel
         public SortTypes[] AvailableSortTypes => ListEnumValues<SortTypes>();
         public SortTypes? SelectedSortType { get; set; }
 
+        //Search
+        public string SearchText { get; set; }
+        public bool ExactChecked {get; set; }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         public FamiliarInfo[] FilteredFamiliars { get; private set; }
@@ -146,6 +150,7 @@ namespace Bestiary.ViewModel
                             {
                                 tempFamiliars = subFilter.Apply(tempFamiliars);
                             }
+                            tempFamiliars = ApplySearch(tempFamiliars);
                             FilteredFamiliars = ApplySort(tempFamiliars).ToArray();
                         }
                     );
@@ -274,6 +279,23 @@ namespace Bestiary.ViewModel
                     break;
             }
             return sortedFamiliars;
+        }
+
+        private IEnumerable<FamiliarInfo> ApplySearch(IEnumerable<FamiliarInfo> familiars)
+        {
+            IEnumerable<FamiliarInfo> filteredFamiliars = familiars;
+            if(SearchText != null)
+            {
+                if(!ExactChecked)
+                {
+                    filteredFamiliars = filteredFamiliars.Where(s => s.Familiar.Name.ToLower().Contains(SearchText.ToLower()));
+                }
+                else
+                {
+                    filteredFamiliars = filteredFamiliars.Where(s => s.Familiar.Name.ToLower().Equals(SearchText.ToLower()));
+                }
+            }
+            return filteredFamiliars;
         }
 
         public MainViewModel(IFamiliarProvider familiarFetcher)
