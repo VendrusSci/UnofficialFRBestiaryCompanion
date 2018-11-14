@@ -161,7 +161,8 @@ namespace Bestiary.Model
         {
             var fakeSource = new FakeFamiliarFetcher();
             var testData = fakeSource.FetchFamiliars()
-                .Select(f => new OwnedFamiliar(f.Familiar));
+                .Where(f => f.Owned == OwnershipStatus.Owned)
+                .Select(f => new OwnedFamiliar(f.Familiar, f.BondLevel.Value, f.Location.Value));
 
             var result = new UserFamiliarInformation();
             result.OwnedFamiliars = testData.ToList();

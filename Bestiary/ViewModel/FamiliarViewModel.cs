@@ -47,7 +47,6 @@ namespace Bestiary.ViewModel
         }
         private LambdaCommand m_SetOwned;
         private LambdaCommand m_IncrementBondingLevel;
-        private LambdaCommand m_FetchBitmap;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -67,6 +66,8 @@ namespace Bestiary.ViewModel
                         onExecute: (p) =>
                         {
                             Info.Owned = OwnershipStatus.Owned;
+                            Info.Location = LocationTypes.InHoard;
+                            Info.BondLevel = BondingLevels.Wary;
                         },
                         onCanExecute: (p) =>
                         {

@@ -158,7 +158,7 @@
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
                             <DataGridTextColumn Header="Name" Width="Auto" IsReadOnly="True" Binding="{Binding Info.Familiar.Name}" TextBlock.TextAlignment="Center"/>
-                            <DataGridTextColumn Header="Ownership" Width="Auto" IsReadOnly="True" Binding="{Binding Info.Owned}" TextBlock.TextAlignment="Center" />
+                            <DataGridTextColumn Header="Ownership" Width="Auto" IsReadOnly="True" Binding="{Binding Info.Owned}" TextBlock.TextAlignment="Center"/>
                             <DataGridTextColumn Header="Bonding Level" Width="Auto" IsReadOnly="True" Binding="{Binding Info.BondLevel}"/>
                             <DataGridTextColumn Width="*" IsReadOnly="True"/>
                             <DataGridTemplateColumn Header="Location" Width="Auto" IsReadOnly="False">
