@@ -16,7 +16,7 @@ namespace Bestiary.Model
                 {
                     Familiar = new Familiar("Agol", new SiteEvent("Anniversary", new CycleYear(2)), Availabilities.Event, "A backwards thinking creature.", 15298),
                     BondLevel = BondingLevels.Inquisitive,
-                    Owned = OwnershipStatus.Owned,
+                    Owned = OwnershipStatus.NotOwned,
                 },
                 new FamiliarInfo
                 {
@@ -28,7 +28,7 @@ namespace Bestiary.Model
                 {
                     Familiar = new Familiar("Animated Armor", new SiteEvent("Night of the Nocturne" , new CycleYear(3)), Availabilities.Event, "A blessing and a curse, donning this armor will increase one's martial abilities, but also one's taste for battle.", 20827),
                     BondLevel = BondingLevels.Awakened,
-                    Owned = OwnershipStatus.Owned,
+                    Owned = OwnershipStatus.NotOwned,
                 },
                 new FamiliarInfo
                 {

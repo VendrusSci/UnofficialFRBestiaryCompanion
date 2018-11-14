@@ -132,7 +132,7 @@ namespace Bestiary.ViewModel
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public FamiliarInfo[] FilteredFamiliars { get; private set; }
+        public FamiliarViewModel[] FilteredFamiliars { get; private set; }
 
         private LambdaCommand m_FetchFamiliars;
 
@@ -151,7 +151,10 @@ namespace Bestiary.ViewModel
                                 tempFamiliars = subFilter.Apply(tempFamiliars);
                             }
                             tempFamiliars = ApplySearch(tempFamiliars);
-                            FilteredFamiliars = ApplySort(tempFamiliars).ToArray();
+                            tempFamiliars = ApplySort(tempFamiliars);
+                            FilteredFamiliars = tempFamiliars
+                                .Select(f => new FamiliarViewModel(f, AvailableLocationTypes))
+                                .ToArray();
                         }
                     );
                 }

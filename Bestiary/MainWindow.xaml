@@ -5,9 +5,36 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Bestiary.Model"
         mc:Ignorable="d"
+        x:Name="TopLevelWindow"
         Title="MainWindow" Height="450" Width="800">
     <Window.Resources>
         <local:IdImageConverter x:Key="converter"/>
+        <Style TargetType="Label">
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        </Style>
+        <Style TargetType="TextBlock">
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+        </Style>
+        <Style TargetType="CheckBox">
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+        </Style>
+        <Style TargetType="ComboBox">
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="5"/>
+        </Style>
+        <Style TargetType="Button">
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="5"/>
+        </Style>
+        <Style TargetType="DataGridCell">
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -43,8 +70,8 @@
                                 <ColumnDefinition Width="Auto"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
-                            <CheckBox Grid.Column="0" VerticalAlignment="Center" IsChecked="{Binding ExactChecked}"/>
-                            <Label Grid.Column="1" VerticalAlignment="Center" Content="Exact"/>
+                            <CheckBox Grid.Column="0" IsChecked="{Binding ExactChecked}"/>
+                            <Label Grid.Column="1" Content="Exact"/>
                         </Grid>
                         
                     </Grid>
@@ -64,23 +91,23 @@
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
-                        <Label Grid.Column="0" Grid.Row="0" HorizontalContentAlignment="Center" Content="Ownership"/>
-                        <Label Grid.Column="0" Grid.Row="1" HorizontalContentAlignment="Center" Content="Bonding Level"/>
-                        <Label Grid.Column="0" Grid.Row="2" HorizontalContentAlignment="Center" Content="Location"/>
-                        <Label Grid.Column="0" Grid.Row="3" HorizontalContentAlignment="Center" Content="Availability"/>
+                        <Label Grid.Column="0" Grid.Row="0" Content="Ownership"/>
+                        <Label Grid.Column="0" Grid.Row="1" Content="Bonding Level"/>
+                        <Label Grid.Column="0" Grid.Row="2" Content="Location"/>
+                        <Label Grid.Column="0" Grid.Row="3"  Content="Availability"/>
                         <Label Grid.Column="0" Grid.Row="4" HorizontalContentAlignment="Center" Content="Source"/>
                         
-                        <ComboBox Grid.Column="1" Grid.Row="0" Margin="5" ItemsSource="{Binding AvailableOwnedStatus}" SelectedItem="{Binding SelectedOwnedStatus}" x:Name="OwnedStatus"/>
-                        <ComboBox Grid.Column="1" Grid.Row="1" Margin="5" ItemsSource="{Binding AvailableBondingLevels}" SelectedItem="{Binding SelectedBondingLevel}"/>
-                        <ComboBox Grid.Column="1" Grid.Row="2" Margin="5" ItemsSource="{Binding AvailableLocationTypes}" SelectedItem="{Binding SelectedLocationType}"/>
-                        <ComboBox Grid.Column="1" Grid.Row="3" Margin="5" ItemsSource="{Binding AvailableAvailabilities}" SelectedItem="{Binding SelectedAvailability}"/>
-                        <ComboBox Grid.Column="1" Grid.Row="4" Margin="5" ItemsSource="{Binding AvailableSources}" SelectedItem="{Binding SelectedSource}"/>
+                        <ComboBox Grid.Column="1" Grid.Row="0" ItemsSource="{Binding AvailableOwnedStatus}" SelectedItem="{Binding SelectedOwnedStatus}" x:Name="OwnedStatus"/>
+                        <ComboBox Grid.Column="1" Grid.Row="1" ItemsSource="{Binding AvailableBondingLevels}" SelectedItem="{Binding SelectedBondingLevel}"/>
+                        <ComboBox Grid.Column="1" Grid.Row="2" ItemsSource="{Binding AvailableLocationTypes}" SelectedItem="{Binding SelectedLocationType}"/>
+                        <ComboBox Grid.Column="1" Grid.Row="3" ItemsSource="{Binding AvailableAvailabilities}" SelectedItem="{Binding SelectedAvailability}"/>
+                        <ComboBox Grid.Column="1" Grid.Row="4" ItemsSource="{Binding AvailableSources}" SelectedItem="{Binding SelectedSource}"/>
                         
-                        <Button Grid.Column="2" Grid.Row="0" Margin="5" Content="Clear" Command="{Binding ClearOption}" CommandParameter="{Binding SelectedOwnedStatus}"/>
-                        <Button Grid.Column="2" Grid.Row="1" Margin="5" Content="Clear" Command="{Binding ClearOption}" CommandParameter="{Binding SelectedBondingLevel}"/>
-                        <Button Grid.Column="2" Grid.Row="2" Margin="5" Content="Clear" Command="{Binding ClearOption}" CommandParameter="{Binding SelectedLocationType}"/>
-                        <Button Grid.Column="2" Grid.Row="3" Margin="5" Content="Clear" Command="{Binding ClearOption}" CommandParameter="{Binding SelectedAvailability}"/>
-                        <Button Grid.Column="2" Grid.Row="4" Margin="5" Content="Clear" Command="{Binding ClearOption}" CommandParameter="{Binding SelectedSource}"/>
+                        <Button Grid.Column="2" Grid.Row="0" Content="Clear" Command="{Binding ClearOption}" CommandParameter="{Binding SelectedOwnedStatus}"/>
+                        <Button Grid.Column="2" Grid.Row="1" Content="Clear" Command="{Binding ClearOption}" CommandParameter="{Binding SelectedBondingLevel}"/>
+                        <Button Grid.Column="2" Grid.Row="2" Content="Clear" Command="{Binding ClearOption}" CommandParameter="{Binding SelectedLocationType}"/>
+                        <Button Grid.Column="2" Grid.Row="3" Content="Clear" Command="{Binding ClearOption}" CommandParameter="{Binding SelectedAvailability}"/>
+                        <Button Grid.Column="2" Grid.Row="4" Content="Clear" Command="{Binding ClearOption}" CommandParameter="{Binding SelectedSource}"/>
                     </Grid>
                 </GroupBox>
                 <GroupBox Grid.Row="2" Header="Subfilters" Margin="5">
@@ -117,43 +144,44 @@
                         <ComboBox Grid.Column="1" Width="Auto" Margin="5" ItemsSource="{Binding AvailableSortTypes}" SelectedItem="{Binding SelectedSortType}"/>
                         <Button Grid.Column="2" Margin="5" Content="Clear" Command="{Binding ClearOption}" CommandParameter="{Binding SelectedSortType}"/>
                     </Grid>
-                    <DataGrid Grid.Row ="1" Width="Auto" Height="Auto" AutoGenerateColumns="False" ItemsSource="{Binding FilteredFamiliars}">
+                    <DataGrid Grid.Row ="1" Width="Auto" Height="Auto" AutoGenerateColumns="False" GridLinesVisibility="None" ItemsSource="{Binding FilteredFamiliars}">
                         <DataGrid.Columns>
                             <DataGridTemplateColumn Header="Icon" Width="Auto" IsReadOnly="True">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
                                         <Image
-                                            Source="{Binding Familiar.Id, Converter={StaticResource converter}, ConverterParameter=Icons}"
+                                            Source="{Binding Icon}"
                                             Width="50"
                                             Height="50"
                                             RenderOptions.BitmapScalingMode="HighQuality"/>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
-                            <DataGridTextColumn Header="Name" Width="Auto" IsReadOnly="True" Binding="{Binding Familiar.Name}" TextBlock.TextAlignment="Center">
-                                <DataGridTextColumn.ElementStyle>
-                                    <Style TargetType="TextBlock">
-                                        <Setter Property="HorizontalAlignment" Value="Center" />
-                                        <Setter Property="VerticalAlignment" Value="Center" />
-                                    </Style>
-                                </DataGridTextColumn.ElementStyle>
-                            </DataGridTextColumn>
-                            <DataGridTextColumn Header="Ownership" Width="Auto" IsReadOnly="True" Binding="{Binding Owned}" TextBlock.TextAlignment="Center">
-                                <DataGridTextColumn.ElementStyle>
-                                    <Style TargetType="TextBlock">
-                                        <Setter Property="HorizontalAlignment" Value="Center" />
-                                        <Setter Property="VerticalAlignment" Value="Center" />
-                                    </Style>
-                                </DataGridTextColumn.ElementStyle>
-                            </DataGridTextColumn>
-                            <DataGridTextColumn Header="Bonding Level" Width="Auto" IsReadOnly="True" Binding="{Binding BondLevel}">
-                                <DataGridTextColumn.ElementStyle>
-                                    <Style TargetType="TextBlock">
-                                        <Setter Property="HorizontalAlignment" Value="Center" />
-                                        <Setter Property="VerticalAlignment" Value="Center" />
-                                    </Style>
-                                </DataGridTextColumn.ElementStyle>
-                            </DataGridTextColumn>
+                            <DataGridTextColumn Header="Name" Width="Auto" IsReadOnly="True" Binding="{Binding Info.Familiar.Name}" TextBlock.TextAlignment="Center"/>
+                            <DataGridTextColumn Header="Ownership" Width="Auto" IsReadOnly="True" Binding="{Binding Info.Owned}" TextBlock.TextAlignment="Center" />
+                            <DataGridTextColumn Header="Bonding Level" Width="Auto" IsReadOnly="True" Binding="{Binding Info.BondLevel}"/>
+                            <DataGridTextColumn Width="*" IsReadOnly="True"/>
+                            <DataGridTemplateColumn Header="Location" Width="Auto" IsReadOnly="False">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <ComboBox  ItemsSource="{Binding AvailableLocationTypes}" SelectedItem="{Binding Info.Location}" IsSynchronizedWithCurrentItem="True"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn  Width="Auto" IsReadOnly="True">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Content="Gotcha!" Command="{Binding SetOwned}"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn  Width="Auto" IsReadOnly="True">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Content="Level Up!" Command="{Binding IncrementBondingLevel}"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
                         </DataGrid.Columns>
                     </DataGrid>
                 </Grid>

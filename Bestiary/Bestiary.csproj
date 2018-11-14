@@ -67,6 +67,7 @@
     <Compile Include="Model\LocationType.cs" />
     <Compile Include="Model\SubFilter.cs" />
     <Compile Include="Model\XmlFamliarFetcher.cs" />
+    <Compile Include="ViewModel\FamiliarViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="FamiliarAddWindow.xaml.cs">
       <DependentUpon>FamiliarAddWindow.xaml</DependentUpon>
