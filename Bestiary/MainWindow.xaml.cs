@@ -25,7 +25,7 @@ namespace Bestiary
         public MainWindow()
         {
             InitializeComponent();
-            DataContext = new MainViewModel(new XmlFamliarFetcher("BuiltinData.xml", "UserData.xml"));
+            DataContext = new MainViewModel(new XmlModelStorage("Data.xml"));
         }
     }
 }

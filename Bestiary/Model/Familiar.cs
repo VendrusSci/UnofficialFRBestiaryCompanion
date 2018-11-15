@@ -34,15 +34,15 @@ namespace Bestiary.Model
     [DataContract]
     class OwnedFamiliar
     {
-        public OwnedFamiliar(Familiar familiar, BondingLevels bondingLevel, LocationTypes location)
+        public OwnedFamiliar(int id, BondingLevels bondingLevel, LocationTypes location)
         {
-            Familiar = familiar;
+            Id = id;
             BondingLevel = bondingLevel; 
             Location = location;
         }
 
         [DataMember]
-        public Familiar Familiar { get; private set; }
+        public int Id { get; private set; }
 
         [DataMember]
         public BondingLevels BondingLevel { get; set; }

@@ -9,38 +9,84 @@ using System.Xml;
 
 namespace Bestiary.Model
 {
-    class XmlFamliarFetcher : IFamiliarProvider
+    interface IModel
     {
-        public XmlFamliarFetcher(string builtinFilepath, string userFilepath)
-        {
-            SaveOutTestData(builtinFilepath, userFilepath);
+        ICRUD<Familiar> LookupFamiliar(int id);
+        ICRUD<OwnedFamiliar> LookupOwnedFamiliar(int id);
+        IEnumerable<int> Familiars { get; }
+        IEnumerable<int> OwnedFamiliars { get; }
+    }
 
-            m_FlightRisingInformation = TryLoadXml<BuiltinFlightRisingInformation>(builtinFilepath) ?? new BuiltinFlightRisingInformation();
-            m_UserFamiliarInformation = TryLoadXml<UserFamiliarInformation>(userFilepath) ?? new UserFamiliarInformation();
+    class XmlCRUD<ValueType> : ICRUD<ValueType>
+    {
+        public XmlCRUD(XmlModelStorage storage, List<ValueType> collection, ValueType value)
+        {
+            m_Collection = collection;
+            m_Storage = storage;
+            m_Value = value;
         }
 
-        public FamiliarInfo[] FetchFamiliars()
+        public void Delete()
         {
-            return m_FlightRisingInformation.Familiars
-                .Select(f =>
-                {
-                    var owned = m_UserFamiliarInformation.OwnedFamiliars
-                        .FirstOrDefault(o => o.Familiar.Id == f.Id);
-                    return new FamiliarInfo
-                    {
-                        Familiar = f,
-                        Owned = owned != null ? OwnershipStatus.Owned : OwnershipStatus.NotOwned,// owned != null,
-                        BondLevel = owned?.BondingLevel,
-                        Location = owned?.Location,
-                    };
-                })
-                .ToArray();
+            m_Collection.Remove(m_Value);
+            m_Storage.Save();
         }
 
-        private void SaveOutTestData(string builtinFilepath, string userFilepath)
+        public ValueType Fetch()
         {
-            SaveXml(builtinFilepath, BuiltinFlightRisingInformation.MakeTestData());
-            SaveXml(userFilepath, UserFamiliarInformation.MakeTestData());
+            return m_Value;
+        }
+
+        public void Update(Action<ValueType> update)
+        {
+            update(m_Value);
+            m_Storage.Save();
+        }
+
+        ValueType m_Value;
+        XmlModelStorage m_Storage;
+        List<ValueType> m_Collection;
+    }
+
+    class XmlModelStorage : IModel
+    {
+        public XmlModelStorage(string path)
+        {
+            m_Filepath = path;
+            m_Data = TryLoadXml<XmlData>(path) ?? new XmlData();
+        }
+
+        public ICRUD<Familiar> LookupFamiliar(int id)
+        {
+            return LookupGeneric(Data.Familiars, familiar => familiar.Id == id);
+        }
+
+        public ICRUD<OwnedFamiliar> LookupOwnedFamiliar(int id)
+        {
+            return LookupGeneric(Data.OwnedFamiliars, owned => owned.Id == id);
+        }
+
+        public XmlData Data => m_Data;
+
+        public IEnumerable<int> Familiars => Data.Familiars.Select(familiar => familiar.Id);
+
+        public IEnumerable<int> OwnedFamiliars => Data.OwnedFamiliars.Select(owned => owned.Id);
+
+        public void Save()
+        {
+            SaveXml(m_Filepath, m_Data);
+        }
+
+        private ICRUD<ValueType> LookupGeneric<ValueType>(List<ValueType> collection, Func<ValueType, bool> predicate)
+        {
+            var value = collection.FirstOrDefault(predicate);
+
+            if(value == null)
+            {
+                return null;
+            }
+
+            return new XmlCRUD<ValueType>(this, collection, value);
         }
 
         private void SaveXml<T>(string filepath, T info)
@@ -82,9 +128,9 @@ namespace Bestiary.Model
 
             return null;
         }
-
-        private UserFamiliarInformation m_UserFamiliarInformation = new UserFamiliarInformation();
-        private BuiltinFlightRisingInformation m_FlightRisingInformation = new BuiltinFlightRisingInformation();
+        
+        private XmlData m_Data;
+        private string m_Filepath;
     }
 
     class CustomResolver : DataContractResolver
@@ -132,47 +178,16 @@ namespace Bestiary.Model
     }
 
     [DataContract]
-    class BuiltinFlightRisingInformation
+    class XmlData
     {
-        public static BuiltinFlightRisingInformation MakeTestData()
-        {
-            var fakeSource = new FakeFamiliarFetcher();
-            var testData = fakeSource.FetchFamiliars()
-                .Select(f => f.Familiar);
-
-            var result = new BuiltinFlightRisingInformation();
-            result.Familiars = testData.ToList();
-            return result;
-        }
-
-        public BuiltinFlightRisingInformation()
+        public XmlData()
         {
             Familiars = new List<Familiar>();
+            OwnedFamiliars = new List<OwnedFamiliar>();
         }
 
         [DataMember]
         public List<Familiar> Familiars { get; private set; }
-    }
-
-    [DataContract]
-    class UserFamiliarInformation
-    {
-        public static UserFamiliarInformation MakeTestData()
-        {
-            var fakeSource = new FakeFamiliarFetcher();
-            var testData = fakeSource.FetchFamiliars()
-                .Where(f => f.Owned == OwnershipStatus.Owned)
-                .Select(f => new OwnedFamiliar(f.Familiar, f.BondLevel.Value, f.Location.Value));
-
-            var result = new UserFamiliarInformation();
-            result.OwnedFamiliars = testData.ToList();
-            return result;
-        }
-
-        public UserFamiliarInformation()
-        {
-            OwnedFamiliars = new List<OwnedFamiliar>();
-        }
 
         [DataMember]
         public List<OwnedFamiliar> OwnedFamiliars { get; private set; }

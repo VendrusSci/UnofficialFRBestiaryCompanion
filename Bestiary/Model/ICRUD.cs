@@ -6,7 +6,12 @@ using System.Threading.Tasks;
 
 namespace Bestiary.Model
 {
-    class EnumDescConverter
+    interface ICRUD<Q>
     {
+        Q Fetch();
+
+        void Update(Action<Q> update);
+
+        void Delete();
     }
 }

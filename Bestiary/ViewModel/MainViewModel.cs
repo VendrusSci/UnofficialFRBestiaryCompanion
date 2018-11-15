@@ -20,7 +20,7 @@ namespace Bestiary.ViewModel
 
     class MainViewModel : INotifyPropertyChanged
     {
-        private IFamiliarProvider m_familiarFetcher;
+        private IModel m_Model;
 
         //Filters
         public OwnershipStatus[] AvailableOwnedStatus => ListEnumValues<OwnershipStatus>();
@@ -145,7 +145,19 @@ namespace Bestiary.ViewModel
                     m_FetchFamiliars = new LambdaCommand(
                         onExecute: (p) =>
                         {
-                            var tempFamiliars = ApplyFilters(m_familiarFetcher.FetchFamiliars());
+                            var familiars = m_Model.Familiars
+                                .Select(id => m_Model.LookupFamiliar(id).Fetch())
+                                .Select(familiar =>
+                                {
+                                    var owned = m_Model.LookupOwnedFamiliar(familiar.Id);
+                                    return new FamiliarInfo
+                                    {
+                                        Familiar = familiar,
+                                        BondLevel = owned?.Fetch()?.BondingLevel,
+                                        Location = owned?.Fetch()?.Location,
+                                    };
+                                });
+                            var tempFamiliars = ApplyFilters(familiars);
                             foreach (var subFilter in SubFilterList)
                             {
                                 tempFamiliars = subFilter.Apply(tempFamiliars);
@@ -301,9 +313,9 @@ namespace Bestiary.ViewModel
             return filteredFamiliars;
         }
 
-        public MainViewModel(IFamiliarProvider familiarFetcher)
+        public MainViewModel(IModel model)
         {
-            m_familiarFetcher = familiarFetcher;
+            m_Model = model;
         }
 
         public MainViewModel()
