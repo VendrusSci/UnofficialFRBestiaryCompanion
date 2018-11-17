@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Bestiary.Model
 {
-    interface ICRUD<Q>
+    public interface ICRUD<Q>
     {
         Q Fetch();
 

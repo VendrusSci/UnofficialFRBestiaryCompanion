@@ -104,16 +104,22 @@ namespace Bestiary.ViewModel
         {
             string path = $"{type}/{Info.Familiar.Id}.png";
 
-            var cwd = Directory.GetCurrentDirectory();
-            var exists = File.Exists(path);
+            try
+            {
+                var bitmapImage = new BitmapImage();
+                bitmapImage.BeginInit();
+                bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
+                bitmapImage.UriSource = new Uri(path, UriKind.RelativeOrAbsolute);
+                bitmapImage.EndInit();
 
-            var bitmapImage = new BitmapImage();
-            bitmapImage.BeginInit();
-            bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
-            bitmapImage.UriSource = new Uri(path, UriKind.RelativeOrAbsolute);
-            bitmapImage.EndInit();
+                return bitmapImage;
+            }
+            catch(FileNotFoundException)
+            {
+                // :(
+            }
 
-            return bitmapImage;
+            return null;
         }
     }
 }

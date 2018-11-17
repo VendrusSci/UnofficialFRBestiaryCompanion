@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace Bestiary.Model
 {
     [DataContract]
-    class Familiar
+    public class Familiar
     {
         [DataMember]
         public string Name { get; private set; }
@@ -32,7 +32,7 @@ namespace Bestiary.Model
     }
 
     [DataContract]
-    class OwnedFamiliar
+    public class OwnedFamiliar
     {
         public OwnedFamiliar(int id, BondingLevels bondingLevel, LocationTypes location)
         {

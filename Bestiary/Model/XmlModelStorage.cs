@@ -9,12 +9,14 @@ using System.Xml;
 
 namespace Bestiary.Model
 {
-    interface IModel
+    public interface IModel
     {
         ICRUD<Familiar> LookupFamiliar(int id);
         ICRUD<OwnedFamiliar> LookupOwnedFamiliar(int id);
         IEnumerable<int> Familiars { get; }
         IEnumerable<int> OwnedFamiliars { get; }
+        void AddFamiliar(Familiar familiar);
+        void AddOwnedFamiliar(OwnedFamiliar ownedFamiliar);
     }
 
     class XmlCRUD<ValueType> : ICRUD<ValueType>
@@ -64,6 +66,18 @@ namespace Bestiary.Model
         public ICRUD<OwnedFamiliar> LookupOwnedFamiliar(int id)
         {
             return LookupGeneric(Data.OwnedFamiliars, owned => owned.Id == id);
+        }
+
+        public void AddFamiliar(Familiar familiar)
+        {
+            Data.Familiars.Add(familiar);
+            Save();
+        }
+
+        public void AddOwnedFamiliar(OwnedFamiliar ownedFamiliar)
+        {
+            Data.OwnedFamiliars.Add(ownedFamiliar);
+            Save();
         }
 
         public XmlData Data => m_Data;

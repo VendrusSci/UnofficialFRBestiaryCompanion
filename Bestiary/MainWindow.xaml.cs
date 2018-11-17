@@ -25,7 +25,7 @@ namespace Bestiary
         public MainWindow()
         {
             InitializeComponent();
-            DataContext = new MainViewModel(new XmlModelStorage("Data.xml"));
+            DataContext = new MainViewModel(this, new XmlModelStorage("Data.xml"));
         }
     }
 }

@@ -62,13 +62,12 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="LambdaCommand.cs" />
+    <Compile Include="Model\FamiliarParameters.cs" />
     <Compile Include="Model\ICRUD.cs" />
-    <Compile Include="Model\IStorage.cs" />
     <Compile Include="Model\LocationType.cs" />
-    <Compile Include="Model\OwnedFamiliarStore.cs" />
     <Compile Include="Model\SubFilter.cs" />
     <Compile Include="Model\XmlModelStorage.cs" />
-    <Compile Include="Model\KnownFamiliarStore.cs" />
+    <Compile Include="ViewModel\FamiliarAddViewModel.cs" />
     <Compile Include="ViewModel\FamiliarViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="FamiliarAddWindow.xaml.cs">

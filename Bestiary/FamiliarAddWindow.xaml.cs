@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Bestiary.Model;
+using Bestiary.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,11 +19,12 @@ namespace Bestiary
     /// <summary>
     /// Interaction logic for Window1.xaml
     /// </summary>
-    public partial class Window1 : Window
-    {
-        public Window1()
+     public partial class FamiliarAddWindow : Window
+     {
+        public FamiliarAddWindow(IModel model)
         {
             InitializeComponent();
+            DataContext = new FamiliarAddViewModel(model);
         }
     }
 }

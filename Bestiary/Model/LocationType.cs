@@ -36,7 +36,7 @@ namespace Bestiary.Model
         Swipp
     }
 
-    enum Availabilities
+    public enum Availabilities
     {
         Always,
         Festival,
@@ -45,7 +45,7 @@ namespace Bestiary.Model
         Retired
     }
 
-    enum BondingLevels
+    public enum BondingLevels
     {
         Wary,
         Tolerant,
@@ -84,7 +84,7 @@ namespace Bestiary.Model
         NotOwned
     }
 
-    enum LocationTypes
+    public enum LocationTypes
     {
         OnDragon,
         InHoard,
@@ -93,7 +93,7 @@ namespace Bestiary.Model
 
     #endregion
 
-    interface IFamiliarSource {}
+    public interface IFamiliarSource {}
 
     [DataContract]
     class Coliseum : IFamiliarSource
@@ -171,12 +171,10 @@ namespace Bestiary.Model
     [DataContract]
     class Baldwin : IFamiliarSource
     {
-        public Baldwin(RecipeItem[] recipe)
+        public Baldwin(int minLevel)
         {
-            Recipe = recipe;
+            MinLevel = minLevel;
         }
-        [DataMember]
-        public RecipeItem[] Recipe { get; set; }
         [DataMember]
         public int MinLevel { get; private set; }
     }
@@ -184,13 +182,6 @@ namespace Bestiary.Model
     [DataContract]
     class Swipp : IFamiliarSource
     {
-        public Swipp(RecipeItem item1, RecipeItem item2)
-        {
-            Recipe[0] = item1;
-            Recipe[1] = item2;
-        }
-        [DataMember]
-        public RecipeItem[] Recipe { get; set; }
     }
 
     [DataContract]
@@ -236,20 +227,5 @@ namespace Bestiary.Model
         [DataMember]
         public string[] EventNames { get; set; }
     }
-
-    [DataContract]
-    class RecipeItem
-    {
-        public RecipeItem(string name, int count)
-        {
-            Name = name;
-            Count = count;
-        }
-        [DataMember]
-        public string Name { get; set; }
-        [DataMember]
-        public int Count { get; set; }
-    }
-
 }
 

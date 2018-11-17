@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:Bestiary.Model"
         mc:Ignorable="d"
         x:Name="TopLevelWindow"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="800"
+        WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <Style TargetType="Label">
             <Setter Property="VerticalAlignment" Value="Center"/>
@@ -19,7 +20,6 @@
         </Style>
         <Style TargetType="CheckBox">
             <Setter Property="VerticalAlignment" Value="Center"/>
-            <Setter Property="HorizontalAlignment" Value="Center"/>
         </Style>
         <Style TargetType="ComboBox">
             <Setter Property="VerticalAlignment" Value="Center"/>
@@ -41,7 +41,10 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Menu Grid.Row="0" Height="20">
-            <MenuItem Width="Auto" Header="Options"/>
+            <MenuItem Width="Auto" Header="Options">
+                <MenuItem Width="Auto" Header="Add new Familiar" Command="{Binding OpenAddFamiliarWindow}"/>
+                <MenuItem Width="Auto" Header="Delete Familiar"/>
+            </MenuItem>
             <MenuItem Width="Auto" Header="Views"/>
         </Menu>
         <Grid Grid.Row="1">
@@ -70,7 +73,7 @@
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
                             <CheckBox Grid.Column="0" IsChecked="{Binding ExactChecked}"/>
-                            <Label Grid.Column="1" Content="Exact"/>
+                            <Label Grid.Column="1" HorizontalAlignment ="Left" Content="Exact"/>
                         </Grid>
                         
                     </Grid>
@@ -95,22 +98,22 @@
                         <Label Grid.Column="0" Grid.Row="2" Content="Location"/>
                         <Label Grid.Column="0" Grid.Row="3"  Content="Availability"/>
                         <Label Grid.Column="0" Grid.Row="4" HorizontalContentAlignment="Center" Content="Source"/>
-                        
-                        <ComboBox Grid.Column="1" Grid.Row="0" ItemsSource="{Binding AvailableOwnedStatus}" SelectedItem="{Binding SelectedOwnedStatus}" x:Name="OwnedStatus"/>
-                        <ComboBox Grid.Column="1" Grid.Row="1" ItemsSource="{Binding AvailableBondingLevels}" SelectedItem="{Binding SelectedBondingLevel}"/>
-                        <ComboBox Grid.Column="1" Grid.Row="2" ItemsSource="{Binding AvailableLocationTypes}" SelectedItem="{Binding SelectedLocationType}"/>
-                        <ComboBox Grid.Column="1" Grid.Row="3" ItemsSource="{Binding AvailableAvailabilities}" SelectedItem="{Binding SelectedAvailability}"/>
-                        <ComboBox Grid.Column="1" Grid.Row="4" ItemsSource="{Binding AvailableSources}" SelectedItem="{Binding SelectedSource}"/>
-                        
-                        <Button Grid.Column="2" Grid.Row="0" Content="Clear" Command="{Binding ClearOption}" CommandParameter="{Binding SelectedOwnedStatus}"/>
-                        <Button Grid.Column="2" Grid.Row="1" Content="Clear" Command="{Binding ClearOption}" CommandParameter="{Binding SelectedBondingLevel}"/>
-                        <Button Grid.Column="2" Grid.Row="2" Content="Clear" Command="{Binding ClearOption}" CommandParameter="{Binding SelectedLocationType}"/>
-                        <Button Grid.Column="2" Grid.Row="3" Content="Clear" Command="{Binding ClearOption}" CommandParameter="{Binding SelectedAvailability}"/>
-                        <Button Grid.Column="2" Grid.Row="4" Content="Clear" Command="{Binding ClearOption}" CommandParameter="{Binding SelectedSource}"/>
+
+                        <ComboBox Grid.Column="1" Grid.Row="0" ItemsSource="{Binding FamiliarParameters.AvailableOwnedStatus}" SelectedItem="{Binding FamiliarParameters.SelectedOwnedStatus}" x:Name="OwnedStatus"/>
+                        <ComboBox Grid.Column="1" Grid.Row="1" ItemsSource="{Binding FamiliarParameters.AvailableBondingLevels}" SelectedItem="{Binding FamiliarParameters.SelectedBondingLevel}"/>
+                        <ComboBox Grid.Column="1" Grid.Row="2" ItemsSource="{Binding FamiliarParameters.AvailableLocationTypes}" SelectedItem="{Binding FamiliarParameters.SelectedLocationType}"/>
+                        <ComboBox Grid.Column="1" Grid.Row="3" ItemsSource="{Binding FamiliarParameters.AvailableAvailabilities}" SelectedItem="{Binding FamiliarParameters.SelectedAvailability}"/>
+                        <ComboBox Grid.Column="1" Grid.Row="4" ItemsSource="{Binding FamiliarParameters.AvailableSources}" SelectedItem="{Binding FamiliarParameters.SelectedSource}"/>
+
+                        <Button Grid.Column="2" Grid.Row="0" Content="Clear" Command="{Binding ClearOption}" CommandParameter="{Binding FamiliarParameters.SelectedOwnedStatus}"/>
+                        <Button Grid.Column="2" Grid.Row="1" Content="Clear" Command="{Binding ClearOption}" CommandParameter="{Binding FamiliarParameters.SelectedBondingLevel}"/>
+                        <Button Grid.Column="2" Grid.Row="2" Content="Clear" Command="{Binding ClearOption}" CommandParameter="{Binding FamiliarParameters.SelectedLocationType}"/>
+                        <Button Grid.Column="2" Grid.Row="3" Content="Clear" Command="{Binding ClearOption}" CommandParameter="{Binding FamiliarParameters.SelectedAvailability}"/>
+                        <Button Grid.Column="2" Grid.Row="4" Content="Clear" Command="{Binding ClearOption}" CommandParameter="{Binding FamiliarParameters.SelectedSource}"/>
                     </Grid>
                 </GroupBox>
                 <GroupBox Grid.Row="2" Header="Subfilters" Margin="5">
-                    <ItemsControl ItemsSource="{Binding SubFilterList}">
+                    <ItemsControl ItemsSource="{Binding FamiliarParameters.SubFilterList}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <Grid>
@@ -163,7 +166,7 @@
                             <DataGridTemplateColumn Header="Location" Width="Auto" IsReadOnly="False">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
-                                        <ComboBox  ItemsSource="{Binding AvailableLocationTypes}" SelectedItem="{Binding Info.Location}" IsSynchronizedWithCurrentItem="True"/>
+                                        <ComboBox  ItemsSource="{Binding FamiliarParameters.AvailableLocationTypes}" SelectedItem="{Binding Info.Location}" IsSynchronizedWithCurrentItem="True"/>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
