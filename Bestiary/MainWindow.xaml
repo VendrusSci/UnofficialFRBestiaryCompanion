@@ -166,7 +166,7 @@
                             <DataGridTemplateColumn Header="Location" Width="Auto" IsReadOnly="False">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
-                                        <ComboBox  ItemsSource="{Binding FamiliarParameters.AvailableLocationTypes}" SelectedItem="{Binding Info.Location}" IsSynchronizedWithCurrentItem="True"/>
+                                        <ComboBox  ItemsSource="{Binding AvailableLocationTypes}" SelectedItem="{Binding Info.Location}" IsSynchronizedWithCurrentItem="True"/>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>

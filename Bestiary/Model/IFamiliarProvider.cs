@@ -9,10 +9,47 @@ namespace Bestiary.Model
 {
     class FamiliarInfo : INotifyPropertyChanged
     {
-        public Familiar Familiar { get; set; }
+        private ICRUD<Familiar> KnownFamiliar;
+        private ICRUD<OwnedFamiliar> OwnedFamiliar;
+
+        public Familiar Familiar
+        {
+            get
+            {
+                return KnownFamiliar.Fetch();
+            }
+            private set{}
+        }
         public OwnershipStatus Owned { get; set; }
-        public BondingLevels? BondLevel { get; set; }
-        public LocationTypes? Location { get; set; }
+        public BondingLevels? BondLevel
+        {
+            get
+            {
+                return OwnedFamiliar.Fetch()?.BondingLevel;
+            }
+            set
+            {
+                OwnedFamiliar.Fetch().BondingLevel = value.Value;
+            }
+        }
+        public LocationTypes? Location
+        {
+            get
+            {
+                return OwnedFamiliar.Fetch()?.Location;
+            }
+            set
+            {
+                OwnedFamiliar.Fetch().Location = value.Value;
+            }
+        }
+
+        public FamiliarInfo(ICRUD<Familiar> familiar, ICRUD<OwnedFamiliar> ownedFamiliar)
+        {
+            KnownFamiliar = familiar;
+            OwnedFamiliar = ownedFamiliar;
+            Owned = ownedFamiliar != null ? OwnershipStatus.Owned : OwnershipStatus.NotOwned;
+        }
 
         public event PropertyChangedEventHandler PropertyChanged;
     }

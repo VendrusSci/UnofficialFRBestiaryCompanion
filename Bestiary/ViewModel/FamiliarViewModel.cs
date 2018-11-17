@@ -21,6 +21,8 @@ namespace Bestiary.ViewModel
     {
         public FamiliarInfo Info { get; set; }
         public LocationTypes[] AvailableLocationTypes { get; private set; }
+
+        private IModel m_Model;
         private BitmapImage m_Icon = null;
         public BitmapImage Icon
         {
@@ -50,10 +52,11 @@ namespace Bestiary.ViewModel
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public FamiliarViewModel(FamiliarInfo info, LocationTypes[] availableLocationTypes)
+        public FamiliarViewModel(IModel model, FamiliarInfo info, LocationTypes[] availableLocationTypes)
         {
             Info = info;
             AvailableLocationTypes = availableLocationTypes;
+            m_Model = model;
         }
 
         public ICommand SetOwned
@@ -65,9 +68,12 @@ namespace Bestiary.ViewModel
                     m_SetOwned = new LambdaCommand(
                         onExecute: (p) =>
                         {
-                            Info.Owned = OwnershipStatus.Owned;
-                            Info.Location = LocationTypes.InHoard;
-                            Info.BondLevel = BondingLevels.Wary;
+                            var ownedFamiliar = new OwnedFamiliar(Info.Familiar.Id, BondingLevels.Wary, LocationTypes.InHoard);
+                            m_Model.AddOwnedFamiliar(ownedFamiliar);
+                            var ownedFamiliarCRUD = m_Model.LookupOwnedFamiliar(Info.Familiar.Id);
+                            Info.BondLevel = ownedFamiliarCRUD?.Fetch()?.BondingLevel;
+                            Info.Location = ownedFamiliarCRUD?.Fetch()?.Location;
+                            Info.Owned = ownedFamiliarCRUD != null ? OwnershipStatus.Owned : OwnershipStatus.NotOwned;
                         },
                         onCanExecute: (p) =>
                         {
@@ -88,11 +94,13 @@ namespace Bestiary.ViewModel
                     m_IncrementBondingLevel = new LambdaCommand(
                         onExecute: (p) =>
                         {
-                            Info.BondLevel++;
+                            var crud = m_Model.LookupOwnedFamiliar(Info.Familiar.Id);
+                            crud.Update(f => f.BondingLevel++);
+                            Info.BondLevel = crud.Fetch()?.BondingLevel;
                         },
                         onCanExecute: (p) =>
                         {
-                        return Info.BondLevel < BondingLevels.Awakened;
+                            return Info.BondLevel < BondingLevels.Awakened;
                         }
                     );
                 }

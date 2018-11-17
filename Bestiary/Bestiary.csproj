@@ -91,7 +91,6 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Model\FakeFamiliarFetcher.cs" />
     <Compile Include="Model\Familiar.cs" />
     <Compile Include="Model\IFamiliarProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">

@@ -46,17 +46,15 @@ namespace Bestiary.ViewModel
                     m_FetchFamiliars = new LambdaCommand(
                         onExecute: (p) =>
                         {
-                            var familiars = Model.Familiars
-                                .Select(id => Model.LookupFamiliar(id).Fetch())
+                            var familiars = m_Model.Familiars
+                                .Select(id => m_Model.LookupFamiliar(id).Fetch())
                                 .Select(familiar =>
                                 {
-                                    var owned = Model.LookupOwnedFamiliar(familiar.Id);
-                                    return new FamiliarInfo
-                                    {
-                                        Familiar = familiar,
-                                        BondLevel = owned?.Fetch()?.BondingLevel,
-                                        Location = owned?.Fetch()?.Location,
-                                    };
+                                    var owned = m_Model.LookupOwnedFamiliar(familiar.Id);
+                                    return new FamiliarInfo(
+                                        m_Model.LookupFamiliar(familiar.Id),
+                                        owned
+                                    );
                                 });
                             var tempFamiliars = ApplyFilters(familiars);
                             foreach (var subFilter in FamiliarParameters.SubFilterList)
@@ -66,7 +64,7 @@ namespace Bestiary.ViewModel
                             tempFamiliars = ApplySearch(tempFamiliars);
                             tempFamiliars = ApplySort(tempFamiliars);
                             FilteredFamiliars = tempFamiliars
-                                .Select(f => new FamiliarViewModel(f, FamiliarParameters.AvailableLocationTypes))
+                                .Select(f => new FamiliarViewModel(m_Model, f, FamiliarParameters.AvailableLocationTypes))
                                 .ToArray();
                         }
                     );
