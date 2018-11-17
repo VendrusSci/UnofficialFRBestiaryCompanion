@@ -41,35 +41,35 @@ namespace Bestiary.Model
                     case Sources.Event:
                         SubFilterList = new List<IAmSubFilter>
                         {
-                            new SubFilter<string, SiteEvent>("Events", AvailableSiteEvents, SelectedSiteEvent, e => e.EventName),
-                            new SubFilter<CycleYear, SiteEvent>("Year", AvailableCycleYears, SelectedCycleYear, e => e.Year),
+                            new SubFilter<string, SiteEvent>("Events", AvailableSiteEvents, SelectedSiteEvent, e => e.EventName, onSet: n => SelectedSiteEvent = n),
+                            new SubFilter<CycleYear, SiteEvent>("Year", AvailableCycleYears, SelectedCycleYear, e => e.Year, onSet: y => SelectedCycleYear = y),
                         };
                         break;
                     case Sources.Festival:
                         SubFilterList = new List<IAmSubFilter>
                         {
-                            new EnumSubFilter<Flights, Festival>("Flights", AvailableFlights, SelectedFlight, f => f.Flight),
-                            new SubFilter<CycleYear, SiteEvent>("Year", AvailableCycleYears, SelectedCycleYear, f => f.Year)
+                            new EnumSubFilter<Flights, Festival>("Flights", AvailableFlights, SelectedFlight, f => f.Flight, onSet: e => SelectedFlight = e),
+                            new SubFilter<CycleYear, SiteEvent>("Year", AvailableCycleYears, SelectedCycleYear, f => f.Year, onSet: y => SelectedCycleYear = y)
                         };
                         break;
                     case Sources.Gathering:
                         SubFilterList = new List<IAmSubFilter>
                         {
-                            new EnumSubFilter<GatherTypes, Gathering>("Gather Type", AvailableGatherTypes, SelectedGatherType, g => g.GatherType),
-                            new EnumSubFilter<Flights, Gathering>("Flight", AvailableFlights, SelectedFlight, g => g.Flight),
-                            new EnumSubFilter<int, Gathering>("Level", AvailableLevels, SelectedLevel, g => g.MinLevel, (a, b) => b >= a),
+                            new EnumSubFilter<GatherTypes, Gathering>("Gather Type", AvailableGatherTypes, SelectedGatherType, g => g.GatherType, onSet: t => SelectedGatherType = t),
+                            new EnumSubFilter<Flights, Gathering>("Flight", AvailableFlights, SelectedFlight, g => g.Flight, onSet: e => SelectedFlight = e),
+                            new EnumSubFilter<int, Gathering>("Level", AvailableLevels, SelectedLevel, g => g.MinLevel, (a, b) => b >= a, onSet: l => SelectedLevel = l),
                         };
                         break;
                     case Sources.Baldwin:
                         SubFilterList = new List<IAmSubFilter>
                         {
-                            new EnumSubFilter<int, Baldwin>("Level", AvailableLevels, SelectedLevel, b => b.MinLevel, (a, b) => b >=a),
+                            new EnumSubFilter<int, Baldwin>("Level", AvailableLevels, SelectedLevel, b => b.MinLevel, (a, b) => b >=a, onSet: l => SelectedLevel = l),
                         };
                         break;
                     case Sources.Marketplace:
                         SubFilterList = new List<IAmSubFilter>
                         {
-                            new EnumSubFilter<MarketPlaceTypes, Marketplace>("Currency", AvailableCurrencies, SelectedCurrency, m => m.Type),
+                            new EnumSubFilter<MarketPlaceTypes, Marketplace>("Currency", AvailableCurrencies, SelectedCurrency, m => m.Type, onSet: c => SelectedCurrency = c),
                         };
                         break;
                     default:
