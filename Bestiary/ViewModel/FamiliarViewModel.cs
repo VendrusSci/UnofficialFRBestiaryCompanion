@@ -70,10 +70,8 @@ namespace Bestiary.ViewModel
                         {
                             var ownedFamiliar = new OwnedFamiliar(Info.Familiar.Id, BondingLevels.Wary, LocationTypes.InHoard);
                             m_Model.AddOwnedFamiliar(ownedFamiliar);
-                            var ownedFamiliarCRUD = m_Model.LookupOwnedFamiliar(Info.Familiar.Id);
-                            Info.BondLevel = ownedFamiliarCRUD?.Fetch()?.BondingLevel;
-                            Info.Location = ownedFamiliarCRUD?.Fetch()?.Location;
-                            Info.Owned = ownedFamiliarCRUD != null ? OwnershipStatus.Owned : OwnershipStatus.NotOwned;
+                            Info.OwnedFamiliar = m_Model.LookupOwnedFamiliar(Info.Familiar.Id);
+                            Info.Owned = Info.OwnedFamiliar != null ? OwnershipStatus.Owned : OwnershipStatus.NotOwned;
                         },
                         onCanExecute: (p) =>
                         {
@@ -94,9 +92,7 @@ namespace Bestiary.ViewModel
                     m_IncrementBondingLevel = new LambdaCommand(
                         onExecute: (p) =>
                         {
-                            var crud = m_Model.LookupOwnedFamiliar(Info.Familiar.Id);
-                            crud.Update(f => f.BondingLevel++);
-                            Info.BondLevel = crud.Fetch()?.BondingLevel;
+                            Info.BondLevel++;
                         },
                         onCanExecute: (p) =>
                         {

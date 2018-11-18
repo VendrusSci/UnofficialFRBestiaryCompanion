@@ -12,25 +12,19 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace Bestiary
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for Window1.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class FamiliarDeleteWindow : Window
     {
-        public MainWindow()
+        public FamiliarDeleteWindow(IModel model)
         {
             InitializeComponent();
-#if DEBUG
-            var resourcePath = "../../Resources/Data.xml";
-#else
-            var resourcePath = "Data.xml";
-#endif
-            DataContext = new MainViewModel(this, new XmlModelStorage(resourcePath));
+            DataContext = new FamiliarDeleteViewModel(model);
         }
     }
 }

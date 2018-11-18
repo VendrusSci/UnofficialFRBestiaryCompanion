@@ -43,7 +43,7 @@
         <Menu Grid.Row="0" Height="20">
             <MenuItem Width="Auto" Header="Options">
                 <MenuItem Width="Auto" Header="Add new Familiar" Command="{Binding OpenAddFamiliarWindow}"/>
-                <MenuItem Width="Auto" Header="Delete Familiar"/>
+                <MenuItem Width="Auto" Header="Delete Familiar" Command="{Binding OpenDeleteFamiliarWindow}"/>
             </MenuItem>
             <MenuItem Width="Auto" Header="Views"/>
         </Menu>
@@ -113,20 +113,26 @@
                     </Grid>
                 </GroupBox>
                 <GroupBox Grid.Row="2" Header="Subfilters" Margin="5">
-                    <ItemsControl ItemsSource="{Binding FamiliarParameters.SubFilterList}">
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition SharedSizeGroup="A"/>
-                                        <ColumnDefinition Width="*"/>
-                                    </Grid.ColumnDefinitions>
-                                    <Label Grid.Column="0" Content="{Binding Name}"/>
-                                    <ComboBox Grid.Column="1" Margin="5" ItemsSource="{Binding AvailableOptions}" SelectedItem="{Binding SelectedOption}"/>
-                                </Grid>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <ItemsControl Grid.Row="0" ItemsSource="{Binding FamiliarParameters.SubFilterList}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition SharedSizeGroup="A"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Label Grid.Column="0" Content="{Binding Name}"/>
+                                        <ComboBox Grid.Column="1" Margin="5" ItemsSource="{Binding AvailableOptions}" SelectedItem="{Binding SelectedOption}"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </Grid>
                 </GroupBox>
                 <Button Grid.Row="4" Content="Go" Margin="5" Command="{Binding FetchFamiliars}"/>
             </Grid>
@@ -143,7 +149,7 @@
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
                         <Label Grid.Column="0" Width="Auto" HorizontalContentAlignment="Center" Content="Sort by:"/>
-                        <ComboBox Grid.Column="1" Width="Auto" Margin="5" ItemsSource="{Binding AvailableSortTypes}" SelectedItem="{Binding SelectedSortType}"/>
+                        <ComboBox Grid.Column="1" Width="Auto" Margin="5" ItemsSource="{Binding AvailableSortTypes}" SelectedItem="{Binding SelectedSortType, Mode=TwoWay}" IsSynchronizedWithCurrentItem="True"/>
                         <Button Grid.Column="2" Margin="5" Content="Clear" Command="{Binding ClearOption}" CommandParameter="{Binding SelectedSortType}"/>
                     </Grid>
                     <DataGrid Grid.Row ="1" Width="Auto" Height="Auto" AutoGenerateColumns="False" GridLinesVisibility="None" ItemsSource="{Binding FilteredFamiliars}">
@@ -162,11 +168,11 @@
                             <DataGridTextColumn Header="Name" Width="Auto" IsReadOnly="True" Binding="{Binding Info.Familiar.Name}" TextBlock.TextAlignment="Center"/>
                             <DataGridTextColumn Header="Ownership" Width="Auto" IsReadOnly="True" Binding="{Binding Info.Owned}" TextBlock.TextAlignment="Center"/>
                             <DataGridTextColumn Header="Bonding Level" Width="Auto" IsReadOnly="True" Binding="{Binding Info.BondLevel}"/>
-                            <DataGridTextColumn Width="*" IsReadOnly="True"/>
+                            <DataGridTextColumn Width="10" IsReadOnly="True"/>
                             <DataGridTemplateColumn Header="Location" Width="Auto" IsReadOnly="False">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
-                                        <ComboBox  ItemsSource="{Binding AvailableLocationTypes}" SelectedItem="{Binding Info.Location}" IsSynchronizedWithCurrentItem="True"/>
+                                        <ComboBox  ItemsSource="{Binding AvailableLocationTypes}" SelectedItem="{Binding Info.Location, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsSynchronizedWithCurrentItem="True"/>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>

@@ -68,10 +68,14 @@
     <Compile Include="Model\SubFilter.cs" />
     <Compile Include="Model\XmlModelStorage.cs" />
     <Compile Include="ViewModel\FamiliarAddViewModel.cs" />
+    <Compile Include="ViewModel\FamiliarDeleteViewModel.cs" />
     <Compile Include="ViewModel\FamiliarViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="FamiliarAddWindow.xaml.cs">
       <DependentUpon>FamiliarAddWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="FamiliarDeleteWindow.xaml.cs">
+      <DependentUpon>FamiliarDeleteWindow.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -86,6 +90,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="FamiliarAddWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="FamiliarDeleteWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

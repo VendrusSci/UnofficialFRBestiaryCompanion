@@ -106,6 +106,15 @@ namespace Bestiary.ViewModel
                                 default:
                                     break;
                             }
+                            FamiliarParameters.SelectedCurrency = null;
+                            FamiliarParameters.SelectedCycleYear = null;
+                            FamiliarParameters.SelectedEnemyType = null;
+                            FamiliarParameters.SelectedFlight = null;
+                            FamiliarParameters.SelectedGatherType = null;
+                            FamiliarParameters.SelectedLevel = null;
+                            FamiliarParameters.SelectedMarketPlaceType = null;
+                            FamiliarParameters.SelectedSiteEvent = null;
+                            FamiliarParameters.SelectedVenueName = null;
                         }
                     );
                 }
@@ -158,6 +167,26 @@ namespace Bestiary.ViewModel
                     );
                 }
                 return m_openAddFamiliarWindow;                
+            }
+        }
+
+        private LambdaCommand m_openDeleteFamiliarWindow;
+        public ICommand OpenDeleteFamiliarWindow
+        {
+            get
+            {
+                if (m_openDeleteFamiliarWindow == null)
+                {
+                    m_openDeleteFamiliarWindow = new LambdaCommand(
+                        onExecute: (p) =>
+                        {
+                            FamiliarDeleteWindow familiarDeleteWindow = new FamiliarDeleteWindow(m_Model);
+                            familiarDeleteWindow.Owner = Window;
+                            familiarDeleteWindow.ShowDialog();
+                        }
+                    );
+                }
+                return m_openDeleteFamiliarWindow;
             }
         }
 

@@ -1,0 +1,22 @@
+﻿<Window x:Class="Bestiary.FamiliarDeleteWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Bestiary"
+        mc:Ignorable="d"
+        Title="Delete Familiar" Height="150" Width="300" d:DesignHeight="150"
+        WindowStartupLocation="CenterOwner">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <TextBox Grid.Row="0" HorizontalContentAlignment="Center" Margin="2" Text="{Binding Id}"/>
+        <TextBox Grid.Row="1" HorizontalContentAlignment="Center" Margin="2"  Text="{Binding Name}"/>
+        <Button Grid.Row="2"  Margin="5" Content="Load name from ID" Command="{Binding LoadName}"/>
+        <Button Grid.Row="3" Margin="5" Content="Delete" Command="{Binding DeleteFamiliar}"/>
+    </Grid>
+</Window>

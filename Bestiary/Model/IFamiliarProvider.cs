@@ -10,7 +10,7 @@ namespace Bestiary.Model
     class FamiliarInfo : INotifyPropertyChanged
     {
         private ICRUD<Familiar> KnownFamiliar;
-        private ICRUD<OwnedFamiliar> OwnedFamiliar;
+        public ICRUD<OwnedFamiliar> OwnedFamiliar;
 
         public Familiar Familiar
         {
@@ -25,22 +25,22 @@ namespace Bestiary.Model
         {
             get
             {
-                return OwnedFamiliar.Fetch()?.BondingLevel;
+                return OwnedFamiliar?.Fetch()?.BondingLevel;
             }
             set
             {
-                OwnedFamiliar.Fetch().BondingLevel = value.Value;
+                OwnedFamiliar.Update(f => f.BondingLevel = value.Value);
             }
         }
         public LocationTypes? Location
         {
             get
             {
-                return OwnedFamiliar.Fetch()?.Location;
+                return OwnedFamiliar?.Fetch()?.Location;
             }
             set
             {
-                OwnedFamiliar.Fetch().Location = value.Value;
+                OwnedFamiliar.Update(f=> f.Location = value.Value);
             }
         }
 
