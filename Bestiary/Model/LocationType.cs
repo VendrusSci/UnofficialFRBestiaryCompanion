@@ -154,14 +154,14 @@ namespace Bestiary.Model
     [DataContract]
     class Gathering : IFamiliarSource
     {
-        public Gathering(Flights flight, GatherTypes gatherType, int minLevel)
+        public Gathering(List<Flights> flights, GatherTypes gatherType, int minLevel)
         {
-            Flight = flight;
+            Flights = flights;
             GatherType = gatherType;
             MinLevel = minLevel;
         }
         [DataMember]
-        public Flights Flight { get; private set; }
+        public List<Flights> Flights { get; private set; }
         [DataMember]
         public GatherTypes GatherType { get; private set; }
         [DataMember]
