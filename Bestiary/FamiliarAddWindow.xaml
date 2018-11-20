@@ -4,6 +4,9 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Bestiary"
+        xmlns:local_model="clr-namespace:Bestiary.Model"
+        xmlns:local_vm="clr-namespace:Bestiary.ViewModel"
+        xmlns:sys="clr-namespace:System.Collections;assembly=mscorlib"
         mc:Ignorable="d"
         Title="Add a Familiar" Height="500" Width="360"
         WindowStartupLocation="CenterOwner">
@@ -72,19 +75,22 @@
             </Grid>
             <Grid Grid.Row="2">
                 <GroupBox Grid.Row="2" Header="Source Subtypes" Margin="5">
-                    <ItemsControl ItemsSource="{Binding FamiliarParameters.SubFilterList}">
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
+                    <ItemsControl ItemsSource="{Binding FamiliarParameters.ParameterSelectorList}">
+                        <ItemsControl.Resources>
+                            <DataTemplate DataType="{x:Type local_model:FilterWrapper}">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition SharedSizeGroup="A"/>
                                         <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
-                                    <Label Grid.Column="0" Content="{Binding Name}"/>
-                                    <ComboBox Grid.Column="1" Margin="5" ItemsSource="{Binding AvailableOptions}" SelectedItem="{Binding SelectedOption}"/>
+                                    <Label Grid.Column="0" Content="{Binding Filter.Name}"/>
+                                    <ComboBox Grid.Column="1" Margin="5" ItemsSource="{Binding Filter.AvailableOptions}" SelectedItem="{Binding Filter.SelectedOption}"/>
                                 </Grid>
                             </DataTemplate>
-                        </ItemsControl.ItemTemplate>
+                            <DataTemplate DataType="{x:Type local_vm:GatherControlViewModel}">
+                                <local:GatherFlightsControl DataContext="{Binding}"/>
+                            </DataTemplate>
+                        </ItemsControl.Resources>
                     </ItemsControl>
                 </GroupBox>
             </Grid>

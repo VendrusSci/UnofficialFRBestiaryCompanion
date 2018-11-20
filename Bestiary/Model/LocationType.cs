@@ -78,7 +78,7 @@ namespace Bestiary.Model
         Normal
     }
 
-    enum OwnershipStatus
+    public enum OwnershipStatus
     {
         Owned,
         NotOwned

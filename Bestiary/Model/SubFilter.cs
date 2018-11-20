@@ -12,7 +12,7 @@ namespace Bestiary.Model
         IEnumerable<FamiliarInfo> Apply(IEnumerable<FamiliarInfo> toFilter);
     }
 
-    class SubFilter<T, SourceType> : IAmSubFilter, INotifyPropertyChanged
+    public class SubFilter<T, SourceType> : IAmSubFilter, INotifyPropertyChanged
         where T : class
         where SourceType : class
     {

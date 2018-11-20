@@ -21,7 +21,7 @@ namespace Bestiary.ViewModel
     class MainViewModel : INotifyPropertyChanged
     {
         private IModel m_Model;
-        public FamiliarParameters FamiliarParameters { get; set; }
+        public FamiliarFilters FamiliarParameters { get; set; }
 
         //Sorting
         public SortTypes[] AvailableSortTypes => FamiliarParameters.ListEnumValues<SortTypes>();
@@ -230,7 +230,7 @@ namespace Bestiary.ViewModel
         {
             Window = window;
             Model = model;
-            FamiliarParameters = new FamiliarParameters();
+            FamiliarParameters = new FamiliarFilters();
         }
     }
 }

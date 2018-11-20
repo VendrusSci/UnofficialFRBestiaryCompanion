@@ -65,7 +65,8 @@
       <DependentUpon>GatherFlightsControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="LambdaCommand.cs" />
-    <Compile Include="Model\FamiliarParameters.cs" />
+    <Compile Include="Model\FamiliarAddParameters.cs" />
+    <Compile Include="Model\FamiliarFilters.cs" />
     <Compile Include="Model\ICRUD.cs" />
     <Compile Include="Model\LocationType.cs" />
     <Compile Include="Model\SubFilter.cs" />

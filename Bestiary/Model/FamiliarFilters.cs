@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Bestiary.Model
 {
-    class FamiliarParameters : INotifyPropertyChanged
+    class FamiliarFilters : INotifyPropertyChanged
     {
         //Filters
         public OwnershipStatus[] AvailableOwnedStatus => ListEnumValues<OwnershipStatus>();
@@ -56,7 +56,7 @@ namespace Bestiary.Model
                         SubFilterList = new List<IAmSubFilter>
                         {
                             new EnumSubFilter<GatherTypes, Gathering>("Gather Type", AvailableGatherTypes, SelectedGatherType, g => g.GatherType, onSet: t => SelectedGatherType = t),
-                            new EnumSubFilter<Flights, Gathering>("Flight", AvailableFlights, SelectedFlight, g => g.Flight, onSet: e => SelectedFlight = e),
+                            new EnumSubFilter<Flights, Gathering>("Flight", AvailableFlights, SelectedFlight, g => g.Flights.FirstOrDefault(f => f == SelectedFlight), onSet: e => SelectedFlight = e),
                             new EnumSubFilter<int, Gathering>("Level", AvailableLevels, SelectedLevel, g => g.MinLevel, (a, b) => b >= a, onSet: l => SelectedLevel = l),
                         };
                         break;
@@ -118,7 +118,7 @@ namespace Bestiary.Model
                 .ToArray();
         }
 
-        public FamiliarParameters()
+        public FamiliarFilters()
         {
             SourceMap = new Dictionary<Sources, Type>
                 {

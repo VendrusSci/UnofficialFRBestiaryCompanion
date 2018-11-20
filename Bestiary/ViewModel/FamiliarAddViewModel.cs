@@ -12,7 +12,8 @@ namespace Bestiary.ViewModel
 {
     class FamiliarAddViewModel : INotifyPropertyChanged
     {
-        public FamiliarParameters FamiliarParameters { set; get; }
+        public FamiliarAddParameters FamiliarParameters { set; get; }
+
         public string Name { get; set; }
         public int? Id { get; set; }
         public string FlavourText { get; set; }
@@ -21,7 +22,7 @@ namespace Bestiary.ViewModel
 
         public FamiliarAddViewModel(IModel model)
         {
-            FamiliarParameters = new FamiliarParameters();
+            FamiliarParameters = new FamiliarAddParameters();
             m_Model = model;
         }
 
@@ -54,7 +55,7 @@ namespace Bestiary.ViewModel
                                     source = new Festival(FamiliarParameters.SelectedFlight.Value, FamiliarParameters.SelectedCycleYear);
                                     break;
                                 case Sources.Gathering:
-                                    source = new Gathering(FamiliarParameters.SelectedFlight.Value, FamiliarParameters.SelectedGatherType.Value, FamiliarParameters.SelectedLevel.Value);
+                                    source = new Gathering(FamiliarParameters.GatherControl.GetSelectedFlights(), FamiliarParameters.SelectedGatherType.Value, FamiliarParameters.SelectedLevel.Value);
                                     break;
                                 case Sources.Joxar:
                                     source = new JoxarSpareInventory();

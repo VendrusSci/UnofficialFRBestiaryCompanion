@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel;
 
 namespace Bestiary.Model
 {
-    class FamiliarInfo : INotifyPropertyChanged
+    public class FamiliarInfo : INotifyPropertyChanged
     {
         private ICRUD<Familiar> KnownFamiliar;
         public ICRUD<OwnedFamiliar> OwnedFamiliar;
