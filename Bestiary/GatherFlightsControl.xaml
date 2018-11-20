@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:Bestiary"
              mc:Ignorable="d" 
              d:DesignHeight="182.626" d:DesignWidth="299.867">
-    <Grid Margin="0,0,303,162">
+    <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="Auto"/>
