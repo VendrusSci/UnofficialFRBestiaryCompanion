@@ -1,19 +1,7 @@
 ﻿using Bestiary.Model;
 using Bestiary.ViewModel;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Bestiary
 {
@@ -26,11 +14,13 @@ namespace Bestiary
         {
             InitializeComponent();
 #if DEBUG
-            var resourcePath = "../../Resources/Data.xml";
+            var resourcesDirectory = "../../Resources/";
 #else
-            var resourcePath = "Data.xml";
+            var resourcesDirectory = Directory.GetCurrentDirectory();
 #endif
-            DataContext = new MainViewModel(this, new XmlModelStorage(resourcePath));
+            var frDataPath = Path.Combine(resourcesDirectory, "FRData.xml");
+            var userDataPath = Path.Combine(resourcesDirectory, "UserData.xml");
+            DataContext = new MainViewModel(this, new XmlModelStorage(frDataPath, userDataPath));
         }
     }
 }

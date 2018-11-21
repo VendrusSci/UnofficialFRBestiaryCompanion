@@ -42,6 +42,7 @@ namespace Bestiary.Model
         Festival,
         Event,
         Cycling,
+        JoxarBox,
         Retired
     }
 

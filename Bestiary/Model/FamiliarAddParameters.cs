@@ -24,7 +24,7 @@ namespace Bestiary.Model
 
         public List<object> ParameterSelectorList { get; set; } = new List<object>();
 
-        public GatherControlViewModel GatherControl { get; private set; } = new GatherControlViewModel();
+        public GatherControlViewModel gatherControl;
         public Availabilities[] AvailableAvailabilities => ListEnumValues<Availabilities>();
         public Availabilities? SelectedAvailability { get; set; }
         public Sources[] AvailableSources => ListEnumValues<Sources>();
@@ -43,42 +43,42 @@ namespace Bestiary.Model
                     case Sources.Coliseum:
                         ParameterSelectorList = new List<object>
                         {
-                            new FilterWrapper(new SubFilter<string, Coliseum>("Venues", AvailableVenueNames, SelectedVenueName, c => c.VenueName, onSet: v => SelectedVenueName = v)),
-                            new FilterWrapper(new EnumSubFilter<EnemyTypes, Coliseum>("Enemy Type", AvailableEnemyTypes, SelectedEnemyType, c => c.EnemyType, onSet: t => SelectedEnemyType = t)),
+                            new SubFilter<string, Coliseum>("Venues", AvailableVenueNames, SelectedVenueName, c => c.VenueName, onSet: v => SelectedVenueName = v),
+                            new EnumSubFilter<EnemyTypes, Coliseum>("Enemy Type", AvailableEnemyTypes, SelectedEnemyType, c => c.EnemyType, onSet: t => SelectedEnemyType = t),
                         };
                         break;
                     case Sources.Event:
                         ParameterSelectorList = new List<object>
                         {
-                            new FilterWrapper(new SubFilter<string, SiteEvent>("Events", AvailableSiteEvents, SelectedSiteEvent, e => e.EventName, onSet: n => SelectedSiteEvent = n)),
-                            new FilterWrapper(new SubFilter<CycleYear, SiteEvent>("Year", AvailableCycleYears, SelectedCycleYear, e => e.Year, onSet: y => SelectedCycleYear = y)),
+                            new SubFilter<string, SiteEvent>("Events", AvailableSiteEvents, SelectedSiteEvent, e => e.EventName, onSet: n => SelectedSiteEvent = n),
+                            new SubFilter<CycleYear, SiteEvent>("Year", AvailableCycleYears, SelectedCycleYear, e => e.Year, onSet: y => SelectedCycleYear = y),
                         };
                         break;
                     case Sources.Festival:
                         ParameterSelectorList = new List<object>
                         {
-                            new FilterWrapper(new EnumSubFilter<Flights, Festival>("Flights", AvailableFlights, SelectedFlight, f => f.Flight, onSet: e => SelectedFlight = e)),
-                            new FilterWrapper(new SubFilter<CycleYear, SiteEvent>("Year", AvailableCycleYears, SelectedCycleYear, f => f.Year, onSet: y => SelectedCycleYear = y)),
+                            new EnumSubFilter<Flights, Festival>("Flights", AvailableFlights, SelectedFlight, f => f.Flight, onSet: e => SelectedFlight = e),
+                            new SubFilter<CycleYear, SiteEvent>("Year", AvailableCycleYears, SelectedCycleYear, f => f.Year, onSet: y => SelectedCycleYear = y)
                         };
                         break;
                     case Sources.Gathering:
                         ParameterSelectorList = new List<object>
                         {
-                            new FilterWrapper(new EnumSubFilter<GatherTypes, Gathering>("Gather Type", AvailableGatherTypes, SelectedGatherType, g => g.GatherType, onSet: t => SelectedGatherType = t)),
-                            new FilterWrapper(new EnumSubFilter<int, Gathering>("Level", AvailableLevels, SelectedLevel, g => g.MinLevel, (a, b) => b >= a, onSet: l => SelectedLevel = l)),
-                            GatherControl,
+                            new EnumSubFilter<GatherTypes, Gathering>("Gather Type", AvailableGatherTypes, SelectedGatherType, g => g.GatherType, onSet: t => SelectedGatherType = t),
+                            new EnumSubFilter<int, Gathering>("Level", AvailableLevels, SelectedLevel, g => g.MinLevel, (a, b) => b >= a, onSet: l => SelectedLevel = l),
+                            gatherControl,
                         };
                         break;
                     case Sources.Baldwin:
                         ParameterSelectorList = new List<object>
                         {
-                            new FilterWrapper(new EnumSubFilter<int, Baldwin>("Level", AvailableLevels, SelectedLevel, b => b.MinLevel, (a, b) => b >=a, onSet: l => SelectedLevel = l)),
+                            new EnumSubFilter<int, Baldwin>("Level", AvailableLevels, SelectedLevel, b => b.MinLevel, (a, b) => b >=a, onSet: l => SelectedLevel = l),
                         };
                         break;
                     case Sources.Marketplace:
                         ParameterSelectorList = new List<object>
                         {
-                            new FilterWrapper(new EnumSubFilter<MarketPlaceTypes, Marketplace>("Currency", AvailableCurrencies, SelectedCurrency, m => m.Type, onSet: c => SelectedCurrency = c)),
+                            new EnumSubFilter<MarketPlaceTypes, Marketplace>("Currency", AvailableCurrencies, SelectedCurrency, m => m.Type, onSet: c => SelectedCurrency = c),
                         };
                         break;
                     default:

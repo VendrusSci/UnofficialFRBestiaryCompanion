@@ -7,8 +7,14 @@ using System.Threading.Tasks;
 
 namespace Bestiary.Model
 {
+    public interface IFamiliarData
+    {
+        int Id { get; }
+    }
+
+
     [DataContract]
-    public class Familiar
+    public class Familiar : IFamiliarData
     {
         [DataMember]
         public string Name { get; private set; }
@@ -32,7 +38,7 @@ namespace Bestiary.Model
     }
 
     [DataContract]
-    public class OwnedFamiliar
+    public class OwnedFamiliar : IFamiliarData
     {
         public OwnedFamiliar(int id, BondingLevels bondingLevel, LocationTypes location)
         {

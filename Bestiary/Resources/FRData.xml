@@ -1,0 +1,1045 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<XmlData xmlns:i="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.datacontract.org/2004/07/Bestiary.Model">
+  <Values>
+    <Familiar>
+      <Availability>Always</Availability>
+      <FlavourText>It is recommended to stay as far from these hostile creatures as possible -with the exception of plague dragons, who have a natural immunity to serpenta venom. </FlavourText>
+      <Id>16261</Id>
+      <Name>Acid-Tongue Serpenta</Name>
+      <Source xmlns:d4p1="http://example.com" i:type="d4p1:Baldwin">
+        <MinLevel>13</MinLevel>
+      </Source>
+    </Familiar>
+    <Familiar>
+      <Availability>Always</Availability>
+      <FlavourText>These observers cluster around ancient aquatic ruins. They may change color to blend with their surroundings.</FlavourText>
+      <Id>4350</Id>
+      <Name>Abyss Striker</Name>
+      <Source xmlns:d4p1="http://example.com" i:type="d4p1:Coliseum">
+        <EnemyType>Normal</EnemyType>
+        <VenueName>Kelp Beds</VenueName>
+      </Source>
+    </Familiar>
+    <Familiar>
+      <Availability>Always</Availability>
+      <FlavourText>While they appear non-threatening, dragons take care not to let this spectral creature pass through them.</FlavourText>
+      <Id>16489</Id>
+      <Name>Aer Phantom</Name>
+      <Source xmlns:d4p1="http://example.com" i:type="d4p1:Coliseum">
+        <EnemyType>Normal</EnemyType>
+        <VenueName>Ghostlight Ruins</VenueName>
+      </Source>
+    </Familiar>
+    <Familiar>
+      <Availability>Event</Availability>
+      <FlavourText>A backwards thinking creature.</FlavourText>
+      <Id>15298</Id>
+      <Name>Agol</Name>
+      <Source xmlns:d4p1="http://example.com" i:type="d4p1:Baldwin">
+        <MinLevel>1</MinLevel>
+      </Source>
+    </Familiar>
+    <Familiar>
+      <Availability>Always</Availability>
+      <FlavourText>A slarg must keep its skin moist to stay hydrated and avoid suffocation.</FlavourText>
+      <Id>18439</Id>
+      <Name>Algae-Bottom Slarg</Name>
+      <Source xmlns:d4p1="http://example.com" i:type="d4p1:Baldwin">
+        <MinLevel>15</MinLevel>
+      </Source>
+    </Familiar>
+    <Familiar>
+      <Availability>Always</Availability>
+      <FlavourText>Dwelling in the waters of the Crystal Pools has left the scales of this fish translucent and hard as a gemstone.</FlavourText>
+      <Id>13435</Id>
+      <Name>Almandine Sturgeon</Name>
+      <Source xmlns:d4p1="http://example.com" i:type="d4p1:Coliseum">
+        <EnemyType>Normal</EnemyType>
+        <VenueName>Crystal Pools</VenueName>
+      </Source>
+    </Familiar>
+    <Familiar>
+      <Availability>Always</Availability>
+      <FlavourText>The happiest fox.</FlavourText>
+      <Id>23849</Id>
+      <Name>Alstroemeria Fox</Name>
+      <Source xmlns:d4p1="http://example.com" i:type="d4p1:Coliseum">
+        <EnemyType>Normal</EnemyType>
+        <VenueName>Blooming Grove</VenueName>
+      </Source>
+    </Familiar>
+    <Familiar>
+      <Availability>Always</Availability>
+      <FlavourText>This distinctive moth has deep reds and purples running through its leafy wings. It's difficult to classify as purely flora or fauna.</FlavourText>
+      <Id>376</Id>
+      <Name>Amaranth Moth</Name>
+      <Source xmlns:d4p1="http://example.com" i:type="d4p1:Coliseum">
+        <EnemyType>Normal</EnemyType>
+        <VenueName>Training Fields</VenueName>
+      </Source>
+    </Familiar>
+    <Familiar>
+      <Availability>Always</Availability>
+      <FlavourText>Sometimes dragon eats fish. Sometimes fish eats dragon.</FlavourText>
+      <Id>13434</Id>
+      <Name>Amber Gulper</Name>
+      <Source xmlns:d4p1="http://example.com" i:type="d4p1:Coliseum">
+        <EnemyType>Normal</EnemyType>
+        <VenueName>Crystal Pools</VenueName>
+      </Source>
+    </Familiar>
+    <Familiar>
+      <Availability>Always</Availability>
+      <FlavourText>These avians are always humming. It's incredibly annoying.</FlavourText>
+      <Id>12739</Id>
+      <Name>Amberwing Waveskimmer</Name>
+      <Source xmlns:d4p1="http://example.com" i:type="d4p1:Baldwin">
+        <MinLevel>8</MinLevel>
+      </Source>
+    </Familiar>
+    <Familiar>
+      <Availability>Always</Availability>
+      <FlavourText>Warped by unstable energies, these arcane-infused ursidae lose all sense of reason when angered.</FlavourText>
+      <Id>16249</Id>
+      <Name>Amethyst King</Name>
+      <Source xmlns:d4p1="http://example.com" i:type="d4p1:Marketplace">
+        <Type>Treasure</Type>
+      </Source>
+    </Familiar>
+    <Familiar>
+      <Availability>Always</Availability>
+      <FlavourText>The constant electrical charge that permeates the warm air of the arid savanna acts as an energy boost to this already spry creature. Catching one is extremely difficult.</FlavourText>
+      <Id>28233</Id>
+      <Name>Ampelope</Name>
+      <Source xmlns:d4p1="http://example.com" i:type="d4p1:Coliseum">
+        <EnemyType>Normal</EnemyType>
+        <VenueName>Thunderhead Savanna</VenueName>
+      </Source>
+    </Familiar>
+    <Familiar>
+      <Availability>Always</Availability>
+      <FlavourText>The most crotchety of fungi. As it ages the outer shell becomes crackled and hard as stone.</FlavourText>
+      <Id>356</Id>
+      <Name>Ancient Fungus</Name>
+      <Source xmlns:d4p1="http://example.com" i:type="d4p1:Coliseum">
+        <EnemyType>Normal</EnemyType>
+        <VenueName>Forgotten Cave</VenueName>
+      </Source>
+    </Familiar>
+    <Familiar>
+      <Availability>Event</Availability>
+      <FlavourText>A blessing and a curse, donning this armor will increase one's martial abilities, but also one's taste for battle.</FlavourText>
+      <Id>20827</Id>
+      <Name>Animated Armor</Name>
+      <Source xmlns:d4p1="http://example.com" i:type="d4p1:SiteEvent">
+        <EventName>Night of the Nocturne</EventName>
+        <Year>
+          <YearNumber>4</YearNumber>
+        </Year>
+      </Source>
+    </Familiar>
+    <Familiar>
+      <Availability>Event</Availability>
+      <FlavourText>This peculiar statue wasn't standing there when you last looked, and it certainly wasn't posed in that way either. Don't turn your back. Don't look away.</FlavourText>
+      <Id>15280</Id>
+      <Name>Animated Statue</Name>
+      <Source xmlns:d4p1="http://example.com" i:type="d4p1:SiteEvent">
+        <EventName>Night of the Nocturne</EventName>
+        <Year>
+          <YearNumber>3</YearNumber>
+        </Year>
+      </Source>
+    </Familiar>
+    <Familiar>
+      <Availability>Always</Availability>
+      <FlavourText>Nekomata sleep with their eye open. It's as disconcerting as it sounds.</FlavourText>
+      <Id>19454</Id>
+      <Name>Anomalous Nekomata</Name>
+      <Source xmlns:d4p1="http://example.com" i:type="d4p1:Baldwin">
+        <MinLevel>16</MinLevel>
+      </Source>
+    </Familiar>
+    <Familiar>
+      <Availability>Always</Availability>
+      <FlavourText>Two heads are better than one, except when they're connected to two stomachs. Food fight!</FlavourText>
+      <Id>12194</Id>
+      <Name>Anomalous Skink</Name>
+      <Source xmlns:d4p1="http://example.com" i:type="d4p1:Baldwin">
+        <MinLevel>7</MinLevel>
+      </Source>
+    </Familiar>
+    <Familiar>
+      <Availability>Event</Availability>
+      <FlavourText>Ewwww... gross! Yuck! The upholstery is definitely the wrong color.</FlavourText>
+      <Id>25171</Id>
+      <Name>Antique Chair</Name>
+      <Source xmlns:d4p1="http://example.com" i:type="d4p1:SiteEvent">
+        <EventName>Night of the Nocturne</EventName>
+        <Year>
+          <YearNumber>5</YearNumber>
+        </Year>
+      </Source>
+    </Familiar>
+    <Familiar>
+      <Availability>Always</Availability>
+      <FlavourText>Feasting a diet of crystal-scaled fish has had a dramatic effect on the plumage of this crane.</FlavourText>
+      <Id>13433</Id>
+      <Name>Apatite Fisher</Name>
+      <Source xmlns:d4p1="http://example.com" i:type="d4p1:Coliseum">
+        <EnemyType>Normal</EnemyType>
+        <VenueName>Crystal Pools</VenueName>
+      </Source>
+    </Familiar>
+    <Familiar>
+      <Availability>Retired</Availability>
+      <FlavourText>Entourage of the Arcanist. (Starfall Celebration Holiday Familiar 2013.)</FlavourText>
+      <Id>1779</Id>
+      <Name>Arcane Sprite</Name>
+      <Source xmlns:d4p1="http://example.com" i:type="d4p1:Festival">
+        <Flight>Arcane</Flight>
+        <Year>
+          <YearNumber>1</YearNumber>
+        </Year>
+      </Source>
+    </Familiar>
+    <Familiar>
+      <Availability>Always</Availability>
+      <FlavourText>This Hippalectryon emits a frigid aura.</FlavourText>
+      <Id>13432</Id>
+      <Name>Arctic Hippalectryon</Name>
+      <Source xmlns:d4p1="http://example.com" i:type="d4p1:Coliseum">
+        <EnemyType>Normal</EnemyType>
+        <VenueName>Crystal Pools</VenueName>
+      </Source>
+    </Familiar>
+    <Familiar>
+      <Availability>Always</Availability>
+      <FlavourText>Thousands of years of evolution have granted this bat hardened armor to protect against falling magmatic debris.</FlavourText>
+      <Id>21413</Id>
+      <Name>Armored Duskflapper</Name>
+      <Source xmlns:d4p1="http://example.com" i:type="d4p1:Coliseum">
+        <EnemyType>Normal</EnemyType>
+        <VenueName>Volcanic Vents</VenueName>
+      </Source>
+    </Familiar>
+    <Familiar>
+      <Availability>Always</Availability>
+      <FlavourText>It is arguable whether the armor makes the owl more or less deadly. Without the armor their flight is nearly silent.</FlavourText>
+      <Id>24505</Id>
+      <Name>Armored Greatowl</Name>
+      <Source xmlns:d4p1="http://example.com" i:type="d4p1:Coliseum">
+        <EnemyType>Normal</EnemyType>
+        <VenueName>Arena</VenueName>
+      </Source>
+    </Familiar>
+    <Familiar>
+      <Availability>Always</Availability>
+      <FlavourText>Adapted to filter feed in the scalding depths of Blacksand Annex. (Colored by PythtechGenetics.)</FlavourText>
+      <Id>25412</Id>
+      <Name>Ashen Bicorn Whale</Name>
+      <Source xmlns:d4p1="http://example.com" i:type="d4p1:Swipp" />
+    </Familiar>
+    <Familiar>
+      <Availability>Always</Availability>
+      <FlavourText>This particular variety of chimera only appears in areas of the Starfall Isles where Beastclans are active, leaving some to wonder if the Clans have a hand in their creation.</FlavourText>
+      <Id>24508</Id>
+      <Name>Ashmane Chimera</Name>
+      <Source xmlns:d4p1="http://example.com" i:type="d4p1:Coliseum">
+        <EnemyType>Normal</EnemyType>
+        <VenueName>Arena</VenueName>
+      </Source>
+    </Familiar>
+    <Familiar>
+      <Availability>Always</Availability>
+      <FlavourText>You'd think that, as a serpent, having hooves would be a detriment. You'd be wrong.</FlavourText>
+      <Id>21437</Id>
+      <Name>Ashscale Ophiotaurus</Name>
+      <Source xmlns:d4p1="http://example.com" i:type="d4p1:Coliseum">
+        <EnemyType>Normal</EnemyType>
+        <VenueName>Volcanic Vents</VenueName>
+      </Source>
+    </Familiar>
+    <Familiar>
+      <Availability>Always</Availability>
+      <FlavourText>A gnarly, vicious land spider that is more at home on the cooled lava than you are. There is definitely reason for concern.</FlavourText>
+      <Id>21420</Id>
+      <Name>Ashspine Widow</Name>
+      <Source xmlns:d4p1="http://example.com" i:type="d4p1:Coliseum">
+        <EnemyType>Normal</EnemyType>
+        <VenueName>Volcanic Vents</VenueName>
+      </Source>
+    </Familiar>
+    <Familiar>
+      <Availability>Always</Availability>
+      <FlavourText>Dryads will attack dragons that attempt to cut or harvest any piece of their grove.</FlavourText>
+      <Id>23855</Id>
+      <Name>Aspen Gall Dryad</Name>
+      <Source xmlns:d4p1="http://example.com" i:type="d4p1:Coliseum">
+        <EnemyType>Normal</EnemyType>
+        <VenueName>Blooming Grove</VenueName>
+      </Source>
+    </Familiar>
+    <Familiar>
+      <Availability>Always</Availability>
+      <FlavourText>Keeping an Augite creation in good working order involves semi-regular patching and allowing the creature long stretches of slumber.</FlavourText>
+      <Id>20030</Id>
+      <Name>Augite Protector</Name>
+      <Source xmlns:d4p1="http://example.com" i:type="d4p1:Coliseum">
+        <EnemyType>Normal</EnemyType>
+        <VenueName>Scorched Forest</VenueName>
+      </Source>
+    </Familiar>
+    <Familiar>
+      <Availability>Always</Availability>
+      <FlavourText>The autumn dryad is often seen guiding local fauna to burrows or caves so that they are protected from the approaching colds of winter.</FlavourText>
+      <Id>358</Id>
+      <Name>Autumn Dryad</Name>
+      <Source xmlns:d4p1="http://example.com" i:type="d4p1:Coliseum">
+        <EnemyType>Normal</EnemyType>
+        <VenueName>Woodland Path</VenueName>
+      </Source>
+    </Familiar>
+    <Familiar>
+      <Availability>Always</Availability>
+      <FlavourText>This variety of pangolin is known for a vibrant shift of color, each unique to the individual. (Colored by biskitten.)</FlavourText>
+      <Id>25405</Id>
+      <Name>Aurora Pangolin</Name>
+      <Source xmlns:d4p1="http://example.com" i:type="d4p1:Marketplace">
+        <Type>Treasure</Type>
+      </Source>
+    </Familiar>
+    <Familiar>
+      <Availability>Event</Availability>
+      <FlavourText>This shiny arthropod is a deft swimmer; it is quite a treat to see one swirling and twirling down a creek during the waning sunlight of autumn.</FlavourText>
+      <Id>20823</Id>
+      <Name>Autumn Millifae</Name>
+      <Source xmlns:d4p1="http://example.com" i:type="d4p1:Baldwin">
+        <MinLevel>4</MinLevel>
+      </Source>
+    </Familiar>
+    <Familiar>
+      <Availability>Always</Availability>
+      <FlavourText>These creatures will conceal themselves among sea grasses, adding a touch of autumn color to underwater fields of green.</FlavourText>
+      <Id>14289</Id>
+      <Name>Autumn Sea Dragon</Name>
+      <Source xmlns:d4p1="http://example.com" i:type="d4p1:Swipp" />
+    </Familiar>
+    <Familiar>
+      <Availability>Event</Availability>
+      <FlavourText>Sure, 'collector's item' you might say. Might we suggest an axe that doesn't have teeth and eyeballs?</FlavourText>
+      <Id>20809</Id>
+      <Name>Axe Mimic</Name>
+      <Source xmlns:d4p1="http://example.com" i:type="d4p1:SiteEvent">
+        <EventName>Night of the Nocturne</EventName>
+        <Year>
+          <YearNumber>4</YearNumber>
+        </Year>
+      </Source>
+    </Familiar>
+    <Familiar>
+      <Availability>Always</Availability>
+      <FlavourText>Baku are able to walk both the physical and ethereal plane.</FlavourText>
+      <Id>405</Id>
+      <Name>Baku</Name>
+      <Source xmlns:d4p1="http://example.com" i:type="d4p1:Coliseum">
+        <EnemyType>Normal</EnemyType>
+        <VenueName>Bamboo Falls</VenueName>
+      </Source>
+    </Familiar>
+    <Familiar>
+      <Availability>Event</Availability>
+      <FlavourText>A delightful, enchanted Bogsneak marionette. No strings attached!</FlavourText>
+      <Id>20811</Id>
+      <Name>Ball-Jointed Bogsneak</Name>
+      <Source xmlns:d4p1="http://example.com" i:type="d4p1:SiteEvent">
+        <EventName>Night of the Nocturne</EventName>
+        <Year>
+          <YearNumber>4</YearNumber>
+        </Year>
+      </Source>
+    </Familiar>
+    <Familiar>
+      <Availability>Always</Availability>
+      <FlavourText>Little is known about how the Bamboo Phytocat's physiology evolved, but one thing is for certain: watch the reeds as you walk.. (KS-sponsored by kiohl.)</FlavourText>
+      <Id>1149</Id>
+      <Name>Bamboo Phytocat</Name>
+      <Source xmlns:d4p1="http://example.com" i:type="d4p1:Coliseum">
+        <EnemyType>Normal</EnemyType>
+        <VenueName>Woodland Path</VenueName>
+      </Source>
+    </Familiar>
+    <Familiar>
+      <Availability>Always</Availability>
+      <FlavourText>The banded owlcat moves silently, both in the air and on the ground.</FlavourText>
+      <Id>600</Id>
+      <Name>Banded Owlcat</Name>
+      <Source xmlns:d4p1="http://example.com" i:type="d4p1:Coliseum">
+        <EnemyType>Normal</EnemyType>
+        <VenueName>Scorched Forest</VenueName>
+      </Source>
+    </Familiar>
+    <Familiar>
+      <Availability>Always</Availability>
+      <FlavourText>These animated guardians grow from fallen trees.</FlavourText>
+      <Id>10666</Id>
+      <Name>Barkback Boar</Name>
+      <Source xmlns:d4p1="http://example.com" i:type="d4p1:Coliseum">
+        <EnemyType>Normal</EnemyType>
+        <VenueName>Rainsong Jungle</VenueName>
+      </Source>
+    </Familiar>
+    <Familiar>
+      <Availability>Always</Availability>
+      <FlavourText>Always thrilled to play, this bright canine is the perfect distraction for a lair full of tireless hatchlings. (Colored by Cynderbark.)</FlavourText>
+      <Id>16254</Id>
+      <Name>Barking Jester</Name>
+      <Source xmlns:d4p1="http://example.com" i:type="d4p1:Swipp" />
+    </Familiar>
+    <Familiar>
+      <Availability>Always</Availability>
+      <FlavourText>It's not unheard of for dryads to form alliances with nature dragon clans.</FlavourText>
+      <Id>23856</Id>
+      <Name>Barkskin Watcher</Name>
+      <Source xmlns:d4p1="http://example.com" i:type="d4p1:Coliseum">
+        <EnemyType>Normal</EnemyType>
+        <VenueName>Blooming Grove</VenueName>
+      </Source>
+    </Familiar>
+    <Familiar>
+      <Availability>Always</Availability>
+      <FlavourText>A creature with a natural sense of humor, it's not uncommon to see a few Barred Skira trying to blend into a Rambra herd.</FlavourText>
+      <Id>19575</Id>
+      <Name>Barred Skira</Name>
+      <Source xmlns:d4p1="http://example.com" i:type="d4p1:Gathering">
+        <Flights>
+          <Flights>Fire</Flights>
+          <Flights>Ice</Flights>
+          <Flights>Light</Flights>
+          <Flights>Shadow</Flights>
+          <Flights>Nature</Flights>
+          <Flights>Arcane</Flights>
+        </Flights>
+        <GatherType>Hunting</GatherType>
+        <MinLevel>31</MinLevel>
+      </Source>
+    </Familiar>
+    <Familiar>
+      <Availability>Always</Availability>
+      <FlavourText>This springy lizard uses its powerful legs and the reliable burst of hot air from magma vents to quickly traverse lava floes.</FlavourText>
+      <Id>21428</Id>
+      <Name>Basalt Vent Hop</Name>
+      <Source xmlns:d4p1="http://example.com" i:type="d4p1:Coliseum">
+        <EnemyType>Normal</EnemyType>
+        <VenueName>Volcanic Vents</VenueName>
+      </Source>
+    </Familiar>
+    <Familiar>
+      <Availability>Always</Availability>
+      <FlavourText>A basilisk's gaze can petrify even the hardiest Earth dragons into stone. Staring contests with this familiar are not recommended.</FlavourText>
+      <Id>381</Id>
+      <Name>Basilisk</Name>
+      <Source xmlns:d4p1="http://example.com" i:type="d4p1:Coliseum">
+        <EnemyType>Normal</EnemyType>
+        <VenueName>Woodland Path</VenueName>
+      </Source>
+    </Familiar>
+    <Familiar>
+      <Availability>Always</Availability>
+      <FlavourText>Never surrender. Never shave. (Colored by Akitaxzero.)</FlavourText>
+      <Id>16244</Id>
+      <Name>Bearded Yeti</Name>
+      <Source xmlns:d4p1="http://example.com" i:type="d4p1:Marketplace">
+        <Type>Treasure</Type>
+      </Source>
+    </Familiar>
+    <Familiar>
+      <Availability>Always</Availability>
+      <FlavourText>This species of fish is known for its ability to rapidly change color. Rather than blend in, they seek to intimidate and infatuate their target.</FlavourText>
+      <Id>15593</Id>
+      <Name>Bellus Glamourtail</Name>
+      <Source xmlns:d4p1="http://example.com" i:type="d4p1:Swipp" />
+    </Familiar>
+    <Familiar>
+      <Availability>Always</Availability>
+      <FlavourText>A mix of many rare animals. It can interbreed successfully with species that compose its makeup.</FlavourText>
+      <Id>24507</Id>
+      <Name>Bengal Chimera</Name>
+      <Source xmlns:d4p1="http://example.com" i:type="d4p1:Coliseum">
+        <EnemyType>Normal</EnemyType>
+        <VenueName>Arena</VenueName>
+      </Source>
+    </Familiar>
+    <Familiar>
+      <Availability>Always</Availability>
+      <FlavourText>This dwarf unicorn has lost its magic. Its once shining coat is dull and blackened. The horns of black unicorns are worthless.</FlavourText>
+      <Id>640</Id>
+      <Name>Black Dwarf Unicorn</Name>
+      <Source xmlns:d4p1="http://example.com" i:type="d4p1:Marketplace">
+        <Type>Gem</Type>
+      </Source>
+    </Familiar>
+    <Familiar>
+      <Availability>Always</Availability>
+      <FlavourText>Forged to infiltrate and dismantle coppercoil creepers. These assassins will perform their work only as long as the coal in their internal furnace burns.</FlavourText>
+      <Id>7591</Id>
+      <Name>Black Iron Creeper</Name>
+      <Source xmlns:d4p1="http://example.com" i:type="d4p1:Coliseum">
+        <EnemyType>Normal</EnemyType>
+        <VenueName>Golem Workshop</VenueName>
+      </Source>
+    </Familiar>
+    <Familiar>
+      <Availability>Always</Availability>
+      <FlavourText>A number of Winter Wolves never lose their summer colors. These individuals are uncommon and generally smaller than their snowy-coated brethren.</FlavourText>
+      <Id>987</Id>
+      <Name>Black Wolf</Name>
+      <Source xmlns:d4p1="http://example.com" i:type="d4p1:Coliseum">
+        <EnemyType>Normal</EnemyType>
+        <VenueName>Boreal Wood</VenueName>
+      </Source>
+    </Familiar>
+    <Familiar>
+      <Availability>Always</Availability>
+      <FlavourText>Blackwings are one of the largest species of hummingbird. When in flight, their wings make a distinctive buzzing sound.</FlavourText>
+      <Id>670</Id>
+      <Name>Black-wing Hummingbird</Name>
+      <Source xmlns:d4p1="http://example.com" i:type="d4p1:Swipp" />
+    </Familiar>
+    <Familiar>
+      <Availability>Always</Availability>
+      <FlavourText>Known for migrating to the warm waters off the coast of Blacksand Annex, Blackline Bicorns compete with the native Ashen Bicorn whales for food. (Colored by Slashfiend.)</FlavourText>
+      <Id>25407</Id>
+      <Name>Blackline Bicorn Whale</Name>
+      <Source xmlns:d4p1="http://example.com" i:type="d4p1:Marketplace">
+        <Type>Treasure</Type>
+      </Source>
+    </Familiar>
+    <Familiar>
+      <Availability>Always</Availability>
+      <FlavourText>Raptorik warriors make up for their lack of size with an abundance of ferocity.</FlavourText>
+      <Id>6334</Id>
+      <Name>Blacktalon Striker</Name>
+      <Source xmlns:d4p1="http://example.com" i:type="d4p1:Coliseum">
+        <EnemyType>Normal</EnemyType>
+        <VenueName>Bamboo Falls</VenueName>
+      </Source>
+    </Familiar>
+    <Familiar>
+      <Availability>Always</Availability>
+      <FlavourText>These creatures spend their early lives swimming in shallow riverbeds. When they mature their fins will have elongated enough to facilitate flight.</FlavourText>
+      <Id>1795</Id>
+      <Name>Blackwing Croaker</Name>
+      <Source xmlns:d4p1="http://example.com" i:type="d4p1:Coliseum">
+        <EnemyType>Normal</EnemyType>
+        <VenueName>Mire</VenueName>
+      </Source>
+    </Familiar>
+    <Familiar>
+      <Availability>JoxarBox</Availability>
+      <FlavourText>The eyes of the Flamecaller. (Flameforger's Festival Holiday Familiar 2016.)</FlavourText>
+      <Id>19323</Id>
+      <Name>Blazing Goblin</Name>
+      <Source xmlns:d4p1="http://example.com" i:type="d4p1:Festival">
+        <Flight>Fire</Flight>
+        <Year>
+          <YearNumber>4</YearNumber>
+        </Year>
+      </Source>
+    </Familiar>
+    <Familiar>
+      <Availability>Festival</Availability>
+      <FlavourText>A creature of uncommon tenacity. It collects blight for its patron.</FlavourText>
+      <Id>23287</Id>
+      <Name>Blight Nymph</Name>
+      <Source xmlns:d4p1="http://example.com" i:type="d4p1:JoxarSpareInventory" />
+    </Familiar>
+    <Familiar>
+      <Availability>Always</Availability>
+      <FlavourText>This iridescent beauty becomes even more colorful once it takes flight.</FlavourText>
+      <Id>14291</Id>
+      <Name>Bloodstone Beetle</Name>
+      <Source xmlns:d4p1="http://example.com" i:type="d4p1:Swipp" />
+    </Familiar>
+    <Familiar>
+      <Availability>Always</Availability>
+      <FlavourText>A strangler in bloom is at the end of its life cycle. It is ready to reproduce.</FlavourText>
+      <Id>597</Id>
+      <Name>Blooming Strangler</Name>
+      <Source xmlns:d4p1="http://example.com" i:type="d4p1:Coliseum">
+        <EnemyType>Normal</EnemyType>
+        <VenueName>Woodland Path</VenueName>
+      </Source>
+    </Familiar>
+    <Familiar>
+      <Availability>Always</Availability>
+      <FlavourText>Where the common Quetzeel is found primarily in the deep seas, the Blotched Quetzeel has strangely made its home in marshes, bogs, and lagoons. Watch where you step!</FlavourText>
+      <Id>27372</Id>
+      <Name>Blotched Quetzeel</Name>
+      <Source xmlns:d4p1="http://example.com" i:type="d4p1:Swipp" />
+    </Familiar>
+    <Familiar>
+      <Availability>Always</Availability>
+      <FlavourText>This cannibalistic snail produces a powerful venom.</FlavourText>
+      <Id>628</Id>
+      <Name>Blue Dragon Reef Snail</Name>
+      <Source xmlns:d4p1="http://example.com" i:type="d4p1:Coliseum">
+        <EnemyType>Normal</EnemyType>
+        <VenueName>Forgotten Cave</VenueName>
+      </Source>
+    </Familiar>
+    <Familiar>
+      <Availability>Always</Availability>
+      <FlavourText>Regarded as a top-tier predator of land, sea, and sky, blue tang hippogriffs are at home in any environment.</FlavourText>
+      <Id>2591</Id>
+      <Name>Blue Tang Hippogriff</Name>
+      <Source xmlns:d4p1="http://example.com" i:type="d4p1:Coliseum">
+        <EnemyType>Normal</EnemyType>
+        <VenueName>Harpy's Roost</VenueName>
+      </Source>
+    </Familiar>
+    <Familiar>
+      <Availability>Always</Availability>
+      <FlavourText>These flowers fend for themselves, uprooting to seek sunlight, shade, and water as required.</FlavourText>
+      <Id>10669</Id>
+      <Name>Blue Vein Pansy</Name>
+      <Source xmlns:d4p1="http://example.com" i:type="d4p1:Gathering">
+        <Flights>
+          <Flights>Wind</Flights>
+          <Flights>Shadow</Flights>
+          <Flights>Lightning</Flights>
+          <Flights>Plague</Flights>
+          <Flights>Nature</Flights>
+          <Flights>Arcane</Flights>
+        </Flights>
+        <GatherType>Foraging</GatherType>
+        <MinLevel>20</MinLevel>
+      </Source>
+    </Familiar>
+    <Familiar>
+      <Availability>Always</Availability>
+      <FlavourText>Though Serthis are dangerous enough with their unmatched cunning and lightning fast reflexes, they're even more deadly with the right weaponry.</FlavourText>
+      <Id>14547</Id>
+      <Name>Blueband Duelist</Name>
+      <Source xmlns:d4p1="http://example.com" i:type="d4p1:Coliseum">
+        <EnemyType>Normal</EnemyType>
+        <VenueName>Forgotten Cave</VenueName>
+      </Source>
+    </Familiar>
+    <Familiar>
+      <Availability>Always</Availability>
+      <FlavourText>The bluefin charger hunts on thin ice. It will charge its prey, breaking the ice beneath their feet, sending it to a watery grave. The charger itself is semi-aquatic.</FlavourText>
+      <Id>616</Id>
+      <Name>Bluefin Charger</Name>
+      <Source xmlns:d4p1="http://example.com" i:type="d4p1:Coliseum">
+        <EnemyType>Normal</EnemyType>
+        <VenueName>Woodland Path</VenueName>
+      </Source>
+    </Familiar>
+    <Familiar>
+      <Availability>Always</Availability>
+      <FlavourText>The static cling is so strong that dragons wearing apparel may end up with several chipskinks affixed to their clothing after wandering through dense brush.</FlavourText>
+      <Id>22406</Id>
+      <Name>Bluelight Chipskink</Name>
+      <Source xmlns:d4p1="http://example.com" i:type="d4p1:Coliseum">
+        <EnemyType>Normal</EnemyType>
+        <VenueName>Training Fields</VenueName>
+      </Source>
+    </Familiar>
+    <Familiar>
+      <Availability>Always</Availability>
+      <FlavourText>Aviar possess complex vocal chords, enabling them to perfectly mimic the calls of local predators and prey. (KS-sponsored by ZeSethis.)</FlavourText>
+      <Id>1173</Id>
+      <Name>Bluemoon Aviar</Name>
+      <Source xmlns:d4p1="http://example.com" i:type="d4p1:Coliseum">
+        <EnemyType>Normal</EnemyType>
+        <VenueName>Harpy's Roost</VenueName>
+      </Source>
+    </Familiar>
+    <Familiar>
+      <Availability>Always</Availability>
+      <FlavourText>Salt is the bane of Greatshells; they are only able to survive in fresh water.</FlavourText>
+      <Id>2421</Id>
+      <Name>Blueridge Greatshell</Name>
+      <Source xmlns:d4p1="http://example.com" i:type="d4p1:Coliseum">
+        <EnemyType>Normal</EnemyType>
+        <VenueName>Waterway</VenueName>
+      </Source>
+    </Familiar>
+    <Familiar>
+      <Availability>Always</Availability>
+      <FlavourText>Believe it or not, the tint of this mammal's tail is not natural. Bluetail Skira spend much of their day lounging halfway into ponds and lakes where blue algae likes to mingle with their fur.</FlavourText>
+      <Id>19576</Id>
+      <Name>Bluetail Skira</Name>
+      <Source xmlns:d4p1="http://example.com" i:type="d4p1:Gathering">
+        <Flights>
+          <Flights>Earth</Flights>
+          <Flights>Water</Flights>
+          <Flights>Wind</Flights>
+          <Flights>Lightning</Flights>
+          <Flights>Plague</Flights>
+        </Flights>
+        <GatherType>Hunting</GatherType>
+        <MinLevel>31</MinLevel>
+      </Source>
+    </Familiar>
+    <Familiar>
+      <Availability>Event</Availability>
+      <FlavourText>A magicked Bogsneak doll that grows an elongated snout in the presence of liars and tricksters.</FlavourText>
+      <Id>20812</Id>
+      <Name>Bogsneak Puppet</Name>
+      <Source xmlns:d4p1="http://example.com" i:type="d4p1:SiteEvent">
+        <EventName>Night of the Nocturne</EventName>
+        <Year>
+          <YearNumber>4</YearNumber>
+        </Year>
+      </Source>
+    </Familiar>
+    <Familiar>
+      <Availability>JoxarBox</Availability>
+      <FlavourText>There's something disconcerting about this bear...</FlavourText>
+      <Id>15275</Id>
+      <Name>Bogus Manamonger</Name>
+      <Source xmlns:d4p1="http://example.com" i:type="d4p1:JoxarSpareInventory" />
+    </Familiar>
+    <Familiar>
+      <Availability>Retired</Availability>
+      <FlavourText>Although frightening to look at, bone fiends mostly keep to themselves and the piles of calcified remains that they have collected.</FlavourText>
+      <Id>910</Id>
+      <Name>Bone Fiend</Name>
+      <Source xmlns:d4p1="http://example.com" i:type="d4p1:SiteEvent">
+        <EventName>Kickstarter</EventName>
+        <Year>
+          <YearNumber>1</YearNumber>
+        </Year>
+      </Source>
+    </Familiar>
+    <Familiar>
+      <Availability>Retired</Availability>
+      <FlavourText>. .. .mysql expects parameter 1 to be string, boolean given. .. (Flight Rising Beta Tester gift)</FlavourText>
+      <Id>591</Id>
+      <Name>Boolean</Name>
+      <Source xmlns:d4p1="http://example.com" i:type="d4p1:SiteEvent">
+        <EventName>Beta Testing</EventName>
+        <Year>
+          <YearNumber>1</YearNumber>
+        </Year>
+      </Source>
+    </Familiar>
+    <Familiar>
+      <Availability>Always</Availability>
+      <FlavourText>A favored mount of sprangyroo mercenaries.</FlavourText>
+      <Id>17495</Id>
+      <Name>Boran Veteran</Name>
+      <Source xmlns:d4p1="http://example.com" i:type="d4p1:Coliseum">
+        <EnemyType>Normal</EnemyType>
+        <VenueName>Arena</VenueName>
+      </Source>
+    </Familiar>
+    <Familiar>
+      <Availability>Festival</Availability>
+      <FlavourText>A creature of uncommon strength. It collects boulders for its patron.</FlavourText>
+      <Id>23278</Id>
+      <Name>Boulder Nymph</Name>
+      <Source xmlns:d4p1="http://example.com" i:type="d4p1:JoxarSpareInventory" />
+    </Familiar>
+    <Familiar>
+      <Availability>Always</Availability>
+      <FlavourText>A colony of bramble guardians is sure to keep any lair warded from tiny intruders.</FlavourText>
+      <Id>618</Id>
+      <Name>Bramble Guardian</Name>
+      <Source xmlns:d4p1="http://example.com" i:type="d4p1:Coliseum">
+        <EnemyType>Normal</EnemyType>
+        <VenueName>Forgotten Cave</VenueName>
+      </Source>
+    </Familiar>
+    <Familiar>
+      <Availability>Always</Availability>
+      <FlavourText>It's not uncommon for these rambunctious canines to get completely distracted by their own beautiful wings. Snap out of it, boy! (Colored by Solarstar.)</FlavourText>
+      <Id>16251</Id>
+      <Name>Brightwing Dwarf Hainu</Name>
+      <Source xmlns:d4p1="http://example.com" i:type="d4p1:Marketplace">
+        <Type>Treasure</Type>
+      </Source>
+    </Familiar>
+    <Familiar>
+      <Availability>Always</Availability>
+      <FlavourText>Naturally gifted with a photographic memory and a phosphorescent mane. (KS-Sponsored by Mythka.)</FlavourText>
+      <Id>1565</Id>
+      <Name>Brilliant Psywurm</Name>
+      <Source xmlns:d4p1="http://example.com" i:type="d4p1:Coliseum">
+        <EnemyType>Normal</EnemyType>
+        <VenueName>Mire</VenueName>
+      </Source>
+    </Familiar>
+    <Familiar>
+      <Availability>Always</Availability>
+      <FlavourText>A fastidious and precise familiar. The brown river flight is not capable of true flight, but its powerful wings propel it through the water at great speeds.</FlavourText>
+      <Id>411</Id>
+      <Name>Brown River Flight</Name>
+      <Source xmlns:d4p1="http://example.com" i:type="d4p1:Coliseum">
+        <EnemyType>Normal</EnemyType>
+        <VenueName>Waterway</VenueName>
+      </Source>
+    </Familiar>
+    <Familiar>
+      <Availability>Always</Availability>
+      <FlavourText>These otherwise passive insectoids become enraged if you pick their flowers.</FlavourText>
+      <Id>22383</Id>
+      <Name>Brown-Spotted Mith</Name>
+      <Source xmlns:d4p1="http://example.com" i:type="d4p1:Coliseum">
+        <EnemyType>Normal</EnemyType>
+        <VenueName>Training Fields</VenueName>
+      </Source>
+    </Familiar>
+    <Familiar>
+      <Availability>Always</Availability>
+      <FlavourText>Brush dodos will stand perfectly still when they encounter a dragon; this remarkable adaptation will ensure the survival of the species.</FlavourText>
+      <Id>2781</Id>
+      <Name>Brush Dodo</Name>
+      <Source xmlns:d4p1="http://example.com" i:type="d4p1:Coliseum">
+        <EnemyType>Normal</EnemyType>
+        <VenueName>Harpy's Roost</VenueName>
+      </Source>
+    </Familiar>
+    <Familiar>
+      <Availability>Always</Availability>
+      <FlavourText>A lovely little lilypad... that moves... and eats things that land on it... lovely... (Colored by Kizmetto.)</FlavourText>
+      <Id>25413</Id>
+      <Name>Bubble Brook Gecko</Name>
+      <Source xmlns:d4p1="http://example.com" i:type="d4p1:Baldwin">
+        <MinLevel>20</MinLevel>
+      </Source>
+    </Familiar>
+    <Familiar>
+      <Availability>Festival</Availability>
+      <FlavourText>A creature of uncommon charm. It collects bubbles for its patron.</FlavourText>
+      <Id>23277</Id>
+      <Name>Bubble Nymph</Name>
+      <Source xmlns:d4p1="http://example.com" i:type="d4p1:JoxarSpareInventory" />
+    </Familiar>
+    <Familiar>
+      <Availability>Always</Availability>
+      <FlavourText>Dig, dig as far as you can; the rabbit hole is bottomless.</FlavourText>
+      <Id>3175</Id>
+      <Name>Bucktooth Digger</Name>
+      <Source xmlns:d4p1="http://example.com" i:type="d4p1:SiteEvent">
+        <EventName>Marva</EventName>
+        <Year>
+          <YearNumber>2</YearNumber>
+        </Year>
+      </Source>
+    </Familiar>
+    <Familiar>
+      <Availability>Always</Availability>
+      <FlavourText>The wings of this mantid never become large enough to facilitate flight.</FlavourText>
+      <Id>9225</Id>
+      <Name>Budwing Morpho</Name>
+      <Source xmlns:d4p1="http://example.com" i:type="d4p1:Coliseum">
+        <EnemyType>Normal</EnemyType>
+        <VenueName>Rainsong Jungle</VenueName>
+      </Source>
+    </Familiar>
+    <Familiar>
+      <Availability>Always</Availability>
+      <FlavourText>Don't tell this cockatrice it missed -and will always miss- leg day. It's plenty buff! (Colored by Whompus.)</FlavourText>
+      <Id>25403</Id>
+      <Name>Buff Laced Cockatrice</Name>
+      <Source xmlns:d4p1="http://example.com" i:type="d4p1:Marketplace">
+        <Type>Treasure</Type>
+      </Source>
+    </Familiar>
+    <Familiar>
+      <Availability>Always</Availability>
+      <FlavourText>Buzz buzz, buzz buzz buzz.</FlavourText>
+      <Id>2394</Id>
+      <Name>Bumble</Name>
+      <Source xmlns:d4p1="http://example.com" i:type="d4p1:Coliseum">
+        <EnemyType>Normal</EnemyType>
+        <VenueName>Training Fields</VenueName>
+      </Source>
+    </Familiar>
+    <Familiar>
+      <Availability>Always</Availability>
+      <FlavourText>This species of caiman got its milky coloration from keeping to dark underground rivers. (Colored by AlpineHell.)</FlavourText>
+      <Id>16255</Id>
+      <Name>Butter Caiman</Name>
+      <Source xmlns:d4p1="http://example.com" i:type="d4p1:Marketplace">
+        <Type>Treasure</Type>
+      </Source>
+    </Familiar>
+    <Familiar>
+      <Availability>Always</Availability>
+      <FlavourText>A valuable part of the woodland ecosystem, stranglers will break down organic material rapidly.</FlavourText>
+      <Id>23873</Id>
+      <Name>Buttercup Strangler</Name>
+      <Source xmlns:d4p1="http://example.com" i:type="d4p1:Coliseum">
+        <EnemyType>Normal</EnemyType>
+        <VenueName>Blooming Grove</VenueName>
+      </Source>
+    </Familiar>
+    <Familiar>
+      <Availability>Always</Availability>
+      <FlavourText>Hugging this familiar is not the recommended method of bonding.</FlavourText>
+      <Id>20457</Id>
+      <Name>Cactus Marzal</Name>
+      <Source xmlns:d4p1="http://example.com" i:type="d4p1:Gathering">
+        <Flights>
+          <Flights>Water</Flights>
+          <Flights>Wind</Flights>
+          <Flights>Light</Flights>
+          <Flights>Nature</Flights>
+          <Flights>Arcane</Flights>
+        </Flights>
+        <GatherType>Foraging</GatherType>
+        <MinLevel>31</MinLevel>
+      </Source>
+    </Familiar>
+    <Familiar>
+      <Availability>Event</Availability>
+      <FlavourText>A thick, romantic accent and welcoming grin enchant your senses. You feel like a guest here, but can't quite let your guard down.</FlavourText>
+      <Id>20813</Id>
+      <Name>Calculating Candelabra</Name>
+      <Source xmlns:d4p1="http://example.com" i:type="d4p1:SiteEvent">
+        <EventName>Night of the Nocturne</EventName>
+        <Year>
+          <YearNumber>4</YearNumber>
+        </Year>
+      </Source>
+    </Familiar>
+    <Familiar>
+      <Availability>Always</Availability>
+      <FlavourText>Candy Cockatrice will only develop brilliant colors if fed a steady diet of concentrated sugar. The colorful ones don't live very long... (Colored by Jasp.)</FlavourText>
+      <Id>25404</Id>
+      <Name>Candy Cockatrice</Name>
+      <Source xmlns:d4p1="http://example.com" i:type="d4p1:Marketplace">
+        <Type>Treasure</Type>
+      </Source>
+    </Familiar>
+    <Familiar>
+      <Availability>Always</Availability>
+      <FlavourText>Xolo, Xolo, Xolo, Xolo, Xolo, Xolo, Xolo, Xolo, Xolo, Xolo.</FlavourText>
+      <Id>5196</Id>
+      <Name>Candycane Xolo</Name>
+      <Source xmlns:d4p1="http://example.com" i:type="d4p1:Marketplace">
+        <Type>Gem</Type>
+      </Source>
+    </Familiar>
+    <Familiar>
+      <Availability>Always</Availability>
+      <FlavourText>The brilliant plumage of male cardinal hippogriffs is scrutinized by potential mates.</FlavourText>
+      <Id>2590</Id>
+      <Name>Cardinal Hippogriff</Name>
+      <Source xmlns:d4p1="http://example.com" i:type="d4p1:Coliseum">
+        <EnemyType>Normal</EnemyType>
+        <VenueName>Harpy's Roost</VenueName>
+      </Source>
+    </Familiar>
+    <Familiar>
+      <Availability>Always</Availability>
+      <FlavourText>The carmine serthis' scales present a particularly rich shade of red after it has freshly molted.</FlavourText>
+      <Id>419</Id>
+      <Name>Carmine Serthis</Name>
+      <Source xmlns:d4p1="http://example.com" i:type="d4p1:Coliseum">
+        <EnemyType>Normal</EnemyType>
+        <VenueName>Sandswept Delta</VenueName>
+      </Source>
+    </Familiar>
+    <Familiar>
+      <Availability>Always</Availability>
+      <FlavourText>The dreaded carrioncorn is said to stampede in massive herds throughout the Abiding Boneyard, sometimes locked in vicious battles with resident vultures over rare food sources.</FlavourText>
+      <Id>16488</Id>
+      <Name>Carrioncorn</Name>
+      <Source xmlns:d4p1="http://example.com" i:type="d4p1:Coliseum">
+        <EnemyType>Normal</EnemyType>
+        <VenueName>Ghostlight Ruins</VenueName>
+      </Source>
+    </Familiar>
+    <Familiar>
+      <Availability>Always</Availability>
+      <FlavourText>Larger than the average mith, ceanothus miths frequently train to act as the vanguard of their fellows.</FlavourText>
+      <Id>22376</Id>
+      <Name>Ceanothus Brawler</Name>
+      <Source xmlns:d4p1="http://example.com" i:type="d4p1:Coliseum">
+        <EnemyType>Normal</EnemyType>
+        <VenueName>Training Fields</VenueName>
+      </Source>
+    </Familiar>
+    <Familiar>
+      <Availability>Always</Availability>
+      <FlavourText>Resembles a creature of draconic legend from a distance. Up close it merely looks delicious.</FlavourText>
+      <Id>342</Id>
+      <Name>Celestial Antelope</Name>
+      <Source xmlns:d4p1="http://example.com" i:type="d4p1:Coliseum">
+        <EnemyType>Normal</EnemyType>
+        <VenueName>Arena</VenueName>
+      </Source>
+    </Familiar>
+    <Familiar>
+      <Availability>Always</Availability>
+      <FlavourText>Asking a centaur archer ’What’s your sign?’ is a sure way to put one on your back that reads ’target’.</FlavourText>
+      <Id>6336</Id>
+      <Name>Centaur Archer</Name>
+      <Source xmlns:d4p1="http://example.com" i:type="d4p1:Coliseum">
+        <EnemyType>Normal</EnemyType>
+        <VenueName>Scorched Forest</VenueName>
+      </Source>
+    </Familiar>
+    <Familiar>
+      <Availability>Always</Availability>
+      <FlavourText>With a beard like that, you know he means business.</FlavourText>
+      <Id>14569</Id>
+      <Name>Centaur Berserker</Name>
+      <Source xmlns:d4p1="http://example.com" i:type="d4p1:Coliseum">
+        <EnemyType>Normal</EnemyType>
+        <VenueName>Forgotten Cave</VenueName>
+      </Source>
+    </Familiar>
+    <Familiar>
+      <Availability>Always</Availability>
+      <FlavourText>These crayfish can live for hundreds of years.</FlavourText>
+      <Id>13431</Id>
+      <Name>Chalcedony Snipper</Name>
+      <Source xmlns:d4p1="http://example.com" i:type="d4p1:Coliseum">
+        <EnemyType>Normal</EnemyType>
+        <VenueName>Crystal Pools</VenueName>
+      </Source>
+    </Familiar>
+    <Familiar>
+      <Availability>Always</Availability>
+      <FlavourText>Sprangyroo are commonly hired on as mercenaries by the Longneck clan.</FlavourText>
+      <Id>4002</Id>
+      <Name>Charcoal Sprangyroo</Name>
+      <Source xmlns:d4p1="http://example.com" i:type="d4p1:Coliseum">
+        <EnemyType>Normal</EnemyType>
+        <VenueName>Arena</VenueName>
+      </Source>
+    </Familiar>
+    <Familiar>
+      <Availability>Always</Availability>
+      <FlavourText>I want to be shiiiiinnny!</FlavourText>
+      <Id>26287</Id>
+      <Name>Charoite Burrower</Name>
+      <Source xmlns:d4p1="http://example.com" i:type="d4p1:Gathering">
+        <Flights>
+          <Flights>Earth</Flights>
+          <Flights>Wind</Flights>
+          <Flights>Ice</Flights>
+          <Flights>Shadow</Flights>
+          <Flights>Lightning</Flights>
+          <Flights>Arcane</Flights>
+        </Flights>
+        <GatherType>Foraging</GatherType>
+        <MinLevel>10</MinLevel>
+      </Source>
+    </Familiar>
+    <Familiar>
+      <Availability>Always</Availability>
+      <FlavourText>So the experiment was not exactly a success...but somehow you cannot bring yourself to dump the results. Is... is it smiling at you?</FlavourText>
+      <Id>10884</Id>
+      <Name>Cheerful Residue</Name>
+      <Source xmlns:d4p1="http://example.com" i:type="d4p1:Baldwin">
+        <MinLevel>3</MinLevel>
+      </Source>
+    </Familiar>
+  </Values>
+</XmlData>
