@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Bestiary.Model"
         mc:Ignorable="d"
         x:Name="TopLevelWindow"
-        Title="MainWindow" Height="450" Width="800"
+        Title="MainWindow" Height="516" Width="853"
         WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <Style TargetType="Label">
@@ -33,6 +33,27 @@
         <Style TargetType="DataGridCell">
             <Setter Property="VerticalContentAlignment" Value="Center"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
+            <Style.Triggers>
+                <Trigger Property="IsSelected" Value="true">
+                    <Setter Property="Foreground" Value="Black"/>
+                    <Setter Property="BorderThickness" Value="0"/>
+                </Trigger>
+                <Trigger Property="IsSelected" Value="false">
+                    <Setter Property="BorderThickness" Value="0"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style TargetType="DataGridRow">
+            <Style.Triggers>
+                <Trigger Property="IsSelected" Value="true">
+                    <Setter Property="BorderBrush" Value="Black"/>
+                    <Setter Property="BorderThickness" Value="1"/>
+                </Trigger>
+                <Trigger Property="IsSelected" Value="false">
+                    <Setter Property="BorderBrush" Value="Transparent"/>
+                    <Setter Property="BorderThickness" Value="1"/>
+                </Trigger>
+            </Style.Triggers>
         </Style>
     </Window.Resources>
     <Grid>
@@ -75,9 +96,9 @@
                             <CheckBox Grid.Column="0" IsChecked="{Binding ExactChecked}"/>
                             <Label Grid.Column="1" HorizontalAlignment ="Left" Content="Exact"/>
                         </Grid>
-                        
+
                     </Grid>
-                    
+
                 </GroupBox>
                 <GroupBox Grid.Row="1" Header="Filters" Margin="5">
                     <Grid>
@@ -168,6 +189,7 @@
                     <DataGrid Grid.Row ="1" Width="Auto" Height="Auto" AutoGenerateColumns="False" GridLinesVisibility="None" ItemsSource="{Binding FilteredFamiliars}">
                         <DataGrid.Resources>
                             <local:OwnedToBoolConverter x:Key="OwnedToBoolConverter"/>
+                            <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Transparent"/>
                         </DataGrid.Resources>
                         <DataGrid.Columns>
                             <DataGridTemplateColumn Header="Icon" Width="Auto" IsReadOnly="True">
