@@ -125,6 +125,9 @@ namespace Bestiary.ViewModel
         public MainWindow Window { get; private set; }
         internal IModel Model { get => m_Model; set => m_Model = value; }
 
+        public int ResultCount { get; set; }
+        public int OwnedCount { get; set; }
+        public int AwakenedCount { get; set; }
         private IEnumerable<FamiliarInfo> ApplyFilters(IEnumerable<FamiliarInfo> familiars)
         {
             IEnumerable<FamiliarInfo> filteredFamiliars = familiars;
@@ -146,6 +149,10 @@ namespace Bestiary.ViewModel
                 var lookingFor = FamiliarParameters.SourceMap[FamiliarParameters.SelectedSource.Value];
                 filteredFamiliars = filteredFamiliars.Where(f => f.Familiar.Source.GetType() == lookingFor);
             }
+
+            ResultCount = filteredFamiliars.Count();
+            OwnedCount = filteredFamiliars.Count(f => f.Owned == OwnershipStatus.Owned);
+            AwakenedCount = filteredFamiliars.Count(f => f.BondLevel == BondingLevels.Awakened);
 
             return filteredFamiliars;
         }

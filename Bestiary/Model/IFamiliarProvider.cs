@@ -1,4 +1,7 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
+using System.Globalization;
+using System.Windows.Data;
 
 namespace Bestiary.Model
 {
@@ -47,6 +50,27 @@ namespace Bestiary.Model
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
+    }
+
+    public class OwnedToBoolConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            OwnershipStatus status = (OwnershipStatus)value;
+            if (status == OwnershipStatus.Owned)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     interface IFamiliarProvider

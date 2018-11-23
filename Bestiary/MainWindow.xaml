@@ -147,12 +147,28 @@
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
                         <Label Grid.Column="0" Width="Auto" HorizontalContentAlignment="Center" Content="Sort by:"/>
                         <ComboBox Grid.Column="1" Width="Auto" Margin="5" ItemsSource="{Binding AvailableSortTypes}" SelectedItem="{Binding SelectedSortType, Mode=TwoWay}" IsSynchronizedWithCurrentItem="True"/>
                         <Button Grid.Column="2" Margin="5" Content="Clear" Command="{Binding ClearOption}" CommandParameter="{Binding SelectedSortType}"/>
+                        <Label Grid.Column="4" Width="Auto" HorizontalContentAlignment="Center" Content="Results:"/>
+                        <Label Grid.Column="5" Width="50" Margin="5" VerticalContentAlignment="Center" Content="{Binding ResultCount}"/>
+                        <Label Grid.Column="6" Width="Auto" HorizontalContentAlignment="Center" Content="Owned:"/>
+                        <Label Grid.Column="7" Width="50" Margin="5" VerticalContentAlignment="Center"  Content="{Binding OwnedCount}"/>
+                        <Label Grid.Column="8" Width="Auto" HorizontalContentAlignment="Center" Content="Awakened:"/>
+                        <Label Grid.Column="9" Width="50" Margin="5" VerticalContentAlignment="Center"  Content="{Binding AwakenedCount}"/>
                     </Grid>
                     <DataGrid Grid.Row ="1" Width="Auto" Height="Auto" AutoGenerateColumns="False" GridLinesVisibility="None" ItemsSource="{Binding FilteredFamiliars}">
+                        <DataGrid.Resources>
+                            <local:OwnedToBoolConverter x:Key="OwnedToBoolConverter"/>
+                        </DataGrid.Resources>
                         <DataGrid.Columns>
                             <DataGridTemplateColumn Header="Icon" Width="Auto" IsReadOnly="True">
                                 <DataGridTemplateColumn.CellTemplate>
@@ -172,7 +188,7 @@
                             <DataGridTemplateColumn Header="Location" Width="Auto" IsReadOnly="False">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
-                                        <ComboBox  ItemsSource="{Binding AvailableLocationTypes}" SelectedItem="{Binding Info.Location, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsSynchronizedWithCurrentItem="True"/>
+                                        <ComboBox  ItemsSource="{Binding AvailableLocationTypes}" SelectedItem="{Binding Info.Location, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsSynchronizedWithCurrentItem="True" IsEnabled="{Binding Info.Owned, Converter={StaticResource OwnedToBoolConverter}}"/>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
