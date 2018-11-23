@@ -55,7 +55,7 @@ namespace Bestiary.ViewModel
                                     source = new Festival(FamiliarParameters.SelectedFlight.Value, FamiliarParameters.SelectedCycleYear);
                                     break;
                                 case Sources.Gathering:
-                                    source = new Gathering(FamiliarParameters.gatherControl.GetSelectedFlights(), FamiliarParameters.SelectedGatherType.Value, FamiliarParameters.SelectedLevel.Value);
+                                    source = new Gathering(FamiliarParameters.GatherControl.GetSelectedFlights(), FamiliarParameters.SelectedGatherType.Value, FamiliarParameters.SelectedLevel.Value);
                                     break;
                                 case Sources.Joxar:
                                     source = new JoxarSpareInventory();
