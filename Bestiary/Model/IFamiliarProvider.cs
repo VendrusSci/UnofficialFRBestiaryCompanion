@@ -27,7 +27,10 @@ namespace Bestiary.Model
             }
             set
             {
-                OwnedFamiliar.Update(f => f.BondingLevel = value.Value);
+                if (value.HasValue)
+                {
+                    OwnedFamiliar?.Update(f => f.BondingLevel = value.Value);
+                }
             }
         }
         public LocationTypes? Location
@@ -38,7 +41,10 @@ namespace Bestiary.Model
             }
             set
             {
-                OwnedFamiliar.Update(f=> f.Location = value.Value);
+                if (value.HasValue)
+                {
+                    OwnedFamiliar?.Update(f => f.Location = value.Value);
+                }
             }
         }
 

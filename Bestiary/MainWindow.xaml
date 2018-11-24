@@ -96,9 +96,7 @@
                             <CheckBox Grid.Column="0" IsChecked="{Binding ExactChecked}"/>
                             <Label Grid.Column="1" HorizontalAlignment ="Left" Content="Exact"/>
                         </Grid>
-
                     </Grid>
-
                 </GroupBox>
                 <GroupBox Grid.Row="1" Header="Filters" Margin="5">
                     <Grid>

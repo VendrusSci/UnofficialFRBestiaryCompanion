@@ -21,6 +21,8 @@ namespace Bestiary.ViewModel
     {
         public FamiliarInfo Info { get; set; }
         public LocationTypes[] AvailableLocationTypes { get; private set; }
+        public OwnershipStatus[] AvailableOwnershipStatuses { get; private set; }
+        public BondingLevels[] AvailableBondingLevels { get; private set; }
 
         private IModel m_Model;
         private BitmapImage m_Icon = null;
@@ -56,6 +58,8 @@ namespace Bestiary.ViewModel
         {
             Info = info;
             AvailableLocationTypes = availableLocationTypes;
+            AvailableOwnershipStatuses = ListEnumValues<OwnershipStatus>();
+            AvailableBondingLevels = ListEnumValues<BondingLevels>();
             m_Model = model;
         }
 
@@ -124,6 +128,12 @@ namespace Bestiary.ViewModel
             }
 
             return null;
+        }
+
+        public T[] ListEnumValues<T>()
+        {
+            return Enum.GetValues(typeof(T)).Cast<T>()
+                .ToArray();
         }
     }
 }

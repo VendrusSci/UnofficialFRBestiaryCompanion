@@ -4,33 +4,219 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Bestiary"
+        xmlns:local_model="clr-namespace:Bestiary.Model"
         mc:Ignorable="d"
-        Title="FamiliarViewWindow" Height="602.785" Width="477.719">
+        Title="FamiliarViewWindow" Height="650" Width="400"
+        WindowStartupLocation="CenterOwner">
+    <Window.Resources>
+        <Style TargetType="Label">
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Right"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        </Style>
+        <Style TargetType="TextBlock">
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+        </Style>
+        <Style TargetType="CheckBox">
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+        <Style TargetType="ComboBox">
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="Margin" Value="5"/>
+        </Style>
+        <Style TargetType="Button">
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="5"/>
+        </Style>
+    </Window.Resources>
     <Grid>
-        <GroupBox>
+        <GroupBox Margin="5">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
-                <Label Grid.Row="0" TextBlock.FontSize="20" TextBlock.FontStyle="Italic" HorizontalContentAlignment="Center" Content="{Binding FamiliarDisplayInfo.Info.Familiar.Name}"/>
-                <Image Grid.Row="1" 
+                <Label Grid.Row="0" TextBlock.FontSize="20" TextBlock.FontStyle="Italic" HorizontalContentAlignment="Center" HorizontalAlignment="Center" Content="{Binding Familiar.Name}"/>
+                <Image  Grid.Row="1"
                     Source="{Binding FamiliarDisplayInfo.Image}"
                     RenderOptions.BitmapScalingMode="NearestNeighbor"
-                    Height="200"/>
-                <Grid Grid.Row="2">
+                    Height="200"
+                    Margin="5"/>
+                <TextBlock Grid.Row="2" Text="{Binding Familiar.FlavourText}" TextWrapping="Wrap" Width="250" TextAlignment="Center" Margin="10"/>
+                <ContentControl Grid.Row="3" Content="{Binding Familiar.Source}">
+                    <ContentControl.Resources>
+                        <DataTemplate DataType="{x:Type local_model:Coliseum}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+                                <Label Grid.Column="0" Grid.Row="0" HorizontalAlignment="Right" Content="Source: "/>
+                                <Label Grid.Column="0" Grid.Row="1" HorizontalAlignment="Right" Content="Venue: "/>
+                                <Label Grid.Column="0" Grid.Row="2" HorizontalAlignment="Right" Content="Enemy Type: "/>
+                                
+                                <Label Grid.Column="1" Grid.Row="0" HorizontalAlignment="Left" Content="Coliseum"/>
+                                <Label Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" Content="{Binding VenueName}"/>
+                                <Label Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" Content="{Binding EnemyType}"/>
+                            </Grid>
+                        </DataTemplate>
+                        <DataTemplate DataType="{x:Type local_model:Marketplace}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+                                <Label Grid.Column="0" Grid.Row="0" HorizontalAlignment="Right" Content="Source: "/>
+                                <Label Grid.Column="0" Grid.Row="1" HorizontalAlignment="Right" Content="Currency: "/>
+
+                                <Label Grid.Column="1" Grid.Row="0" HorizontalAlignment="Left" Content="Marketplace"/>
+                                <Label Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" Content="{Binding Type}"/>
+                            </Grid>
+                        </DataTemplate>
+                        <DataTemplate DataType="{x:Type local_model:Festival}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+                                <Label Grid.Column="0" Grid.Row="0" HorizontalAlignment="Right" Content="Source: "/>
+                                <Label Grid.Column="0" Grid.Row="1" HorizontalAlignment="Right" Content="Flight: "/>
+                                <Label Grid.Column="0" Grid.Row="2" HorizontalAlignment="Right" Content="Year: "/>
+
+                                <Label Grid.Column="1" Grid.Row="0" HorizontalAlignment="Left" Content="Festival"/>
+                                <Label Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" Content="{Binding Flight}"/>
+                                <Label Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" Content="{Binding Year}"/>
+                            </Grid>
+                        </DataTemplate>
+                        <DataTemplate DataType="{x:Type local_model:JoxarSpareInventory}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+                                <Label Grid.Column="0" Grid.Row="0" HorizontalAlignment="Right" Content="Source: "/>
+                                <Label Grid.Column="1" Grid.Row="0" HorizontalAlignment="Left" Content="Joxar's Spare Inventory"/>
+                            </Grid>
+                        </DataTemplate>
+                        <DataTemplate DataType="{x:Type local_model:SiteEvent}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+                                <Label Grid.Column="0" Grid.Row="0" HorizontalAlignment="Right" Content="Source: "/>
+                                <Label Grid.Column="0" Grid.Row="1" HorizontalAlignment="Right" Content="Event Name: "/>
+                                <Label Grid.Column="0" Grid.Row="2" HorizontalAlignment="Right" Content="Year: "/>
+
+                                <Label Grid.Column="1" Grid.Row="0" HorizontalAlignment="Left" Content="Festival"/>
+                                <Label Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" Content="{Binding EventName}"/>
+                                <Label Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" Content="{Binding Year}"/>
+                            </Grid>
+                        </DataTemplate>
+                        <DataTemplate DataType="{x:Type local_model:Gathering}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+                                <Label Grid.Column="0" Grid.Row="0" HorizontalAlignment="Right" Content="Source: "/>
+                                <Label Grid.Column="0" Grid.Row="1" HorizontalAlignment="Right" Content="Gathering Type: "/>
+                                <Label Grid.Column="0" Grid.Row="2" HorizontalAlignment="Right" Content="In: "/>
+                                <Label Grid.Column="0" Grid.Row="3" HorizontalAlignment="Right" Content="Level: "/>
+
+                                <Label Grid.Column="1" Grid.Row="0" HorizontalAlignment="Left" Content="Gathering"/>
+                                <Label Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" Content="{Binding GatherType}"/>
+                                <ComboBox Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" IsEditable="False" ItemsSource="{Binding Flights}" SelectedIndex="0"/>
+                                <Label Grid.Column="1" Grid.Row="3" HorizontalAlignment="Left" Content="{Binding MinLevel}"/>
+                            </Grid>
+                        </DataTemplate>
+                        <DataTemplate DataType="{x:Type local_model:Baldwin}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+                                <Label Grid.Column="0" Grid.Row="0" HorizontalAlignment="Right" Content="Source: "/>
+                                <Label Grid.Column="0" Grid.Row="1" HorizontalAlignment="Right" Content="Minimum Level: "/>
+
+                                <Label Grid.Column="1" Grid.Row="0" HorizontalAlignment="Left" Content="Baldwin's Bubbling Brew"/>
+                                <Label Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" Content="{Binding MinLevel}"/>
+                            </Grid>
+                        </DataTemplate>
+                        <DataTemplate DataType="{x:Type local_model:Swipp}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+                                <Label Grid.Column="0" Grid.Row="0" HorizontalAlignment="Right" Content="Source: "/>
+                                <Label Grid.Column="1" Grid.Row="0" HorizontalAlignment="Left" Content="Swipp's Swap Stand"/>
+                            </Grid>
+                        </DataTemplate>
+                    </ContentControl.Resources>
+                </ContentControl>
+                <Grid Grid.Row="5" Margin="10">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1*"/>
-                        <ColumnDefinition Width="2*"/>
-                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Column="1" Text="{Binding Familiar.FlavourText}" TextWrapping="Wrap"/>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Label Grid.Column="0" Grid.Row="0" Content="Ownership Status:"/>
+                    <Label Grid.Column="0" Grid.Row="1" Content="Bond Level:"/>
+                    <Label Grid.Column="0" Grid.Row="2" Content="Location:"/>
+                    <ComboBox Grid.Column="1" Grid.Row="0" ItemsSource="{Binding FamiliarDisplayInfo.AvailableOwnershipStatuses}" SelectedItem="{Binding SelectedOwnershipStatus}" IsSynchronizedWithCurrentItem="True"/>
+                    <ComboBox Grid.Column="1" Grid.Row="1" ItemsSource="{Binding FamiliarDisplayInfo.AvailableBondingLevels}" SelectedItem="{Binding SelectedBondingLevel}" IsSynchronizedWithCurrentItem="True"/>
+                    <ComboBox Grid.Column="1" Grid.Row="2" ItemsSource="{Binding FamiliarDisplayInfo.AvailableLocationTypes}" SelectedItem="{Binding SelectedLocation}" IsSynchronizedWithCurrentItem="True"/>
                 </Grid>
+                <Button Grid.Row="6" Content="Update" Margin="5" Command="{Binding UpdateStatus}" Width="150"/>
             </Grid>
         </GroupBox>
     </Grid>

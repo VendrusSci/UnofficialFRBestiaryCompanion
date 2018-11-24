@@ -207,7 +207,7 @@ namespace Bestiary.ViewModel
                     m_openDataFamiliarWindow = new LambdaCommand(
                         onExecute: (p) =>
                         {
-                            FamiliarDataWindow familiarDataWindow = new FamiliarDataWindow((FamiliarViewModel)p);
+                            FamiliarDataWindow familiarDataWindow = new FamiliarDataWindow((FamiliarViewModel)p, m_Model);
                             familiarDataWindow.Owner = Window;
                             familiarDataWindow.ShowDialog();
                         },
