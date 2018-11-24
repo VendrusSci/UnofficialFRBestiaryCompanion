@@ -17,7 +17,7 @@ namespace Bestiary.ViewModel
         Images
     }
     
-    class FamiliarViewModel : INotifyPropertyChanged
+    public class FamiliarViewModel : INotifyPropertyChanged
     {
         public FamiliarInfo Info { get; set; }
         public LocationTypes[] AvailableLocationTypes { get; private set; }

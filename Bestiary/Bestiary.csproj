@@ -61,6 +61,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="FamiliarDataWindow.xaml.cs">
+      <DependentUpon>FamiliarDataWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="GatherFlightsControl.xaml.cs">
       <DependentUpon>GatherFlightsControl.xaml</DependentUpon>
     </Compile>
@@ -74,6 +77,7 @@
     <Compile Include="ViewModel\FamiliarAddViewModel.cs" />
     <Compile Include="ViewModel\FamiliarDeleteViewModel.cs" />
     <Compile Include="ViewModel\FamiliarViewModel.cs" />
+    <Compile Include="ViewModel\FamiliarDataViewModel.cs" />
     <Compile Include="ViewModel\GatherControlViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="FamiliarAddWindow.xaml.cs">
@@ -82,6 +86,10 @@
     <Compile Include="FamiliarDeleteWindow.xaml.cs">
       <DependentUpon>FamiliarDeleteWindow.xaml</DependentUpon>
     </Compile>
+    <Page Include="FamiliarDataWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="GatherFlightsControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -126,6 +134,7 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">

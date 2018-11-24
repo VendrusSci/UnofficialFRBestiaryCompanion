@@ -197,6 +197,30 @@ namespace Bestiary.ViewModel
             }
         }
 
+        private LambdaCommand m_openDataFamiliarWindow;
+        public ICommand OpenDataFamiliarWindow
+        {
+            get
+            {
+                if(m_openDataFamiliarWindow == null)
+                {
+                    m_openDataFamiliarWindow = new LambdaCommand(
+                        onExecute: (p) =>
+                        {
+                            FamiliarDataWindow familiarDataWindow = new FamiliarDataWindow((FamiliarViewModel)p);
+                            familiarDataWindow.Owner = Window;
+                            familiarDataWindow.ShowDialog();
+                        },
+                        onCanExecute: (p) =>
+                        {
+                            return p.GetType() == typeof(FamiliarViewModel);
+                        }
+                    );
+                }
+                return m_openDataFamiliarWindow;
+            }
+        }
+
         private IEnumerable<FamiliarInfo> ApplySort(IEnumerable<FamiliarInfo> familiars)
         {
             IEnumerable<FamiliarInfo> sortedFamiliars = familiars;

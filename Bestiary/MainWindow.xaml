@@ -186,11 +186,14 @@
                         <Label Grid.Column="8" Width="Auto" HorizontalContentAlignment="Center" Content="Awakened:"/>
                         <Label Grid.Column="9" Width="50" Margin="5" VerticalContentAlignment="Center"  Content="{Binding AwakenedCount}"/>
                     </Grid>
-                    <DataGrid Grid.Row ="1" Width="Auto" Height="Auto" AutoGenerateColumns="False" GridLinesVisibility="None" ItemsSource="{Binding FilteredFamiliars}">
+                    <DataGrid Grid.Row ="1" Width="Auto" Height="Auto" AutoGenerateColumns="False" GridLinesVisibility="None" ItemsSource="{Binding FilteredFamiliars}" IsSynchronizedWithCurrentItem="True">
                         <DataGrid.Resources>
                             <local:OwnedToBoolConverter x:Key="OwnedToBoolConverter"/>
                             <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Transparent"/>
                         </DataGrid.Resources>
+                        <DataGrid.InputBindings>
+                            <MouseBinding MouseAction="LeftDoubleClick" Command="{Binding OpenDataFamiliarWindow}" CommandParameter="{Binding FilteredFamiliars/}"/>
+                        </DataGrid.InputBindings>
                         <DataGrid.Columns>
                             <DataGridTemplateColumn Header="Icon" Width="Auto" IsReadOnly="True">
                                 <DataGridTemplateColumn.CellTemplate>
