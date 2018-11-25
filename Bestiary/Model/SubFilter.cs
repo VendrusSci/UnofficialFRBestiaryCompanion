@@ -74,7 +74,7 @@ namespace Bestiary.Model
         public event PropertyChangedEventHandler PropertyChanged;
     }
 
-    class EnumSubFilter<T, SourceType> : IAmSubFilter, INotifyPropertyChanged
+    public class EnumSubFilter<T, SourceType> : IAmSubFilter, INotifyPropertyChanged
         where T : struct
         where SourceType : class
     {
@@ -130,6 +130,66 @@ namespace Bestiary.Model
 
         private Func<SourceType, T> m_GetKey;
         private Func<T, T, bool> m_Compare;
+        private Action<T?> m_OnSet;
+
+        public event PropertyChangedEventHandler PropertyChanged;
+    }
+
+    public class ListSubFilter<T, SourceType> : IAmSubFilter, INotifyPropertyChanged
+    where T : struct
+    where SourceType : class
+    {
+        public string Name { get; set; }
+        public T[] AvailableOptions { get; set; }
+        private T? m_SelectedOption = null;
+        public T? SelectedOption
+        {
+            get { return m_SelectedOption; }
+            set
+            {
+                m_SelectedOption = value;
+                m_OnSet?.Invoke(m_SelectedOption);
+            }
+        }
+
+        public ListSubFilter(string name, T[] availableOptions, T? selectedOption, Func<SourceType, List<T>> getKey, Action<T?> onSet = null)
+        {
+            Name = name;
+            AvailableOptions = availableOptions;
+            SelectedOption = selectedOption;
+            m_GetKey = getKey;
+            m_OnSet = onSet;
+            if (m_Compare == null)
+            {
+                m_Compare = (a, b) => a.Contains(b);
+            }
+        }
+
+        public IEnumerable<FamiliarInfo> Apply(IEnumerable<FamiliarInfo> toFilter)
+        {
+            if (SelectedOption == null)
+            {
+                return toFilter;
+            }
+
+            return toFilter
+                .Where(f =>
+                {
+                    var source = f.Familiar.Source as SourceType;
+                    if (source == null)
+                    {
+                        return false;
+                    }
+
+                    var key = m_GetKey(source);
+                    var matches = m_Compare(key, SelectedOption.Value);
+
+                    return matches;
+                });
+        }
+
+        private Func<SourceType, List<T>> m_GetKey;
+        private Func<List<T>, T, bool> m_Compare;
         private Action<T?> m_OnSet;
 
         public event PropertyChangedEventHandler PropertyChanged;
