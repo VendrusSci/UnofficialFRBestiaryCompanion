@@ -87,13 +87,18 @@
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
-                        <TextBox Grid.Row="0" Text="{Binding SearchText}" />
+                        <TextBox Grid.Row="0" Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}">
+                            <TextBox.InputBindings>
+                                <KeyBinding Command="{Binding FetchFamiliars}" Key="Enter"/>
+                            </TextBox.InputBindings>
+                        </TextBox>
                         <Grid Grid.Row="1" HorizontalAlignment="Right" Width="174">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
-                            <CheckBox Grid.Column="0" IsChecked="{Binding ExactChecked}"/>
+                            <CheckBox Grid.Column="0" IsChecked="{Binding ExactChecked}" HorizontalAlignment="Left"/>
                             <Label Grid.Column="1" HorizontalAlignment ="Left" Content="Exact"/>
                         </Grid>
                     </Grid>
@@ -144,9 +149,11 @@
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition SharedSizeGroup="A"/>
                                             <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
                                         </Grid.ColumnDefinitions>
                                         <Label Grid.Column="0" Content="{Binding Name}"/>
                                         <ComboBox Grid.Column="1" Margin="5" ItemsSource="{Binding AvailableOptions}" SelectedItem="{Binding SelectedOption}"/>
+                                        <Button Grid.Column="2" Margin="5" Content="Clear" Command="{Binding Clear}"/>
                                     </Grid>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>

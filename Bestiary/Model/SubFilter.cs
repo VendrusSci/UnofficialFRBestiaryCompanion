@@ -4,12 +4,14 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace Bestiary.Model
 {
     interface IAmSubFilter
     {
         IEnumerable<FamiliarInfo> Apply(IEnumerable<FamiliarInfo> toFilter);
+        ICommand Clear { get; }
     }
 
     public class SubFilter<T, SourceType> : IAmSubFilter, INotifyPropertyChanged
@@ -27,6 +29,28 @@ namespace Bestiary.Model
             {
                 m_SelectedOption = value;
                 m_OnSet?.Invoke(m_SelectedOption);
+            }
+        }
+
+        private LambdaCommand m_Clear;
+        public ICommand Clear
+        {
+            get
+            {
+                if(m_Clear == null)
+                {
+                    m_Clear = new LambdaCommand(
+                        onExecute: (p) =>
+                        {
+                            SelectedOption = null;
+                        },
+                        onCanExecute: (p) =>
+                        {
+                            return SelectedOption != null;
+                        }
+                    );
+                }
+                return m_Clear;
             }
         }
 
@@ -102,6 +126,28 @@ namespace Bestiary.Model
             if (m_Compare == null)
             {
                 m_Compare = (a, b) => a.Equals(b);
+            }
+        }
+
+        private LambdaCommand m_Clear;
+        public ICommand Clear
+        {
+            get
+            {
+                if (m_Clear == null)
+                {
+                    m_Clear = new LambdaCommand(
+                        onExecute: (p) =>
+                        {
+                            SelectedOption = null;
+                        },
+                        onCanExecute: (p) =>
+                        {
+                            return SelectedOption != null;
+                        }
+                    );
+                }
+                return m_Clear;
             }
         }
 
@@ -186,6 +232,28 @@ namespace Bestiary.Model
 
                     return matches;
                 });
+        }
+
+        private LambdaCommand m_Clear;
+        public ICommand Clear
+        {
+            get
+            {
+                if (m_Clear == null)
+                {
+                    m_Clear = new LambdaCommand(
+                        onExecute: (p) =>
+                        {
+                            SelectedOption = null;
+                        },
+                        onCanExecute: (p) =>
+                        {
+                            return SelectedOption != null;
+                        }
+                    );
+                }
+                return m_Clear;
+            }
         }
 
         private Func<SourceType, List<T>> m_GetKey;

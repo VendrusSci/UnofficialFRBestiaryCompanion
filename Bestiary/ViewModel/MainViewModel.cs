@@ -115,6 +115,26 @@ namespace Bestiary.ViewModel
                             FamiliarParameters.SelectedMarketPlaceType = null;
                             FamiliarParameters.SelectedSiteEvent = null;
                             FamiliarParameters.SelectedVenueName = null;
+                        },
+                        onCanExecute: (p) =>
+                        {
+                            switch (p)
+                            {
+                                case OwnershipStatus b:
+                                    return FamiliarParameters.SelectedOwnedStatus != null;
+                                case BondingLevels bl:
+                                    return FamiliarParameters.SelectedBondingLevel != null;
+                                case Sources s:
+                                    return FamiliarParameters.SelectedSource != null;
+                                case Availabilities a:
+                                    return FamiliarParameters.SelectedAvailability != null;
+                                case SortTypes st:
+                                    return SelectedSortType != null;
+                                case LocationTypes l:
+                                    return FamiliarParameters.SelectedLocationType != null;
+                                default:
+                                    return false;
+                            }
                         }
                     );
                 }
