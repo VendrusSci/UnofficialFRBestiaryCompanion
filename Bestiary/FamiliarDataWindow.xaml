@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Bestiary"
+        xmlns:local_vm="clr-namespace:Bestiary.ViewModel"
         xmlns:local_model="clr-namespace:Bestiary.Model"
         mc:Ignorable="d"
         Title="FamiliarViewWindow" Height="650" Width="400"
@@ -30,6 +31,7 @@
             <Setter Property="VerticalContentAlignment" Value="Center"/>
             <Setter Property="Margin" Value="5"/>
         </Style>
+        <local_vm:ItemToDescriptionConverter x:Key="DescConverter"/>
     </Window.Resources>
     <Grid>
         <GroupBox Margin="5">
@@ -212,9 +214,22 @@
                     <Label Grid.Column="0" Grid.Row="0" Content="Ownership Status:"/>
                     <Label Grid.Column="0" Grid.Row="1" Content="Bond Level:"/>
                     <Label Grid.Column="0" Grid.Row="2" Content="Location:"/>
-                    <ComboBox Grid.Column="1" Grid.Row="0" ItemsSource="{Binding FamiliarDisplayInfo.AvailableOwnershipStatuses}" SelectedItem="{Binding SelectedOwnershipStatus}" IsSynchronizedWithCurrentItem="True"/>
+                    <ComboBox Grid.Column="1" Grid.Row="0" ItemsSource="{Binding FamiliarDisplayInfo.AvailableOwnershipStatuses}" SelectedItem="{Binding SelectedOwnershipStatus}" IsSynchronizedWithCurrentItem="True">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Mode=OneTime, Converter={StaticResource DescConverter}}"/>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
                     <ComboBox Grid.Column="1" Grid.Row="1" ItemsSource="{Binding FamiliarDisplayInfo.AvailableBondingLevels}" SelectedItem="{Binding SelectedBondingLevel}" IsSynchronizedWithCurrentItem="True"/>
-                    <ComboBox Grid.Column="1" Grid.Row="2" ItemsSource="{Binding FamiliarDisplayInfo.AvailableLocationTypes}" SelectedItem="{Binding SelectedLocation}" IsSynchronizedWithCurrentItem="True"/>
+                    <ComboBox Grid.Column="1" Grid.Row="2" ItemsSource="{Binding FamiliarDisplayInfo.AvailableLocationTypes}" SelectedItem="{Binding SelectedLocation}" IsSynchronizedWithCurrentItem="True">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Mode=OneTime, Converter={StaticResource DescConverter}}"/>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+
+                    </ComboBox>
                 </Grid>
                 <Button Grid.Row="6" Content="Update" Margin="5" Command="{Binding UpdateStatus}" Width="150"/>
             </Grid>

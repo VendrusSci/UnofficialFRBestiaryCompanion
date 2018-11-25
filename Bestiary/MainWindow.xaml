@@ -57,7 +57,7 @@
             </Style.Triggers>
         </Style>
         <local_vm:LongestItemToWidthConverter x:Key="ComboBoxWidthConverter"/>
-        <local_vm:EnumToDescriptionConverter x:Key="EnumDescConverter"/>
+        <local_vm:ItemToDescriptionConverter x:Key="DescConverter"/>
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -129,14 +129,38 @@
                         <ComboBox Grid.Column="1" Grid.Row="0" ItemsSource="{Binding FamiliarParameters.AvailableOwnedStatus}" SelectedItem="{Binding FamiliarParameters.SelectedOwnedStatus}" HorizontalAlignment="Stretch">
                             <ComboBox.ItemTemplate>
                                 <DataTemplate>
-                                    <TextBlock Text="{Binding Mode=OneTime, Converter={StaticResource EnumDescConverter}}"/>
+                                    <TextBlock Text="{Binding Mode=OneTime, Converter={StaticResource DescConverter}}"/>
                                 </DataTemplate>
                             </ComboBox.ItemTemplate>
                         </ComboBox>
-                        <ComboBox Grid.Column="1" Grid.Row="1" ItemsSource="{Binding FamiliarParameters.AvailableBondingLevels}" SelectedItem="{Binding FamiliarParameters.SelectedBondingLevel}" HorizontalAlignment="Stretch" />
-                        <ComboBox Grid.Column="1" Grid.Row="2" ItemsSource="{Binding FamiliarParameters.AvailableLocationTypes}" SelectedItem="{Binding FamiliarParameters.SelectedLocationType}" HorizontalAlignment="Stretch" />
-                        <ComboBox Grid.Column="1" Grid.Row="3" ItemsSource="{Binding FamiliarParameters.AvailableAvailabilities}" SelectedItem="{Binding FamiliarParameters.SelectedAvailability}" HorizontalAlignment="Stretch" />
-                        <ComboBox Grid.Column="1" Grid.Row="4" ItemsSource="{Binding FamiliarParameters.AvailableSources}" SelectedItem="{Binding FamiliarParameters.SelectedSource}" HorizontalAlignment="Stretch" />
+                        <ComboBox Grid.Column="1" Grid.Row="1" ItemsSource="{Binding FamiliarParameters.AvailableBondingLevels}" SelectedItem="{Binding FamiliarParameters.SelectedBondingLevel}" HorizontalAlignment="Stretch">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Mode=OneTime, Converter={StaticResource DescConverter}}"/>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                        <ComboBox Grid.Column="1" Grid.Row="2" ItemsSource="{Binding FamiliarParameters.AvailableLocationTypes}" SelectedItem="{Binding FamiliarParameters.SelectedLocationType}" HorizontalAlignment="Stretch">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Mode=OneTime, Converter={StaticResource DescConverter}}"/>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                        <ComboBox Grid.Column="1" Grid.Row="3" ItemsSource="{Binding FamiliarParameters.AvailableAvailabilities}" SelectedItem="{Binding FamiliarParameters.SelectedAvailability}" HorizontalAlignment="Stretch">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Mode=OneTime, Converter={StaticResource DescConverter}}"/>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                        <ComboBox Grid.Column="1" Grid.Row="4" ItemsSource="{Binding FamiliarParameters.AvailableSources}" SelectedItem="{Binding FamiliarParameters.SelectedSource}" HorizontalAlignment="Stretch">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Mode=OneTime, Converter={StaticResource DescConverter}}"/>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
 
                         <Button Grid.Column="2" Grid.Row="0" Content="Clear" Command="{Binding ClearOption}" CommandParameter="{Binding FamiliarParameters.SelectedOwnedStatus}"/>
                         <Button Grid.Column="2" Grid.Row="1" Content="Clear" Command="{Binding ClearOption}" CommandParameter="{Binding FamiliarParameters.SelectedBondingLevel}"/>
@@ -161,7 +185,13 @@
                                             <ColumnDefinition Width="Auto"/>
                                         </Grid.ColumnDefinitions>
                                         <Label Grid.Column="0" Content="{Binding Name}"/>
-                                        <ComboBox Grid.Column="1" Margin="5" ItemsSource="{Binding AvailableOptions}" SelectedItem="{Binding SelectedOption}" HorizontalAlignment="Stretch"/>
+                                        <ComboBox Grid.Column="1" Margin="5" ItemsSource="{Binding AvailableOptions}" SelectedItem="{Binding SelectedOption}" HorizontalAlignment="Stretch">
+                                            <ComboBox.ItemTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Text="{Binding Mode=OneTime, Converter={StaticResource DescConverter}}"/>
+                                                </DataTemplate>
+                                            </ComboBox.ItemTemplate>
+                                        </ComboBox>
                                         <Button Grid.Column="2" Margin="5" Content="Clear" Command="{Binding Clear}"/>
                                     </Grid>
                                 </DataTemplate>
@@ -221,13 +251,19 @@
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
                             <DataGridTextColumn Header="Name" Width="Auto" IsReadOnly="True" Binding="{Binding Info.Familiar.Name}" TextBlock.TextAlignment="Center"/>
-                            <DataGridTextColumn Header="Ownership" Width="Auto" IsReadOnly="True" Binding="{Binding Info.Owned}" TextBlock.TextAlignment="Center"/>
+                            <DataGridTextColumn Header="Ownership" Width="Auto" IsReadOnly="True" Binding="{Binding Info.Owned, Converter={StaticResource DescConverter}}" TextBlock.TextAlignment="Center"/>
                             <DataGridTextColumn Header="Bonding Level" Width="Auto" IsReadOnly="True" Binding="{Binding Info.BondLevel}"/>
                             <DataGridTextColumn Width="10" IsReadOnly="True"/>
                             <DataGridTemplateColumn Header="Location" Width="Auto" IsReadOnly="False">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
-                                        <ComboBox  ItemsSource="{Binding AvailableLocationTypes}" SelectedItem="{Binding Info.Location, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsSynchronizedWithCurrentItem="True" IsEnabled="{Binding Info.Owned, Converter={StaticResource OwnedToBoolConverter}}"/>
+                                        <ComboBox  ItemsSource="{Binding AvailableLocationTypes}" SelectedItem="{Binding Info.Location, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsSynchronizedWithCurrentItem="True" IsEnabled="{Binding Info.Owned, Converter={StaticResource OwnedToBoolConverter}}">
+                                            <ComboBox.ItemTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Text="{Binding Mode=OneTime, Converter={StaticResource DescConverter}}"/>
+                                                </DataTemplate>
+                                            </ComboBox.ItemTemplate>
+                                        </ComboBox>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>

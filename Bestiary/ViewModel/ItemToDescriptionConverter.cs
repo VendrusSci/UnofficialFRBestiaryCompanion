@@ -10,15 +10,15 @@ using System.Windows.Data;
 
 namespace Bestiary.ViewModel
 {
-    public class EnumToDescriptionConverter : IValueConverter
+    public class ItemToDescriptionConverter : IValueConverter
     {
-        private string GetEnumDescription(Enum enumObject)
+        private string GetDescription(object fieldObject)
         {
-            FieldInfo fieldInfo = enumObject.GetType().GetField(enumObject.ToString());
+            FieldInfo fieldInfo = fieldObject.GetType().GetField(fieldObject.ToString());
             object[] attributes = fieldInfo.GetCustomAttributes(false);
             if(attributes.Length == 0)
             {
-                return enumObject.ToString();
+                return fieldObject.ToString();
             }
             else
             {
@@ -29,8 +29,7 @@ namespace Bestiary.ViewModel
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            Enum enumForConversion = (Enum)value;
-            string desc = GetEnumDescription(enumForConversion);
+            string desc = GetDescription(value);
             return desc;
         }
 

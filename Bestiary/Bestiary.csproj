@@ -74,7 +74,7 @@
     <Compile Include="Model\LocationType.cs" />
     <Compile Include="Model\SubFilter.cs" />
     <Compile Include="Model\XmlModelStorage.cs" />
-    <Compile Include="ViewModel\EnumToDescriptionConverter.cs" />
+    <Compile Include="ViewModel\ItemToDescriptionConverter.cs" />
     <Compile Include="ViewModel\FamiliarAddViewModel.cs" />
     <Compile Include="ViewModel\FamiliarDeleteViewModel.cs" />
     <Compile Include="ViewModel\FamiliarViewModel.cs" />

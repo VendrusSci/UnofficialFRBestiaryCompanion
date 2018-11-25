@@ -40,6 +40,7 @@ namespace Bestiary.Model
         Festival,
         Event,
         Cycling,
+        [Description("Joxar's Boxes")]
         JoxarBox,
         Retired
     }
