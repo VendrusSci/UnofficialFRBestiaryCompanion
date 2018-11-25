@@ -1,10 +1,8 @@
-﻿using System;
+﻿
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Runtime.Serialization;
-using System.Text;
-using System.Threading.Tasks;
+using System.ComponentModel;
 
 namespace Bestiary.Model
 {
@@ -61,6 +59,7 @@ namespace Bestiary.Model
     {
         Hunting,
         Fishing,
+        [Description("Insect Catching")]
         InsectCatching,
         Foraging,
         Digging,
@@ -82,13 +81,17 @@ namespace Bestiary.Model
     public enum OwnershipStatus
     {
         Owned,
+        [Description("Not Owned")]
         NotOwned
     }
 
     public enum LocationTypes
     {
+        [Description("On Dragon")]
         OnDragon,
+        [Description("In Hoard")]
         InHoard,
+        [Description("In Vault")]
         InVault
     }
 
