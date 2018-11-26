@@ -81,6 +81,7 @@
     <Compile Include="GatherFlightsControl.xaml.cs">
       <DependentUpon>GatherFlightsControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ImageLoader.cs" />
     <Compile Include="LambdaCommand.cs" />
     <Compile Include="Model\FamiliarAddParameters.cs" />
     <Compile Include="Model\FamiliarFilters.cs" />

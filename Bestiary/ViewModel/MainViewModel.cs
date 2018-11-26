@@ -410,16 +410,11 @@ namespace Bestiary.ViewModel
             try
             {
                 var bestiaryIconPath = Path.Combine(ApplicationPaths.GetResourcesDirectory(), "bestiary.png");
-                Icon = new BitmapImage();
-                Icon.BeginInit();
-                Icon.CacheOption = BitmapCacheOption.OnLoad;
-                Icon.UriSource = new Uri(bestiaryIconPath, UriKind.RelativeOrAbsolute);
-                Icon.EndInit();
+                Icon = ImageLoader.LoadImage(bestiaryIconPath);
             }
             catch (FileNotFoundException)
             {
                 UserActionLog.Error("Bestiary file not found");
-                Icon = null;
                 // :(
             }
 

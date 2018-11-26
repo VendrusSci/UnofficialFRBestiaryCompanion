@@ -117,13 +117,7 @@ namespace Bestiary.ViewModel
 
             try
             {
-                var bitmapImage = new BitmapImage();
-                bitmapImage.BeginInit();
-                bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
-                bitmapImage.UriSource = new Uri(path, UriKind.RelativeOrAbsolute);
-                bitmapImage.EndInit();
-
-                return bitmapImage;
+                return ImageLoader.LoadImage(path);
             }
             catch(FileNotFoundException)
             {
