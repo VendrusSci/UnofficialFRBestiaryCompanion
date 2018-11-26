@@ -15,6 +15,12 @@ namespace Bestiary.ViewModel
         private string GetDescription(object fieldObject)
         {
             FieldInfo fieldInfo = fieldObject.GetType().GetField(fieldObject.ToString());
+
+            if(fieldInfo == null)
+            {
+                return null;
+            }
+
             object[] attributes = fieldInfo.GetCustomAttributes(false);
             if(attributes.Length == 0)
             {
@@ -29,16 +35,7 @@ namespace Bestiary.ViewModel
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            string desc;
-            if (value.GetType() != typeof(string))
-            {
-                desc = GetDescription(value);
-            }
-            else
-            {
-                desc = (string)value;
-            }
-            return desc;
+            return GetDescription(value) ?? value.ToString();
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
