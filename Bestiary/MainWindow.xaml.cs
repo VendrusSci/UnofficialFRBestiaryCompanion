@@ -14,9 +14,9 @@ namespace Bestiary
         {
             InitializeComponent();
 
-            var resourcesDirectory = Directory.GetCurrentDirectory();
-            var frDataPath = Path.Combine(resourcesDirectory, "Resources/FRData.xml");
-            var userDataPath = Path.Combine(resourcesDirectory, "User Data/UserData.xml");
+            var dataDirectory = ApplicationPaths.GetDataDirectory();
+            var frDataPath = Path.Combine(dataDirectory, "Resources/FRData.xml");
+            var userDataPath = Path.Combine(dataDirectory, "User Data/UserData.xml");
             DataContext = new MainViewModel(this, new XmlModelStorage(frDataPath, userDataPath));
         }
     }

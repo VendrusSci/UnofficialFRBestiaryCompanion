@@ -112,7 +112,8 @@ namespace Bestiary.ViewModel
 
         private BitmapImage LoadImage(ImageType type)
         {
-            string path = $"Resources/{type}/{Info.Familiar.Id}.png";
+            var resourcePath = ApplicationPaths.GetResourcesDirectory();
+            var path = Path.Combine(resourcePath, $"{type}/{Info.Familiar.Id}.png");
 
             try
             {
@@ -126,7 +127,11 @@ namespace Bestiary.ViewModel
             }
             catch(FileNotFoundException)
             {
-                MainViewModel.UserActionLog.Info($"No icon found for familiar {Info.Familiar.Id}");
+                MainViewModel.UserActionLog.Info($"No {type} file found for familiar {Info.Familiar.Id}");
+            }
+            catch(DirectoryNotFoundException)
+            {
+                MainViewModel.UserActionLog.Info($"No resources folder, could not find {type} file for familiar {Info.Familiar.Id}");
             }
 
             return null;

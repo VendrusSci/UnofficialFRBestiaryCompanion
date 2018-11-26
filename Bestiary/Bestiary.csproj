@@ -71,6 +71,7 @@
     <Compile Include="AboutWindow.xaml.cs">
       <DependentUpon>AboutWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ApplicationPaths.cs" />
     <Compile Include="FamiliarDataWindow.xaml.cs">
       <DependentUpon>FamiliarDataWindow.xaml</DependentUpon>
     </Compile>
