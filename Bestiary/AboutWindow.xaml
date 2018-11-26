@@ -1,0 +1,19 @@
+﻿<Window x:Class="Bestiary.AboutWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Bestiary"
+        mc:Ignorable="d"
+        Title="About" Height="190" Width="300">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Row="0"  HorizontalAlignment="Center" TextAlignment="Center" Margin="5" TextWrapping="Wrap" Text="All familiar images and information are © Stormlight Workshop LLC."/>
+        <TextBlock Grid.Row="1"  HorizontalAlignment="Center" TextAlignment="Center" Margin="5" TextWrapping="Wrap" Text="This software is free and open source, and is intended for personal use only"/>
+        <TextBlock Grid.Row="2"  HorizontalAlignment="Center" TextAlignment="Center" Margin="5" TextWrapping="Wrap" Text="While we will endeavour to keep the keep the software and familiar list up to date, no guarantees are made."/>
+    </Grid>
+</Window>

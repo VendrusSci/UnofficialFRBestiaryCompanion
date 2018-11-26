@@ -27,7 +27,7 @@ namespace Bestiary.ViewModel
                     flightList.Add((Flights)i);
                 }
             }
-            
+            MainViewModel.UserActionLog.Info($"Flights in list: {flightList}");
             return flightList;
         }
     }

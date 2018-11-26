@@ -42,7 +42,7 @@ namespace Bestiary.ViewModel
         {
             get
             {
-                if(m_Image ==  null)
+                if(m_Image == null)
                 {
                     m_Image = LoadImage(ImageType.Images);
                 }
@@ -72,6 +72,7 @@ namespace Bestiary.ViewModel
                     m_SetOwned = new LambdaCommand(
                         onExecute: (p) =>
                         {
+                            MainViewModel.UserActionLog.Info($"Setting familiar to owned: {Info.Familiar.Id}");
                             var ownedFamiliar = new OwnedFamiliar(Info.Familiar.Id, BondingLevels.Wary, LocationTypes.InHoard);
                             m_Model.AddOwnedFamiliar(ownedFamiliar);
                             Info.OwnedFamiliar = m_Model.LookupOwnedFamiliar(Info.Familiar.Id);
@@ -96,6 +97,7 @@ namespace Bestiary.ViewModel
                     m_IncrementBondingLevel = new LambdaCommand(
                         onExecute: (p) =>
                         {
+                            MainViewModel.UserActionLog.Info($"Bond level increased to {Info.BondLevel + 1}");
                             Info.BondLevel++;
                         },
                         onCanExecute: (p) =>
@@ -110,7 +112,7 @@ namespace Bestiary.ViewModel
 
         private BitmapImage LoadImage(ImageType type)
         {
-            string path = $"{type}/{Info.Familiar.Id}.png";
+            string path = $"Resources/{type}/{Info.Familiar.Id}.png";
 
             try
             {
@@ -124,7 +126,7 @@ namespace Bestiary.ViewModel
             }
             catch(FileNotFoundException)
             {
-                // :(
+                MainViewModel.UserActionLog.Info($"No icon found for familiar {Info.Familiar.Id}");
             }
 
             return null;

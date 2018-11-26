@@ -21,6 +21,7 @@ namespace Bestiary.ViewModel
 
         public FamiliarDeleteViewModel(IModel model)
         {
+            MainViewModel.UserActionLog.Info($"Familiar delete window started");
             m_Model = model;
         }
 
@@ -34,13 +35,16 @@ namespace Bestiary.ViewModel
                     m_LoadName = new LambdaCommand(
                         onExecute: (p) =>
                         {
+                            MainViewModel.UserActionLog.Info($"Familiar Id looked up: {Id}");
                             m_KnownFamiliar = m_Model.LookupFamiliar(Id);
                             if(m_KnownFamiliar != null)
                             {
                                 Name = m_KnownFamiliar.Fetch().Name;
+                                MainViewModel.UserActionLog.Info($"Familiar found: {Name}");
                             }
                             else
                             {
+                                MainViewModel.UserActionLog.Info($"Familiar not found");
                                 Name = "ID unknown";
                             }
                         }
@@ -60,10 +64,12 @@ namespace Bestiary.ViewModel
                     m_DeleteFamiliar = new LambdaCommand(
                         onExecute: (p) =>
                         {
+                            MainViewModel.UserActionLog.Info($"Deleting familiar: {Id}");
                             m_KnownFamiliar.Delete();
                             m_OwnedFamiliar = m_Model.LookupOwnedFamiliar(Id);
                             if(m_OwnedFamiliar != null)
                             {
+                                MainViewModel.UserActionLog.Info($"Owned familiar found, deleting that too");
                                 m_OwnedFamiliar.Delete();
                             }
                         }

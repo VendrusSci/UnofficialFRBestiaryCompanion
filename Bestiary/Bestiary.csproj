@@ -37,6 +37,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="PropertyChanged, Version=2.5.13.0, Culture=neutral, PublicKeyToken=ee3ee20bcf148ddd, processorArchitecture=MSIL">
       <HintPath>..\packages\PropertyChanged.Fody.2.5.13\lib\net452\PropertyChanged.dll</HintPath>
     </Reference>
@@ -61,8 +64,18 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="AboutWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>XamlIntelliSenseFileGenerator</Generator>
+    </Page>
+    <Compile Include="AboutWindow.xaml.cs">
+      <DependentUpon>AboutWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="FamiliarDataWindow.xaml.cs">
       <DependentUpon>FamiliarDataWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="FetchUpdateWindow.xaml.cs">
+      <DependentUpon>FetchUpdateWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="GatherFlightsControl.xaml.cs">
       <DependentUpon>GatherFlightsControl.xaml</DependentUpon>
@@ -74,6 +87,10 @@
     <Compile Include="Model\LocationType.cs" />
     <Compile Include="Model\SubFilter.cs" />
     <Compile Include="Model\XmlModelStorage.cs" />
+    <Compile Include="SupportInfoWindow.xaml.cs">
+      <DependentUpon>SupportInfoWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModel\FetchUpdateViewModel.cs" />
     <Compile Include="ViewModel\ItemToDescriptionConverter.cs" />
     <Compile Include="ViewModel\FamiliarAddViewModel.cs" />
     <Compile Include="ViewModel\FamiliarDeleteViewModel.cs" />
@@ -88,9 +105,14 @@
     <Compile Include="FamiliarDeleteWindow.xaml.cs">
       <DependentUpon>FamiliarDeleteWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModel\SupportViewModel.cs" />
     <Page Include="FamiliarDataWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="FetchUpdateWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="GatherFlightsControl.xaml">
       <SubType>Designer</SubType>
@@ -116,6 +138,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="SupportInfoWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Model\Familiar.cs" />
@@ -138,6 +164,9 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <None Include="log4net.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

@@ -29,7 +29,15 @@ namespace Bestiary.ViewModel
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            string desc = GetDescription(value);
+            string desc;
+            if (value.GetType() != typeof(string))
+            {
+                desc = GetDescription(value);
+            }
+            else
+            {
+                desc = (string)value;
+            }
             return desc;
         }
 

@@ -13,13 +13,10 @@ namespace Bestiary
         public MainWindow()
         {
             InitializeComponent();
-#if DEBUG
-            var resourcesDirectory = "../../Resources/";
-#else
+
             var resourcesDirectory = Directory.GetCurrentDirectory();
-#endif
-            var frDataPath = Path.Combine(resourcesDirectory, "FRData.xml");
-            var userDataPath = Path.Combine(resourcesDirectory, "UserData.xml");
+            var frDataPath = Path.Combine(resourcesDirectory, "Resources/FRData.xml");
+            var userDataPath = Path.Combine(resourcesDirectory, "User Data/UserData.xml");
             DataContext = new MainViewModel(this, new XmlModelStorage(frDataPath, userDataPath));
         }
     }

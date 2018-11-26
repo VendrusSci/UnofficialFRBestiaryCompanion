@@ -38,9 +38,10 @@ namespace Bestiary.Model
     {
         Always,
         Festival,
-        Event,
+        [Description("Night of the Nocturne")]
+        Notn,
         Cycling,
-        [Description("Joxar's Boxes")]
+        [Description("Joxar's Spare Inventory")]
         JoxarBox,
         Retired
     }

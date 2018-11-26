@@ -22,6 +22,7 @@ namespace Bestiary.ViewModel
 
         public FamiliarDataViewModel(FamiliarViewModel info, IModel model)
         {
+            MainViewModel.UserActionLog.Info($"Familiar data view started");
             m_Model = model;
             FamiliarDisplayInfo = info;
             Familiar = FamiliarDisplayInfo.Info.Familiar;
@@ -44,14 +45,17 @@ namespace Bestiary.ViewModel
                     m_UpdateStatus = new LambdaCommand(
                         onExecute: (p) =>
                         {
+                            MainViewModel.UserActionLog.Info($"Updating status:");
                             if (FamiliarDisplayInfo.Info.Owned == OwnershipStatus.Owned)
                             {
                                 if (SelectedOwnershipStatus == OwnershipStatus.NotOwned)
                                 {
+                                    MainViewModel.UserActionLog.Info($"Familiar no longer owned");
                                     FamiliarDisplayInfo.Info.OwnedFamiliar.Delete();
                                 }
                                 else
                                 {
+                                    MainViewModel.UserActionLog.Info($"Familiar status updated: {SelectedLocation.Value}, {SelectedBondingLevel.Value}");
                                     OwnedFamiliar.Update(f => f.Location = SelectedLocation.Value);
                                     OwnedFamiliar.Update(f => f.BondingLevel = SelectedBondingLevel.Value);
                                 }
@@ -60,7 +64,10 @@ namespace Bestiary.ViewModel
                             {
                                 if (SelectedOwnershipStatus == OwnershipStatus.Owned)
                                 {
+                                    MainViewModel.UserActionLog.Info($"Familiar now owned");
                                     m_Model.AddOwnedFamiliar(new OwnedFamiliar(Familiar.Id, SelectedBondingLevel.Value, SelectedLocation.Value));
+                                    OwnedFamiliar.Update(f => f.Location = LocationTypes.InHoard);
+                                    OwnedFamiliar.Update(f => f.BondingLevel = BondingLevels.Wary);
                                 }
                             }
                         }

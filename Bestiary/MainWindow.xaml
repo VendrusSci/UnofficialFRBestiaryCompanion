@@ -7,7 +7,8 @@
         xmlns:local_vm="clr-namespace:Bestiary.ViewModel"
         mc:Ignorable="d"
         x:Name="TopLevelWindow"
-        Title="MainWindow" Height="500" Width="900"
+        Title="Unofficial FR Bestiary Companion" Height="500" Width="950"
+        Icon="{Binding Icon}"
         WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <Style TargetType="Label">
@@ -70,6 +71,11 @@
                 <MenuItem Width="Auto" Header="Delete Familiar" Command="{Binding OpenDeleteFamiliarWindow}"/>
             </MenuItem>
             <MenuItem Width="Auto" Header="Views"/>
+            <MenuItem Width="Auto" Header="Other">
+                <MenuItem Width="Auto" Header="Support" Command="{Binding OpenSupportInfoWindow}"/>
+                <MenuItem Width="Auto" Header="Check for Updates" Command="{Binding OpenFetchUpdateWindow}"/>
+                <MenuItem Width="Auto" Header="About" Command="{Binding OpenAboutWindow}"/>
+            </MenuItem>
         </Menu>
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
@@ -95,7 +101,7 @@
                                 <KeyBinding Command="{Binding FetchFamiliars}" Key="Enter"/>
                             </TextBox.InputBindings>
                         </TextBox>
-                        <Grid Grid.Row="1" HorizontalAlignment="Left" >
+                        <Grid Grid.Row="1">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto"/>
                                 <ColumnDefinition Width="Auto"/>
@@ -103,6 +109,7 @@
                             </Grid.ColumnDefinitions>
                             <CheckBox Grid.Column="0" IsChecked="{Binding ExactChecked}" HorizontalAlignment="Left"/>
                             <Label Grid.Column="1" HorizontalAlignment ="Left" Content="Exact"/>
+                            <Button Grid.Column="2" HorizontalAlignment="Right" Content="Clear all filters" Command="{Binding ClearAllFilters}"/>
                         </Grid>
                     </Grid>
                 </GroupBox>
@@ -110,7 +117,7 @@
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" SharedSizeGroup="A"/>
-                            <ColumnDefinition MinWidth="120" />
+                            <ColumnDefinition MinWidth="160" />
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
