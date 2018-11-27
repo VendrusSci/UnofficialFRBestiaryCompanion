@@ -58,7 +58,7 @@ namespace Bestiary.Model
                         ParameterSelectorList = new List<object>
                         {
                             new FilterWrapper(new EnumSubFilter<Flights, Festival>("Flights", AvailableFlights, SelectedFlight, f => f.Flight, onSet: e => SelectedFlight = e)),
-                            new FilterWrapper(new SubFilter<CycleYear, SiteEvent>("Year", AvailableCycleYears, SelectedCycleYear, f => f.Year, onSet: y => SelectedCycleYear = y)),
+                            new FilterWrapper(new SubFilter<CycleYear, SiteEvent>("Year", AvailableCycleYears, SelectedCycleYear, f => f.Year, onSet: y => SelectedCycleYear.Equals(y))),
                         };
                         break;
                     case Sources.Gathering:
@@ -108,7 +108,7 @@ namespace Bestiary.Model
             get
             {
                 int years = (int)Math.Ceiling(DateTime.Now.Subtract(new DateTime(2013, 6, 8)).TotalDays / 365.25);
-                return Enumerable.Range(1, years)
+                return Enumerable.Range(1, years+1)
                     .Select(year => new CycleYear(year))
                     .ToArray();
             }

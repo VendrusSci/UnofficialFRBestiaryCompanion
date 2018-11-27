@@ -191,7 +191,7 @@ namespace Bestiary.Model
     }
 
     [DataContract]
-    class CycleYear
+    public class CycleYear
     {
         public CycleYear( int yearNumber)
         {
@@ -217,7 +217,7 @@ namespace Bestiary.Model
     {
         public Venues()
         {
-            VenueNames =  File.ReadAllLines("Venues.txt");
+            VenueNames =  File.ReadAllLines(Path.Combine(ApplicationPaths.GetResourcesDirectory(), "Venues.txt"));
         }
         [DataMember]
         public string[] VenueNames { get; set; }
@@ -228,7 +228,7 @@ namespace Bestiary.Model
     {
         public SiteEvents()
         {
-            EventNames = File.ReadAllLines("Events.txt");
+            EventNames = File.ReadAllLines(Path.Combine(ApplicationPaths.GetResourcesDirectory(), "Events.txt"));
         }
         [DataMember]
         public string[] EventNames { get; set; }
