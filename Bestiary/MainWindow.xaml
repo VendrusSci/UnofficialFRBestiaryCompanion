@@ -229,7 +229,7 @@
                         </Grid.ColumnDefinitions>
                         <Label Grid.Column="0" Width="Auto" HorizontalContentAlignment="Center" Content="Sort by:"/>
                         <ComboBox Grid.Column="1" Margin="5" ItemsSource="{Binding AvailableSortTypes}" SelectedItem="{Binding SelectedSortType, Mode=TwoWay}" IsSynchronizedWithCurrentItem="True" Width="{Binding Path=AvailableSortTypes, Converter={StaticResource ComboBoxWidthConverter}}"/>
-                        <Button Grid.Column="2" Margin="5" Content="Clear" Command="{Binding ClearOption}" CommandParameter="{Binding SelectedSortType}"/>
+                        <Button Grid.Column="2" Margin="5" Content="Go" Width="30"  Command="{Binding SortResults}"/>
                         <Label Grid.Column="4" Width="Auto" HorizontalContentAlignment="Center" Content="Results:"/>
                         <Label Grid.Column="5" Width="50" Margin="5" VerticalContentAlignment="Center" Content="{Binding ResultCount}"/>
                         <Label Grid.Column="6" Width="Auto" HorizontalContentAlignment="Center" Content="Owned:"/>

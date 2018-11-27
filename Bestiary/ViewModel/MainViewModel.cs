@@ -66,8 +66,6 @@ namespace Bestiary.ViewModel
                             }
                             UserActionLog.Info("Applying search");
                             tempFamiliars = ApplySearch(tempFamiliars);
-                            UserActionLog.Info("Applying sort");
-                            tempFamiliars = ApplySort(tempFamiliars);
                             FilteredFamiliars = tempFamiliars
                                 .Select(f => new FamiliarViewModel(m_Model, f, FamiliarParameters.AvailableLocationTypes))
                                 .ToArray();
@@ -151,6 +149,25 @@ namespace Bestiary.ViewModel
                     );
                 }
                 return m_ClearOption;
+            }
+        }
+
+        private LambdaCommand m_SortResults;
+        public ICommand SortResults
+        {
+            get
+            {
+                if(m_SortResults == null)
+                {
+                    m_SortResults = new LambdaCommand(
+                        onExecute: (p) =>
+                        {
+                            UserActionLog.Info("Applying sort");
+                            FilteredFamiliars = ApplySort(FilteredFamiliars);
+                        }
+                    );
+                }
+                return m_SortResults;
             }
         }
 
@@ -361,20 +378,20 @@ namespace Bestiary.ViewModel
             }
         }
 
-        private IEnumerable<FamiliarInfo> ApplySort(IEnumerable<FamiliarInfo> familiars)
+        private FamiliarViewModel[] ApplySort(FamiliarViewModel[] familiars)
         {
-            IEnumerable<FamiliarInfo> sortedFamiliars = familiars;
+            FamiliarViewModel[] sortedFamiliars = familiars;
 
             switch (SelectedSortType)
             {
                 case SortTypes.Alphabetical:
-                    sortedFamiliars = sortedFamiliars.OrderBy(f => f.Familiar.Name);
+                    sortedFamiliars = sortedFamiliars.OrderBy(f => f.Info.Familiar.Name).ToArray();
                     break;
                 case SortTypes.BondLevel:
-                    sortedFamiliars = sortedFamiliars.OrderBy(f => f.BondLevel);
+                    sortedFamiliars = sortedFamiliars.OrderBy(f => f.Info.BondLevel).ToArray();
                     break;
                 case SortTypes.HoardOrder:
-                    sortedFamiliars = sortedFamiliars.OrderBy(f => f.Familiar.Id);
+                    sortedFamiliars = sortedFamiliars.OrderBy(f => f.Info.Familiar.Id).ToArray();
                     break;
             }
             return sortedFamiliars;

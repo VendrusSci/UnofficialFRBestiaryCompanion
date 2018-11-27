@@ -261,3 +261,5 @@ __pycache__/
 *.pyc
 
 /Bestiary/Resources/Images
+/Bestiary/Resources/Icons
+/Bestiary/Resources/ElementIcons
