@@ -1,4 +1,5 @@
-﻿using Bestiary.ViewModel;
+﻿using Bestiary.Model;
+using Bestiary.ViewModel;
 using System.Windows;
 
 namespace Bestiary
@@ -8,10 +9,10 @@ namespace Bestiary
     /// </summary>
     public partial class FetchUpdateWindow : Window
     {
-        public FetchUpdateWindow()
+        public FetchUpdateWindow(IModel model)
         {
             InitializeComponent();
-            DataContext = new FetchUpdateViewModel();
+            DataContext = new FetchUpdateViewModel(model);
         }
     }
 }

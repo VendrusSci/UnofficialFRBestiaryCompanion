@@ -14,6 +14,7 @@ namespace Bestiary.ViewModel
         [Description("Bond Level")]
         BondLevel,
         Alphabetical,
+        [Description("Hoard Order")]
         HoardOrder
     }
 
@@ -69,6 +70,7 @@ namespace Bestiary.ViewModel
                             FilteredFamiliars = tempFamiliars
                                 .Select(f => new FamiliarViewModel(m_Model, f, FamiliarParameters.AvailableLocationTypes))
                                 .ToArray();
+                            FilteredFamiliars = ApplySort(FilteredFamiliars);
                         }
                     );
                 }
@@ -304,6 +306,7 @@ namespace Bestiary.ViewModel
                             FamiliarDataWindow familiarDataWindow = new FamiliarDataWindow((FamiliarViewModel)p, m_Model);
                             familiarDataWindow.Owner = Window;
                             familiarDataWindow.ShowDialog();
+                            FetchFamiliars.Execute(null);
                         },
                         onCanExecute: (p) =>
                         {
@@ -368,7 +371,7 @@ namespace Bestiary.ViewModel
                         onExecute: (p) =>
                         {
                             UserActionLog.Info("Update window opened");
-                            FetchUpdateWindow updateWindow = new FetchUpdateWindow();
+                            FetchUpdateWindow updateWindow = new FetchUpdateWindow(m_Model);
                             updateWindow.Owner = Window;
                             updateWindow.ShowDialog();
                         }
@@ -400,17 +403,35 @@ namespace Bestiary.ViewModel
         private IEnumerable<FamiliarInfo> ApplySearch(IEnumerable<FamiliarInfo> familiars)
         {
             IEnumerable<FamiliarInfo> filteredFamiliars = familiars;
-            if(SearchText != null)
+            if(!string.IsNullOrEmpty(SearchText))
             {
+                var searchText = SearchText;
                 if(!ExactChecked)
                 {
-                    filteredFamiliars = filteredFamiliars.Where(s => s.Familiar.Name.ToLower().Contains(SearchText.ToLower()));
+                    var tempFamiliars = filteredFamiliars.Where(s => s.Familiar.Name.ToLower().Contains(searchText.ToLower()));
+                    if(tempFamiliars.Count() == 0)
+                    {
+                        filteredFamiliars = filteredFamiliars.Where(s => EditDistance.GetEditDistance(s.Familiar.Name.ToLower(), searchText.ToLower()) <= 3);
+                    }
+                    else
+                    {
+                        filteredFamiliars = tempFamiliars;
+                    }
                 }
                 else
                 {
-                    filteredFamiliars = filteredFamiliars.Where(s => s.Familiar.Name.ToLower().Equals(SearchText.ToLower()));
+                    var tempFamiliars = filteredFamiliars.Where(s => s.Familiar.Name.ToLower().Equals(searchText.ToLower()));
+                    if (tempFamiliars.Count() == 0)
+                    {
+                        filteredFamiliars = filteredFamiliars.Where(s => EditDistance.GetEditDistance(s.Familiar.Name.ToLower(), searchText.ToLower()) <= 3);
+                    }
+                    else
+                    {
+                        filteredFamiliars = tempFamiliars;
+                    }
                 }
             }
+            SearchText = "";
             return filteredFamiliars;
         }
 
@@ -422,6 +443,8 @@ namespace Bestiary.ViewModel
             UserActionLog.Info("Application opened!");
             FamiliarParameters = new FamiliarFilters();
             FetchFamiliars.Execute(null);
+            SelectedSortType = SortTypes.Alphabetical;
+            SortResults.Execute(null);
             UserActionLog.Info("Familiars loaded on open");
 
             try

@@ -78,6 +78,7 @@
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition/>
+                                    <ColumnDefinition/>
                                 </Grid.ColumnDefinitions>
                                 <Grid.RowDefinitions>
                                     <RowDefinition/>
@@ -221,7 +222,7 @@
                             </DataTemplate>
                         </ComboBox.ItemTemplate>
                     </ComboBox>
-                    <ComboBox Grid.Column="1" Grid.Row="1" ItemsSource="{Binding FamiliarDisplayInfo.AvailableBondingLevels}" SelectedItem="{Binding SelectedBondingLevel}" IsSynchronizedWithCurrentItem="True"/>
+                    <ComboBox Grid.Column="1" Grid.Row="1" ItemsSource="{Binding FamiliarDisplayInfo.AvailableBondingLevels}" SelectedItem="{Binding SelectedBondingLevel}" IsSynchronizedWithCurrentItem="True" />
                     <ComboBox Grid.Column="1" Grid.Row="2" ItemsSource="{Binding FamiliarDisplayInfo.AvailableLocationTypes}" SelectedItem="{Binding SelectedLocation}" IsSynchronizedWithCurrentItem="True">
                         <ComboBox.ItemTemplate>
                             <DataTemplate>

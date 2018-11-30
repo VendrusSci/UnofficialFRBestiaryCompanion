@@ -58,7 +58,7 @@ namespace Bestiary.Model
                         ParameterSelectorList = new List<object>
                         {
                             new FilterWrapper(new EnumSubFilter<Flights, Festival>("Flights", AvailableFlights, SelectedFlight, f => f.Flight, onSet: e => SelectedFlight = e)),
-                            new FilterWrapper(new SubFilter<CycleYear, SiteEvent>("Year", AvailableCycleYears, SelectedCycleYear, f => f.Year, onSet: y => SelectedCycleYear.Equals(y))),
+                            new FilterWrapper(new SubFilter<CycleYear, SiteEvent>("Year", AvailableCycleYears, SelectedCycleYear, f => f.Year, onSet: y => SelectedCycleYear = y)),
                         };
                         break;
                     case Sources.Gathering:

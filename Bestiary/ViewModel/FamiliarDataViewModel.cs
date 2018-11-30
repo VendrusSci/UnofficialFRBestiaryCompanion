@@ -65,9 +65,11 @@ namespace Bestiary.ViewModel
                                 if (SelectedOwnershipStatus == OwnershipStatus.Owned)
                                 {
                                     MainViewModel.UserActionLog.Info($"Familiar now owned");
-                                    m_Model.AddOwnedFamiliar(new OwnedFamiliar(Familiar.Id, SelectedBondingLevel.Value, SelectedLocation.Value));
-                                    OwnedFamiliar.Update(f => f.Location = LocationTypes.InHoard);
-                                    OwnedFamiliar.Update(f => f.BondingLevel = BondingLevels.Wary);
+                                    m_Model.AddOwnedFamiliar(new OwnedFamiliar(Familiar.Id, SelectedBondingLevel ?? BondingLevels.Wary, SelectedLocation ?? LocationTypes.InHoard));
+                                    FamiliarDisplayInfo.Info.OwnedFamiliar = m_Model.LookupOwnedFamiliar(Familiar.Id);
+                                    OwnedFamiliar = FamiliarDisplayInfo.Info.OwnedFamiliar;
+                                    SelectedBondingLevel = FamiliarDisplayInfo.Info.BondLevel;
+                                    SelectedLocation = FamiliarDisplayInfo.Info.Location;
                                 }
                             }
                         }
