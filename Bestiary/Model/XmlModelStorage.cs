@@ -55,7 +55,10 @@ namespace Bestiary.Model
             m_FamiliarPath = familiarPath;
             m_OwnedFamiliarPath = ownedFamiliarPath;
             m_FRData = TryLoadXml<XmlData<Familiar>>(familiarPath) ?? new XmlData<Familiar>();
-            m_UserData = TryLoadXml<XmlData<OwnedFamiliar>>(ownedFamiliarPath) ?? new XmlData<OwnedFamiliar>();
+            if(!String.IsNullOrEmpty(ownedFamiliarPath))
+            {
+                m_UserData = TryLoadXml<XmlData<OwnedFamiliar>>(ownedFamiliarPath) ?? new XmlData<OwnedFamiliar>();
+            }
         }
 
         public ICRUD<Familiar> LookupFamiliar(int id)
