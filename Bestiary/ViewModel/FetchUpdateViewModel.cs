@@ -44,7 +44,9 @@ namespace Bestiary.ViewModel
                                     StatusString = "Familiar list found, updating local file";
                                     UpdateLocalFile();
                                     StatusString = "Update complete!";
+#if !DEBUG
                                     File.Delete(m_LocalUpdateFilePath);
+#endif
                                 }
                                 else
                                 {
