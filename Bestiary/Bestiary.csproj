@@ -82,6 +82,10 @@
       <DependentUpon>GatherFlightsControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="ImageLoader.cs" />
+    <Compile Include="InitialisationWindow.xaml.cs">
+      <DependentUpon>InitialisationWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="BaseCommand.cs" />
     <Compile Include="LambdaCommand.cs" />
     <Compile Include="Model\FamiliarAddParameters.cs" />
     <Compile Include="Model\FamiliarFilters.cs" />
@@ -95,6 +99,7 @@
     <Compile Include="ViewModel\EditDistance.cs" />
     <Compile Include="ViewModel\FetchUpdateViewModel.cs" />
     <Compile Include="ViewModel\FlightToIconConverter.cs" />
+    <Compile Include="ViewModel\InitialisationViewModel.cs" />
     <Compile Include="ViewModel\ItemToDescriptionConverter.cs" />
     <Compile Include="ViewModel\FamiliarAddViewModel.cs" />
     <Compile Include="ViewModel\FamiliarDeleteViewModel.cs" />
@@ -109,6 +114,7 @@
     <Compile Include="FamiliarDeleteWindow.xaml.cs">
       <DependentUpon>FamiliarDeleteWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModel\OpenDialogCommand.cs" />
     <Compile Include="ViewModel\SupportViewModel.cs" />
     <Page Include="FamiliarDataWindow.xaml">
       <SubType>Designer</SubType>
@@ -119,6 +125,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="GatherFlightsControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="InitialisationWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

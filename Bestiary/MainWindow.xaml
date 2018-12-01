@@ -69,6 +69,7 @@
             <MenuItem Width="Auto" Header="Options">
                 <MenuItem Width="Auto" Header="Add new Familiar" Command="{Binding OpenAddFamiliarWindow}"/>
                 <MenuItem Width="Auto" Header="Delete Familiar" Command="{Binding OpenDeleteFamiliarWindow}"/>
+                <MenuItem Width="Auto" Header="Initialisation Options" Command="{Binding OpenInitialisationWindow}"/>
             </MenuItem>
             <MenuItem Width="Auto" Header="Views"/>
             <MenuItem Width="Auto" Header="Other">

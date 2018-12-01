@@ -250,22 +250,14 @@ namespace Bestiary.ViewModel
             }
         }
 
-        private LambdaCommand m_openAddFamiliarWindow;
+        private BaseCommand m_openAddFamiliarWindow;
         public ICommand OpenAddFamiliarWindow
         {
             get
             {
                 if(m_openAddFamiliarWindow == null)
                 {
-                    m_openAddFamiliarWindow = new LambdaCommand(
-                        onExecute: (p) =>
-                        {
-                            UserActionLog.Info("Add familiar window opened");
-                            FamiliarAddWindow familiarAddWindow = new FamiliarAddWindow(m_Model);
-                            familiarAddWindow.Owner = Window;
-                            familiarAddWindow.ShowDialog();
-                        }
-                    );
+                    m_openAddFamiliarWindow = new OpenDialogCommand<FamiliarAddWindow>(Window, _ => new FamiliarAddWindow(m_Model));
                 }
                 return m_openAddFamiliarWindow;                
             }
@@ -292,13 +284,20 @@ namespace Bestiary.ViewModel
             }
         }
 
-        private LambdaCommand m_openDataFamiliarWindow;
+        private BaseCommand m_openDataFamiliarWindow;
         public ICommand OpenDataFamiliarWindow
         {
             get
             {
                 if(m_openDataFamiliarWindow == null)
                 {
+                    m_openDataFamiliarWindow = new OpenDialogCommand<FamiliarDataWindow>(
+                        Window,
+                        p => new FamiliarDataWindow((FamiliarViewModel)p, m_Model),
+                        canExecute: p => p.GetType() == typeof(FamiliarViewModel),
+                        afterClosed: _ => FetchFamiliars.Execute(null)
+                    );
+                    /*
                     m_openDataFamiliarWindow = new LambdaCommand(
                         onExecute: (p) =>
                         {
@@ -313,6 +312,7 @@ namespace Bestiary.ViewModel
                             return p.GetType() == typeof(FamiliarViewModel);
                         }
                     );
+                    */
                 }
                 return m_openDataFamiliarWindow;
             }
@@ -378,6 +378,27 @@ namespace Bestiary.ViewModel
                     );
                 }
                 return m_openFetchUpdateWindow;
+            }
+        }
+
+        private LambdaCommand m_OpenInitialisationWindow;
+        public ICommand OpenInitialisationWindow
+        {
+            get
+            {
+                if(m_OpenInitialisationWindow == null)
+                {
+                    m_OpenInitialisationWindow = new LambdaCommand(
+                        onExecute: (p) =>
+                        {
+                            UserActionLog.Info("Initialisation window opened");
+                            InitialisationWindow initWindow = new InitialisationWindow();
+                            initWindow.Owner = Window;
+                            initWindow.ShowDialog();
+                        }
+                    );
+                }
+                return m_OpenInitialisationWindow;
             }
         }
 

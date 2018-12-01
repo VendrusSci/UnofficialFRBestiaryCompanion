@@ -4,7 +4,7 @@ using System.Windows.Input;
 
 namespace Bestiary
 {
-    class LambdaCommand : ICommand
+    class LambdaCommand : BaseCommand
     {
         public LambdaCommand(Action<object> onExecute, Predicate<object> onCanExecute=null)
         {
@@ -12,25 +12,14 @@ namespace Bestiary
             m_onCanExecute = onCanExecute;
         }
 
-        public event EventHandler CanExecuteChanged
-        {
-            add { CommandManager.RequerySuggested += value; }
-            remove { CommandManager.RequerySuggested -= value; }
-        }
-
-        public bool CanExecute(object parameter)
+        public override bool CanExecute(object parameter)
         {
             return m_onCanExecute?.Invoke(parameter) ?? true;
         }
 
-        public void Execute(object parameter)
+        public override void Execute(object parameter)
         {
             m_onExecute?.Invoke(parameter);
-        }
-
-        public void NotifyCanExecuteChanged()
-        {
-            CommandManager.InvalidateRequerySuggested();
         }
 
         private Action<object> m_onExecute;
