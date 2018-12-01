@@ -41,7 +41,7 @@ namespace Bestiary.ViewModel
 
                                 if (FetchUpdateFile())
                                 {
-                                    StatusString = "Familiar list found, updating local file";
+                                    StatusString = "Familiar list found, updating local file...";
                                     UpdateLocalFile();
                                     StatusString = "Update complete!";
 #if !DEBUG

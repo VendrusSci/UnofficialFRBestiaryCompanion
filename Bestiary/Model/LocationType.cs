@@ -9,16 +9,27 @@ namespace Bestiary.Model
     #region Enums
     enum Flights
     {
+        [Description("Earth")]
         Earth,
+        [Description("Fire")]
         Fire,
+        [Description("Water")]
         Water,
+        [Description("Wind")]
         Wind,
+        [Description("Ice")]
         Ice,
+        [Description("Light")]
         Light,
+        [Description("Shadow")]
         Shadow,
+        [Description("Lightning")]
         Lightning,
+        [Description("Plague")]
         Plague,
+        [Description("Nature")]
         Nature,
+        [Description("Arcane")]
         Arcane
     }
 

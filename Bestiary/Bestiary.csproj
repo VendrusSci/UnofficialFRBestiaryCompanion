@@ -94,6 +94,7 @@
     </Compile>
     <Compile Include="ViewModel\EditDistance.cs" />
     <Compile Include="ViewModel\FetchUpdateViewModel.cs" />
+    <Compile Include="ViewModel\FlightToIconConverter.cs" />
     <Compile Include="ViewModel\ItemToDescriptionConverter.cs" />
     <Compile Include="ViewModel\FamiliarAddViewModel.cs" />
     <Compile Include="ViewModel\FamiliarDeleteViewModel.cs" />

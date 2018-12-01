@@ -1,11 +1,9 @@
 ﻿using Bestiary.Model;
-using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
 using System.Windows.Input;
+using System.Windows.Media.Imaging;
 
 namespace Bestiary.ViewModel
 {
@@ -40,7 +38,7 @@ namespace Bestiary.ViewModel
         {
             get
             {
-                if(m_UpdateStatus == null)
+                if (m_UpdateStatus == null)
                 {
                     m_UpdateStatus = new LambdaCommand(
                         onExecute: (p) =>
