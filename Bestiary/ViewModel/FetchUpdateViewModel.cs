@@ -36,17 +36,15 @@ namespace Bestiary.ViewModel
                             Task.Run(() =>
                             {
                                 m_IsBusy = true;
-
+                                MainViewModel.UserActionLog.Info("Familiar update process started");
                                 StatusString = "Fetching updated familiar list...";
 
                                 if (FetchUpdateFile())
                                 {
                                     StatusString = "Familiar list found, updating local file...";
                                     UpdateLocalFile();
-                                    StatusString = "Update complete!";
-#if !DEBUG
+                                    MainViewModel.UserActionLog.Info("Deleting local file");
                                     File.Delete(m_LocalUpdateFilePath);
-#endif
                                 }
                                 else
                                 {
@@ -69,25 +67,29 @@ namespace Bestiary.ViewModel
         private IModel m_LocalFamiliarModel;
         private IModel m_UpdateFamiliarModel;
 
-#if DEBUG
-        private const string m_RemoteUpdateFilePath = "FRTest\\SourceFamiliars.xml";
-#else
-        private const string m_RemoteUpdateFilePath = null;
-#endif
+        private const string m_RemoteUpdateFilePath = "https://raw.githubusercontent.com/VendrusSci/UnofficialFRBestiaryCompanion/master/Bestiary/Resources/FRData.xml";
         private const string m_LocalUpdateFilePath = "SourceFamiliars.xml";
 
         public event PropertyChangedEventHandler PropertyChanged;
 
         private bool FetchUpdateFile()
         {
-#if !DEBUG
             using (WebClient client = new WebClient())
             {
-                client.DownloadFile(m_RemoteUpdateFilePath, m_LocalUpdateFilePath);
+                try
+                {
+                    MainViewModel.UserActionLog.Info($"Attempting to download file with following url: {m_RemoteUpdateFilePath}");
+                    client.DownloadFile(m_RemoteUpdateFilePath, m_LocalUpdateFilePath);
+                }
+                catch(WebException ex)
+                {
+                    StatusString = "Failed to download file";
+                    MainViewModel.UserActionLog.Error("Failed to download file");
+                }
             }
-#endif
             if(File.Exists(m_LocalUpdateFilePath))
             {
+                MainViewModel.UserActionLog.Info("Update file download succeeded");
                 return true;
             }
             else
@@ -99,6 +101,7 @@ namespace Bestiary.ViewModel
 
         private void UpdateLocalFile()
         {
+            MainViewModel.UserActionLog.Info("Starting update of FR data...");
             string filePath = Path.Combine(ApplicationPaths.GetResourcesDirectory(), "FRData.xml");
             if (!StructuralComparisons.StructuralEqualityComparer.Equals(GetHashValue(m_LocalUpdateFilePath), GetHashValue(filePath)))
             {
@@ -113,6 +116,13 @@ namespace Bestiary.ViewModel
                     }
                     m_LocalFamiliarModel.AddFamiliar(m_UpdateFamiliarModel.LookupFamiliar(familiar).Fetch());
                 }
+                MainViewModel.UserActionLog.Info("Update completed");
+                StatusString = "Update complete!";
+            }
+            else
+            {
+                MainViewModel.UserActionLog.Info("Hash match, no update required");
+                StatusString = "Already up to date!";
             }
         }
 

@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Bestiary"
         mc:Ignorable="d"
-        Title="Fetch Update" Height="200" Width="300">
+        Title="Fetch Update" Height="200" Width="300"
+        WindowStartupLocation="CenterOwner">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
