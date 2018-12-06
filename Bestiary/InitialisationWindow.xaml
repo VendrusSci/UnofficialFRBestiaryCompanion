@@ -5,8 +5,36 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Bestiary"
         mc:Ignorable="d"
-        Title="InitialisationWindow" Height="450" Width="800">
+        Title="Initialisation Options" Height="300" Width="500">
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <TextBlock Grid.Column="0" Grid.ColumnSpan="2" TextAlignment="Center" FontSize="15" Margin="5">
+            <Run FontSize="18" Text="These buttons will perform actions on the entire database."/>
+            <LineBreak/>
+            <LineBreak/>
+            <Run Text="They are designed for people who have most of the available familiars"/>
+            <LineBreak/>
+            <Run Text="and would find it much easier to remove/deawaken a few familiars"/>
+            <LineBreak/>
+            <Run Text=" using the data window than add them with the main buttons"/>
+            <LineBreak/>
+            <LineBreak/>
+            <Run Text="Use at your own risk!"/>
+            <LineBreak/>
+            <Run Text="(And maybe make a copy of the UserData file first...)"/>
+        </TextBlock>
+        <Button Grid.Column="0" Grid.Row="2" Margin="10" Content="Make all familiars 'Owned'"/>
+        <Button Grid.Column="0" Grid.Row="3" Margin="10" Content="Make all familiars 'Not Owned'"/>
+        <Button Grid.Column="1" Grid.Row="2" Margin="10" Content="Make all familiars 'Awakened'"/>
+        <Button Grid.Column="1" Grid.Row="3" Margin="10" Content="Make all familiars 'Wary'"/>
     </Grid>
 </Window>
