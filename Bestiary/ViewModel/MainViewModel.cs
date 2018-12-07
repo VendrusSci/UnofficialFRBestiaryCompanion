@@ -355,7 +355,11 @@ namespace Bestiary.ViewModel
                 if(m_OpenInitialisationWindow == null)
                 {
                     UserActionLog.Info("Initialisation window opened");
-                    m_OpenInitialisationWindow = new OpenDialogCommand<InitialisationWindow>(Window, _ => new InitialisationWindow(m_Model));
+                    m_OpenInitialisationWindow = new OpenDialogCommand<InitialisationWindow>(
+                        Window, 
+                        _ => new InitialisationWindow(m_Model),
+                        afterClosed: _ => FetchFamiliars.Execute(null)
+                        );
                 }
                 return m_OpenInitialisationWindow;
             }

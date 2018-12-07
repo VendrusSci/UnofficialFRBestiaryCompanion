@@ -14,7 +14,7 @@ namespace Bestiary
 #if DEBUG
             return "..\\..\\";
 #else
-            return Path.Combine(Directory.GetCurrentDirectory(), ";
+            return Directory.GetCurrentDirectory();
 #endif
         }
 

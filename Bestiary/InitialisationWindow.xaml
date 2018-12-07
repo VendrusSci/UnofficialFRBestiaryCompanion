@@ -31,7 +31,7 @@
             <LineBreak/>
             <Run Text="Use at your own risk!"/>
             <LineBreak/>
-            <Run Text="(And maybe make a copy of the UserData file first...)"/>
+            <Run Text="(Some operations may take a few seconds to run)"/>
         </TextBlock>
         <Button Grid.Column="0" Grid.Row="2" Margin="10" Content="Make all familiars 'Owned'" Command="{Binding MakeAllOwned}"/>
         <Button Grid.Column="0" Grid.Row="3" Margin="10" Content="Make all familiars 'Not Owned'" Command="{Binding MakeAllUnOwned}"/>

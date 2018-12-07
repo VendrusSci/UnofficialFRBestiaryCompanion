@@ -64,6 +64,46 @@ namespace Bestiary.ViewModel
             }
         }
 
+        private LambdaCommand m_FetchUpdateOverwrite;
+        public ICommand FetchUpdateOverwrite
+        {
+            get
+            {
+                if(m_FetchUpdateOverwrite == null)
+                {
+                    m_FetchUpdateOverwrite = new LambdaCommand(
+                        onExecute: (p) =>
+                        {
+                            Task.Run(() =>
+                            {
+                                if (FetchUpdateFile())
+                                {
+                                    MainViewModel.UserActionLog.Info("Starting fast update");
+                                    string frDataPath = Path.Combine(ApplicationPaths.GetResourcesDirectory(), "FRData.xml");
+                                    if(!StructuralComparisons.StructuralEqualityComparer.Equals(GetHashValue(m_LocalUpdateFilePath), GetHashValue(frDataPath)))
+                                    {
+                                        StatusString = "Familiar list found, updating local file...";
+                                        string bkupFilePath = "Backup.xml";
+                                        File.Replace(m_LocalUpdateFilePath, frDataPath, bkupFilePath);
+                                        File.Delete(bkupFilePath);
+                                        StatusString = "Update Complete";
+                                        MainViewModel.UserActionLog.Info("Fast update complete");
+                                    }
+                                    else
+                                    {
+                                        StatusString = "Already up to date!";
+                                        MainViewModel.UserActionLog.Info("File up to date, no update required");
+                                    }
+                                    File.Delete(m_LocalUpdateFilePath);
+                                }
+                            });
+                        }
+                    );
+                }
+                return m_FetchUpdateOverwrite;
+            }
+        }
+
         private IModel m_LocalFamiliarModel;
         private IModel m_UpdateFamiliarModel;
 
