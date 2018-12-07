@@ -257,32 +257,35 @@ namespace Bestiary.ViewModel
             {
                 if(m_openAddFamiliarWindow == null)
                 {
-                    m_openAddFamiliarWindow = new OpenDialogCommand<FamiliarAddWindow>(Window, _ => new FamiliarAddWindow(m_Model));
+                    UserActionLog.Info("Add Familiar window opened");
+                    m_openAddFamiliarWindow = new OpenDialogCommand<FamiliarAddWindow>(
+                        Window, 
+                        _ => new FamiliarAddWindow(m_Model),
+                        afterClosed: _ => FetchFamiliars.Execute(null)
+                    );
                 }
                 return m_openAddFamiliarWindow;                
             }
         }
 
-        private LambdaCommand m_openDeleteFamiliarWindow;
+        private BaseCommand m_openDeleteFamiliarWindow;
         public ICommand OpenDeleteFamiliarWindow
         {
             get
             {
+                UserActionLog.Info("Delete Familiar window opened");
                 if (m_openDeleteFamiliarWindow == null)
                 {
-                    m_openDeleteFamiliarWindow = new LambdaCommand(
-                        onExecute: (p) =>
-                        {
-                            UserActionLog.Info("Delete familiar window opened");
-                            FamiliarDeleteWindow familiarDeleteWindow = new FamiliarDeleteWindow(m_Model);
-                            familiarDeleteWindow.Owner = Window;
-                            familiarDeleteWindow.ShowDialog();
-                        }
+                    m_openDeleteFamiliarWindow = new OpenDialogCommand<FamiliarDeleteWindow>(
+                        Window, 
+                        _ => new FamiliarDeleteWindow(m_Model),
+                        afterClosed: _ => FetchFamiliars.Execute(null)
                     );
                 }
                 return m_openDeleteFamiliarWindow;
             }
         }
+
 
         private BaseCommand m_openDataFamiliarWindow;
         public ICommand OpenDataFamiliarWindow
@@ -302,86 +305,57 @@ namespace Bestiary.ViewModel
             }
         }
 
-        private LambdaCommand m_openSupportInfoWindow;
+        private BaseCommand m_openSupportInfoWindow;
         public ICommand OpenSupportInfoWindow
         {
             get
             {
                 if (m_openSupportInfoWindow == null)
                 {
-                    m_openSupportInfoWindow = new LambdaCommand(
-                        onExecute: (p) =>
-                        {
-                            UserActionLog.Info("Support window opened");
-                            SupportInfoWindow supportWindow = new SupportInfoWindow();
-                            supportWindow.Owner = Window;
-                            supportWindow.ShowDialog();
-                        }
-                    );
+                    UserActionLog.Info("Support window opened");
+                    m_openSupportInfoWindow = new OpenDialogCommand<SupportInfoWindow>(Window, _ => new SupportInfoWindow());
                 }
                 return m_openSupportInfoWindow;
             }
         }
 
-        private LambdaCommand m_openAboutWindow;
+        private BaseCommand m_openAboutWindow;
         public ICommand OpenAboutWindow
         {
             get
             {
                 if (m_openAboutWindow == null)
                 {
-                    m_openAboutWindow = new LambdaCommand(
-                        onExecute: (p) =>
-                        {
-                            UserActionLog.Info("About window opened");
-                            AboutWindow aboutWindow = new AboutWindow();
-                            aboutWindow.Owner = Window;
-                            aboutWindow.ShowDialog();
-                        }
-                    );
+                    UserActionLog.Info("About window opened");
+                    m_openAboutWindow = new OpenDialogCommand<AboutWindow>(Window, _ => new AboutWindow());
                 }
                 return m_openAboutWindow;
             }
         }
 
-        private LambdaCommand m_openFetchUpdateWindow;
+        private BaseCommand m_openFetchUpdateWindow;
         public ICommand OpenFetchUpdateWindow
         {
             get
             {
                 if (m_openFetchUpdateWindow == null)
                 {
-                    m_openFetchUpdateWindow = new LambdaCommand(
-                        onExecute: (p) =>
-                        {
-                            UserActionLog.Info("Update window opened");
-                            FetchUpdateWindow updateWindow = new FetchUpdateWindow(m_Model);
-                            updateWindow.Owner = Window;
-                            updateWindow.ShowDialog();
-                        }
-                    );
+                    UserActionLog.Info("Update window opened");
+                    m_openFetchUpdateWindow = new OpenDialogCommand<FetchUpdateWindow>(Window, _ => new FetchUpdateWindow(m_Model));
                 }
                 return m_openFetchUpdateWindow;
             }
         }
 
-        private LambdaCommand m_OpenInitialisationWindow;
+        private BaseCommand m_OpenInitialisationWindow;
         public ICommand OpenInitialisationWindow
         {
             get
             {
                 if(m_OpenInitialisationWindow == null)
                 {
-                    m_OpenInitialisationWindow = new LambdaCommand(
-                        onExecute: (p) =>
-                        {
-                            UserActionLog.Info("Initialisation window opened");
-                            InitialisationWindow initWindow = new InitialisationWindow(m_Model);
-                            initWindow.Owner = Window;
-                            initWindow.ShowDialog();
-                            FetchFamiliars.Execute(null);
-                        }
-                    );
+                    UserActionLog.Info("Initialisation window opened");
+                    m_OpenInitialisationWindow = new OpenDialogCommand<InitialisationWindow>(Window, _ => new InitialisationWindow(m_Model));
                 }
                 return m_OpenInitialisationWindow;
             }
