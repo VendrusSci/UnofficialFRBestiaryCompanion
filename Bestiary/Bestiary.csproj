@@ -96,6 +96,7 @@
     <Compile Include="SupportInfoWindow.xaml.cs">
       <DependentUpon>SupportInfoWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModel\BondLevelToColourConverter.cs" />
     <Compile Include="ViewModel\EditDistance.cs" />
     <Compile Include="ViewModel\FetchUpdateViewModel.cs" />
     <Compile Include="ViewModel\FlightToIconConverter.cs" />

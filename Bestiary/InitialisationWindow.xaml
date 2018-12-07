@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Bestiary"
         mc:Ignorable="d"
-        Title="Initialisation Options" Height="300" Width="500">
+        Title="Initialisation Options" Height="300" Width="500"
+        WindowStartupLocation="CenterOwner">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -32,9 +33,9 @@
             <LineBreak/>
             <Run Text="(And maybe make a copy of the UserData file first...)"/>
         </TextBlock>
-        <Button Grid.Column="0" Grid.Row="2" Margin="10" Content="Make all familiars 'Owned'"/>
-        <Button Grid.Column="0" Grid.Row="3" Margin="10" Content="Make all familiars 'Not Owned'"/>
-        <Button Grid.Column="1" Grid.Row="2" Margin="10" Content="Make all familiars 'Awakened'"/>
-        <Button Grid.Column="1" Grid.Row="3" Margin="10" Content="Make all familiars 'Wary'"/>
+        <Button Grid.Column="0" Grid.Row="2" Margin="10" Content="Make all familiars 'Owned'" Command="{Binding MakeAllOwned}"/>
+        <Button Grid.Column="0" Grid.Row="3" Margin="10" Content="Make all familiars 'Not Owned'" Command="{Binding MakeAllUnOwned}"/>
+        <Button Grid.Column="1" Grid.Row="2" Margin="10" Content="Make all owned familiars 'Awakened'" Command="{Binding MakeAllOwnedAwakened}"/>
+        <Button Grid.Column="1" Grid.Row="3" Margin="10" Content="Make all owned familiars 'Wary'" Command="{Binding MakeAllOwnedWary}"/>
     </Grid>
 </Window>

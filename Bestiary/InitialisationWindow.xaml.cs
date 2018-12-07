@@ -1,16 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Bestiary.Model;
+using Bestiary.ViewModel;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+
 
 namespace Bestiary
 {
@@ -19,9 +10,10 @@ namespace Bestiary
     /// </summary>
     public partial class InitialisationWindow : Window
     {
-        public InitialisationWindow()
+        public InitialisationWindow(IModel model)
         {
             InitializeComponent();
+            DataContext = new InitialisationViewModel(model);
         }
     }
 }

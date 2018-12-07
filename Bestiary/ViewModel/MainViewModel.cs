@@ -297,22 +297,6 @@ namespace Bestiary.ViewModel
                         canExecute: p => p.GetType() == typeof(FamiliarViewModel),
                         afterClosed: _ => FetchFamiliars.Execute(null)
                     );
-                    /*
-                    m_openDataFamiliarWindow = new LambdaCommand(
-                        onExecute: (p) =>
-                        {
-                            UserActionLog.Info($"Familiar Data window opened: {((FamiliarViewModel)p).Info.Familiar.Name}, #{((FamiliarViewModel)p).Info.Familiar.Id}");
-                            FamiliarDataWindow familiarDataWindow = new FamiliarDataWindow((FamiliarViewModel)p, m_Model);
-                            familiarDataWindow.Owner = Window;
-                            familiarDataWindow.ShowDialog();
-                            FetchFamiliars.Execute(null);
-                        },
-                        onCanExecute: (p) =>
-                        {
-                            return p.GetType() == typeof(FamiliarViewModel);
-                        }
-                    );
-                    */
                 }
                 return m_openDataFamiliarWindow;
             }
@@ -392,9 +376,10 @@ namespace Bestiary.ViewModel
                         onExecute: (p) =>
                         {
                             UserActionLog.Info("Initialisation window opened");
-                            InitialisationWindow initWindow = new InitialisationWindow();
+                            InitialisationWindow initWindow = new InitialisationWindow(m_Model);
                             initWindow.Owner = Window;
                             initWindow.ShowDialog();
+                            FetchFamiliars.Execute(null);
                         }
                     );
                 }

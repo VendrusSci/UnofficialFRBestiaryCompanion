@@ -181,7 +181,7 @@ namespace Bestiary.Model
         public event PropertyChangedEventHandler PropertyChanged;
     }
 
-    public class ListSubFilter<T, SourceType> : IAmSubFilter, INotifyPropertyChanged
+    public class List<T, SourceType> : IAmSubFilter, INotifyPropertyChanged
     where T : struct
     where SourceType : class
     {
@@ -198,7 +198,7 @@ namespace Bestiary.Model
             }
         }
 
-        public ListSubFilter(string name, T[] availableOptions, T? selectedOption, Func<SourceType, List<T>> getKey, Action<T?> onSet = null)
+        public List(string name, T[] availableOptions, T? selectedOption, Func<SourceType, List<T>> getKey, Action<T?> onSet = null)
         {
             Name = name;
             AvailableOptions = availableOptions;

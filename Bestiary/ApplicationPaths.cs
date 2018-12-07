@@ -14,13 +14,18 @@ namespace Bestiary
 #if DEBUG
             return "..\\..\\";
 #else
-            return Directory.GetCurrentDirectory();
+            return Path.Combine(Directory.GetCurrentDirectory(), ";
 #endif
         }
 
         public static string GetResourcesDirectory()
         {
             return Path.Combine(GetDataDirectory(), "Resources");
+        }
+
+        public static string GetUserDataPath()
+        {
+            return Path.Combine(GetDataDirectory(), "User Data\\UserData.xml");
         }
     }
 }

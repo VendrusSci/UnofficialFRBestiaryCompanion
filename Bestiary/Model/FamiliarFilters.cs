@@ -56,7 +56,7 @@ namespace Bestiary.Model
                         SubFilterList = new List<IAmSubFilter>
                         {
                             new EnumSubFilter<GatherTypes, Gathering>("Gather Type", AvailableGatherTypes, SelectedGatherType, g => g.GatherType, onSet: t => SelectedGatherType = t),
-                            new ListSubFilter<Flights, Gathering>("Flight", AvailableFlights, SelectedFlight, g => g.Flights, onSet: e => SelectedFlight = e),
+                            new List<Flights, Gathering>("Flight", AvailableFlights, SelectedFlight, g => g.Flights, onSet: e => SelectedFlight = e),
                             new EnumSubFilter<int, Gathering>("Level", AvailableLevels, SelectedLevel, g => g.MinLevel, (a, b) => b >= a, onSet: l => SelectedLevel = l),
                         };
                         break;
