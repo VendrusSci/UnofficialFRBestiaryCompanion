@@ -29,6 +29,7 @@ namespace Bestiary.ViewModel
                                     m_model.AddOwnedFamiliar(new OwnedFamiliar(famId, BondingLevels.Wary, LocationTypes.InHoard));
                                 }   
                             }
+                            MainViewModel.UserActionLog.Info("Set all familiars to owned");
                         }
                     );
                 }
@@ -51,6 +52,7 @@ namespace Bestiary.ViewModel
                             {
                                 m_model.LookupOwnedFamiliar(id).Delete();
                             }
+                            MainViewModel.UserActionLog.Info("Set all familiars to not owned");
                         }
                     );
                 }
@@ -73,6 +75,7 @@ namespace Bestiary.ViewModel
                                 var ownedFam = m_model.LookupOwnedFamiliar(famId);
                                 ownedFam.Update(f => f.BondingLevel = BondingLevels.Awakened);
                             }
+                            MainViewModel.UserActionLog.Info("Set all owned familiars to awakened");
                         }
                     );
                 }
@@ -95,13 +98,12 @@ namespace Bestiary.ViewModel
                                 var ownedFam = m_model.LookupOwnedFamiliar(famId);
                                 ownedFam.Update(f => f.BondingLevel = BondingLevels.Wary);
                             }
+                            MainViewModel.UserActionLog.Info("Set all owned familiars to wary");
                         }
                     );
                 }
                 return m_MakeAllOwnedWary;
             }
         }
-
-
     }
 }
