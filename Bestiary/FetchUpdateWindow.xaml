@@ -5,14 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Bestiary"
         mc:Ignorable="d"
-        Title="Fetch Update" Height="250" Width="400"
+        Title="Fetch Update" Height="270" Width="400"
         WindowStartupLocation="CenterOwner">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <TextBlock Grid.Row="0" TextAlignment="Center" Margin="10">
@@ -40,6 +39,6 @@
                 <Button Grid.Row="1" Content="Fast Update" Margin="5" Command="{Binding FetchUpdateOverwrite}"/>
             </Grid>
         </GroupBox>
-        <TextBlock Grid.Row="4" HorizontalAlignment="Center" TextAlignment="Center" Margin="10" Text="{Binding StatusString}"/>
+        <TextBlock Grid.Row="3" HorizontalAlignment="Center" TextAlignment="Center" Margin="10" Text="{Binding StatusString}"/>
     </Grid>
 </Window>
