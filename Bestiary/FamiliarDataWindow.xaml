@@ -51,6 +51,7 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
@@ -71,7 +72,15 @@
                         <TextBlock Grid.Row="2" Text="{Binding Familiar.FlavourText}" TextWrapping="Wrap" Width="250" TextAlignment="Center" Margin="10"/>
                     </Grid>
                 </GroupBox>
-                <ContentControl Grid.Row="1" Content="{Binding Familiar.Source}">
+                <Grid Grid.Row="1" Margin="5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Column="0" HorizontalAlignment="Right" Content="Availability: "/>
+                    <TextBlock Grid.Column="1" Margin="5" HorizontalAlignment="Left" Text="{Binding Familiar.Availability}"/>
+                </Grid>
+                <ContentControl Grid.Row="2" Content="{Binding Familiar.Source}">
                     <ContentControl.Resources>
                         <DataTemplate DataType="{x:Type local_model:Coliseum}">
                             <Grid Margin="5">
@@ -238,7 +247,7 @@
                         </DataTemplate>
                     </ContentControl.Resources>
                 </ContentControl>
-                <Grid Grid.Row="3" Margin="10">
+                <Grid Grid.Row="4" Margin="10">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
                         <ColumnDefinition/>
@@ -268,7 +277,7 @@
 
                     </ComboBox>
                 </Grid>
-                <Button Grid.Row="4" Content="Update" Margin="5" Command="{Binding UpdateStatus}" Width="150"/>
+                <Button Grid.Row="5" Content="Update" Margin="5" Command="{Binding UpdateStatus}" Width="150"/>
             </Grid>
         </GroupBox>
     </Grid>
