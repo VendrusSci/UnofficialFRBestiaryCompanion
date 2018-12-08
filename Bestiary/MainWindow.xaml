@@ -37,6 +37,7 @@
             <Setter Property="Margin" Value="5"/>
         </Style>
         <Style TargetType="DataGridCell">
+            <Setter Property="Background" Value="Transparent"/>
             <Setter Property="VerticalContentAlignment" Value="Center"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
             <Style.Triggers>
@@ -60,6 +61,11 @@
                     <Setter Property="BorderThickness" Value="1"/>
                 </Trigger>
             </Style.Triggers>
+            <Setter Property="Background" Value="Transparent"/>
+            <EventSetter Event="PreviewMouseDoubleClick" Handler="ChangeSelectedRow"/>
+        </Style>
+        <Style TargetType="DataGrid">
+            
         </Style>
     </Window.Resources>
     <Grid>
@@ -287,7 +293,7 @@
                             <DataGridTemplateColumn Header="Location" Width="Auto" IsReadOnly="False">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
-                                        <ComboBox  ItemsSource="{Binding AvailableLocationTypes}" SelectedItem="{Binding Info.Location, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsSynchronizedWithCurrentItem="True" IsEnabled="{Binding Info.Owned, Converter={StaticResource OwnedToBoolConverter}}">
+                                        <ComboBox  ItemsSource="{Binding AvailableLocationTypes}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  SelectedItem="{Binding Info.Location, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsSynchronizedWithCurrentItem="True" IsEnabled="{Binding Info.Owned, Converter={StaticResource OwnedToBoolConverter}}">
                                             <ComboBox.ItemTemplate>
                                                 <DataTemplate>
                                                     <TextBlock Text="{Binding Mode=OneTime, Converter={StaticResource DescConverter}}"/>
