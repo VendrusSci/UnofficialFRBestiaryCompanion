@@ -61,8 +61,8 @@
                     <Setter Property="BorderThickness" Value="1"/>
                 </Trigger>
             </Style.Triggers>
-            <Setter Property="Background" Value="Transparent"/>
             <EventSetter Event="PreviewMouseDoubleClick" Handler="ChangeSelectedRow"/>
+            <EventSetter Event="PreviewMouseLeftButtonDown" Handler="ChangeSelectedRow"/>
         </Style>
         <Style TargetType="DataGrid">
             
@@ -249,7 +249,8 @@
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
                         <Label Grid.Column="0" Width="Auto" HorizontalContentAlignment="Center" Content="Sort by:"/>
-                        <ComboBox Grid.Column="1" Margin="5" ItemsSource="{Binding AvailableSortTypes}" SelectedItem="{Binding SelectedSortType, Mode=TwoWay}" IsSynchronizedWithCurrentItem="True" Width="{Binding Path=AvailableSortTypes, Converter={StaticResource ComboBoxWidthConverter}}">
+                        <ComboBox Grid.Column="1" Margin="5" ItemsSource="{Binding AvailableSortTypes}" SelectedItem="{Binding SelectedSortType, Mode=TwoWay}" 
+                                  IsSynchronizedWithCurrentItem="True" Width="{Binding Path=AvailableSortTypes, Converter={StaticResource ComboBoxWidthConverter}}">
                             <ComboBox.ItemTemplate>
                                 <DataTemplate>
                                     <TextBlock Text="{Binding Mode=OneTime, Converter={StaticResource DescConverter}}"/>
@@ -264,7 +265,9 @@
                         <Label Grid.Column="8" Width="Auto" HorizontalContentAlignment="Center" Content="Awakened:"/>
                         <Label Grid.Column="9" Width="50" Margin="5" VerticalContentAlignment="Center"  Content="{Binding AwakenedCount}"/>
                     </Grid>
-                    <DataGrid Grid.Row ="1" Width="Auto" Height="Auto" AutoGenerateColumns="False" GridLinesVisibility="None" ItemsSource="{Binding FilteredFamiliars}" IsSynchronizedWithCurrentItem="True">
+                    <DataGrid Grid.Row ="1" Width="Auto" Height="Auto" AlternatingRowBackground="#FBE9D9" AlternationCount="2"
+                              AutoGenerateColumns="False" GridLinesVisibility="None" 
+                              ItemsSource="{Binding FilteredFamiliars}" IsSynchronizedWithCurrentItem="True">
                         <DataGrid.Resources>
                             <local:OwnedToBoolConverter x:Key="OwnedToBoolConverter"/>
                             <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Transparent"/>
@@ -299,12 +302,14 @@
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
                             <DataGridTextColumn Header="Name" Width="Auto" IsReadOnly="True" Binding="{Binding Info.Familiar.Name}" TextBlock.TextAlignment="Center"/>
-                            <DataGridTextColumn Header="Ownership" Width="Auto" IsReadOnly="True" Binding="{Binding Info.Owned, Converter={StaticResource DescConverter}}" TextBlock.TextAlignment="Center"/>
+                            <DataGridTextColumn Header="Ownership" Width="Auto" IsReadOnly="True" TextBlock.TextAlignment="Center"
+                                                Binding="{Binding Info.Owned, Converter={StaticResource DescConverter}}"/>
                             <DataGridTemplateColumn Header="Bonding Level" IsReadOnly="False">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
                                         <ComboBox MinWidth="90" IsEditable="False" ItemsSource="{Binding AvailableBondingLevels}" 
-                                                  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" IsEnabled="{Binding Info.Owned, Converter={StaticResource OwnedToBoolConverter}}" 
+                                                  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
+                                                  IsEnabled="{Binding Info.Owned, Converter={StaticResource OwnedToBoolConverter}}" 
                                                   SelectedItem="{Binding Info.BondLevel, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                                   IsSynchronizedWithCurrentItem="True"/>
                                     </DataTemplate>
