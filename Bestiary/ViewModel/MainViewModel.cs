@@ -13,9 +13,15 @@ namespace Bestiary.ViewModel
     {
         [Description("Bond Level")]
         BondLevel,
+        [Description("Reverse Bond Level")]
+        ReverseBondLevel,
         Alphabetical,
+        [Description("Reverse Alphabetical")]
+        ReverseAlphabetical,
         [Description("Hoard Order")]
-        HoardOrder
+        HoardOrder,
+        [Description("Reverse Hoard Order")]
+        ReverseHoardOrder
     }
 
     class MainViewModel : INotifyPropertyChanged
@@ -93,10 +99,12 @@ namespace Bestiary.ViewModel
                                 case OwnershipStatus b:
                                     UserActionLog.Info("Owned filter cleared");
                                     FamiliarParameters.SelectedOwnedStatus = null;
+                                    FamiliarParameters.OwnedStatusInvert = false;
                                     break;
                                 case BondingLevels bl:
                                     UserActionLog.Info("Bonding filter cleared");
                                     FamiliarParameters.SelectedBondingLevel = null;
+                                    FamiliarParameters.BondingLevelInvert = false;
                                     break;
                                 case Sources s:
                                     UserActionLog.Info("Source filter cleared");
@@ -105,14 +113,12 @@ namespace Bestiary.ViewModel
                                 case Availabilities a:
                                     UserActionLog.Info("Availability filter cleared");
                                     FamiliarParameters.SelectedAvailability = null;
-                                    break;
-                                case SortTypes st:
-                                    UserActionLog.Info("Sort type cleared");
-                                    SelectedSortType = null;
+                                    FamiliarParameters.AvailabilityInvert = false;
                                     break;
                                 case LocationTypes l:
                                     UserActionLog.Info("Location filter cleared");
                                     FamiliarParameters.SelectedLocationType = null;
+                                    FamiliarParameters.LocationInvert = false;
                                     break;
                                 default:
                                     break;
@@ -186,22 +192,22 @@ namespace Bestiary.ViewModel
             if (FamiliarParameters.SelectedBondingLevel != null)
             {
                 UserActionLog.Info($"    Filter: Bond level {FamiliarParameters.SelectedBondingLevel}");
-                filteredFamiliars = filteredFamiliars.Where(f => f.BondLevel == FamiliarParameters.SelectedBondingLevel);
+                filteredFamiliars = FamiliarParameters.BondingLevelInvert ? filteredFamiliars.Where(f => f.BondLevel != FamiliarParameters.SelectedBondingLevel) : filteredFamiliars.Where(f => f.BondLevel == FamiliarParameters.SelectedBondingLevel);
             }
             if (FamiliarParameters.SelectedOwnedStatus != null)
             {
                 UserActionLog.Info($"    Filter: Ownership status {FamiliarParameters.SelectedOwnedStatus}");
-                filteredFamiliars = filteredFamiliars.Where(f => f.Owned == FamiliarParameters.SelectedOwnedStatus);
+                filteredFamiliars = FamiliarParameters.OwnedStatusInvert ? filteredFamiliars.Where(f => f.Owned != FamiliarParameters.SelectedOwnedStatus) : filteredFamiliars.Where(f => f.Owned == FamiliarParameters.SelectedOwnedStatus);
             }
             if (FamiliarParameters.SelectedLocationType != null)
             {
                 UserActionLog.Info($"    Filter: Location {FamiliarParameters.SelectedLocationType.Value}");
-                filteredFamiliars = filteredFamiliars.Where(f => f.Location == FamiliarParameters.SelectedLocationType);
+                filteredFamiliars = FamiliarParameters.LocationInvert ? filteredFamiliars.Where(f => f.Location != FamiliarParameters.SelectedLocationType) : filteredFamiliars.Where(f => f.Location == FamiliarParameters.SelectedLocationType);
             }
             if (FamiliarParameters.SelectedAvailability != null)
             {
                 UserActionLog.Info($"    Filter: Availability {FamiliarParameters.SelectedAvailability}");
-                filteredFamiliars = filteredFamiliars.Where(f => f.Familiar.Availability == FamiliarParameters.SelectedAvailability);
+                filteredFamiliars = FamiliarParameters.AvailabilityInvert ? filteredFamiliars.Where(f => f.Familiar.Availability == FamiliarParameters.SelectedAvailability) : filteredFamiliars.Where(f => f.Familiar.Availability == FamiliarParameters.SelectedAvailability);
             }
             if (FamiliarParameters.SelectedSource != null)
             {
@@ -243,6 +249,11 @@ namespace Bestiary.ViewModel
                             FamiliarParameters.SelectedMarketPlaceType = null;
                             FamiliarParameters.SelectedSiteEvent = null;
                             FamiliarParameters.SelectedVenueName = null;
+
+                            FamiliarParameters.AvailabilityInvert = false;
+                            FamiliarParameters.BondingLevelInvert = false;
+                            FamiliarParameters.OwnedStatusInvert = false;
+                            FamiliarParameters.LocationInvert = false;
                         }
                     );
                 }
@@ -374,11 +385,20 @@ namespace Bestiary.ViewModel
                 case SortTypes.Alphabetical:
                     sortedFamiliars = sortedFamiliars.OrderBy(f => f.Info.Familiar.Name).ToArray();
                     break;
+                case SortTypes.ReverseAlphabetical:
+                    sortedFamiliars = sortedFamiliars.OrderByDescending(f => f.Info.Familiar.Name).ToArray();
+                    break;
                 case SortTypes.BondLevel:
                     sortedFamiliars = sortedFamiliars.OrderBy(f => f.Info.BondLevel).ToArray();
                     break;
+                case SortTypes.ReverseBondLevel:
+                    sortedFamiliars = sortedFamiliars.OrderByDescending(f => f.Info.BondLevel).ToArray();
+                    break;
                 case SortTypes.HoardOrder:
                     sortedFamiliars = sortedFamiliars.OrderBy(f => f.Info.Familiar.Id).ToArray();
+                    break;
+                case SortTypes.ReverseHoardOrder:
+                    sortedFamiliars = sortedFamiliars.OrderByDescending(f => f.Info.Familiar.Id).ToArray();
                     break;
             }
             return sortedFamiliars;

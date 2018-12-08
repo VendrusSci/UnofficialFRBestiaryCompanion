@@ -8,7 +8,21 @@ namespace Bestiary.Model
     public class FamiliarInfo : INotifyPropertyChanged
     {
         private ICRUD<Familiar> KnownFamiliar;
-        public ICRUD<OwnedFamiliar> OwnedFamiliar;
+
+        private ICRUD<OwnedFamiliar> m_OwnedFamiliar;
+        public ICRUD<OwnedFamiliar> OwnedFamiliar
+        {
+            get { return m_OwnedFamiliar; }
+            set
+            {
+                if(m_OwnedFamiliar != value)
+                {
+                    m_OwnedFamiliar = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("BondLevel"));
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Owned"));
+                }
+            }
+        }
 
         public Familiar Familiar
         {
@@ -18,7 +32,7 @@ namespace Bestiary.Model
             }
             private set{}
         }
-        public OwnershipStatus Owned { get; set; }
+        public OwnershipStatus Owned => OwnedFamiliar != null ? OwnershipStatus.Owned : OwnershipStatus.NotOwned;
         public BondingLevels? BondLevel
         {
             get
@@ -52,7 +66,6 @@ namespace Bestiary.Model
         {
             KnownFamiliar = familiar;
             OwnedFamiliar = ownedFamiliar;
-            Owned = ownedFamiliar != null ? OwnershipStatus.Owned : OwnershipStatus.NotOwned;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

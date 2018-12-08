@@ -12,12 +12,16 @@ namespace Bestiary.Model
         //Filters
         public OwnershipStatus[] AvailableOwnedStatus => ListEnumValues<OwnershipStatus>();
         public OwnershipStatus? SelectedOwnedStatus { get; set; }
+        public bool OwnedStatusInvert { get; set; }
         public BondingLevels[] AvailableBondingLevels => ListEnumValues<BondingLevels>();
         public BondingLevels? SelectedBondingLevel { get; set; }
+        public bool BondingLevelInvert { get; set; }
         public LocationTypes[] AvailableLocationTypes => ListEnumValues<LocationTypes>();
         public LocationTypes? SelectedLocationType { get; set; }
+        public bool AvailabilityInvert { get; set; }
         public Availabilities[] AvailableAvailabilities => ListEnumValues<Availabilities>();
         public Availabilities? SelectedAvailability { get; set; }
+        public bool LocationInvert { get; set; }
         public Sources[] AvailableSources => ListEnumValues<Sources>();
         public Sources? m_SelectedSource;
         public Sources? SelectedSource

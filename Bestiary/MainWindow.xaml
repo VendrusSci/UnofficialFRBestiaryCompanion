@@ -114,7 +114,7 @@
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto"/>
                                 <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
                             <CheckBox Grid.Column="0" IsChecked="{Binding ExactChecked}" HorizontalAlignment="Left"/>
                             <Label Grid.Column="1" HorizontalAlignment ="Left" Content="Exact"/>
@@ -127,6 +127,8 @@
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" SharedSizeGroup="A"/>
                             <ColumnDefinition MinWidth="160" />
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
@@ -183,6 +185,16 @@
                         <Button Grid.Column="2" Grid.Row="2" Content="Clear" Command="{Binding ClearOption}" CommandParameter="{Binding FamiliarParameters.SelectedLocationType}"/>
                         <Button Grid.Column="2" Grid.Row="3" Content="Clear" Command="{Binding ClearOption}" CommandParameter="{Binding FamiliarParameters.SelectedAvailability}"/>
                         <Button Grid.Column="2" Grid.Row="4" Content="Clear" Command="{Binding ClearOption}" CommandParameter="{Binding FamiliarParameters.SelectedSource}"/>
+
+                        <Label Grid.Column="3" Grid.Row="0" Content="Exclude:"/>
+                        <Label Grid.Column="3" Grid.Row="1" Content="Exclude:"/>
+                        <Label Grid.Column="3" Grid.Row="2" Content="Exclude:"/>
+                        <Label Grid.Column="3" Grid.Row="3" Content="Exclude:"/>
+
+                        <CheckBox Grid.Column="4"  Grid.Row="0" IsChecked="{Binding FamiliarParameters.OwnedStatusInvert}"/>
+                        <CheckBox Grid.Column="4"  Grid.Row="1" IsChecked="{Binding FamiliarParameters.BondingLevelInvert}"/>
+                        <CheckBox Grid.Column="4"  Grid.Row="2" IsChecked="{Binding FamiliarParameters.LocationInvert}"/>
+                        <CheckBox Grid.Column="4"  Grid.Row="3" IsChecked="{Binding FamiliarParameters.AvailabilityInvert}"/>
                     </Grid>
                 </GroupBox>
                 <GroupBox Grid.Row="2" Header="Subfilters" Margin="5">
@@ -288,12 +300,21 @@
                             </DataGridTemplateColumn>
                             <DataGridTextColumn Header="Name" Width="Auto" IsReadOnly="True" Binding="{Binding Info.Familiar.Name}" TextBlock.TextAlignment="Center"/>
                             <DataGridTextColumn Header="Ownership" Width="Auto" IsReadOnly="True" Binding="{Binding Info.Owned, Converter={StaticResource DescConverter}}" TextBlock.TextAlignment="Center"/>
-                            <DataGridTextColumn Header="Bonding Level" Width="Auto" IsReadOnly="True" Binding="{Binding Info.BondLevel}" CellStyle="{StaticResource BondLevelStyle}"/>
+                            <DataGridTemplateColumn Header="Bonding Level" Width="Auto" IsReadOnly="False">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <ComboBox IsEditable="False" ItemsSource="{Binding AvailableBondingLevels}" 
+                                                  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" IsEnabled="{Binding Info.Owned, Converter={StaticResource OwnedToBoolConverter}}" 
+                                                  SelectedItem="{Binding Info.BondLevel, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                  IsSynchronizedWithCurrentItem="True"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
                             <DataGridTextColumn Width="10" IsReadOnly="True"/>
                             <DataGridTemplateColumn Header="Location" Width="Auto" IsReadOnly="False">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
-                                        <ComboBox  ItemsSource="{Binding AvailableLocationTypes}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  SelectedItem="{Binding Info.Location, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsSynchronizedWithCurrentItem="True" IsEnabled="{Binding Info.Owned, Converter={StaticResource OwnedToBoolConverter}}">
+                                        <ComboBox  ItemsSource="{Binding AvailableLocationTypes}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" SelectedItem="{Binding Info.Location, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsSynchronizedWithCurrentItem="True" IsEnabled="{Binding Info.Owned, Converter={StaticResource OwnedToBoolConverter}}">
                                             <ComboBox.ItemTemplate>
                                                 <DataTemplate>
                                                     <TextBlock Text="{Binding Mode=OneTime, Converter={StaticResource DescConverter}}"/>
@@ -307,13 +328,6 @@
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
                                         <Button Content="Gotcha!" Command="{Binding SetOwned}"/>
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
-                            <DataGridTemplateColumn  Width="Auto" IsReadOnly="True">
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <Button Content="Level Up!" Command="{Binding IncrementBondingLevel}"/>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>

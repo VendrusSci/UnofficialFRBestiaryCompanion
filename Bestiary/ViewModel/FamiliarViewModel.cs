@@ -76,7 +76,6 @@ namespace Bestiary.ViewModel
                             var ownedFamiliar = new OwnedFamiliar(Info.Familiar.Id, BondingLevels.Wary, LocationTypes.InHoard);
                             m_Model.AddOwnedFamiliar(ownedFamiliar);
                             Info.OwnedFamiliar = m_Model.LookupOwnedFamiliar(Info.Familiar.Id);
-                            Info.Owned = Info.OwnedFamiliar != null ? OwnershipStatus.Owned : OwnershipStatus.NotOwned;
                         },
                         onCanExecute: (p) =>
                         {
