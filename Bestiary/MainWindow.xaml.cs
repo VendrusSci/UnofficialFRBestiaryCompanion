@@ -28,7 +28,7 @@ namespace Bestiary
         {
             var dgrow = (DataGridRow)Sender;
             DependencyObject parent = VisualTreeHelper.GetParent((Visual)e.OriginalSource);
-            while(parent as DataGrid == null)
+            while(parent as DataGrid == null && parent != null)
             {
                 parent = VisualTreeHelper.GetParent(parent);
             }

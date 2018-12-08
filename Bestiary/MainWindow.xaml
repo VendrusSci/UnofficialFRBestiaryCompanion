@@ -311,7 +311,13 @@
                                                   HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
                                                   IsEnabled="{Binding Info.Owned, Converter={StaticResource OwnedToBoolConverter}}" 
                                                   SelectedItem="{Binding Info.BondLevel, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                                  IsSynchronizedWithCurrentItem="True"/>
+                                                  IsSynchronizedWithCurrentItem="True">
+                                            <ComboBox.Style>
+                                                <Style TargetType="ComboBox">
+                                                    <Setter Property="Background" Value="{Binding Info.BondLevel , Converter={StaticResource BondLevelToColour}}"/>
+                                                </Style>
+                                            </ComboBox.Style>
+                                        </ComboBox>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
