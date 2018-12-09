@@ -146,7 +146,7 @@ namespace Bestiary.ViewModel
             if (!StructuralComparisons.StructuralEqualityComparer.Equals(GetHashValue(m_LocalUpdateFilePath), GetHashValue(filePath)))
             {
                 //if the hashes aren't the same, make a new model and compare all the familiars
-                m_UpdateFamiliarModel = new XmlModelStorage(m_LocalUpdateFilePath, "");
+                m_UpdateFamiliarModel = new XmlModelStorage(m_LocalUpdateFilePath, "", "");
                 foreach(var familiar in m_UpdateFamiliarModel.Familiars)
                 {
                     var localFamiliar = m_LocalFamiliarModel.LookupFamiliar(familiar);

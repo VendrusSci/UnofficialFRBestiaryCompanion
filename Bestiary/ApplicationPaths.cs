@@ -27,5 +27,10 @@ namespace Bestiary
         {
             return Path.Combine(GetDataDirectory(), "User Data\\UserData.xml");
         }
+
+        public static string GetDisplayIconDirectory()
+        {
+            return Path.Combine(GetResourcesDirectory(), "DisplayIcons");
+        }
     }
 }

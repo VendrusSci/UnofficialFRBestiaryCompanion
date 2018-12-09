@@ -21,7 +21,8 @@ namespace Bestiary
             var dataDirectory = ApplicationPaths.GetDataDirectory();
             var frDataPath = Path.Combine(dataDirectory, "Resources/FRData.xml");
             var userDataPath = Path.Combine(dataDirectory, "User Data/UserData.xml");
-            DataContext = new MainViewModel(this, new XmlModelStorage(frDataPath, userDataPath));
+            var bookmarkDataPath = Path.Combine(dataDirectory, "User Data/BookmarkData.xml");
+            DataContext = new MainViewModel(this, new XmlModelStorage(frDataPath, userDataPath, bookmarkDataPath));
         }
 
         public void ChangeSelectedRow(object Sender, MouseButtonEventArgs e)

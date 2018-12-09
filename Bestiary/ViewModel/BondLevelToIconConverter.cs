@@ -21,13 +21,13 @@ namespace Bestiary.ViewModel
 
         public BondLevelToIconConverter()
         {
-            m_Awakened = ImageLoader.LoadImage(Path.Combine(ApplicationPaths.GetResourcesDirectory(), "BondIcons//Awakened.png"));
-            m_Loyal = ImageLoader.LoadImage(Path.Combine(ApplicationPaths.GetResourcesDirectory(), "BondIcons//Loyal.png"));
-            m_Companion = ImageLoader.LoadImage(Path.Combine(ApplicationPaths.GetResourcesDirectory(), "BondIcons//Companion.png"));
-            m_Inquisitive = ImageLoader.LoadImage(Path.Combine(ApplicationPaths.GetResourcesDirectory(), "BondIcons//Inquisitive.png"));
-            m_Relaxed = ImageLoader.LoadImage(Path.Combine(ApplicationPaths.GetResourcesDirectory(), "BondIcons//Relaxed.png"));
-            m_Tolerant = ImageLoader.LoadImage(Path.Combine(ApplicationPaths.GetResourcesDirectory(), "BondIcons//Tolerant.png"));
-            m_Wary = ImageLoader.LoadImage(Path.Combine(ApplicationPaths.GetResourcesDirectory(), "BondIcons//Wary.png"));
+            m_Awakened = ImageLoader.LoadImage(Path.Combine(ApplicationPaths.GetDisplayIconDirectory(), "Awakened.png"));
+            m_Loyal = ImageLoader.LoadImage(Path.Combine(ApplicationPaths.GetDisplayIconDirectory(), "Loyal.png"));
+            m_Companion = ImageLoader.LoadImage(Path.Combine(ApplicationPaths.GetDisplayIconDirectory(), "Companion.png"));
+            m_Inquisitive = ImageLoader.LoadImage(Path.Combine(ApplicationPaths.GetDisplayIconDirectory(), "Inquisitive.png"));
+            m_Relaxed = ImageLoader.LoadImage(Path.Combine(ApplicationPaths.GetDisplayIconDirectory(), "Relaxed.png"));
+            m_Tolerant = ImageLoader.LoadImage(Path.Combine(ApplicationPaths.GetDisplayIconDirectory(), "Tolerant.png"));
+            m_Wary = ImageLoader.LoadImage(Path.Combine(ApplicationPaths.GetDisplayIconDirectory(), "Wary.png"));
         }
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)

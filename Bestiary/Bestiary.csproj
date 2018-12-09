@@ -109,16 +109,21 @@
     </Compile>
     <Compile Include="BaseCommand.cs" />
     <Compile Include="LambdaCommand.cs" />
+    <Compile Include="Model\Bookmarking.cs" />
     <Compile Include="Model\FamiliarAddParameters.cs" />
     <Compile Include="Model\FamiliarFilters.cs" />
     <Compile Include="Model\ICRUD.cs" />
     <Compile Include="Model\LocationType.cs" />
     <Compile Include="Model\SubFilter.cs" />
     <Compile Include="Model\XmlModelStorage.cs" />
+    <Compile Include="ResultListWindow.xaml.cs">
+      <DependentUpon>ResultListWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SupportInfoWindow.xaml.cs">
       <DependentUpon>SupportInfoWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModel\BondLevelToIconConverter.cs" />
+    <Compile Include="ViewModel\BookmarkStateToIconConverter.cs" />
     <Compile Include="ViewModel\EditDistance.cs" />
     <Compile Include="ViewModel\FetchUpdateViewModel.cs" />
     <Compile Include="ViewModel\FlightToIconConverter.cs" />
@@ -138,6 +143,7 @@
       <DependentUpon>FamiliarDeleteWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModel\OpenDialogCommand.cs" />
+    <Compile Include="ViewModel\ResultListViewModel.cs" />
     <Compile Include="ViewModel\SupportViewModel.cs" />
     <Page Include="FamiliarDataWindow.xaml">
       <SubType>Designer</SubType>
@@ -172,6 +178,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="FamiliarDeleteWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ResultListWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

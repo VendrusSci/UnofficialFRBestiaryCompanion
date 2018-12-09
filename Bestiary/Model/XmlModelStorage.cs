@@ -11,10 +11,13 @@ namespace Bestiary.Model
     {
         ICRUD<Familiar> LookupFamiliar(int id);
         ICRUD<OwnedFamiliar> LookupOwnedFamiliar(int id);
+        ICRUD<BookmarkedFamiliar> LookupBookmarkedFamiliar(int id);
         IEnumerable<int> Familiars { get; }
         IEnumerable<int> OwnedFamiliars { get; }
+        IEnumerable<int> BookmarkedFamiliars { get; }
         void AddFamiliar(Familiar familiar);
         void AddOwnedFamiliar(OwnedFamiliar ownedFamiliar);
+        void AddBookmarkedFamiliar(BookmarkedFamiliar bookmarkedFamiliar);
     }
 
     class XmlCRUD<ValueType> : ICRUD<ValueType>
@@ -50,14 +53,20 @@ namespace Bestiary.Model
 
     class XmlModelStorage : IModel
     {
-        public XmlModelStorage(string familiarPath, string ownedFamiliarPath)
+        public XmlModelStorage(string familiarPath, string ownedFamiliarPath, string bookmarkedPath)
         {
             m_FamiliarPath = familiarPath;
             m_OwnedFamiliarPath = ownedFamiliarPath;
+            m_BookmarkedPath = bookmarkedPath;
+
             m_FRData = TryLoadXml<XmlData<Familiar>>(familiarPath) ?? new XmlData<Familiar>();
             if(!String.IsNullOrEmpty(ownedFamiliarPath))
             {
                 m_UserData = TryLoadXml<XmlData<OwnedFamiliar>>(ownedFamiliarPath) ?? new XmlData<OwnedFamiliar>();
+            }
+            if (!String.IsNullOrEmpty(bookmarkedPath))
+            {
+                m_BookmarkData = TryLoadXml<XmlData<BookmarkedFamiliar>>(bookmarkedPath) ?? new XmlData<BookmarkedFamiliar>();
             }
         }
 
@@ -69,6 +78,11 @@ namespace Bestiary.Model
         public ICRUD<OwnedFamiliar> LookupOwnedFamiliar(int id)
         {
             return LookupGeneric(SaveUserData, UserData.Values, owned => owned.Id == id);
+        }
+
+        public ICRUD<BookmarkedFamiliar> LookupBookmarkedFamiliar(int id)
+        {
+            return LookupGeneric(SaveBookmarkData, BookmarkData.Values, bookmarked => bookmarked.Id == id);
         }
 
         public void AddFamiliar(Familiar familiar)
@@ -83,12 +97,19 @@ namespace Bestiary.Model
             SaveUserData();
         }
 
+        public void AddBookmarkedFamiliar(BookmarkedFamiliar bookmarkedFamiliar)
+        {
+            BookmarkData.Values.Add(bookmarkedFamiliar);
+            SaveBookmarkData();
+        }
+
         public XmlData<Familiar> FRData => m_FRData;
         public XmlData<OwnedFamiliar> UserData => m_UserData;
+        public XmlData<BookmarkedFamiliar> BookmarkData => m_BookmarkData;
 
         public IEnumerable<int> Familiars => FRData.Values.Select(familiar => familiar.Id);
-
         public IEnumerable<int> OwnedFamiliars => UserData.Values.Select(owned => owned.Id);
+        public IEnumerable<int> BookmarkedFamiliars => BookmarkData.Values.Select(bookmarked => bookmarked.Id);
 
         public void SaveFrData()
         {
@@ -98,6 +119,11 @@ namespace Bestiary.Model
         public void SaveUserData()
         {
             SaveXml(m_OwnedFamiliarPath, m_UserData);
+        }
+
+        public void SaveBookmarkData()
+        {
+            SaveXml(m_BookmarkedPath, m_BookmarkData);
         }
 
         private ICRUD<ValueType> LookupGeneric<ValueType>(Action saveFunc, List<ValueType> collection, Func<ValueType, bool> predicate)
@@ -154,8 +180,10 @@ namespace Bestiary.Model
         
         private XmlData<Familiar> m_FRData;
         private XmlData<OwnedFamiliar> m_UserData;
+        private XmlData<BookmarkedFamiliar> m_BookmarkData;
         private string m_FamiliarPath;
         private string m_OwnedFamiliarPath;
+        private string m_BookmarkedPath;
     }
 
     class CustomResolver : DataContractResolver

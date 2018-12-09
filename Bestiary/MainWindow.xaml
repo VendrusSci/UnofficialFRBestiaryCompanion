@@ -15,6 +15,7 @@
         <local_vm:LongestItemToWidthConverter x:Key="ComboBoxWidthConverter"/>
         <local_vm:ItemToDescriptionConverter x:Key="DescConverter"/>
         <local_vm:BondLevelToIconConverter x:Key="BondLevelToIcon"/>
+        <local_vm:BookmarkStateToIconConverter x:Key="BookmarkedToIcon"/>
 
         <Style TargetType="{x:Type Label}">
             <Setter Property="VerticalAlignment" Value="Center"/>
@@ -364,7 +365,10 @@
                             <DataGridTemplateColumn  Width="Auto" IsReadOnly="True">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
-                                        <Button Content="{Binding Info.Bookmarked}" Command="{Binding ToggleBookmark}"/>
+                                        <Button Command="{Binding ToggleBookmark}">
+                                            <Image Margin="0 0 1 0" Width="20" Height="20" 
+                                                   Source="{Binding Info.Bookmarked, Converter={StaticResource BookmarkedToIcon}}"/>
+                                        </Button>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>

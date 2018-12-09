@@ -59,9 +59,11 @@ namespace Bestiary.ViewModel
                                 .Select(familiar =>
                                 {
                                     var owned = m_Model.LookupOwnedFamiliar(familiar.Id);
+                                    var bookmarked = m_Model.LookupBookmarkedFamiliar(familiar.Id);
                                     return new FamiliarInfo(
                                         m_Model.LookupFamiliar(familiar.Id),
-                                        owned
+                                        owned,
+                                        bookmarked
                                     );
                                 });
                             UserActionLog.Info("Applying filters");
@@ -368,9 +370,26 @@ namespace Bestiary.ViewModel
                         Window, 
                         _ => new InitialisationWindow(m_Model),
                         afterClosed: _ => FetchFamiliars.Execute(null)
-                        );
+                    );
                 }
                 return m_OpenInitialisationWindow;
+            }
+        }
+
+        private BaseCommand m_OpenResultListWindow;
+        public ICommand OpenResultListWindow
+        {
+            get
+            {
+                if(m_OpenResultListWindow == null)
+                {
+                    UserActionLog.Info("Results List window opened");
+                    m_OpenResultListWindow = new OpenDialogCommand<ResultListWindow>(
+                        Window,
+                        _ => new ResultListWindow(FilteredFamiliars)
+                    );
+                }
+                return m_OpenResultListWindow;
             }
         }
 
@@ -381,10 +400,10 @@ namespace Bestiary.ViewModel
             switch (SelectedSortType)
             {
                 case SortTypes.Alphabetical:
-                    sortedFamiliars = sortedFamiliars.OrderBy(f => f.Info.Familiar.Name).ToArray();
+                    sortedFamiliars = sortedFamiliars.OrderBy(f => f.Info.Familiar.Name, StringComparer.Ordinal).ToArray();
                     break;
                 case SortTypes.ReverseAlphabetical:
-                    sortedFamiliars = sortedFamiliars.OrderByDescending(f => f.Info.Familiar.Name).ToArray();
+                    sortedFamiliars = sortedFamiliars.OrderByDescending(f => f.Info.Familiar.Name, StringComparer.Ordinal).ToArray();
                     break;
                 case SortTypes.BondLevel:
                     sortedFamiliars = sortedFamiliars.OrderBy(f => f.Info.BondLevel).ToArray();

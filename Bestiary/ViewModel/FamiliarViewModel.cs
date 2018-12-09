@@ -49,9 +49,7 @@ namespace Bestiary.ViewModel
                 return m_Image;
             }
         }
-        private LambdaCommand m_SetOwned;
-        private LambdaCommand m_IncrementBondingLevel;
-
+ 
         public event PropertyChangedEventHandler PropertyChanged;
 
         public FamiliarViewModel(IModel model, FamiliarInfo info, LocationTypes[] availableLocationTypes)
@@ -63,6 +61,7 @@ namespace Bestiary.ViewModel
             m_Model = model;
         }
 
+        private LambdaCommand m_SetOwned;
         public ICommand SetOwned
         {
             get
@@ -87,25 +86,32 @@ namespace Bestiary.ViewModel
             }
         }
 
-        public ICommand IncrementBondingLevel
+        private LambdaCommand m_ToggleBookmark;
+        public ICommand ToggleBookmark
         {
             get
             {
-                if(m_IncrementBondingLevel == null)
+                if(m_ToggleBookmark == null)
                 {
-                    m_IncrementBondingLevel = new LambdaCommand(
+                    m_ToggleBookmark = new LambdaCommand(
                         onExecute: (p) =>
                         {
-                            MainViewModel.UserActionLog.Info($"Bond level increased to {Info.BondLevel + 1}");
-                            Info.BondLevel++;
-                        },
-                        onCanExecute: (p) =>
-                        {
-                            return Info.BondLevel < BondingLevels.Awakened;
+                            if(Info.BookmarkedFamiliar == null)
+                            {
+                                MainViewModel.UserActionLog.Info($"Bookmarking familiar: {Info.Familiar.Id}");
+                                m_Model.AddBookmarkedFamiliar(new BookmarkedFamiliar(Info.Familiar.Id));
+                                Info.BookmarkedFamiliar = m_Model.LookupBookmarkedFamiliar(Info.Familiar.Id);
+                            }
+                            else
+                            {
+                                MainViewModel.UserActionLog.Info($"Removing bookmark from familiar: {Info.Familiar.Id}");
+                                Info.BookmarkedFamiliar.Delete();
+                                Info.BookmarkedFamiliar = null;
+                            }
                         }
                     );
                 }
-                return m_IncrementBondingLevel;
+                return m_ToggleBookmark;
             }
         }
 
