@@ -1,0 +1,34 @@
+﻿<Window x:Class="Bestiary.ResultListWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Bestiary"
+        mc:Ignorable="d"
+        Title="ResultListWindow" Height="450" Width="800"
+        WindowStartupLocation="CenterOwner">
+    <Grid>
+        <TabControl Margin="5">
+            <TabItem Header="Name List">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <TextBox Grid.Row="0" Margin="5" Text="{Binding NameList, Mode=OneTime}"  TextWrapping="Wrap" IsReadOnly="True"/>
+                    <Button Grid.Row="1" Margin="5" Content="{Binding NameCopyButtonState}" Command="{Binding CopyToClipboard}" CommandParameter="{Binding NameList, Mode=OneWay}"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="BBCode Icon List">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <TextBox Grid.Row="0" Margin="5" Text="{Binding IconList, Mode=OneTime}"  TextWrapping="Wrap" IsReadOnly="True"/>
+                    <Button Grid.Row="1" Margin="5" Content="{Binding IconCopyButtonState}" Command="{Binding CopyToClipboard}" CommandParameter="{Binding IconList, Mode=OneWay}"/>
+                </Grid>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Window>

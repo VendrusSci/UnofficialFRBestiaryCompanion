@@ -85,6 +85,7 @@
                 <MenuItem Width="Auto" Header="Add new Familiar" Command="{Binding OpenAddFamiliarWindow}"/>
                 <MenuItem Width="Auto" Header="Delete Familiar" Command="{Binding OpenDeleteFamiliarWindow}"/>
                 <MenuItem Width="Auto" Header="Initialisation Options" Command="{Binding OpenInitialisationWindow}"/>
+                <MenuItem Width="Auto" Header="Copyable Results List" Command="{Binding OpenResultListWindow}"/>
             </MenuItem>
             <MenuItem Width="Auto" Header="Views"/>
             <MenuItem Width="Auto" Header="Other">
@@ -357,6 +358,13 @@
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
                                         <Button Content="Gotcha!" Command="{Binding SetOwned}"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn  Width="Auto" IsReadOnly="True">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Content="{Binding Info.Bookmarked}" Command="{Binding ToggleBookmark}"/>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
