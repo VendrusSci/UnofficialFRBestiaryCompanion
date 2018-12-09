@@ -23,6 +23,7 @@ namespace Bestiary.ViewModel
         public LocationTypes[] AvailableLocationTypes { get; private set; }
         public OwnershipStatus[] AvailableOwnershipStatuses { get; private set; }
         public BondingLevels[] AvailableBondingLevels { get; private set; }
+        public BookmarkState[] AvailableBookmarkStates { get; private set; }
 
         private IModel m_Model;
         private BitmapImage m_Icon = null;
@@ -58,6 +59,7 @@ namespace Bestiary.ViewModel
             AvailableLocationTypes = availableLocationTypes;
             AvailableOwnershipStatuses = ListEnumValues<OwnershipStatus>();
             AvailableBondingLevels = ListEnumValues<BondingLevels>();
+            AvailableBookmarkStates = ListEnumValues<BookmarkState>();
             m_Model = model;
         }
 

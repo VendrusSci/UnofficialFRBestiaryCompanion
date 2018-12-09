@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
@@ -9,7 +10,9 @@ namespace Bestiary.Model
 {
     public enum BookmarkState
     {
+        [Description("Bookmark")]
         Bookmarked,
+        [Description("No Bookmark")]
         NotBookmarked
     }
 

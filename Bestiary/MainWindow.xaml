@@ -146,13 +146,15 @@
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
                         <Label Grid.Column="0" Grid.Row="0" Content="Ownership"/>
-                        <Label Grid.Column="0" Grid.Row="1" Content="Bonding Level"/>
-                        <Label Grid.Column="0" Grid.Row="2" Content="Location"/>
-                        <Label Grid.Column="0" Grid.Row="3"  Content="Availability"/>
-                        <Label Grid.Column="0" Grid.Row="4" HorizontalContentAlignment="Center" Content="Source"/>
-
+                        <Label Grid.Column="0" Grid.Row="1" Content="Bookmarked"/>
+                        <Label Grid.Column="0" Grid.Row="2" Content="Bonding Level"/>
+                        <Label Grid.Column="0" Grid.Row="3" Content="Location"/>
+                        <Label Grid.Column="0" Grid.Row="4" Content="Availability"/>
+                        <Label Grid.Column="0" Grid.Row="5" Content="Source"/>
+                        
                         <ComboBox Grid.Column="1" Grid.Row="0" ItemsSource="{Binding FamiliarParameters.AvailableOwnedStatus}" 
                                   SelectedItem="{Binding FamiliarParameters.SelectedOwnedStatus}" HorizontalAlignment="Stretch">
                             <ComboBox.ItemTemplate>
@@ -161,7 +163,15 @@
                                 </DataTemplate>
                             </ComboBox.ItemTemplate>
                         </ComboBox>
-                        <ComboBox Grid.Column="1" Grid.Row="1" ItemsSource="{Binding FamiliarParameters.AvailableBondingLevels}" 
+                        <ComboBox Grid.Column="1" Grid.Row="1" ItemsSource="{Binding FamiliarParameters.AvailableBookmarkStates}" 
+                                  SelectedItem="{Binding FamiliarParameters.SelectedBookmarkState}" HorizontalAlignment="Stretch">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Converter={StaticResource DescConverter}, Mode=OneTime}"/>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                        <ComboBox Grid.Column="1" Grid.Row="2" ItemsSource="{Binding FamiliarParameters.AvailableBondingLevels}" 
                                   SelectedItem="{Binding FamiliarParameters.SelectedBondingLevel}" HorizontalAlignment="Stretch"
                                   Margin="5">
                             <ComboBox.ItemTemplate>
@@ -173,7 +183,7 @@
                                 </DataTemplate>
                             </ComboBox.ItemTemplate>
                         </ComboBox>
-                        <ComboBox Grid.Column="1" Grid.Row="2" ItemsSource="{Binding FamiliarParameters.AvailableLocationTypes}" 
+                        <ComboBox Grid.Column="1" Grid.Row="3" ItemsSource="{Binding FamiliarParameters.AvailableLocationTypes}" 
                                   SelectedItem="{Binding FamiliarParameters.SelectedLocationType}" HorizontalAlignment="Stretch">
                             <ComboBox.ItemTemplate>
                                 <DataTemplate>
@@ -181,7 +191,7 @@
                                 </DataTemplate>
                             </ComboBox.ItemTemplate>
                         </ComboBox>
-                        <ComboBox Grid.Column="1" Grid.Row="3" ItemsSource="{Binding FamiliarParameters.AvailableAvailabilities}" 
+                        <ComboBox Grid.Column="1" Grid.Row="4" ItemsSource="{Binding FamiliarParameters.AvailableAvailabilities}" 
                                   SelectedItem="{Binding FamiliarParameters.SelectedAvailability}" HorizontalAlignment="Stretch">
                             <ComboBox.ItemTemplate>
                                 <DataTemplate>
@@ -189,7 +199,7 @@
                                 </DataTemplate>
                             </ComboBox.ItemTemplate>
                         </ComboBox>
-                        <ComboBox Grid.Column="1" Grid.Row="4" ItemsSource="{Binding FamiliarParameters.AvailableSources}" 
+                        <ComboBox Grid.Column="1" Grid.Row="5" ItemsSource="{Binding FamiliarParameters.AvailableSources}" 
                                   SelectedItem="{Binding FamiliarParameters.SelectedSource}" HorizontalAlignment="Stretch">
                             <ComboBox.ItemTemplate>
                                 <DataTemplate>
@@ -199,18 +209,19 @@
                         </ComboBox>
 
                         <Button Grid.Column="2" Grid.Row="0" Content="Clear" Command="{Binding ClearOption}" CommandParameter="{Binding FamiliarParameters.SelectedOwnedStatus}"/>
-                        <Button Grid.Column="2" Grid.Row="1" Content="Clear" Command="{Binding ClearOption}" CommandParameter="{Binding FamiliarParameters.SelectedBondingLevel}"/>
-                        <Button Grid.Column="2" Grid.Row="2" Content="Clear" Command="{Binding ClearOption}" CommandParameter="{Binding FamiliarParameters.SelectedLocationType}"/>
-                        <Button Grid.Column="2" Grid.Row="3" Content="Clear" Command="{Binding ClearOption}" CommandParameter="{Binding FamiliarParameters.SelectedAvailability}"/>
-                        <Button Grid.Column="2" Grid.Row="4" Content="Clear" Command="{Binding ClearOption}" CommandParameter="{Binding FamiliarParameters.SelectedSource}"/>
+                        <Button Grid.Column="2" Grid.Row="1" Content="Clear" Command="{Binding ClearOption}" CommandParameter="{Binding FamiliarParameters.SelectedBookmarkState}"/>
+                        <Button Grid.Column="2" Grid.Row="2" Content="Clear" Command="{Binding ClearOption}" CommandParameter="{Binding FamiliarParameters.SelectedBondingLevel}"/>
+                        <Button Grid.Column="2" Grid.Row="3" Content="Clear" Command="{Binding ClearOption}" CommandParameter="{Binding FamiliarParameters.SelectedLocationType}"/>
+                        <Button Grid.Column="2" Grid.Row="4" Content="Clear" Command="{Binding ClearOption}" CommandParameter="{Binding FamiliarParameters.SelectedAvailability}"/>
+                        <Button Grid.Column="2" Grid.Row="5" Content="Clear" Command="{Binding ClearOption}" CommandParameter="{Binding FamiliarParameters.SelectedSource}"/>
 
-                        <Label Grid.Column="3" Grid.Row="1" Content="Exclude:"/>
                         <Label Grid.Column="3" Grid.Row="2" Content="Exclude:"/>
                         <Label Grid.Column="3" Grid.Row="3" Content="Exclude:"/>
+                        <Label Grid.Column="3" Grid.Row="4" Content="Exclude:"/>
 
-                        <CheckBox Grid.Column="4"  Grid.Row="1" IsChecked="{Binding FamiliarParameters.BondingLevelInvert}"/>
-                        <CheckBox Grid.Column="4"  Grid.Row="2" IsChecked="{Binding FamiliarParameters.LocationInvert}"/>
-                        <CheckBox Grid.Column="4"  Grid.Row="3" IsChecked="{Binding FamiliarParameters.AvailabilityInvert}"/>
+                        <CheckBox Grid.Column="4"  Grid.Row="2" IsChecked="{Binding FamiliarParameters.BondingLevelInvert}"/>
+                        <CheckBox Grid.Column="4"  Grid.Row="3" IsChecked="{Binding FamiliarParameters.LocationInvert}"/>
+                        <CheckBox Grid.Column="4"  Grid.Row="4" IsChecked="{Binding FamiliarParameters.AvailabilityInvert}"/>
                     </Grid>
                 </GroupBox>
                 <GroupBox Grid.Row="2" Header="Subfilters" Margin="5">

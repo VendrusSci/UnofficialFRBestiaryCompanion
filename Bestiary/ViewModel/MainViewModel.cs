@@ -102,6 +102,10 @@ namespace Bestiary.ViewModel
                                     UserActionLog.Info("Owned filter cleared");
                                     FamiliarParameters.SelectedOwnedStatus = null;
                                     break;
+                                case BookmarkState bs:
+                                    UserActionLog.Info("Bookmark filter cleared");
+                                    FamiliarParameters.SelectedBookmarkState = null;
+                                    break;
                                 case BondingLevels bl:
                                     UserActionLog.Info("Bonding filter cleared");
                                     FamiliarParameters.SelectedBondingLevel = null;
@@ -141,6 +145,8 @@ namespace Bestiary.ViewModel
                             {
                                 case OwnershipStatus b:
                                     return FamiliarParameters.SelectedOwnedStatus != null;
+                                case BookmarkState bs:
+                                    return FamiliarParameters.SelectedBookmarkState != null;
                                 case BondingLevels bl:
                                     return FamiliarParameters.SelectedBondingLevel != null;
                                 case Sources s:
@@ -200,6 +206,11 @@ namespace Bestiary.ViewModel
                 UserActionLog.Info($"    Filter: Ownership status {FamiliarParameters.SelectedOwnedStatus}");
                 filteredFamiliars = filteredFamiliars.Where(f => f.Owned == FamiliarParameters.SelectedOwnedStatus);
             }
+            if (FamiliarParameters.SelectedBookmarkState != null)
+            {
+                UserActionLog.Info($"    Filter: Bookmark state {FamiliarParameters.SelectedBookmarkState}");
+                filteredFamiliars = filteredFamiliars.Where(f => f.Bookmarked == FamiliarParameters.SelectedBookmarkState);
+            }
             if (FamiliarParameters.SelectedLocationType != null)
             {
                 UserActionLog.Info($"    Filter: Location {FamiliarParameters.SelectedLocationType.Value}");
@@ -236,6 +247,7 @@ namespace Bestiary.ViewModel
                         {
                             UserActionLog.Info("All filters cleared");
                             FamiliarParameters.SelectedOwnedStatus = null;
+                            FamiliarParameters.SelectedBookmarkState = null;
                             FamiliarParameters.SelectedBondingLevel = null;
                             FamiliarParameters.SelectedSource = null;
                             FamiliarParameters.SelectedAvailability = null;  
