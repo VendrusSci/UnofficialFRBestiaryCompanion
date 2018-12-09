@@ -7,7 +7,7 @@
         xmlns:local_vm="clr-namespace:Bestiary.ViewModel"
         mc:Ignorable="d"
         x:Name="TopLevelWindow"
-        Title="Unofficial FR Bestiary Companion" Height="500" Width="1000"
+        Title="Unofficial FR Bestiary Companion" Height="500" Width="1050"
         Icon="{Binding Icon}"
         WindowStartupLocation="CenterScreen">
     <Window.Resources>
@@ -186,12 +186,10 @@
                         <Button Grid.Column="2" Grid.Row="3" Content="Clear" Command="{Binding ClearOption}" CommandParameter="{Binding FamiliarParameters.SelectedAvailability}"/>
                         <Button Grid.Column="2" Grid.Row="4" Content="Clear" Command="{Binding ClearOption}" CommandParameter="{Binding FamiliarParameters.SelectedSource}"/>
 
-                        <Label Grid.Column="3" Grid.Row="0" Content="Exclude:"/>
                         <Label Grid.Column="3" Grid.Row="1" Content="Exclude:"/>
                         <Label Grid.Column="3" Grid.Row="2" Content="Exclude:"/>
                         <Label Grid.Column="3" Grid.Row="3" Content="Exclude:"/>
 
-                        <CheckBox Grid.Column="4"  Grid.Row="0" IsChecked="{Binding FamiliarParameters.OwnedStatusInvert}"/>
                         <CheckBox Grid.Column="4"  Grid.Row="1" IsChecked="{Binding FamiliarParameters.BondingLevelInvert}"/>
                         <CheckBox Grid.Column="4"  Grid.Row="2" IsChecked="{Binding FamiliarParameters.LocationInvert}"/>
                         <CheckBox Grid.Column="4"  Grid.Row="3" IsChecked="{Binding FamiliarParameters.AvailabilityInvert}"/>
@@ -312,11 +310,6 @@
                                                   IsEnabled="{Binding Info.Owned, Converter={StaticResource OwnedToBoolConverter}}" 
                                                   SelectedItem="{Binding Info.BondLevel, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                                   IsSynchronizedWithCurrentItem="True">
-                                            <ComboBox.Style>
-                                                <Style TargetType="ComboBox">
-                                                    <Setter Property="Background" Value="{Binding Info.BondLevel , Converter={StaticResource BondLevelToColour}}"/>
-                                                </Style>
-                                            </ComboBox.Style>
                                         </ComboBox>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>

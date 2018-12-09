@@ -12,7 +12,6 @@ namespace Bestiary.Model
         //Filters
         public OwnershipStatus[] AvailableOwnedStatus => ListEnumValues<OwnershipStatus>();
         public OwnershipStatus? SelectedOwnedStatus { get; set; }
-        public bool OwnedStatusInvert { get; set; }
         public BondingLevels[] AvailableBondingLevels => ListEnumValues<BondingLevels>();
         public BondingLevels? SelectedBondingLevel { get; set; }
         public bool BondingLevelInvert { get; set; }

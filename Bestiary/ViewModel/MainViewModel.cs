@@ -99,7 +99,6 @@ namespace Bestiary.ViewModel
                                 case OwnershipStatus b:
                                     UserActionLog.Info("Owned filter cleared");
                                     FamiliarParameters.SelectedOwnedStatus = null;
-                                    FamiliarParameters.OwnedStatusInvert = false;
                                     break;
                                 case BondingLevels bl:
                                     UserActionLog.Info("Bonding filter cleared");
@@ -197,7 +196,7 @@ namespace Bestiary.ViewModel
             if (FamiliarParameters.SelectedOwnedStatus != null)
             {
                 UserActionLog.Info($"    Filter: Ownership status {FamiliarParameters.SelectedOwnedStatus}");
-                filteredFamiliars = FamiliarParameters.OwnedStatusInvert ? filteredFamiliars.Where(f => f.Owned != FamiliarParameters.SelectedOwnedStatus) : filteredFamiliars.Where(f => f.Owned == FamiliarParameters.SelectedOwnedStatus);
+                filteredFamiliars = filteredFamiliars.Where(f => f.Owned == FamiliarParameters.SelectedOwnedStatus);
             }
             if (FamiliarParameters.SelectedLocationType != null)
             {
@@ -252,7 +251,6 @@ namespace Bestiary.ViewModel
 
                             FamiliarParameters.AvailabilityInvert = false;
                             FamiliarParameters.BondingLevelInvert = false;
-                            FamiliarParameters.OwnedStatusInvert = false;
                             FamiliarParameters.LocationInvert = false;
                         }
                     );

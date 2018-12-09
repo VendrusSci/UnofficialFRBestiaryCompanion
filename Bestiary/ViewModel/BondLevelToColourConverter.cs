@@ -12,7 +12,8 @@ namespace Bestiary.ViewModel
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             BondingLevels? bondLevel = value as BondingLevels?;
-            return new SolidColorBrush(bondLevel == BondingLevels.Awakened ? Colors.PeachPuff : Colors.Transparent);
+            SolidColorBrush brush = new SolidColorBrush(bondLevel == BondingLevels.Awakened ? Colors.PeachPuff : Colors.Transparent);
+            return brush;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
