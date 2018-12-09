@@ -6,6 +6,7 @@ using System.Linq;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using Bestiary.Model;
+using Bestiary.ViewWindows;
 
 namespace Bestiary.ViewModel
 {
@@ -402,6 +403,23 @@ namespace Bestiary.ViewModel
                     );
                 }
                 return m_OpenResultListWindow;
+            }
+        }
+
+        private BaseCommand m_OpenFRBestiaryView;
+        public ICommand OpenFRBestiaryView
+        {
+            get
+            {
+                if(m_OpenFRBestiaryView == null)
+                {
+                    UserActionLog.Info("FR Bestiary view opened");
+                    m_OpenFRBestiaryView = new OpenDialogCommand<FRBestiaryView>(
+                        Window,
+                        _ => new FRBestiaryView(m_Model, FamiliarParameters.AvailableOwnedStatus, FamiliarParameters.AvailableBondingLevels, FamiliarParameters.AvailableLocationTypes) 
+                    );
+                }
+                return m_OpenFRBestiaryView;
             }
         }
 

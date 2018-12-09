@@ -1,0 +1,84 @@
+﻿<Window x:Class="Bestiary.ViewWindows.FRBestiaryView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Bestiary.ViewWindows"
+        xmlns:local_vm="clr-namespace:Bestiary.ViewModel.Dataviews"
+        mc:Ignorable="d"
+        Title="FRBestiaryView" Height="630" Width="820">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" HorizontalAlignment="Right" Width="812">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0" Command="{Binding ChangePage}" CommandParameter="dec">
+                <Image Source="{Binding LeftArrow}"/>
+            </Button>
+            <TextBox Grid.Column="1" Margin="2" HorizontalAlignment="Right"
+                     HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                     MinWidth="50" MaxHeight="25"  Text="{Binding PageCount, UpdateSourceTrigger=PropertyChanged}">
+                <TextBox.InputBindings>
+                    <KeyBinding Command="{Binding GoToPage}" Key="Enter"/>
+                </TextBox.InputBindings>
+            </TextBox>
+            <Button Grid.Column="2" Margin="5 0 0 0" Height="25" Width="30" HorizontalAlignment="Left" Content="Go" Command="{Binding GoToPage}"/>
+            <Button Grid.Column="3" Command="{Binding ChangePage}" CommandParameter="inc">
+                <Image Source="{Binding RightArrow}"/>
+            </Button>
+        </Grid>
+        <Grid Grid.Row="1" Margin="2" Background="White">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <ContentControl Grid.Row="0" Grid.Column="0">
+                <local:FRBestiaryFamControl DataContext="{Binding Familiars[0]}"/>
+            </ContentControl>
+            <ContentControl Grid.Row="0" Grid.Column="1">
+                <local:FRBestiaryFamControl DataContext="{Binding Familiars[1]}"/>
+            </ContentControl>
+            <ContentControl Grid.Row="0" Grid.Column="2">
+                <local:FRBestiaryFamControl DataContext="{Binding Familiars[2]}"/>
+            </ContentControl>
+            <ContentControl Grid.Row="0" Grid.Column="3">
+                <local:FRBestiaryFamControl DataContext="{Binding Familiars[3]}"/>
+            </ContentControl>
+            
+            <ContentControl Grid.Row="1" Grid.Column="0">
+                <local:FRBestiaryFamControl DataContext="{Binding Familiars[4]}"/>
+            </ContentControl>
+            <ContentControl Grid.Row="1" Grid.Column="1">
+                <local:FRBestiaryFamControl DataContext="{Binding Familiars[5]}"/>
+            </ContentControl>
+            <ContentControl Grid.Row="1" Grid.Column="2">
+                <local:FRBestiaryFamControl DataContext="{Binding Familiars[6]}"/>
+            </ContentControl>
+            <ContentControl Grid.Row="1" Grid.Column="3">
+                <local:FRBestiaryFamControl DataContext="{Binding Familiars[7]}"/>
+            </ContentControl>
+            <!--<local:FRBestiaryFamControl Grid.Row="0" Grid.Column="0" DataContext="{Binding RelativeSource={RelativeSource Self}}" Content="{Binding Familiars[0]}"/>
+            <local:FRBestiaryFamControl Grid.Row="0" Grid.Column="1" Content="{Binding Familiars[1]}"/>
+            <local:FRBestiaryFamControl Grid.Row="0" Grid.Column="2" Content="{Binding Familiars[2]}"/>
+            <local:FRBestiaryFamControl Grid.Row="0" Grid.Column="3" Content="{Binding Familiars[3]}"/>
+
+            <local:FRBestiaryFamControl Grid.Row="1" Grid.Column="0" Content="{Binding Familiars[4]}"/>
+            <local:FRBestiaryFamControl Grid.Row="1" Grid.Column="1" Content="{Binding Familiars[5]}"/>
+            <local:FRBestiaryFamControl Grid.Row="1" Grid.Column="2" Content="{Binding Familiars[6]}"/>
+            <local:FRBestiaryFamControl Grid.Row="1" Grid.Column="3" Content="{Binding Familiars[7]}"/>-->
+        </Grid>
+    </Grid>
+</Window>
