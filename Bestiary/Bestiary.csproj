@@ -61,6 +61,7 @@
     <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
       <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
     </Reference>
+    <Reference Include="PresentationFramework.Aero2" />
     <Reference Include="PropertyChanged, Version=2.5.13.0, Culture=neutral, PublicKeyToken=ee3ee20bcf148ddd, processorArchitecture=MSIL">
       <HintPath>..\packages\PropertyChanged.Fody.2.5.13\lib\net452\PropertyChanged.dll</HintPath>
     </Reference>
@@ -117,7 +118,7 @@
     <Compile Include="SupportInfoWindow.xaml.cs">
       <DependentUpon>SupportInfoWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewModel\BondLevelToColourConverter.cs" />
+    <Compile Include="ViewModel\BondLevelToIconConverter.cs" />
     <Compile Include="ViewModel\EditDistance.cs" />
     <Compile Include="ViewModel\FetchUpdateViewModel.cs" />
     <Compile Include="ViewModel\FlightToIconConverter.cs" />

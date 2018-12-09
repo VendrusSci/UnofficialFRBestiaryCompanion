@@ -1,10 +1,11 @@
-﻿<Window x:Class="Bestiary.MainWindow"
+﻿<Window
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Bestiary.Model"
         xmlns:local_vm="clr-namespace:Bestiary.ViewModel"
+        xmlns:Themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero2" x:Class="Bestiary.MainWindow"
         mc:Ignorable="d"
         x:Name="TopLevelWindow"
         Title="Unofficial FR Bestiary Companion" Height="500" Width="1050"
@@ -13,30 +14,30 @@
     <Window.Resources>
         <local_vm:LongestItemToWidthConverter x:Key="ComboBoxWidthConverter"/>
         <local_vm:ItemToDescriptionConverter x:Key="DescConverter"/>
-        <local_vm:BondLevelToColourConverter x:Key="BondLevelToColour"/>
+        <local_vm:BondLevelToIconConverter x:Key="BondLevelToIcon"/>
 
-        <Style TargetType="Label">
+        <Style TargetType="{x:Type Label}">
             <Setter Property="VerticalAlignment" Value="Center"/>
             <Setter Property="HorizontalAlignment" Value="Center"/>
             <Setter Property="HorizontalContentAlignment" Value="Center"/>
         </Style>
-        <Style TargetType="TextBlock">
+        <Style TargetType="{x:Type TextBlock}">
             <Setter Property="VerticalAlignment" Value="Center"/>
             <Setter Property="HorizontalAlignment" Value="Center"/>
         </Style>
-        <Style TargetType="CheckBox">
+        <Style TargetType="{x:Type CheckBox}">
             <Setter Property="VerticalAlignment" Value="Center"/>
         </Style>
-        <Style TargetType="ComboBox">
+        <Style TargetType="{x:Type ComboBox}">
             <Setter Property="VerticalAlignment" Value="Center"/>
             <Setter Property="HorizontalAlignment" Value="Center"/>
             <Setter Property="Margin" Value="5"/>
         </Style>
-        <Style TargetType="Button">
+        <Style TargetType="{x:Type Button}">
             <Setter Property="VerticalContentAlignment" Value="Center"/>
             <Setter Property="Margin" Value="5"/>
         </Style>
-        <Style TargetType="DataGridCell">
+        <Style TargetType="{x:Type DataGridCell}">
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="VerticalContentAlignment" Value="Center"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
@@ -50,7 +51,9 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
-        <Style TargetType="DataGridRow">
+        <Style TargetType="{x:Type DataGridRow}">
+            <EventSetter Event="Control.PreviewMouseDoubleClick" Handler="ChangeSelectedRow"/>
+            <EventSetter Event="UIElement.PreviewMouseLeftButtonDown" Handler="ChangeSelectedRow"/>
             <Style.Triggers>
                 <Trigger Property="IsSelected" Value="true">
                     <Setter Property="BorderBrush" Value="Black"/>
@@ -61,11 +64,15 @@
                     <Setter Property="BorderThickness" Value="1"/>
                 </Trigger>
             </Style.Triggers>
-            <EventSetter Event="PreviewMouseDoubleClick" Handler="ChangeSelectedRow"/>
-            <EventSetter Event="PreviewMouseLeftButtonDown" Handler="ChangeSelectedRow"/>
         </Style>
-        <Style TargetType="DataGrid">
-            
+        <Style x:Key="FocusVisual">
+            <Setter Property="Control.Template">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <Rectangle Margin="2" SnapsToDevicePixels="true" Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" StrokeThickness="1" StrokeDashArray="1 2"/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
         </Style>
     </Window.Resources>
     <Grid>
@@ -144,38 +151,47 @@
                         <Label Grid.Column="0" Grid.Row="3"  Content="Availability"/>
                         <Label Grid.Column="0" Grid.Row="4" HorizontalContentAlignment="Center" Content="Source"/>
 
-                        <ComboBox Grid.Column="1" Grid.Row="0" ItemsSource="{Binding FamiliarParameters.AvailableOwnedStatus}" SelectedItem="{Binding FamiliarParameters.SelectedOwnedStatus}" HorizontalAlignment="Stretch">
+                        <ComboBox Grid.Column="1" Grid.Row="0" ItemsSource="{Binding FamiliarParameters.AvailableOwnedStatus}" 
+                                  SelectedItem="{Binding FamiliarParameters.SelectedOwnedStatus}" HorizontalAlignment="Stretch">
                             <ComboBox.ItemTemplate>
                                 <DataTemplate>
-                                    <TextBlock Text="{Binding Mode=OneTime, Converter={StaticResource DescConverter}}"/>
+                                    <TextBlock Text="{Binding Converter={StaticResource DescConverter}, Mode=OneTime}"/>
                                 </DataTemplate>
                             </ComboBox.ItemTemplate>
                         </ComboBox>
-                        <ComboBox Grid.Column="1" Grid.Row="1" ItemsSource="{Binding FamiliarParameters.AvailableBondingLevels}" SelectedItem="{Binding FamiliarParameters.SelectedBondingLevel}" HorizontalAlignment="Stretch">
+                        <ComboBox Grid.Column="1" Grid.Row="1" ItemsSource="{Binding FamiliarParameters.AvailableBondingLevels}" 
+                                  SelectedItem="{Binding FamiliarParameters.SelectedBondingLevel}" HorizontalAlignment="Stretch"
+                                  Margin="5">
                             <ComboBox.ItemTemplate>
                                 <DataTemplate>
-                                    <TextBlock Text="{Binding Mode=OneTime, Converter={StaticResource DescConverter}}"/>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Image Margin="0 0 2 0" Width="10" Height="10" Source="{Binding Converter={StaticResource BondLevelToIcon}}"/>
+                                        <TextBlock Text="{Binding Converter={StaticResource DescConverter}, Mode=OneTime}"/>
+                                    </StackPanel>
                                 </DataTemplate>
                             </ComboBox.ItemTemplate>
                         </ComboBox>
-                        <ComboBox Grid.Column="1" Grid.Row="2" ItemsSource="{Binding FamiliarParameters.AvailableLocationTypes}" SelectedItem="{Binding FamiliarParameters.SelectedLocationType}" HorizontalAlignment="Stretch">
+                        <ComboBox Grid.Column="1" Grid.Row="2" ItemsSource="{Binding FamiliarParameters.AvailableLocationTypes}" 
+                                  SelectedItem="{Binding FamiliarParameters.SelectedLocationType}" HorizontalAlignment="Stretch">
                             <ComboBox.ItemTemplate>
                                 <DataTemplate>
-                                    <TextBlock Text="{Binding Mode=OneTime, Converter={StaticResource DescConverter}}"/>
+                                    <TextBlock Text="{Binding Converter={StaticResource DescConverter}, Mode=OneTime}"/>
                                 </DataTemplate>
                             </ComboBox.ItemTemplate>
                         </ComboBox>
-                        <ComboBox Grid.Column="1" Grid.Row="3" ItemsSource="{Binding FamiliarParameters.AvailableAvailabilities}" SelectedItem="{Binding FamiliarParameters.SelectedAvailability}" HorizontalAlignment="Stretch">
+                        <ComboBox Grid.Column="1" Grid.Row="3" ItemsSource="{Binding FamiliarParameters.AvailableAvailabilities}" 
+                                  SelectedItem="{Binding FamiliarParameters.SelectedAvailability}" HorizontalAlignment="Stretch">
                             <ComboBox.ItemTemplate>
                                 <DataTemplate>
-                                    <TextBlock Text="{Binding Mode=OneTime, Converter={StaticResource DescConverter}}"/>
+                                    <TextBlock Text="{Binding Converter={StaticResource DescConverter}, Mode=OneTime}"/>
                                 </DataTemplate>
                             </ComboBox.ItemTemplate>
                         </ComboBox>
-                        <ComboBox Grid.Column="1" Grid.Row="4" ItemsSource="{Binding FamiliarParameters.AvailableSources}" SelectedItem="{Binding FamiliarParameters.SelectedSource}" HorizontalAlignment="Stretch">
+                        <ComboBox Grid.Column="1" Grid.Row="4" ItemsSource="{Binding FamiliarParameters.AvailableSources}" 
+                                  SelectedItem="{Binding FamiliarParameters.SelectedSource}" HorizontalAlignment="Stretch">
                             <ComboBox.ItemTemplate>
                                 <DataTemplate>
-                                    <TextBlock Text="{Binding Mode=OneTime, Converter={StaticResource DescConverter}}"/>
+                                    <TextBlock Text="{Binding Converter={StaticResource DescConverter}, Mode=OneTime}"/>
                                 </DataTemplate>
                             </ComboBox.ItemTemplate>
                         </ComboBox>
@@ -214,7 +230,7 @@
                                         <ComboBox Grid.Column="1" Margin="5" ItemsSource="{Binding AvailableOptions}" SelectedItem="{Binding SelectedOption}" HorizontalAlignment="Stretch">
                                             <ComboBox.ItemTemplate>
                                                 <DataTemplate>
-                                                    <TextBlock Text="{Binding Mode=OneTime, Converter={StaticResource DescConverter}}"/>
+                                                    <TextBlock Text="{Binding Converter={StaticResource DescConverter}, Mode=OneTime}"/>
                                                 </DataTemplate>
                                             </ComboBox.ItemTemplate>
                                         </ComboBox>
@@ -248,10 +264,10 @@
                         </Grid.ColumnDefinitions>
                         <Label Grid.Column="0" Width="Auto" HorizontalContentAlignment="Center" Content="Sort by:"/>
                         <ComboBox Grid.Column="1" Margin="5" ItemsSource="{Binding AvailableSortTypes}" SelectedItem="{Binding SelectedSortType, Mode=TwoWay}" 
-                                  IsSynchronizedWithCurrentItem="True" Width="{Binding Path=AvailableSortTypes, Converter={StaticResource ComboBoxWidthConverter}}">
+                                  IsSynchronizedWithCurrentItem="True" Width="{Binding AvailableSortTypes, Converter={StaticResource ComboBoxWidthConverter}}">
                             <ComboBox.ItemTemplate>
                                 <DataTemplate>
-                                    <TextBlock Text="{Binding Mode=OneTime, Converter={StaticResource DescConverter}}"/>
+                                    <TextBlock Text="{Binding Converter={StaticResource DescConverter}, Mode=OneTime}"/>
                                 </DataTemplate>
                             </ComboBox.ItemTemplate>
                         </ComboBox>
@@ -269,8 +285,7 @@
                         <DataGrid.Resources>
                             <local:OwnedToBoolConverter x:Key="OwnedToBoolConverter"/>
                             <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Transparent"/>
-                            <Style x:Key="BondLevelStyle" TargetType="DataGridCell">
-                                <Setter Property="Background" Value="{Binding Info.BondLevel , Converter={StaticResource BondLevelToColour}}"/>
+                            <Style x:Key="BondLevelStyle" TargetType="{x:Type DataGridCell}">
                                 <Setter Property="VerticalContentAlignment" Value="Center"/>
                                 <Setter Property="VerticalAlignment" Value="Center"/>
                                 <Style.Triggers>
@@ -310,6 +325,14 @@
                                                   IsEnabled="{Binding Info.Owned, Converter={StaticResource OwnedToBoolConverter}}" 
                                                   SelectedItem="{Binding Info.BondLevel, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                                   IsSynchronizedWithCurrentItem="True">
+                                            <ComboBox.ItemTemplate>
+                                                <DataTemplate>
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <Image Margin="0 0 2 0" Width="10" Height="10" Source="{Binding Converter={StaticResource BondLevelToIcon}}"/>
+                                                        <TextBlock Text="{Binding Converter={StaticResource DescConverter}, Mode=OneTime}"/>
+                                                    </StackPanel>
+                                                </DataTemplate>
+                                            </ComboBox.ItemTemplate>
                                         </ComboBox>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
@@ -323,7 +346,7 @@
                                                    IsSynchronizedWithCurrentItem="True" IsEnabled="{Binding Info.Owned, Converter={StaticResource OwnedToBoolConverter}}">
                                             <ComboBox.ItemTemplate>
                                                 <DataTemplate>
-                                                    <TextBlock Text="{Binding Mode=OneTime, Converter={StaticResource DescConverter}}"/>
+                                                    <TextBlock Text="{Binding Converter={StaticResource DescConverter}, Mode=OneTime}"/>
                                                 </DataTemplate>
                                             </ComboBox.ItemTemplate>
                                         </ComboBox>
