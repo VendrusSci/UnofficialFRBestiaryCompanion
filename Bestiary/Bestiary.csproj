@@ -86,29 +86,29 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="AboutWindow.xaml">
+    <Page Include="OtherWindows\AboutWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>XamlIntelliSenseFileGenerator</Generator>
     </Page>
-    <Compile Include="AboutWindow.xaml.cs">
+    <Compile Include="OtherWindows\AboutWindow.xaml.cs">
       <DependentUpon>AboutWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ApplicationPaths.cs" />
+    <Compile Include="SupportClasses\ApplicationPaths.cs" />
     <Compile Include="FamiliarDataWindow.xaml.cs">
       <DependentUpon>FamiliarDataWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="FetchUpdateWindow.xaml.cs">
+    <Compile Include="OtherWindows\FetchUpdateWindow.xaml.cs">
       <DependentUpon>FetchUpdateWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="GatherFlightsControl.xaml.cs">
+    <Compile Include="SupportClasses\GatherFlightsControl.xaml.cs">
       <DependentUpon>GatherFlightsControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ImageLoader.cs" />
-    <Compile Include="InitialisationWindow.xaml.cs">
+    <Compile Include="SupportClasses\ImageLoader.cs" />
+    <Compile Include="OptionsWindows\InitialisationWindow.xaml.cs">
       <DependentUpon>InitialisationWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="BaseCommand.cs" />
-    <Compile Include="LambdaCommand.cs" />
+    <Compile Include="SupportClasses\BaseCommand.cs" />
+    <Compile Include="SupportClasses\LambdaCommand.cs" />
     <Compile Include="Model\Bookmarking.cs" />
     <Compile Include="Model\FamiliarAddParameters.cs" />
     <Compile Include="Model\FamiliarFilters.cs" />
@@ -116,48 +116,49 @@
     <Compile Include="Model\LocationType.cs" />
     <Compile Include="Model\SubFilter.cs" />
     <Compile Include="Model\XmlModelStorage.cs" />
-    <Compile Include="ResultListWindow.xaml.cs">
+    <Compile Include="OptionsWindows\ResultListWindow.xaml.cs">
       <DependentUpon>ResultListWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="SupportInfoWindow.xaml.cs">
+    <Compile Include="OtherWindows\SupportInfoWindow.xaml.cs">
       <DependentUpon>SupportInfoWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewModel\BondLevelToIconConverter.cs" />
-    <Compile Include="ViewModel\BookmarkStateToIconConverter.cs" />
-    <Compile Include="ViewModel\EditDistance.cs" />
+    <Compile Include="ViewModel\Converters\BondLevelToIconConverter.cs" />
+    <Compile Include="ViewModel\Converters\BookmarkStateToIconConverter.cs" />
+    <Compile Include="ViewModel\Dataviews\FRBestiaryViewModel.cs" />
+    <Compile Include="ViewModel\SupportClasses\EditDistance.cs" />
     <Compile Include="ViewModel\FetchUpdateViewModel.cs" />
-    <Compile Include="ViewModel\FlightToIconConverter.cs" />
+    <Compile Include="ViewModel\Converters\FlightToIconConverter.cs" />
     <Compile Include="ViewModel\InitialisationViewModel.cs" />
-    <Compile Include="ViewModel\ItemToDescriptionConverter.cs" />
+    <Compile Include="ViewModel\Converters\ItemToDescriptionConverter.cs" />
     <Compile Include="ViewModel\FamiliarAddViewModel.cs" />
     <Compile Include="ViewModel\FamiliarDeleteViewModel.cs" />
     <Compile Include="ViewModel\FamiliarViewModel.cs" />
     <Compile Include="ViewModel\FamiliarDataViewModel.cs" />
     <Compile Include="ViewModel\GatherControlViewModel.cs" />
-    <Compile Include="ViewModel\LongestItemToWidthConverter.cs" />
+    <Compile Include="ViewModel\Converters\LongestItemToWidthConverter.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
-    <Compile Include="FamiliarAddWindow.xaml.cs">
+    <Compile Include="OptionsWindows\FamiliarAddWindow.xaml.cs">
       <DependentUpon>FamiliarAddWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="FamiliarDeleteWindow.xaml.cs">
+    <Compile Include="OptionsWindows\FamiliarDeleteWindow.xaml.cs">
       <DependentUpon>FamiliarDeleteWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewModel\OpenDialogCommand.cs" />
+    <Compile Include="ViewModel\SupportClasses\OpenDialogCommand.cs" />
     <Compile Include="ViewModel\ResultListViewModel.cs" />
     <Compile Include="ViewModel\SupportViewModel.cs" />
     <Page Include="FamiliarDataWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="FetchUpdateWindow.xaml">
+    <Page Include="OtherWindows\FetchUpdateWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="GatherFlightsControl.xaml">
+    <Page Include="SupportClasses\GatherFlightsControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="InitialisationWindow.xaml">
+    <Page Include="OptionsWindows\InitialisationWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -173,19 +174,19 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="FamiliarAddWindow.xaml">
+    <Page Include="OptionsWindows\FamiliarAddWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="FamiliarDeleteWindow.xaml">
+    <Page Include="OptionsWindows\FamiliarDeleteWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="ResultListWindow.xaml">
+    <Page Include="OptionsWindows\ResultListWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="SupportInfoWindow.xaml">
+    <Page Include="OtherWindows\SupportInfoWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -241,6 +242,7 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Fody.3.2.9\build\Fody.targets" Condition="Exists('..\packages\Fody.3.2.9\build\Fody.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
