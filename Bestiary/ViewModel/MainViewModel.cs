@@ -423,6 +423,22 @@ namespace Bestiary.ViewModel
             }
         }
 
+        private BaseCommand m_OpenColiseumView;
+        public ICommand OpenColiseumView
+        {
+            get
+            {
+                if(m_OpenColiseumView == null)
+                {
+                    m_OpenColiseumView = new OpenDialogCommand<ColiseumView>(
+                        Window,
+                        _ => new ColiseumView(m_Model, FamiliarParameters.AvailableOwnedStatus, FamiliarParameters.AvailableBondingLevels, FamiliarParameters.AvailableLocationTypes)
+                    );
+                }
+                return m_OpenColiseumView;
+            }
+        }
+
         private FamiliarViewModel[] ApplySort(FamiliarViewModel[] familiars)
         {
             FamiliarViewModel[] sortedFamiliars = familiars;

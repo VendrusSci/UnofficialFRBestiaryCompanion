@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Data;
 using System.Windows.Media.Imaging;
 
-namespace Bestiary.ViewModel
+namespace Bestiary.ViewModel.Converters
 {
     class BookmarkStateToIconConverter : IValueConverter
     {

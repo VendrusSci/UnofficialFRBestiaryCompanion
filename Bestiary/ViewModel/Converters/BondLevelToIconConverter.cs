@@ -7,7 +7,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Bestiary.Model;
 
-namespace Bestiary.ViewModel
+namespace Bestiary.ViewModel.Converters
 {
     class BondLevelToIconConverter : IValueConverter
     {

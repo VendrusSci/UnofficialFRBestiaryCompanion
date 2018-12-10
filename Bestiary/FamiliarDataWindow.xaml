@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Bestiary"
-        xmlns:local_vm="clr-namespace:Bestiary.ViewModel"
+        xmlns:local_c="clr-namespace:Bestiary.ViewModel.Converters"
         xmlns:local_model="clr-namespace:Bestiary.Model"
         mc:Ignorable="d"
         Title="{Binding Familiar.Name}" Height="700" Width="400"
@@ -42,8 +42,8 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
-        <local_vm:ItemToDescriptionConverter x:Key="DescConverter"/>
-        <local_vm:FlightToIconConverter x:Key="FlightToIconConverter"/>
+        <local_c:ItemToDescriptionConverter x:Key="DescConverter"/>
+        <local_c:FlightToIconConverter x:Key="FlightToIconConverter"/>
     </Window.Resources>
     <Grid>
         <GroupBox Margin="5">

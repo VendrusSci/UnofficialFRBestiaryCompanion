@@ -1,17 +1,23 @@
 ﻿using Bestiary.Model;
 using System;
 using System.Globalization;
-using System.IO;
 using System.Windows.Data;
+using System.Windows.Media;
 
 namespace Bestiary.ViewModel.Converters
 {
-    public class FlightToIconConverter : IValueConverter
+    public class EnemyTypeToColourConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var element = (Flights)value;
-            return ImageLoader.LoadImage(Path.Combine(ApplicationPaths.GetDisplayIconDirectory() , element.ToString() + ".png"));
+            if((EnemyTypes)value == EnemyTypes.Boss)
+            {
+                return Brushes.PeachPuff;
+            }
+            else
+            {
+                return Brushes.Transparent;
+            }
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

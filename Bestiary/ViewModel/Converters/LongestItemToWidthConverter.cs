@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
 
-namespace Bestiary.ViewModel
+namespace Bestiary.ViewModel.Converters
 {
     class LongestItemToWidthConverter : IValueConverter
     {

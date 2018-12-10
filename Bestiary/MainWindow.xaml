@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Bestiary.Model"
         xmlns:local_vm="clr-namespace:Bestiary.ViewModel"
+        xmlns:local_c="clr-namespace:Bestiary.ViewModel.Converters"
         xmlns:Themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero2" x:Class="Bestiary.MainWindow"
         mc:Ignorable="d"
         x:Name="TopLevelWindow"
@@ -12,10 +13,10 @@
         Icon="{Binding Icon}"
         WindowStartupLocation="CenterScreen">
     <Window.Resources>
-        <local_vm:LongestItemToWidthConverter x:Key="ComboBoxWidthConverter"/>
-        <local_vm:ItemToDescriptionConverter x:Key="DescConverter"/>
-        <local_vm:BondLevelToIconConverter x:Key="BondLevelToIcon"/>
-        <local_vm:BookmarkStateToIconConverter x:Key="BookmarkedToIcon"/>
+        <local_c:LongestItemToWidthConverter x:Key="ComboBoxWidthConverter"/>
+        <local_c:ItemToDescriptionConverter x:Key="DescConverter"/>
+        <local_c:BondLevelToIconConverter x:Key="BondLevelToIcon"/>
+        <local_c:BookmarkStateToIconConverter x:Key="BookmarkedToIcon"/>
 
         <Style TargetType="{x:Type Label}">
             <Setter Property="VerticalAlignment" Value="Center"/>
@@ -90,6 +91,7 @@
             </MenuItem>
             <MenuItem Width="Auto" Header="Views">
                 <MenuItem Width="Auto" Header="Flight Rising Bestiary" Command="{Binding OpenFRBestiaryView}"/>
+                <MenuItem Width="Auto" Header="Coliseum" Command="{Binding OpenColiseumView}"/>
             </MenuItem>
             <MenuItem Width="Auto" Header="Other">
                 <MenuItem Width="Auto" Header="Support" Command="{Binding OpenSupportInfoWindow}"/>
@@ -298,7 +300,7 @@
                               AutoGenerateColumns="False" GridLinesVisibility="None" 
                               ItemsSource="{Binding FilteredFamiliars}" IsSynchronizedWithCurrentItem="True">
                         <DataGrid.Resources>
-                            <local:OwnedToBoolConverter x:Key="OwnedToBoolConverter"/>
+                            <local_c:OwnedToBoolConverter x:Key="OwnedToBoolConverter"/>
                             <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Transparent"/>
                             <Style x:Key="BondLevelStyle" TargetType="{x:Type DataGridCell}">
                                 <Setter Property="VerticalContentAlignment" Value="Center"/>

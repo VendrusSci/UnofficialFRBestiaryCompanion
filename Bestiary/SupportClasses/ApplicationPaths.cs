@@ -32,5 +32,10 @@ namespace Bestiary
         {
             return Path.Combine(GetResourcesDirectory(), "DisplayIcons");
         }
+
+        public static string GetViewIconDirectory()
+        {
+            return Path.Combine(GetResourcesDirectory(), "ViewIcons");
+        }
     }
 }

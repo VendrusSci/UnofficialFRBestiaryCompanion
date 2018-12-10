@@ -86,11 +86,20 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ViewModel\Converters\EnemyTypeToColourConverter.cs" />
+    <Compile Include="ViewModel\Converters\OwnedToBoolConverter.cs" />
+    <Compile Include="ViewModel\Dataviews\ColiseumViewModel.cs" />
+    <Compile Include="ViewWindows\ColiseumView.xaml.cs">
+      <DependentUpon>ColiseumView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewWindows\FRBestiaryFamControl.xaml.cs">
       <DependentUpon>FRBestiaryFamControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewWindows\FRBestiaryView.xaml.cs">
       <DependentUpon>FRBestiaryView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewWindows\VenueControl.xaml.cs">
+      <DependentUpon>VenueControl.xaml</DependentUpon>
     </Compile>
     <Page Include="OtherWindows\AboutWindow.xaml">
       <SubType>Designer</SubType>
@@ -196,11 +205,19 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="ViewWindows\ColiseumView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="ViewWindows\FRBestiaryFamControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ViewWindows\FRBestiaryView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ViewWindows\VenueControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

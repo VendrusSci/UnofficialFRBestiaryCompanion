@@ -1,0 +1,166 @@
+﻿<UserControl x:Class="Bestiary.ViewWindows.VenueControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Bestiary.ViewWindows"
+             xmlns:local_c="clr-namespace:Bestiary.ViewModel.Converters"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <Style TargetType="{x:Type TextBlock}">
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+        </Style>
+        <Style TargetType="{x:Type CheckBox}">
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+        <Style TargetType="{x:Type ComboBox}">
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="5"/>
+        </Style>
+        <Style TargetType="{x:Type Button}">
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="5"/>
+        </Style>
+        <Style TargetType="{x:Type DataGridCell}">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Style.Triggers>
+                <Trigger Property="IsSelected" Value="true">
+                    <Setter Property="Foreground" Value="Black"/>
+                    <Setter Property="BorderThickness" Value="0"/>
+                </Trigger>
+                <Trigger Property="IsSelected" Value="false">
+                    <Setter Property="BorderThickness" Value="0"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style TargetType="{x:Type DataGridRow}">
+            <EventSetter Event="Control.PreviewMouseDoubleClick" Handler="ChangeSelectedRow"/>
+            <EventSetter Event="UIElement.PreviewMouseLeftButtonDown" Handler="ChangeSelectedRow"/>
+            <Style.Triggers>
+                <Trigger Property="IsSelected" Value="true">
+                    <Setter Property="BorderBrush" Value="Black"/>
+                    <Setter Property="BorderThickness" Value="1"/>
+                </Trigger>
+                <Trigger Property="IsSelected" Value="false">
+                    <Setter Property="BorderBrush" Value="Transparent"/>
+                    <Setter Property="BorderThickness" Value="1"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <local_c:ItemToDescriptionConverter x:Key="DescConverter"/>
+        <local_c:BondLevelToIconConverter x:Key="BondLevelToIcon"/>
+    </UserControl.Resources>
+    
+    <Grid Background="White">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" Margin="5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition MinWidth="80"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Image Grid.Column="0" Height="80" Margin="5" Source="{Binding HeaderImage}"/>
+            <TextBlock Grid.Column="2" Text="Familiars Owned:"/>
+            <TextBlock Grid.Column="3">
+                <Run Text="{Binding NumOwned, Mode=OneWay}"/>
+                <Run Text="/"/>
+                <Run Text="{Binding NumFamiliars, Mode=OneWay}"/>
+                <Run Text=" ("/>
+                <Run Text="{Binding OwnedPercentage, Mode=OneWay}"/>
+                <Run Text="%)"/>
+            </TextBlock>
+        </Grid>
+        <DataGrid Grid.Row ="1" Width="Auto" Height="Auto" AlternatingRowBackground="#FBE9D9" AlternationCount="2"
+                              AutoGenerateColumns="False" GridLinesVisibility="None" 
+                              ItemsSource="{Binding Familiars}" IsSynchronizedWithCurrentItem="True">
+            <DataGrid.Resources>
+                <local_c:OwnedToBoolConverter x:Key="OwnedToBoolConverter"/>
+                <local_c:EnemyTypeToColourConverter x:Key="EnemyTypeToColour"/>
+                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Transparent"/>
+                <Style x:Key="BondLevelStyle" TargetType="{x:Type DataGridCell}">
+                    <Setter Property="VerticalContentAlignment" Value="Center"/>
+                    <Setter Property="VerticalAlignment" Value="Center"/>
+                    <Style.Triggers>
+                        <Trigger Property="IsSelected" Value="true">
+                            <Setter Property="Foreground" Value="Black"/>
+                            <Setter Property="BorderThickness" Value="0"/>
+                        </Trigger>
+                        <Trigger Property="IsSelected" Value="false">
+                            <Setter Property="BorderThickness" Value="0"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </DataGrid.Resources>
+            <DataGrid.Columns>
+                <DataGridTemplateColumn Header="Icon" Width="Auto" IsReadOnly="True">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Border BorderThickness="2" BorderBrush="{Binding Info.Familiar.Source.EnemyType, Converter={StaticResource EnemyTypeToColour}}">
+                                <Image
+                                            Source="{Binding Icon}"
+                                            Width="50"
+                                            Height="50"
+                                            RenderOptions.BitmapScalingMode="HighQuality"/>
+                            </Border>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn Header="Name" Width="Auto" IsReadOnly="True" Binding="{Binding Info.Familiar.Name}" TextBlock.TextAlignment="Center"/>
+                <DataGridTextColumn Header="Ownership" Width="Auto" IsReadOnly="True" TextBlock.TextAlignment="Center"
+                                                Binding="{Binding Info.Owned, Converter={StaticResource DescConverter}}"/>
+                <DataGridTemplateColumn Header="Bonding Level" IsReadOnly="False">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <ComboBox MinWidth="90" IsEditable="False" ItemsSource="{Binding AvailableBondingLevels}" 
+                                                  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
+                                                  IsEnabled="{Binding Info.Owned, Converter={StaticResource OwnedToBoolConverter}}" 
+                                                  SelectedItem="{Binding Info.BondLevel, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                  IsSynchronizedWithCurrentItem="True">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Image Margin="0 0 2 0" Width="10" Height="10" Source="{Binding Converter={StaticResource BondLevelToIcon}}"/>
+                                            <TextBlock Text="{Binding Converter={StaticResource DescConverter}, Mode=OneTime}"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn Width="10" IsReadOnly="True"/>
+                <DataGridTemplateColumn Header="Location" Width="Auto" IsReadOnly="False">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <ComboBox  ItemsSource="{Binding AvailableLocationTypes}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" MinWidth="90"
+                                                   SelectedItem="{Binding Info.Location, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                                   IsSynchronizedWithCurrentItem="True" IsEnabled="{Binding Info.Owned, Converter={StaticResource OwnedToBoolConverter}}">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Converter={StaticResource DescConverter}, Mode=OneTime}"/>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn  Width="Auto" IsReadOnly="True">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="Gotcha!" Command="{Binding SetOwned}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</UserControl>
