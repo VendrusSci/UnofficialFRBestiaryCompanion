@@ -68,8 +68,9 @@
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
-            <Image Grid.Column="0" Height="80" Margin="5" Source="{Binding HeaderImage}"/>
-            <TextBlock Grid.Column="2" Text="Familiars Owned:"/>
+            <Image Grid.Column="0" Source="{Binding HeaderImage}"/>
+            <TextBlock Grid.Column="0" FontSize="20" FontWeight="Bold" HorizontalAlignment="Right" Text="{Binding Name}"/>
+            <TextBlock Grid.Column="2" Text="Familiars Owned:  "/>
             <TextBlock Grid.Column="3">
                 <Run Text="{Binding NumOwned, Mode=OneWay}"/>
                 <Run Text="/"/>
