@@ -1,4 +1,5 @@
 ﻿using Bestiary.Model;
+using Bestiary.ViewWindows;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -6,6 +7,7 @@ using System.Collections.Specialized;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Windows.Input;
 using System.Windows.Media.Imaging;
 
 namespace Bestiary.ViewModel.Dataviews
@@ -57,7 +59,7 @@ namespace Bestiary.ViewModel.Dataviews
             var familiars = m_ColiseumFamiliars
                 .Where(f => ((Coliseum)f.Familiar.Source).VenueName == name)
                 .Select(f => new FamiliarViewModel(m_Model, f, m_AvailableLocationTypes));
-            return new ColiseumVenue(name, familiars, m_AvailableOwnedStatus, m_AvailableBondingLevels, m_AvailableLocationTypes);
+            return new ColiseumVenue(m_Model, name, familiars, m_AvailableOwnedStatus, m_AvailableBondingLevels, m_AvailableLocationTypes);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -75,13 +77,15 @@ namespace Bestiary.ViewModel.Dataviews
         public OwnershipStatus[] AvailableOwnedStatus { get; private set; }
         public BondingLevels[] AvailableBondingLevels { get; private set; }
         public LocationTypes[] AvailableLocationTypes { get; private set; }
+        private IModel m_Model;
 
-        public ColiseumVenue(string name, IEnumerable<FamiliarViewModel> familiars, OwnershipStatus[] availableOwnedStatus, BondingLevels[] availableBondingLevels, LocationTypes[] availableLocationTypes)
+        public ColiseumVenue(IModel model, string name, IEnumerable<FamiliarViewModel> familiars, OwnershipStatus[] availableOwnedStatus, BondingLevels[] availableBondingLevels, LocationTypes[] availableLocationTypes)
         {
             AvailableLocationTypes = availableLocationTypes;
             AvailableOwnedStatus = availableOwnedStatus;
             AvailableBondingLevels = availableBondingLevels;
             Name = name;
+            m_Model = model;
             HeaderImage = ImageLoader.LoadImage(Path.Combine(ApplicationPaths.GetViewIconDirectory(), name + ".png"));
 
             Familiars.CollectionChanged += OnFamiliarCollectionChanged;
@@ -125,6 +129,24 @@ namespace Bestiary.ViewModel.Dataviews
             }
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("NumOwned"));
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("OwnedPercentage"));
+        }
+
+        public ColiseumView Window { get; set; }
+        private BaseCommand m_openDataFamiliarWindow;
+        public ICommand OpenDataFamiliarWindow
+        {
+            get
+            {
+                if (m_openDataFamiliarWindow == null)
+                {
+                    m_openDataFamiliarWindow = new OpenDialogCommand<FamiliarDataWindow>(
+                        Window,
+                        p => new FamiliarDataWindow((FamiliarViewModel)p, m_Model),
+                        canExecute: p => p.GetType() == typeof(FamiliarViewModel)
+                    );
+                }
+                return m_openDataFamiliarWindow;
+            }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

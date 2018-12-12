@@ -83,23 +83,13 @@
         <DataGrid Grid.Row ="1" Width="Auto" Height="Auto" AlternatingRowBackground="#FBE9D9" AlternationCount="2"
                               AutoGenerateColumns="False" GridLinesVisibility="None" 
                               ItemsSource="{Binding Familiars}" IsSynchronizedWithCurrentItem="True">
+            <DataGrid.InputBindings>
+                <MouseBinding MouseAction="LeftDoubleClick" Command="{Binding OpenDataFamiliarWindow}" CommandParameter="{Binding Familiars/}"/>
+            </DataGrid.InputBindings>
             <DataGrid.Resources>
                 <local_c:OwnedToBoolConverter x:Key="OwnedToBoolConverter"/>
                 <local_c:EnemyTypeToColourConverter x:Key="EnemyTypeToColour"/>
                 <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Transparent"/>
-                <Style x:Key="BondLevelStyle" TargetType="{x:Type DataGridCell}">
-                    <Setter Property="VerticalContentAlignment" Value="Center"/>
-                    <Setter Property="VerticalAlignment" Value="Center"/>
-                    <Style.Triggers>
-                        <Trigger Property="IsSelected" Value="true">
-                            <Setter Property="Foreground" Value="Black"/>
-                            <Setter Property="BorderThickness" Value="0"/>
-                        </Trigger>
-                        <Trigger Property="IsSelected" Value="false">
-                            <Setter Property="BorderThickness" Value="0"/>
-                        </Trigger>
-                    </Style.Triggers>
-                </Style>
             </DataGrid.Resources>
             <DataGrid.Columns>
                 <DataGridTemplateColumn Header="Icon" Width="Auto" IsReadOnly="True">
