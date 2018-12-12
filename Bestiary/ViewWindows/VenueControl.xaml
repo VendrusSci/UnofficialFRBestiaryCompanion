@@ -77,7 +77,7 @@
                 <Run Text="{Binding NumFamiliars, Mode=OneWay}"/>
                 <Run Text=" ("/>
                 <Run Text="{Binding OwnedPercentage, Mode=OneWay}"/>
-                <Run Text="%)"/>
+                <Run Text="% )"/>
             </TextBlock>
         </Grid>
         <DataGrid Grid.Row ="1" Width="Auto" Height="Auto" AlternatingRowBackground="#FBE9D9" AlternationCount="2"

@@ -58,6 +58,11 @@ namespace Bestiary.ViewModel
             AvailableBondingLevels = ListEnumValues<BondingLevels>();
             AvailableBookmarkStates = ListEnumValues<BookmarkState>();
             m_Model = model;
+
+            PropertyChanged += (e, p) =>
+            {
+                MainViewModel.UserActionLog.Debug($"I, a familiar view model, just changed '{p.PropertyName}' ({Info.Familiar.Name})");
+            };
         }
 
         private LambdaCommand m_SetOwned;
@@ -74,6 +79,7 @@ namespace Bestiary.ViewModel
                             var ownedFamiliar = new OwnedFamiliar(Info.Familiar.Id, BondingLevels.Wary, LocationTypes.InHoard);
                             m_Model.AddOwnedFamiliar(ownedFamiliar);
                             Info.OwnedFamiliar = m_Model.LookupOwnedFamiliar(Info.Familiar.Id);
+                            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Info"));
                         },
                         onCanExecute: (p) =>
                         {
@@ -100,12 +106,14 @@ namespace Bestiary.ViewModel
                                 MainViewModel.UserActionLog.Info($"Bookmarking familiar: {Info.Familiar.Id}");
                                 m_Model.AddBookmarkedFamiliar(new BookmarkedFamiliar(Info.Familiar.Id));
                                 Info.BookmarkedFamiliar = m_Model.LookupBookmarkedFamiliar(Info.Familiar.Id);
+                                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Info"));
                             }
                             else
                             {
                                 MainViewModel.UserActionLog.Info($"Removing bookmark from familiar: {Info.Familiar.Id}");
                                 Info.BookmarkedFamiliar.Delete();
                                 Info.BookmarkedFamiliar = null;
+                                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Info"));
                             }
                         }
                     );

@@ -1,4 +1,8 @@
 ﻿using Bestiary.Model;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
@@ -20,9 +24,8 @@ namespace Bestiary.ViewModel.Dataviews
             m_AvailableBondingLevels = AvailableBondingLevels;
             m_AvailableOwnedStatus = AvailableOwnedStatus;
             m_AvailableLocationTypes = AvailableLocationTypes;
-            Venues = new ColiseumVenue[m_VenueSet.VenueNames.Count()];
 
-            var tempFamiliars = m_Model.Familiars
+            m_ColiseumFamiliars = m_Model.Familiars
                                .Select(id => m_Model.LookupFamiliar(id).Fetch())
                                .Select(familiar =>
                                {
@@ -34,8 +37,9 @@ namespace Bestiary.ViewModel.Dataviews
                                        bookmarked
                                    );
                                })
-                               .Where(familiar => familiar.Familiar.Source.GetType() == typeof(Coliseum));
-            m_ColiseumFamiliars = tempFamiliars.ToArray();
+                               .Where(familiar => familiar.Familiar.Source.GetType() == typeof(Coliseum))
+                               .ToArray();
+
             FetchVenues();
         }
 
@@ -43,25 +47,16 @@ namespace Bestiary.ViewModel.Dataviews
         public ColiseumVenue[] Venues { get; private set; }
         private void FetchVenues()
         {
-            int count = 0;
-            foreach(var venue in m_VenueSet.VenueNames)
-            {
-                Venues[count] = SetUpVenue(venue);
-                count++;
-            }
+            Venues = m_VenueSet.VenueNames
+                .Select(name => SetUpVenue(name))
+                .ToArray();
         }
 
         private ColiseumVenue SetUpVenue(string name)
         {
-            FamiliarViewModel[] familiars;
-            var tempFamiliars = m_ColiseumFamiliars.Where(f => ((Coliseum)f.Familiar.Source).VenueName == name);
-            familiars = new FamiliarViewModel[tempFamiliars.Count()];
-            int count = 0;
-            foreach(var fam in tempFamiliars)
-            {
-                familiars[count] = new FamiliarViewModel(m_Model, tempFamiliars.ElementAt(count), m_AvailableLocationTypes);
-                count++;
-            }
+            var familiars = m_ColiseumFamiliars
+                .Where(f => ((Coliseum)f.Familiar.Source).VenueName == name)
+                .Select(f => new FamiliarViewModel(m_Model, f, m_AvailableLocationTypes));
             return new ColiseumVenue(name, familiars, m_AvailableOwnedStatus, m_AvailableBondingLevels, m_AvailableLocationTypes);
         }
 
@@ -72,22 +67,64 @@ namespace Bestiary.ViewModel.Dataviews
     {
         public BitmapImage HeaderImage { get; private set; }
         public string Name { get; private set; }
-        public FamiliarViewModel[] Familiars { get; private set; }
+        //public FamiliarViewModel[] Familiars { get; private set; }
+        public ObservableCollection<FamiliarViewModel> Familiars { get; private set; } = new ObservableCollection<FamiliarViewModel>();
         public int NumOwned => Familiars.Where(f => f.Info.Owned == OwnershipStatus.Owned).Count();
         public int NumFamiliars => Familiars.Count();
-        public int OwnedPercentage => NumOwned / NumFamiliars;
+        public int OwnedPercentage => (NumOwned * 100) / NumFamiliars;
         public OwnershipStatus[] AvailableOwnedStatus { get; private set; }
         public BondingLevels[] AvailableBondingLevels { get; private set; }
         public LocationTypes[] AvailableLocationTypes { get; private set; }
 
-        public ColiseumVenue(string name, FamiliarViewModel[] familiars, OwnershipStatus[] availableOwnedStatus, BondingLevels[] availableBondingLevels, LocationTypes[] availableLocationTypes)
+        public ColiseumVenue(string name, IEnumerable<FamiliarViewModel> familiars, OwnershipStatus[] availableOwnedStatus, BondingLevels[] availableBondingLevels, LocationTypes[] availableLocationTypes)
         {
             AvailableLocationTypes = availableLocationTypes;
             AvailableOwnedStatus = availableOwnedStatus;
             AvailableBondingLevels = availableBondingLevels;
             Name = name;
-            Familiars = familiars;
             HeaderImage = ImageLoader.LoadImage(Path.Combine(ApplicationPaths.GetViewIconDirectory(), name + ".png"));
+
+            Familiars.CollectionChanged += OnFamiliarCollectionChanged;
+            foreach(var familiar in familiars)
+            {
+                Familiars.Add(familiar);
+            }
+        }
+
+        private void OnFamiliarCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            MainViewModel.UserActionLog.Debug($"Change event raised ({e.Action})");
+            if (e.NewItems != null)
+            {
+                foreach (var newFamiliar in e.NewItems.OfType<FamiliarViewModel>())
+                {
+                    MainViewModel.UserActionLog.Debug($"now listening for changes to ({newFamiliar.Info.Familiar.Name})");
+                    newFamiliar.PropertyChanged += OnSingleFamiliarChanged;
+                }
+            }
+            if (e.OldItems != null)
+            {
+                foreach (var oldFamiliar in e.OldItems.OfType<FamiliarViewModel>())
+                {
+                    MainViewModel.UserActionLog.Debug($"no longer listening for changes to ({oldFamiliar.Info.Familiar.Name})");
+                    oldFamiliar.PropertyChanged -= OnSingleFamiliarChanged;
+                }
+            }
+        }
+
+        private void OnSingleFamiliarChanged(object sender, PropertyChangedEventArgs e)
+        {
+            var familiar = sender as FamiliarViewModel;
+            if (familiar != null)
+            {
+                MainViewModel.UserActionLog.Debug($"noticed change on familiar ({familiar.Info.Familiar.Name})");
+            }
+            else
+            {
+                MainViewModel.UserActionLog.Debug($"noticed change on familiar (???)");
+            }
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("NumOwned"));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("OwnedPercentage"));
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
