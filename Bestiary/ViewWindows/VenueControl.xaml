@@ -136,7 +136,7 @@
                         <DataTemplate>
                             <ComboBox  ItemsSource="{Binding AvailableLocationTypes}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" MinWidth="90"
                                                    SelectedItem="{Binding Info.Location, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                                                   IsSynchronizedWithCurrentItem="True" IsEnabled="{Binding Info.Owned, Converter={StaticResource OwnedToBoolConverter}}">
+                                                   IsSynchronizedWithCurrentItem="{x:Null}" IsEnabled="{Binding Info.Owned, Converter={StaticResource OwnedToBoolConverter}}">
                                 <ComboBox.ItemTemplate>
                                     <DataTemplate>
                                         <TextBlock Text="{Binding Converter={StaticResource DescConverter}, Mode=OneTime}"/>

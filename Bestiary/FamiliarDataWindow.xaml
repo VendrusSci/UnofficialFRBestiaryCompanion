@@ -267,8 +267,8 @@
                             </DataTemplate>
                         </ComboBox.ItemTemplate>
                     </ComboBox>
-                    <ComboBox Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" ItemsSource="{Binding FamiliarDisplayInfo.AvailableBondingLevels}" SelectedItem="{Binding SelectedBondingLevel}" IsSynchronizedWithCurrentItem="True" />
-                    <ComboBox Grid.Column="1" Grid.Row="2" HorizontalAlignment="Stretch" ItemsSource="{Binding FamiliarDisplayInfo.AvailableLocationTypes}" SelectedItem="{Binding SelectedLocation}" IsSynchronizedWithCurrentItem="True">
+                    <ComboBox Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" ItemsSource="{Binding FamiliarDisplayInfo.AvailableBondingLevels}" SelectedItem="{Binding SelectedBondingLevel}" IsSynchronizedWithCurrentItem="{x:Null}" />
+                    <ComboBox Grid.Column="1" Grid.Row="2" HorizontalAlignment="Stretch" ItemsSource="{Binding FamiliarDisplayInfo.AvailableLocationTypes}" SelectedItem="{Binding SelectedLocation}" IsSynchronizedWithCurrentItem="{x:Null}">
                         <ComboBox.ItemTemplate>
                             <DataTemplate>
                                 <TextBlock Text="{Binding Mode=OneTime, Converter={StaticResource DescConverter}}"/>

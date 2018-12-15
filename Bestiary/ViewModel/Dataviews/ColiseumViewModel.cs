@@ -69,7 +69,9 @@ namespace Bestiary.ViewModel.Dataviews
     {
         public BitmapImage HeaderImage { get; private set; }
         public string Name { get; private set; }
+
         public ObservableCollection<FamiliarViewModel> Familiars { get; private set; } = new ObservableCollection<FamiliarViewModel>();
+
         public int NumOwned => Familiars.Where(f => f.Info.Owned == OwnershipStatus.Owned).Count();
         public int NumFamiliars => Familiars.Count();
         public int OwnedPercentage => (NumOwned * 100) / NumFamiliars;
@@ -80,7 +82,6 @@ namespace Bestiary.ViewModel.Dataviews
             Name = name;
             m_Model = model;
             HeaderImage = ImageLoader.LoadImage(Path.Combine(ApplicationPaths.GetViewIconDirectory(), name + ".png"));
-
             Familiars.CollectionChanged += OnFamiliarCollectionChanged;
             foreach(var familiar in familiars)
             {
@@ -124,21 +125,41 @@ namespace Bestiary.ViewModel.Dataviews
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("OwnedPercentage"));
         }
 
+        private void UpdateAllFamiliars()
+        {
+            foreach(var familiar in Familiars)
+            {
+                familiar.Info.OwnedFamiliar = m_Model.LookupOwnedFamiliar(familiar.Info.Familiar.Id);
+            }
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("NumOwned"));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("OwnedPercentage"));
+        }
+
         public ColiseumView Window { get; set; }
-        private BaseCommand m_openDataFamiliarWindow;
+
+        private LambdaCommand m_OpenDataFamiliarWindow;
         public ICommand OpenDataFamiliarWindow
         {
             get
             {
-                if (m_openDataFamiliarWindow == null)
+                if(m_OpenDataFamiliarWindow == null)
                 {
-                    m_openDataFamiliarWindow = new OpenDialogCommand<FamiliarDataWindow>(
-                        Window,
-                        p => new FamiliarDataWindow((FamiliarViewModel)p, m_Model),
-                        canExecute: p => p.GetType() == typeof(FamiliarViewModel)
+                    m_OpenDataFamiliarWindow = new LambdaCommand(
+                        onExecute: (p) =>
+                        {
+                            MainViewModel.UserActionLog.Info($"Familiar Data window opened: {((FamiliarViewModel)p).Info.Familiar.Name}, #{((FamiliarViewModel)p).Info.Familiar.Id}");
+                            FamiliarDataWindow familiarDataWindow = new FamiliarDataWindow((FamiliarViewModel)p, m_Model);
+                            familiarDataWindow.Owner = Window;
+                            familiarDataWindow.ShowDialog();
+                            UpdateAllFamiliars();
+                        },
+                        onCanExecute: (p) =>
+                        {
+                            return p.GetType() == typeof(FamiliarViewModel);
+                        }
                     );
                 }
-                return m_openDataFamiliarWindow;
+                return m_OpenDataFamiliarWindow;
             }
         }
 

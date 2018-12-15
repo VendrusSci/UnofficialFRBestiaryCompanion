@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using Bestiary.ViewModel;
+using System.ComponentModel;
 
 namespace Bestiary.Model
 {
@@ -29,8 +30,8 @@ namespace Bestiary.Model
                 if(m_OwnedFamiliar != value)
                 {
                     m_OwnedFamiliar = value;
-                    //PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Location"));
-                    //PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("BondLevel"));
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Location"));
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("BondLevel"));
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Owned"));
                 }
             }
@@ -56,6 +57,7 @@ namespace Bestiary.Model
                 if (value.HasValue)
                 {
                     OwnedFamiliar?.Update(f => f.BondingLevel = value.Value);
+                    MainViewModel.UserActionLog.Debug($"Bonding level set as {value.Value} for {Familiar.Name} ({Familiar.Id})");
                 }
             }
         }
@@ -70,6 +72,7 @@ namespace Bestiary.Model
                 if (value.HasValue)
                 {
                     OwnedFamiliar?.Update(f => f.Location = value.Value);
+                    MainViewModel.UserActionLog.Debug($"Location set as {value.Value} for {Familiar.Name} ({Familiar.Id})");
                 }
             }
         }
