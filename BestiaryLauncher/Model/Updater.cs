@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace BestiaryLauncher.Model
 {
-    enum VersionType
+    public enum VersionType
     {
         LauncherVersion,
         SoftwareVersion
@@ -16,79 +16,38 @@ namespace BestiaryLauncher.Model
 
     class Updater
     {
+        private string RemoteExeFullPath;
+        private string RemoteLauncherExeFullPath;
+        private string LatestUbcVersion;
+        private string LatestLauncherVersion;
         public Updater()
         {
             Directory.CreateDirectory(ApplicationPaths.GetTempDirectory());
+            LatestUbcVersion = StatusChecks.GetLatestVersionNumber(ApplicationPaths.RemoteUbcVersionFile, "version.txt");
+            LatestLauncherVersion = StatusChecks.GetLatestVersionNumber(ApplicationPaths.RemoteLauncherExePath, "launcherversion.txt");
+            RemoteExeFullPath = Path.Combine(ApplicationPaths.RemoteExePath, LatestUbcVersion, ApplicationPaths.ExeFile);
+            RemoteLauncherExeFullPath = Path.Combine(ApplicationPaths.RemoteLauncherExePath, LatestLauncherVersion, ApplicationPaths.LauncherExeFile);
         }
 
-        private bool IsVersionDifferent(VersionType project)
+        public void UpdateUbcSoftware()
         {
-            bool result = false;
 
-            using (WebClient client = new WebClient())
-            {
-                switch (project)
-                {
-                    case VersionType.SoftwareVersion:
-                        try
-                        {
-                            client.DownloadFile(ApplicationPaths.RemoteUbcVersionFile, Path.Combine(ApplicationPaths.GetTempDirectory(), ApplicationPaths.UbcVersionFile));
-                        }
-                        catch(WebException ex)
-                        {
-                            //MainViewModel.UserActionLog.Error("Failed to download file");
-                        }
-                        string tempVersionFile = Path.Combine(ApplicationPaths.GetTempDirectory(), ApplicationPaths.UbcVersionFile);
-                        if (File.Exists(ApplicationPaths.GetUBCVersionPath()) && File.Exists(tempVersionFile))
-                        {
-                            if(File.ReadAllText(ApplicationPaths.GetUBCVersionPath()) == File.ReadAllText(tempVersionFile))
-                            {
-                                result = true;
-                            }
-                            else
-                            {
-                                result = false;
-                            }
-                        }
-                        break;
-                    case VersionType.LauncherVersion:
-                        try
-                        {
-                            client.DownloadFile(ApplicationPaths.RemoteLauncherVersionFile, Path.Combine(ApplicationPaths.GetTempDirectory(), ApplicationPaths.LauncherVersionFile));
-                        }
-                        catch (WebException ex)
-                        {
-                            //MainViewModel.UserActionLog.Error("Failed to download file");
-                        }
-                        string tempLauncherVersionFile = Path.Combine(ApplicationPaths.GetTempDirectory(), ApplicationPaths.LauncherVersionFile);
-                        if (File.Exists(ApplicationPaths.GetLauncherVersionPath()) && File.Exists(tempLauncherVersionFile))
-                        {
-                            if (File.ReadAllText(ApplicationPaths.GetLauncherVersionPath()) == File.ReadAllText(tempLauncherVersionFile))
-                            {
-                                result = true;
-                            }
-                            else
-                            {
-                                result = false;
-                            }
-                        }
-                        break;
-                }
-            }
-
-                
-
-            return result;
         }
 
-        private bool FamiliarUpdateAvailable()
+        public void UpdateVersionFile()
         {
-            bool result = false;
 
-
-
-
-            return result;
         }
+
+        public void UpdateFamiliars()
+        {
+
+        }
+
+        public void UpdateLauncher()
+        {
+
+        }
+       
     }
 }
