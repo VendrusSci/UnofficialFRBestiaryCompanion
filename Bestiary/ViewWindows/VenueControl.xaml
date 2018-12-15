@@ -81,8 +81,8 @@
             </TextBlock>
         </Grid>
         <DataGrid Grid.Row ="1" Width="Auto" Height="Auto" AlternatingRowBackground="#FBE9D9" AlternationCount="2"
-                              AutoGenerateColumns="False" GridLinesVisibility="None" 
-                              ItemsSource="{Binding Familiars}" IsSynchronizedWithCurrentItem="True">
+                AutoGenerateColumns="False" GridLinesVisibility="None"
+                ItemsSource="{Binding Familiars}" IsSynchronizedWithCurrentItem="True">
             <DataGrid.InputBindings>
                 <MouseBinding MouseAction="LeftDoubleClick" Command="{Binding OpenDataFamiliarWindow}" CommandParameter="{Binding Familiars/}"/>
             </DataGrid.InputBindings>
@@ -106,6 +106,7 @@
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
                 <DataGridTextColumn Header="Name" Width="Auto" IsReadOnly="True" Binding="{Binding Info.Familiar.Name}" TextBlock.TextAlignment="Center"/>
+                <DataGridTextColumn Width="10" IsReadOnly="True"/>
                 <DataGridTextColumn Header="Ownership" Width="Auto" IsReadOnly="True" TextBlock.TextAlignment="Center"
                                                 Binding="{Binding Info.Owned, Converter={StaticResource DescConverter}}"/>
                 <DataGridTemplateColumn Header="Bonding Level" IsReadOnly="False">
@@ -128,7 +129,8 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTextColumn Width="10" IsReadOnly="True"/>
+                
+
                 <DataGridTemplateColumn Header="Location" Width="Auto" IsReadOnly="False">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
@@ -144,6 +146,7 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
+
                 <DataGridTemplateColumn  Width="Auto" IsReadOnly="True">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>

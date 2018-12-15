@@ -71,6 +71,7 @@ namespace Bestiary.ViewModel
                             {
                                 MainViewModel.UserActionLog.Info($"Owned familiar found, deleting that too");
                                 m_OwnedFamiliar.Delete();
+                                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("m_OwnedFamiliar"));
                             }
                         }
                     );

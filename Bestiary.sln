@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.27428.2037
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bestiary", "Bestiary\Bestiary.csproj", "{874D7413-F4A7-49D7-8921-D54DBF2814A8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BestiaryLauncher", "BestiaryLauncher\BestiaryLauncher.csproj", "{637D7510-84D6-4A72-8FE0-6FE7889571EE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{874D7413-F4A7-49D7-8921-D54DBF2814A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{874D7413-F4A7-49D7-8921-D54DBF2814A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{874D7413-F4A7-49D7-8921-D54DBF2814A8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{637D7510-84D6-4A72-8FE0-6FE7889571EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{637D7510-84D6-4A72-8FE0-6FE7889571EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{637D7510-84D6-4A72-8FE0-6FE7889571EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{637D7510-84D6-4A72-8FE0-6FE7889571EE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

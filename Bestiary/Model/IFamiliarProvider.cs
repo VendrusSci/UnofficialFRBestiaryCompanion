@@ -29,7 +29,8 @@ namespace Bestiary.Model
                 if(m_OwnedFamiliar != value)
                 {
                     m_OwnedFamiliar = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("BondLevel"));
+                    //PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Location"));
+                    //PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("BondLevel"));
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Owned"));
                 }
             }

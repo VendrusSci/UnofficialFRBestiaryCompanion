@@ -59,7 +59,7 @@ namespace Bestiary.ViewModel.Dataviews
             var familiars = m_ColiseumFamiliars
                 .Where(f => ((Coliseum)f.Familiar.Source).VenueName == name)
                 .Select(f => new FamiliarViewModel(m_Model, f, m_AvailableLocationTypes));
-            return new ColiseumVenue(m_Model, name, familiars, m_AvailableOwnedStatus, m_AvailableBondingLevels, m_AvailableLocationTypes);
+            return new ColiseumVenue(m_Model, name, familiars);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -69,21 +69,14 @@ namespace Bestiary.ViewModel.Dataviews
     {
         public BitmapImage HeaderImage { get; private set; }
         public string Name { get; private set; }
-        //public FamiliarViewModel[] Familiars { get; private set; }
         public ObservableCollection<FamiliarViewModel> Familiars { get; private set; } = new ObservableCollection<FamiliarViewModel>();
         public int NumOwned => Familiars.Where(f => f.Info.Owned == OwnershipStatus.Owned).Count();
         public int NumFamiliars => Familiars.Count();
         public int OwnedPercentage => (NumOwned * 100) / NumFamiliars;
-        public OwnershipStatus[] AvailableOwnedStatus { get; private set; }
-        public BondingLevels[] AvailableBondingLevels { get; private set; }
-        public LocationTypes[] AvailableLocationTypes { get; private set; }
         private IModel m_Model;
 
-        public ColiseumVenue(IModel model, string name, IEnumerable<FamiliarViewModel> familiars, OwnershipStatus[] availableOwnedStatus, BondingLevels[] availableBondingLevels, LocationTypes[] availableLocationTypes)
+        public ColiseumVenue(IModel model, string name, IEnumerable<FamiliarViewModel> familiars)
         {
-            AvailableLocationTypes = availableLocationTypes;
-            AvailableOwnedStatus = availableOwnedStatus;
-            AvailableBondingLevels = availableBondingLevels;
             Name = name;
             m_Model = model;
             HeaderImage = ImageLoader.LoadImage(Path.Combine(ApplicationPaths.GetViewIconDirectory(), name + ".png"));
