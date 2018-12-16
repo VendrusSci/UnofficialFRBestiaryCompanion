@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
+using System.IO.Compression;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
+using System.Security.Cryptography;
 
 namespace BestiaryLauncher.Model
 {
@@ -42,17 +40,23 @@ namespace BestiaryLauncher.Model
 
         public void UpdateVersionFile(VersionType software)
         {
-            
+            if(software == VersionType.UbcVersion)
+            {
+
+            }
+            else if(software == VersionType.LauncherVersion)
+            {
+
+            }
         }
 
         public void UpdateFamiliars()
         {
+
             //Requires updating:
             //Icons
             //Images
-            //FRData.xml
-            //Venues.txt
-            //Events.txt
+            //FamiliarData folder contents
         }
 
         public void UpdateLauncher()
@@ -62,8 +66,64 @@ namespace BestiaryLauncher.Model
 
         private void GetFileAndOverwrite(string localPath, string remotePath, string tempPath)
         {
-
+            if(!File.Exists(tempPath))
+            {
+                using(WebClient client = new WebClient())
+                {
+                    try
+                    {
+                        client.DownloadFile(remotePath, tempPath);
+                    }
+                    catch(WebException ex)
+                    {
+                        //Debug text here
+                    }
+                }
+            }
+            File.Copy(tempPath, localPath, true);
         }
-       
+
+        private void GetFolderAndOverwrite(string localDir, string remoteZip, string tempZip)
+        {
+            string tempDir = Path.GetDirectoryName(tempZip) + Path.GetFileNameWithoutExtension(tempZip);
+            if(!File.Exists(tempZip))
+            {
+                using (WebClient client = new WebClient())
+                {
+                    try
+                    {
+                        client.DownloadFile(remoteZip, tempZip);
+                    }
+                    catch(WebException ex)
+                    {
+                        //Debug text here
+                    }
+                }
+            }
+            if(File.Exists(tempZip))
+            {
+                using (ZipArchive archive = ZipFile.OpenRead(tempZip))
+                {
+                    archive.ExtractToDirectory(tempDir);
+                }
+            }
+            foreach(var file in Directory.GetFiles(localDir))
+            {
+                File.Delete(file);
+            }
+            foreach(var file in Directory.GetFiles(tempDir))
+            {
+                File.Copy(file, Path.Combine(localDir, file));
+            }
+        }
+
+        private byte[] GetHashValue(string filePath)
+        {
+            using (var filestream = new FileStream(filePath, FileMode.Open))
+            {
+                var sha = SHA256.Create();
+                return sha.ComputeHash(filestream);
+            }
+        }
     }
 }
