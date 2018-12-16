@@ -20,8 +20,7 @@ namespace BestiaryLauncher.Model
         public static string RemoteLauncherVersionFile = "https://raw.githubusercontent.com/VendrusSci/UnofficialFRBestiaryCompanion/master/BestiaryLauncher/launcherversion.txt";
         public static string RemoteUbcVersionFile = "https://raw.githubusercontent.com/VendrusSci/UnofficialFRBestiaryCompanion/master/Bestiary/Resources/version.txt";
         public static string RemoteFRDataFile = "https://raw.githubusercontent.com/VendrusSci/UnofficialFRBestiaryCompanion/master/Bestiary/Resources/FRData.xml";
-        public static string RemoteExePath = "https://github.com/VendrusSci/UnofficialFRBestiaryCompanion/releases/download/";
-        public static string RemoteLauncherExePath = "https://github.com/VendrusSci/UnofficialFRBestiaryCompanion/releases/download/";
+        public static string RemoteGitReleasePath = "https://github.com/VendrusSci/UnofficialFRBestiaryCompanion/releases/download/";
 
 
         public static string GetDataDirectory()
