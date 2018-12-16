@@ -7,23 +7,55 @@ namespace BestiaryLauncher.ViewModels
 {
     public class MainViewModel
     {
+        public string LauncherUpdateStatus { get; private set; }
+        public string SoftwareUpdateStatus { get; private set; }
+        public string LaunchButtonText { get; private set; }
+        public string UpdateStatusText { get; private set; }
+        private string m_Hidden = "Hidden";
+        private string m_Visible = "Visible";
+        private string m_LaunchButtonUpdateAvailable = "Postpone Update and Launch";
+        private string m_LaunchButtonNoUpdateAvailable = "Launch";
+        private string m_UpdateSuccess = "Update Successful";
+        private string m_UpdateFail = "Update Failed, check connection or report bug";
+
         private Updater m_Updater;
         public MainViewModel()
         {
             m_Updater = new Updater();
+            LauncherUpdateStatus = m_Hidden;
+            SoftwareUpdateStatus = m_Hidden;
             if(m_Updater.LauncherUpdateAvailable())
             {
                 //Set Launcher update stuff to visible
-                //warn that no UBC updates can occur until launcher is updated
-                //if OK
-                //m_Updater.UpdateLauncher();
-                //Prompt restart
-                //else
-                //close
+                LauncherUpdateStatus = m_Visible;
             }
             else
             {
-                //Set Launcher stuff to not visible
+                //Set UBC update stuff to visible
+                LauncherUpdateStatus = m_Visible;
+                LaunchButtonText = m_LaunchButtonUpdateAvailable;
+            }
+        }
+
+        private LambdaCommand m_UpdateLauncher;
+        public ICommand UpdateLauncher
+        {
+            get
+            {
+                if(m_UpdateLauncher == null)
+                {
+                    m_UpdateLauncher = new LambdaCommand(
+                        onExecute: (p) =>
+                        {
+                            bool result = m_Updater.UpdateLauncher();
+                        },
+                        onCanExecute: (p) =>
+                        {
+                            return m_Updater.LauncherUpdateAvailable();
+                        }
+                    );
+                }
+                return m_UpdateLauncher;
             }
         }
 
@@ -37,7 +69,14 @@ namespace BestiaryLauncher.ViewModels
                     m_UpdateFamiliars = new LambdaCommand(
                         onExecute: (p) =>
                         {
-                            m_Updater.UpdateFamiliars();
+                            UpdateStatusText = "Updating Familiars...";
+                            bool result = m_Updater.UpdateFamiliars();
+                            UpdateStatusText = result ? m_UpdateSuccess : m_UpdateFail;
+                            if(!CheckForUbcUpdates())
+                            {
+                                LaunchButtonText = m_LaunchButtonNoUpdateAvailable;
+                            }
+                            
                         },
                         onCanExecute: (p) =>
                         {
@@ -59,10 +98,18 @@ namespace BestiaryLauncher.ViewModels
                     m_UpdateSoftware = new LambdaCommand(
                         onExecute: (p) =>
                         {
-                            m_Updater.UpdateUbcSoftware();
-                            if(m_Updater.FamiliarUpdateAvailable())
+                            UpdateStatusText = "Updating Software...";
+                            bool result = m_Updater.UpdateUbcSoftware();
+                            UpdateStatusText = result ? m_UpdateSuccess : m_UpdateFail;
+                            if (m_Updater.FamiliarUpdateAvailable())
                             {
-                                m_Updater.UpdateFamiliars();
+                                UpdateStatusText = "Updating Familiars...";
+                                result = m_Updater.UpdateFamiliars();
+                                UpdateStatusText = result ? m_UpdateSuccess : m_UpdateFail;
+                            }
+                            if (!CheckForUbcUpdates())
+                            {
+                                LaunchButtonText = m_LaunchButtonNoUpdateAvailable;
                             }
                         },
                         onCanExecute: (p) =>
@@ -92,6 +139,11 @@ namespace BestiaryLauncher.ViewModels
                 }
                 return m_NoUpdate;
             }
+        }
+
+        private bool CheckForUbcUpdates()
+        {
+            return (m_Updater.UbcUpdateAvailable() & m_Updater.FamiliarUpdateAvailable());
         }
     }
 }
