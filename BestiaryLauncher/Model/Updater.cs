@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
 using System.Net;
@@ -26,6 +27,38 @@ namespace BestiaryLauncher.Model
             LatestLauncherVersion = StatusChecks.GetLatestVersionNumber(ApplicationPaths.RemoteGitReleasePath, ApplicationPaths.LauncherVersionFile);
         }
 
+        public void LaunchUbc()
+        {
+            var ubc = new Process();
+            ubc.StartInfo.FileName = Path.Combine(ApplicationPaths.GetDataDirectory(), ApplicationPaths.UbcExeFile);
+            ubc.Start();
+        }
+
+        public bool LauncherUpdateAvailable()
+        {
+            return StatusChecks.IsVersionDifferent(VersionType.LauncherVersion, LatestLauncherVersion);
+        }
+
+        public bool FamiliarUpdateAvailable()
+        {
+            bool result = false;
+            if(StatusChecks.IsVersionDifferent(VersionType.UbcVersion, LatestUbcVersion) != true)
+            {
+                result = StatusChecks.FamiliarUpdateAvailable();
+            }
+            return result;
+        }
+
+        public bool UbcUpdateAvailable()
+        {
+            bool result = false;
+            if (StatusChecks.IsVersionDifferent(VersionType.UbcVersion, LatestUbcVersion) != true)
+            {
+                result = StatusChecks.UbcUpdateAvailable(Path.Combine(LatestReleasePath, ApplicationPaths.UbcExeFile));
+            }
+            return result;
+        }
+
         public void UpdateUbcSoftware()
         {
             //Requires updating:
@@ -35,9 +68,9 @@ namespace BestiaryLauncher.Model
                 "https://raw.githubusercontent.com/VendrusSci/UnofficialFRBestiaryCompanion/master/Bestiary/Resources/bestiary.png", 
                 Path.Combine(ApplicationPaths.GetTempDirectory(), bestiaryImgName));
             //Executable
-            GetFileAndOverwrite(Path.Combine(ApplicationPaths.GetDataDirectory(),ApplicationPaths.ExeFile),
-                Path.Combine(LatestReleasePath, ApplicationPaths.ExeFile),
-                Path.Combine(ApplicationPaths.GetTempDirectory(), ApplicationPaths.ExeFile));
+            GetFileAndOverwrite(Path.Combine(ApplicationPaths.GetDataDirectory(),ApplicationPaths.UbcExeFile),
+                Path.Combine(LatestReleasePath, ApplicationPaths.UbcExeFile),
+                Path.Combine(ApplicationPaths.GetTempDirectory(), ApplicationPaths.UbcExeFile));
             //DisplayIcons
             GetResourcesFolderAndOverwrite("DisplayIcons");
             //ViewIcons
@@ -67,7 +100,7 @@ namespace BestiaryLauncher.Model
                 Path.Combine(ApplicationPaths.GetTempDirectory(), ApplicationPaths.LauncherExeFile));
         }
 
-        public void UpdateVersionFile(VersionType software)
+        public static void UpdateVersionFile(VersionType software)
         {
             if (software == VersionType.UbcVersion)
             {
@@ -83,7 +116,7 @@ namespace BestiaryLauncher.Model
             }
         }
 
-        private void GetFileAndOverwrite(string localPath, string remotePath, string tempPath)
+        private static void GetFileAndOverwrite(string localPath, string remotePath, string tempPath)
         {
             if(!File.Exists(tempPath))
             {
@@ -109,7 +142,7 @@ namespace BestiaryLauncher.Model
                 Path.Combine(ApplicationPaths.GetTempDirectory(), folderName));
         }
 
-        private void GetFolderAndOverwrite(string localDir, string remoteZip, string tempZip)
+        private static void GetFolderAndOverwrite(string localDir, string remoteZip, string tempZip)
         {
             string tempDir = Path.GetDirectoryName(tempZip) + Path.GetFileNameWithoutExtension(tempZip);
             if(!File.Exists(tempZip))
@@ -143,7 +176,7 @@ namespace BestiaryLauncher.Model
             }
         }
 
-        private byte[] GetHashValue(string filePath)
+        private static byte[] GetHashValue(string filePath)
         {
             using (var filestream = new FileStream(filePath, FileMode.Open))
             {

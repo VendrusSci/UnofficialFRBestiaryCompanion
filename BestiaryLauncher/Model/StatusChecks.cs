@@ -5,16 +5,16 @@ namespace BestiaryLauncher.Model
 {
     public static class StatusChecks
     {
-        public static bool IsVersionDifferent(VersionType project, string ubcVersion, string launcherVersion)
+        public static bool IsVersionDifferent(VersionType project, string version)
         {
             bool result = false;
             switch (project)
             {
                 case VersionType.UbcVersion:
-                    result = File.ReadAllText(ApplicationPaths.UbcVersionFile) == ubcVersion;
+                    result = File.ReadAllText(ApplicationPaths.UbcVersionFile) == version;
                     break;
                 case VersionType.LauncherVersion:
-                    result = File.ReadAllText(ApplicationPaths.LauncherVersionFile) == launcherVersion;
+                    result = File.ReadAllText(ApplicationPaths.LauncherVersionFile) == version;
                     break;
             }
             return result;
@@ -22,7 +22,7 @@ namespace BestiaryLauncher.Model
 
         public static bool SoftwareExists()
         {
-            return File.Exists(Path.Combine(ApplicationPaths.GetDataDirectory(), ApplicationPaths.ExeFile));
+            return File.Exists(Path.Combine(ApplicationPaths.GetDataDirectory(), ApplicationPaths.UbcExeFile));
         }
 
         public static bool FamiliarUpdateAvailable()
@@ -32,11 +32,11 @@ namespace BestiaryLauncher.Model
                 Path.Combine(ApplicationPaths.GetTempDirectory(), ApplicationPaths.FRDataFile));
         }
 
-        public static bool SoftwareUpdateAvailable(string remotePath)
+        public static bool UbcUpdateAvailable(string remotePath)
         {
-            return DownloadAndCompare(Path.Combine(ApplicationPaths.GetDataDirectory(), ApplicationPaths.ExeFile),
+            return DownloadAndCompare(Path.Combine(ApplicationPaths.GetDataDirectory(), ApplicationPaths.UbcExeFile),
                 remotePath,
-                Path.Combine(ApplicationPaths.GetTempDirectory(), ApplicationPaths.ExeFile));
+                Path.Combine(ApplicationPaths.GetTempDirectory(), ApplicationPaths.UbcExeFile));
         }
 
         public static bool LauncherUpdateAvailable(string remotePath)

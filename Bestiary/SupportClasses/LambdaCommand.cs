@@ -4,7 +4,7 @@ using System.Windows.Input;
 
 namespace Bestiary
 {
-    class LambdaCommand : BaseCommand
+    public class LambdaCommand : BaseCommand
     {
         public LambdaCommand(Action<object> onExecute, Predicate<object> onCanExecute=null)
         {

@@ -4,7 +4,7 @@ using System.Windows.Input;
 
 namespace Bestiary
 {
-    abstract class BaseCommand : ICommand
+    public abstract class BaseCommand : ICommand
     {
         public event EventHandler CanExecuteChanged
         {

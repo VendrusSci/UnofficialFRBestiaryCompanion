@@ -14,7 +14,7 @@ namespace BestiaryLauncher.Model
         public static string FRDataFile = "FRData.xml";
         public static string UserDataFile = "UserData.xml";
         public static string BookmarkFile = "BookmarkData.xml";
-        public static string ExeFile = "Bestiary.exe";
+        public static string UbcExeFile = "Bestiary.exe";
         public static string LauncherExeFile = "BestiaryLauncher.exe";
 
         public static string RemoteLauncherVersionFile = "https://raw.githubusercontent.com/VendrusSci/UnofficialFRBestiaryCompanion/master/BestiaryLauncher/launcherversion.txt";
