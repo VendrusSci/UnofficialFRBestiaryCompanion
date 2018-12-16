@@ -15,9 +15,11 @@ namespace Bestiary.ViewModel
 {
     class FetchUpdateViewModel : INotifyPropertyChanged
     {
-        public FetchUpdateViewModel(IModel model)
+        string m_FRDataPath;
+        public FetchUpdateViewModel(IModel model, string FRDataPath)
         {
             m_LocalFamiliarModel = model;
+            m_FRDataPath = FRDataPath;
         }
 
         public string StatusString { get; private set; }
@@ -79,12 +81,11 @@ namespace Bestiary.ViewModel
                                 if (FetchUpdateFile())
                                 {
                                     MainViewModel.UserActionLog.Info("Starting fast update");
-                                    string frDataPath = Path.Combine(ApplicationPaths.GetResourcesDirectory(), "FRData.xml");
-                                    if(!StructuralComparisons.StructuralEqualityComparer.Equals(GetHashValue(m_LocalUpdateFilePath), GetHashValue(frDataPath)))
+                                    if(!StructuralComparisons.StructuralEqualityComparer.Equals(GetHashValue(m_LocalUpdateFilePath), GetHashValue(m_FRDataPath)))
                                     {
                                         StatusString = "Familiar list found, updating local file...";
                                         string bkupFilePath = "Backup.xml";
-                                        File.Replace(m_LocalUpdateFilePath, frDataPath, bkupFilePath);
+                                        File.Replace(m_LocalUpdateFilePath, m_FRDataPath, bkupFilePath);
                                         File.Delete(bkupFilePath);
                                         StatusString = "Update Complete";
                                         MainViewModel.UserActionLog.Info("Fast update complete");
@@ -142,8 +143,7 @@ namespace Bestiary.ViewModel
         private void UpdateLocalFile()
         {
             MainViewModel.UserActionLog.Info("Starting update of FR data...");
-            string filePath = Path.Combine(ApplicationPaths.GetResourcesDirectory(), "FRData.xml");
-            if (!StructuralComparisons.StructuralEqualityComparer.Equals(GetHashValue(m_LocalUpdateFilePath), GetHashValue(filePath)))
+            if (!StructuralComparisons.StructuralEqualityComparer.Equals(GetHashValue(m_LocalUpdateFilePath), GetHashValue(m_FRDataPath)))
             {
                 //if the hashes aren't the same, make a new model and compare all the familiars
                 m_UpdateFamiliarModel = new XmlModelStorage(m_LocalUpdateFilePath, "", "");

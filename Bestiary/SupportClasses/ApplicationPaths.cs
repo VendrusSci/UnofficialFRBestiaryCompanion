@@ -37,5 +37,10 @@ namespace Bestiary
         {
             return Path.Combine(GetResourcesDirectory(), "ViewIcons");
         }
+
+        public static string GetFamiliarDataDirectory()
+        {
+            return Path.Combine(GetResourcesDirectory(), "FamiliarData");
+        }
     }
 }

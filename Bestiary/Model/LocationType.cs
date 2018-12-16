@@ -228,7 +228,7 @@ namespace Bestiary.Model
     {
         public Venues()
         {
-            VenueNames =  File.ReadAllLines(Path.Combine(ApplicationPaths.GetResourcesDirectory(), "Venues.txt"));
+            VenueNames =  File.ReadAllLines(Path.Combine(ApplicationPaths.GetFamiliarDataDirectory(), "Venues.txt"));
         }
         [DataMember]
         public string[] VenueNames { get; set; }
@@ -239,7 +239,7 @@ namespace Bestiary.Model
     {
         public SiteEvents()
         {
-            EventNames = File.ReadAllLines(Path.Combine(ApplicationPaths.GetResourcesDirectory(), "Events.txt"));
+            EventNames = File.ReadAllLines(Path.Combine(ApplicationPaths.GetFamiliarDataDirectory(), "Events.txt"));
         }
         [DataMember]
         public string[] EventNames { get; set; }

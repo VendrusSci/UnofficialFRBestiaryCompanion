@@ -365,7 +365,7 @@ namespace Bestiary.ViewModel
                 if (m_openFetchUpdateWindow == null)
                 {
                     UserActionLog.Info("Update window opened");
-                    m_openFetchUpdateWindow = new OpenDialogCommand<FetchUpdateWindow>(Window, _ => new FetchUpdateWindow(m_Model));
+                    m_openFetchUpdateWindow = new OpenDialogCommand<FetchUpdateWindow>(Window, _ => new FetchUpdateWindow(m_Model, m_FRDataPath));
                 }
                 return m_openFetchUpdateWindow;
             }
@@ -502,10 +502,12 @@ namespace Bestiary.ViewModel
             return filteredFamiliars;
         }
 
-        public MainViewModel(MainWindow window, IModel model)
+        private string m_FRDataPath;
+        public MainViewModel(MainWindow window, IModel model, string FRDataPath)
         {
             Window = window;
             Model = model;
+            m_FRDataPath = FRDataPath;
 
             UserActionLog.Info("Application opened!");
             FamiliarParameters = new FamiliarFilters();

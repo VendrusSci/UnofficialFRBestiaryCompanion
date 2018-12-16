@@ -9,10 +9,10 @@ namespace Bestiary
     /// </summary>
     public partial class FetchUpdateWindow : Window
     {
-        public FetchUpdateWindow(IModel model)
+        public FetchUpdateWindow(IModel model, string FRDataPath)
         {
             InitializeComponent();
-            DataContext = new FetchUpdateViewModel(model);
+            DataContext = new FetchUpdateViewModel(model, FRDataPath);
         }
     }
 }
