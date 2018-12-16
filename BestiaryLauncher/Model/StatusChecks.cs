@@ -1,5 +1,7 @@
 ﻿using System.IO;
+using System.Linq;
 using System.Net;
+using System.Text;
 
 namespace BestiaryLauncher.Model
 {
@@ -25,48 +27,45 @@ namespace BestiaryLauncher.Model
             return File.Exists(Path.Combine(ApplicationPaths.GetDataDirectory(), ApplicationPaths.UbcExeFile));
         }
 
-        public static bool FamiliarUpdateAvailable()
+        public static bool FamiliarUpdateAvailable(ILoadFiles loader, IDownloadFiles downloader)
         {
-            return DownloadAndCompare(Path.Combine(ApplicationPaths.GetResourcesDirectory(), ApplicationPaths.FRDataFile),
-                ApplicationPaths.RemoteFRDataFile,
-                Path.Combine(ApplicationPaths.GetTempDirectory(), ApplicationPaths.FRDataFile));
+            return DownloadAndCompare(
+                loader,
+                Path.Combine(ApplicationPaths.GetResourcesDirectory(), ApplicationPaths.FRDataFile),
+                downloader,
+                ApplicationPaths.RemoteFRDataFile
+            );
         }
 
-        public static bool UbcUpdateAvailable(string remotePath)
+        public static bool UbcUpdateAvailable(ILoadFiles loader, IDownloadFiles downloader, string remotePath)
         {
-            return DownloadAndCompare(Path.Combine(ApplicationPaths.GetDataDirectory(), ApplicationPaths.UbcExeFile),
-                remotePath,
-                Path.Combine(ApplicationPaths.GetTempDirectory(), ApplicationPaths.UbcExeFile));
+            return DownloadAndCompare(
+                loader,
+                Path.Combine(ApplicationPaths.GetDataDirectory(), ApplicationPaths.UbcExeFile),
+                downloader,
+                remotePath
+            );
         }
 
-        public static bool LauncherUpdateAvailable(string remotePath)
+        public static bool LauncherUpdateAvailable(ILoadFiles loader, IDownloadFiles downloader, string remotePath)
         {
-            return DownloadAndCompare(Path.Combine(ApplicationPaths.GetDataDirectory(), ApplicationPaths.LauncherExeFile),
-                remotePath,
-                Path.Combine(ApplicationPaths.GetTempDirectory(), ApplicationPaths.LauncherExeFile));
+            return DownloadAndCompare(
+                loader,
+                Path.Combine(ApplicationPaths.GetDataDirectory(), ApplicationPaths.LauncherExeFile),
+                downloader,
+                remotePath
+            );
         }
 
-        public static bool DownloadAndCompare(string localPath, string remotePath, string tempPath)
+        public static bool DownloadAndCompare(ILoadFiles loader, string localPath, IDownloadFiles downloader, string remoteUrl)
         {
             bool result = false;
-            if (!File.Exists(tempPath))
+            var localContents = loader.LoadAsString(localPath);
+            var remoteContents = downloader.DownloadAsString(remoteUrl);
+            
+            if (localContents != null && remoteContents != null)
             {
-                using (WebClient client = new WebClient())
-                {
-                    try
-                    {
-                        client.DownloadFile(remotePath, tempPath);
-                    }
-                    catch (WebException ex)
-                    {
-                        //MainViewModel.UserActionLog.Error("Failed to download file");
-                    }
-                }
-
-            }
-            if (File.Exists(localPath) && File.Exists(tempPath))
-            {
-                if (File.ReadAllText(localPath) == File.ReadAllText(tempPath))
+                if (localContents.SequenceEqual(remoteContents))
                 {
                     result = true;
                 }
@@ -76,7 +75,6 @@ namespace BestiaryLauncher.Model
 
         public static string GetLatestVersionNumber(string remotePath, string fileName)
         {
-            string versionNumber;
             string tempPath = Path.Combine(ApplicationPaths.GetTempDirectory(), fileName);
             if (File.Exists(tempPath))
             {
@@ -87,22 +85,89 @@ namespace BestiaryLauncher.Model
                 try
                 {
                     client.DownloadFile(remotePath, tempPath);
+                    return File.ReadAllText(tempPath);
                 }
-                catch (WebException ex)
+                catch (WebException)
                 {
                     //MainViewModel.UserActionLog.Error("Failed to download file");
                 }
 
             }
-            if(File.Exists(tempPath))
+            return null;
+        }
+    }
+
+    public interface ILoadFiles
+    {
+        byte[] Load(string filepath);
+    }
+
+    public interface IDownloadFiles
+    {
+        byte[] Download(string url);
+    }
+
+    static class FileDownloaderExtensionMethods
+    {
+        public static string DownloadAsString(this IDownloadFiles downloader, string url)
+        {
+            var data = downloader.Download(url);
+            if(data == null)
             {
-                versionNumber = File.ReadAllText(tempPath);
+                return null;
             }
-            else
+            return Encoding.ASCII.GetString(data);
+        }
+    }
+    
+    static class FileLoaderExtensionMethods
+    {
+        public static string LoadAsString(this ILoadFiles loader, string filepath)
+        {
+            var data = loader.Load(filepath);
+            if (data == null)
             {
-                versionNumber = null;
+                return null;
             }
-            return versionNumber;
+            return Encoding.ASCII.GetString(data);
+        }
+    }
+
+    class FileLoader : ILoadFiles
+    {
+        public byte[] Load(string filepath)
+        {
+            try
+            {
+                return File.ReadAllBytes(filepath);
+            }
+            catch(FileNotFoundException)
+            {
+            }
+            catch(DirectoryNotFoundException)
+            {
+            }
+            return null;
+        }
+    }
+
+    class FileDownloader : IDownloadFiles
+    {
+        public byte[] Download(string url)
+        {
+            using (WebClient client = new WebClient())
+            {
+                try
+                {
+                    return client.DownloadData(url);
+                }
+                catch (WebException)
+                {
+                    //MainViewModel.UserActionLog.Error("Failed to download file");
+                }
+            }
+
+            return null;
         }
     }
 }

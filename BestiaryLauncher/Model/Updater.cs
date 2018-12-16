@@ -46,7 +46,7 @@ namespace BestiaryLauncher.Model
             bool result = false;
             if(StatusChecks.IsVersionDifferent(VersionType.UbcVersion, LatestUbcVersion) != true)
             {
-                result = StatusChecks.FamiliarUpdateAvailable();
+                result = StatusChecks.FamiliarUpdateAvailable(new FileLoader(), new FileDownloader());
             }
             return result;
         }
@@ -56,7 +56,7 @@ namespace BestiaryLauncher.Model
             bool result = false;
             if (StatusChecks.IsVersionDifferent(VersionType.UbcVersion, LatestUbcVersion) != true)
             {
-                result = StatusChecks.UbcUpdateAvailable(Path.Combine(LatestReleasePath, ApplicationPaths.UbcExeFile));
+                result = StatusChecks.UbcUpdateAvailable(new FileLoader(), new FileDownloader(), Path.Combine(LatestReleasePath, ApplicationPaths.UbcExeFile));
             }
             return result;
         }

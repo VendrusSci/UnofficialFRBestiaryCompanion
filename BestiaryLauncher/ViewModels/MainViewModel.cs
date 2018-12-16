@@ -42,7 +42,7 @@ namespace BestiaryLauncher.ViewModels
         {
             get
             {
-                if(m_UpdateLauncher == null)
+                if (m_UpdateLauncher == null)
                 {
                     m_UpdateLauncher = new LambdaCommand(
                         onExecute: (p) =>
@@ -64,7 +64,7 @@ namespace BestiaryLauncher.ViewModels
         {
             get
             {
-                if(m_UpdateFamiliars == null)
+                if (m_UpdateFamiliars == null)
                 {
                     m_UpdateFamiliars = new LambdaCommand(
                         onExecute: (p) =>
@@ -72,11 +72,11 @@ namespace BestiaryLauncher.ViewModels
                             UpdateStatusText = "Updating Familiars...";
                             bool result = m_Updater.UpdateFamiliars();
                             UpdateStatusText = result ? m_UpdateSuccess : m_UpdateFail;
-                            if(!CheckForUbcUpdates())
+                            if (!CheckForUbcUpdates())
                             {
                                 LaunchButtonText = m_LaunchButtonNoUpdateAvailable;
                             }
-                            
+
                         },
                         onCanExecute: (p) =>
                         {
@@ -93,7 +93,7 @@ namespace BestiaryLauncher.ViewModels
         {
             get
             {
-                if(m_UpdateSoftware == null)
+                if (m_UpdateSoftware == null)
                 {
                     m_UpdateSoftware = new LambdaCommand(
                         onExecute: (p) =>
@@ -127,7 +127,7 @@ namespace BestiaryLauncher.ViewModels
         {
             get
             {
-                if(m_NoUpdate == null)
+                if (m_NoUpdate == null)
                 {
                     m_NoUpdate = new LambdaCommand(
                         onExecute: (p) =>
