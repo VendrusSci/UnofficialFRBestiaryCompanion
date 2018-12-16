@@ -10,7 +10,7 @@ namespace BestiaryLauncher.Model
             bool result = false;
             switch (project)
             {
-                case VersionType.SoftwareVersion:
+                case VersionType.UbcVersion:
                     result = File.ReadAllText(ApplicationPaths.UbcVersionFile) == ubcVersion;
                     break;
                 case VersionType.LauncherVersion:
@@ -49,27 +49,26 @@ namespace BestiaryLauncher.Model
         public static bool DownloadAndCompare(string localPath, string remotePath, string tempPath)
         {
             bool result = false;
-
-            using (WebClient client = new WebClient())
+            if (!File.Exists(tempPath))
             {
-                try
+                using (WebClient client = new WebClient())
                 {
-                    client.DownloadFile(remotePath, tempPath);
-                }
-                catch (WebException ex)
-                {
-                    //MainViewModel.UserActionLog.Error("Failed to download file");
-                }
-                if (File.Exists(localPath) && File.Exists(tempPath))
-                {
-                    if (File.ReadAllText(localPath) == File.ReadAllText(tempPath))
+                    try
                     {
-                        result = true;
+                        client.DownloadFile(remotePath, tempPath);
                     }
-                    else
+                    catch (WebException ex)
                     {
-                        result = false;
+                        //MainViewModel.UserActionLog.Error("Failed to download file");
                     }
+                }
+
+            }
+            if (File.Exists(localPath) && File.Exists(tempPath))
+            {
+                if (File.ReadAllText(localPath) == File.ReadAllText(tempPath))
+                {
+                    result = true;
                 }
             }
             return result;
@@ -79,6 +78,10 @@ namespace BestiaryLauncher.Model
         {
             string versionNumber;
             string tempPath = Path.Combine(ApplicationPaths.GetTempDirectory(), fileName);
+            if (File.Exists(tempPath))
+            {
+                File.Delete(tempPath);
+            }
             using (WebClient client = new WebClient())
             {
                 try
@@ -89,16 +92,16 @@ namespace BestiaryLauncher.Model
                 {
                     //MainViewModel.UserActionLog.Error("Failed to download file");
                 }
-                if (File.Exists(tempPath))
-                {
-                    versionNumber = File.ReadAllText(tempPath);
-                }
-                else
-                {
-                    versionNumber = null;
-                }
+
             }
-            File.Delete(tempPath);
+            if(File.Exists(tempPath))
+            {
+                versionNumber = File.ReadAllText(tempPath);
+            }
+            else
+            {
+                versionNumber = null;
+            }
             return versionNumber;
         }
     }

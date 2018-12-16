@@ -11,7 +11,7 @@ namespace BestiaryLauncher.Model
     public enum VersionType
     {
         LauncherVersion,
-        SoftwareVersion
+        UbcVersion
     }
 
     class Updater
@@ -23,28 +23,44 @@ namespace BestiaryLauncher.Model
         public Updater()
         {
             Directory.CreateDirectory(ApplicationPaths.GetTempDirectory());
-            LatestUbcVersion = StatusChecks.GetLatestVersionNumber(ApplicationPaths.RemoteUbcVersionFile, "version.txt");
-            LatestLauncherVersion = StatusChecks.GetLatestVersionNumber(ApplicationPaths.RemoteLauncherExePath, "launcherversion.txt");
+            LatestUbcVersion = StatusChecks.GetLatestVersionNumber(ApplicationPaths.RemoteUbcVersionFile, ApplicationPaths.UbcVersionFile);
+            LatestLauncherVersion = StatusChecks.GetLatestVersionNumber(ApplicationPaths.RemoteLauncherExePath, ApplicationPaths.LauncherVersionFile);
             RemoteExeFullPath = Path.Combine(ApplicationPaths.RemoteExePath, LatestUbcVersion, ApplicationPaths.ExeFile);
             RemoteLauncherExeFullPath = Path.Combine(ApplicationPaths.RemoteLauncherExePath, LatestLauncherVersion, ApplicationPaths.LauncherExeFile);
         }
 
         public void UpdateUbcSoftware()
         {
-
+            //requires updating:
+            //executable
+            //DisplayIcons
+            //ViewIcons
+            
+            //Bestiary.png
+            
         }
 
-        public void UpdateVersionFile()
+        public void UpdateVersionFile(VersionType software)
         {
-
+            
         }
 
         public void UpdateFamiliars()
         {
-
+            //Requires updating:
+            //Icons
+            //Images
+            //FRData.xml
+            //Venues.txt
+            //Events.txt
         }
 
         public void UpdateLauncher()
+        {
+
+        }
+
+        private void GetFileAndOverwrite(string localPath, string remotePath, string tempPath)
         {
 
         }
