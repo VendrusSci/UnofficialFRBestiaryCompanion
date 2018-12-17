@@ -15,18 +15,30 @@ namespace BestiaryLauncher.Model
         UbcVersion
     }
 
-    class Updater
+    public class Updater
     {
         private string LatestUbcVersion;
         private string LatestLauncherVersion;
         private string LatestReleasePath;
 
-        public Updater()
+        private ILoadFiles m_FileLoader;
+        private IDownloadFiles m_FileDownloader;
+        private IUnzipFiles m_FileUnzipper;
+        private IManipulateFiles m_FileManipulator;
+        private IManipulateDirectories m_DirectoryManipulator;
+
+        public Updater(ILoadFiles fileLoader, IDownloadFiles fileDownloader, IUnzipFiles fileUnzipper, 
+            IManipulateFiles fileManipulator, IManipulateDirectories directoryManipulator)
         {
-            Directory.CreateDirectory(ApplicationPaths.GetTempDirectory());
+            m_FileLoader = fileLoader;
+            m_FileDownloader = fileDownloader;
+            m_FileUnzipper = fileUnzipper;
+            m_FileManipulator = fileManipulator;
+            m_DirectoryManipulator = directoryManipulator;
+
             LatestReleasePath = ApplicationPaths.RemoteGitReleasePath + LatestUbcVersion;
-            LatestUbcVersion = StatusChecks.GetLatestVersionNumber(new FileDownloader(), ApplicationPaths.RemoteUbcVersionFile);
-            LatestLauncherVersion = StatusChecks.GetLatestVersionNumber(new FileDownloader(), ApplicationPaths.RemoteGitReleasePath);
+            LatestUbcVersion = StatusChecks.GetLatestVersionNumber(m_FileDownloader, ApplicationPaths.RemoteUbcVersionFile);
+            LatestLauncherVersion = StatusChecks.GetLatestVersionNumber(m_FileDownloader, ApplicationPaths.RemoteLauncherVersionFile);
         }
 
         public void LaunchUbc()
@@ -36,29 +48,24 @@ namespace BestiaryLauncher.Model
             ubc.Start();
         }
 
+        public bool SoftwareUpdateAvailable()
+        {
+            return StatusChecks.IsVersionDifferent(m_FileLoader, VersionType.UbcVersion, LatestUbcVersion);
+        }
+
         public bool LauncherUpdateAvailable()
         {
-            return StatusChecks.IsVersionDifferent(new FileLoader(), VersionType.LauncherVersion, LatestLauncherVersion);
+            return StatusChecks.IsVersionDifferent(m_FileLoader, VersionType.LauncherVersion, LatestLauncherVersion);
         }
 
         public bool FamiliarUpdateAvailable()
         {
-            bool result = false;
-            if(StatusChecks.IsVersionDifferent(new FileLoader(), VersionType.UbcVersion, LatestUbcVersion) != true)
-            {
-                result = StatusChecks.FamiliarUpdateAvailable(new FileLoader(), new FileDownloader());
-            }
-            return result;
+             return StatusChecks.FamiliarUpdateAvailable(m_FileLoader, m_FileDownloader);
         }
 
         public bool UbcUpdateAvailable()
         {
-            bool result = false;
-            if (StatusChecks.IsVersionDifferent(new FileLoader(), VersionType.UbcVersion, LatestUbcVersion) != true)
-            {
-                result = StatusChecks.UbcUpdateAvailable(new FileLoader(), new FileDownloader(), Path.Combine(LatestReleasePath, ApplicationPaths.UbcExeFile));
-            }
-            return result;
+            return StatusChecks.UbcUpdateAvailable(m_FileLoader, m_FileDownloader, Path.Combine(LatestReleasePath, ApplicationPaths.UbcExeFile));
         }
 
         public bool UpdateUbcSoftware()
@@ -66,19 +73,20 @@ namespace BestiaryLauncher.Model
             bool result = true;
             //Requires updating:
             //Bestiary.png
-            string bestiaryImgName = "bestiary.png";
-            result |= GetFileAndOverwrite(Path.Combine(ApplicationPaths.GetResourcesDirectory(), bestiaryImgName),
-                new FileDownloader(),
-                ApplicationPaths.RemoteBestiaryImgPath);
+            result &= GetFileAndOverwrite(Path.Combine(ApplicationPaths.GetResourcesDirectory(), ApplicationPaths.bestiaryImgFile),
+                m_FileDownloader,
+                ApplicationPaths.RemoteBestiaryImgPath,
+                m_FileManipulator);
             //Executable
-            result |= GetFileAndOverwrite(
+            result &= GetFileAndOverwrite(
                 Path.Combine(ApplicationPaths.GetDataDirectory(),ApplicationPaths.UbcExeFile),
-                new FileDownloader(),
-                Path.Combine(LatestReleasePath, ApplicationPaths.UbcExeFile));
+                m_FileDownloader,
+                Path.Combine(LatestReleasePath, ApplicationPaths.UbcExeFile),
+                m_FileManipulator);
             //DisplayIcons
-            result |= GetResourcesFolderAndOverwrite("DisplayIcons");
+            result &= GetResourcesFolderAndOverwrite("DisplayIcons");
             //ViewIcons
-            result |= GetResourcesFolderAndOverwrite("ViewIcons");
+            result &= GetResourcesFolderAndOverwrite("ViewIcons");
 
             return result;
         }
@@ -102,31 +110,34 @@ namespace BestiaryLauncher.Model
             //Requires updating:
             //Launcher.exe
             //Rename own executable
-            File.Move(Path.Combine(ApplicationPaths.GetDataDirectory(), ApplicationPaths.LauncherExeFile), "Backup_" + ApplicationPaths.LauncherExeFile);
+            m_FileManipulator.Move(Path.Combine(ApplicationPaths.GetDataDirectory(), ApplicationPaths.LauncherExeFile), "Backup_" + ApplicationPaths.LauncherExeFile);
             //Load in new executable
             return GetFileAndOverwrite(
                 Path.Combine(ApplicationPaths.GetDataDirectory(), ApplicationPaths.LauncherExeFile),
-                new FileDownloader(),
-                Path.Combine(LatestReleasePath, ApplicationPaths.LauncherExeFile)
+                m_FileDownloader,
+                Path.Combine(LatestReleasePath, ApplicationPaths.LauncherExeFile),
+                m_FileManipulator
                 );
         }
 
-        public static bool UpdateVersionFile(VersionType software)
+        public bool UpdateVersionFile(VersionType software)
         {
             if (software == VersionType.UbcVersion)
             {
                 return GetFileAndOverwrite(
                     ApplicationPaths.GetUBCVersionPath(),
-                    new FileDownloader(),
-                    ApplicationPaths.RemoteUbcVersionFile
+                    m_FileDownloader,
+                    ApplicationPaths.RemoteUbcVersionFile,
+                    m_FileManipulator
                     );
             }
             else if (software == VersionType.LauncherVersion)
             {
                 return GetFileAndOverwrite(
                     ApplicationPaths.GetLauncherVersionPath(),
-                    new FileDownloader(),
-                    ApplicationPaths.RemoteLauncherVersionFile
+                    m_FileDownloader,
+                    ApplicationPaths.RemoteLauncherVersionFile,
+                    m_FileManipulator
                     );
             }
             else
@@ -136,18 +147,18 @@ namespace BestiaryLauncher.Model
         }
 
         private static string m_FileBackup = ".bak";
-        private static bool GetFileAndOverwrite(string localPath, IDownloadFiles downloader, string remotePath)
+        private bool GetFileAndOverwrite(string localPath, IDownloadFiles downloader, string remotePath, IManipulateFiles fileInterface)
         {
             var backupPath = localPath + m_FileBackup;
-            if(File.Exists(backupPath))
+            if(fileInterface.Exists(backupPath))
             {
-                File.Delete(backupPath);
+                fileInterface.Delete(backupPath);
             }
-            File.Move(localPath, backupPath);
-            string tempPath = downloader.DownloadToDirectory(remotePath, localPath);
+            fileInterface.Move(localPath, backupPath);
+            string tempPath = downloader.DownloadToDirectory(remotePath, Path.GetDirectoryName(localPath), m_FileManipulator);
             if(tempPath == null)
             {
-                File.Move(backupPath, localPath);
+                fileInterface.Move(backupPath, localPath);
                 return false;
             }
             return true;
@@ -157,25 +168,26 @@ namespace BestiaryLauncher.Model
         private bool GetResourcesFolderAndOverwrite(string folderName)
         {
             return GetFolderAndOverwrite(
-                new FileDownloader(),
+                m_FileDownloader,
                 Path.Combine(LatestReleasePath, folderName + ".zip"),
                 Path.Combine(ApplicationPaths.GetResourcesDirectory(), folderName),
-                new FileUnzipper()
+                m_FileUnzipper,
+                m_DirectoryManipulator
                 );
         }
 
         private static string m_FolderBackup = "_Bkup";
-        private static bool GetFolderAndOverwrite(IDownloadFiles downloader, string remoteZip, string localDir, IUnzipFiles unzipper)
+        private bool GetFolderAndOverwrite(IDownloadFiles downloader, string remoteZip, string localDir, IUnzipFiles unzipper, IManipulateDirectories directoryInterface)
         {
-            var zipFile = downloader.DownloadToDirectory(remoteZip, localDir);
+            var zipFile = downloader.DownloadToDirectory(remoteZip, localDir, m_FileManipulator);
             if(zipFile != null)
             {
                 var backupPath = localDir + m_FolderBackup;
-                if(Directory.Exists(backupPath))
+                if(directoryInterface.Exists(backupPath))
                 {
-                    Directory.Delete(backupPath);
+                    directoryInterface.Delete(backupPath);
                 }
-                Directory.Move(localDir, backupPath);
+                directoryInterface.Move(localDir, backupPath);
                 var folderPath = unzipper.Unzip(zipFile);
                 return true;
             }

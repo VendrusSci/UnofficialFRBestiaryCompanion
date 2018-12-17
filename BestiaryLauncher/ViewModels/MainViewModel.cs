@@ -21,7 +21,8 @@ namespace BestiaryLauncher.ViewModels
         private Updater m_Updater;
         public MainViewModel()
         {
-            m_Updater = new Updater();
+            m_Updater = new Updater(new FileLoader(), new FileDownloader(), new FileUnzipper(), 
+                new FileManipulator(), new DirectoryManipulator());
             LauncherUpdateStatus = m_Hidden;
             SoftwareUpdateStatus = m_Hidden;
             if(m_Updater.LauncherUpdateAvailable())
@@ -29,11 +30,15 @@ namespace BestiaryLauncher.ViewModels
                 //Set Launcher update stuff to visible
                 LauncherUpdateStatus = m_Visible;
             }
-            else
+            else if(m_Updater.UbcUpdateAvailable())
             {
                 //Set UBC update stuff to visible
                 LauncherUpdateStatus = m_Visible;
                 LaunchButtonText = m_LaunchButtonUpdateAvailable;
+            }
+            else
+            {
+                NoUpdate.Execute(null);
             }
         }
 

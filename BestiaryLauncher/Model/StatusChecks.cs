@@ -66,7 +66,7 @@ namespace BestiaryLauncher.Model
             
             if (localContents != null && remoteContents != null)
             {
-                if (!localContents.SequenceEqual(remoteContents))
+                if (localContents != remoteContents)
                 {
                     result = true;
                 }
@@ -74,8 +74,7 @@ namespace BestiaryLauncher.Model
             return result;
         }
 
-        public static string GetLatestVersionNumber(IDownloadFiles downloader, string remotePath
-            )
+        public static string GetLatestVersionNumber(IDownloadFiles downloader, string remotePath)
         {
             return downloader.DownloadAsString(remotePath);
         }
@@ -91,9 +90,19 @@ namespace BestiaryLauncher.Model
         byte[] Download(string url);
     }
 
-    public interface IDeleteFiles
+    public interface IManipulateFiles
     {
         void Delete(string filePath);
+        bool Exists(string filePath);
+        void Move(string sourceFilepath, string destFilepath);
+        void WriteAllBytes(string filePath, byte[] data);
+    }
+
+    public interface IManipulateDirectories
+    {
+        void Delete(string dirPath);
+        bool Exists(string dirPath);
+        void Move(string sourceDir, string destDir);
     }
 
     public interface IUnzipFiles
@@ -113,20 +122,20 @@ namespace BestiaryLauncher.Model
             return Encoding.ASCII.GetString(data);
         }
 
-        public static string DownloadToDirectory(this IDownloadFiles downloader, string url, string directoryPath)
+        public static string DownloadToDirectory(this IDownloadFiles downloader, string url, string directoryPath, IManipulateFiles fileManipulator)
         {
             var fileName = Path.Combine(directoryPath, Path.GetFileName(url));
             var data = downloader.Download(url);
             if (data != null)
             {
-                File.WriteAllBytes(Path.Combine(directoryPath, Path.GetFileName(url)), data);
+                fileManipulator.WriteAllBytes(Path.Combine(directoryPath, Path.GetFileName(url)), data);
                 return fileName;
             }
             return null;
         }
     }
     
-    static class FileLoaderExtensionMethods
+    public static class FileLoaderExtensionMethods
     {
         public static string LoadAsString(this ILoadFiles loader, string filepath)
         {
@@ -177,11 +186,44 @@ namespace BestiaryLauncher.Model
         }
     }
 
-    class FileDeleter : IDeleteFiles
+    class FileManipulator : IManipulateFiles
     {
         public void Delete(string filePath)
         {
             File.Delete(filePath);
+        }
+
+        public bool Exists(string filePath)
+        {
+            return File.Exists(filePath);
+        }
+
+        public void Move(string sourceFilepath, string destFilepath)
+        {
+            File.Move(sourceFilepath, destFilepath);
+        }
+
+        public void WriteAllBytes(string filePath, byte[] data)
+        {
+            File.WriteAllBytes(filePath, data);
+        }
+    }
+
+    class DirectoryManipulator : IManipulateDirectories
+    {
+        public void Delete(string dirPath)
+        {
+            Directory.Delete(dirPath);
+        }
+
+        public bool Exists(string dirPath)
+        {
+            return Directory.Exists(dirPath);
+        }
+
+        public void Move(string sourceDir, string destDir)
+        {
+            Directory.Move(sourceDir, destDir);
         }
     }
 

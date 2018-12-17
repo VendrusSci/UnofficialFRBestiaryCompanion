@@ -29,17 +29,17 @@ namespace LauncherTests
         }
 
         [Test]
-        public void TestLauncherIsVersionDifferentWithSameVersion()
+        public void TestIsLauncherVersionDifferentWithSameVersion()
         {
             var loader = Substitute.For<ILoadFiles>();
-            loader.Load(ApplicationPaths.UbcVersionFile).Returns(Encoding.ASCII.GetBytes("expected launcher version"));
-            var wasDifferent = StatusChecks.IsVersionDifferent(loader, VersionType.UbcVersion, "expected launcher version");
-            loader.Received().Load(ApplicationPaths.UbcVersionFile);
+            loader.Load(ApplicationPaths.LauncherVersionFile).Returns(Encoding.ASCII.GetBytes("expected launcher version"));
+            var wasDifferent = StatusChecks.IsVersionDifferent(loader, VersionType.LauncherVersion, "expected launcher version");
+            loader.Received().Load(ApplicationPaths.LauncherVersionFile);
             Assert.IsFalse(wasDifferent, "expected launcher version should match");
         }
 
         [Test]
-        public void TestLauncherIsVersionDifferentWithDifferentVersion()
+        public void TestIsLauncherVersionDifferentWithDifferentVersion()
         {
             var loader = Substitute.For<ILoadFiles>();
             loader.Load(ApplicationPaths.LauncherVersionFile).Returns(Encoding.ASCII.GetBytes("unexpected launcher version"));
