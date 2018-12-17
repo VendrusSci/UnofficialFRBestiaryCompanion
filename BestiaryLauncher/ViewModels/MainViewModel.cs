@@ -18,11 +18,14 @@ namespace BestiaryLauncher.ViewModels
         private string m_UpdateSuccess = "Update Successful";
         private string m_UpdateFail = "Update Failed, check connection or report bug";
 
+        private ICloseApplications m_ApplicationCloser;
         private Updater m_Updater;
-        public MainViewModel()
+        public MainViewModel(ILoadFiles fileLoader, IDownloadFiles fileDownloader, IUnzipFiles fileUnzipper,
+            IManipulateFiles fileManipulator, IManipulateDirectories directoryManipulator, 
+            IStartProcesses processStarter, ICloseApplications applicationCloser)
         {
-            m_Updater = new Updater(new FileLoader(), new FileDownloader(), new FileUnzipper(), 
-                new FileManipulator(), new DirectoryManipulator());
+            m_Updater = new Updater(fileLoader, fileDownloader, fileUnzipper, fileManipulator, directoryManipulator, processStarter);
+            m_ApplicationCloser = applicationCloser;
             LauncherUpdateStatus = m_Hidden;
             SoftwareUpdateStatus = m_Hidden;
             if(m_Updater.LauncherUpdateAvailable())
@@ -33,7 +36,7 @@ namespace BestiaryLauncher.ViewModels
             else if(m_Updater.UbcUpdateAvailable())
             {
                 //Set UBC update stuff to visible
-                LauncherUpdateStatus = m_Visible;
+                SoftwareUpdateStatus = m_Visible;
                 LaunchButtonText = m_LaunchButtonUpdateAvailable;
             }
             else
@@ -52,7 +55,16 @@ namespace BestiaryLauncher.ViewModels
                     m_UpdateLauncher = new LambdaCommand(
                         onExecute: (p) =>
                         {
-                            bool result = m_Updater.UpdateLauncher();
+                            if(m_Updater.UpdateLauncher())
+                            {
+                                UpdateStatusText = "Launcher update complete";
+                                LauncherUpdateStatus = m_Hidden;
+                                SoftwareUpdateStatus = m_Visible;
+                            }
+                            else
+                            {
+                                UpdateStatusText = "Launcher update failed";
+                            }
                         },
                         onCanExecute: (p) =>
                         {
@@ -138,7 +150,7 @@ namespace BestiaryLauncher.ViewModels
                         onExecute: (p) =>
                         {
                             m_Updater.LaunchUbc();
-                            Application.Current.Shutdown();
+                            m_ApplicationCloser.Close();
                         }
                     );
                 }

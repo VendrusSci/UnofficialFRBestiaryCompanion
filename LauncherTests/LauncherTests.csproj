@@ -67,6 +67,7 @@
     <Compile Include="Model\StatusChecksTests.cs" />
     <Compile Include="Model\UpdaterTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModel\MainViewModelTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

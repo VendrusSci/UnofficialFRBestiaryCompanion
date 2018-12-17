@@ -1,8 +1,10 @@
-﻿using System.IO;
+﻿using System.Diagnostics;
+using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Windows;
 
 namespace BestiaryLauncher.Model
 {
@@ -108,6 +110,16 @@ namespace BestiaryLauncher.Model
     public interface IUnzipFiles
     {
         string Unzip(string filePath);
+    }
+
+    public interface IStartProcesses
+    {
+        void Start(string filePath);
+    }
+
+    public interface ICloseApplications
+    {
+        void Close();
     }
 
     static class FileDownloaderExtensionMethods
@@ -237,6 +249,22 @@ namespace BestiaryLauncher.Model
                 archive.ExtractToDirectory(dirPath);
                 return dirPath;
             }
+        }
+    }
+
+    class ProcessStarter : IStartProcesses
+    {
+        public void Start(string filePath)
+        {
+            Process.Start(filePath);
+        }
+    }
+
+    class ApplicationCloser : ICloseApplications
+    {
+        public void Close()
+        {
+            Application.Current.Shutdown();
         }
     }
 }

@@ -26,15 +26,17 @@ namespace BestiaryLauncher.Model
         private IUnzipFiles m_FileUnzipper;
         private IManipulateFiles m_FileManipulator;
         private IManipulateDirectories m_DirectoryManipulator;
+        private IStartProcesses m_ProcessStarter;
 
         public Updater(ILoadFiles fileLoader, IDownloadFiles fileDownloader, IUnzipFiles fileUnzipper, 
-            IManipulateFiles fileManipulator, IManipulateDirectories directoryManipulator)
+            IManipulateFiles fileManipulator, IManipulateDirectories directoryManipulator, IStartProcesses processStarter)
         {
             m_FileLoader = fileLoader;
             m_FileDownloader = fileDownloader;
             m_FileUnzipper = fileUnzipper;
             m_FileManipulator = fileManipulator;
             m_DirectoryManipulator = directoryManipulator;
+            m_ProcessStarter = processStarter;
 
             LatestReleasePath = ApplicationPaths.RemoteGitReleasePath + LatestUbcVersion;
             LatestUbcVersion = StatusChecks.GetLatestVersionNumber(m_FileDownloader, ApplicationPaths.RemoteUbcVersionFile);
@@ -43,9 +45,7 @@ namespace BestiaryLauncher.Model
 
         public void LaunchUbc()
         {
-            var ubc = new Process();
-            ubc.StartInfo.FileName = Path.Combine(ApplicationPaths.GetDataDirectory(), ApplicationPaths.UbcExeFile);
-            ubc.Start();
+            m_ProcessStarter.Start(Path.Combine(ApplicationPaths.GetDataDirectory(), ApplicationPaths.UbcExeFile));
         }
 
         public bool SoftwareUpdateAvailable()
@@ -96,11 +96,11 @@ namespace BestiaryLauncher.Model
             bool result = true;
             //Requires updating:
             //Icons
-            result |= GetResourcesFolderAndOverwrite("Icons");
+            result &= GetResourcesFolderAndOverwrite("Icons");
             //Images
-            result |= GetResourcesFolderAndOverwrite("Images");
+            result &= GetResourcesFolderAndOverwrite("Images");
             //FamiliarData folder contents
-            result |= GetResourcesFolderAndOverwrite("FamiliarData");
+            result &= GetResourcesFolderAndOverwrite("FamiliarData");
 
             return result;
         }
