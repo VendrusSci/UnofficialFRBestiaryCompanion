@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bestiary", "Bestiary\Bestia
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BestiaryLauncher", "BestiaryLauncher\BestiaryLauncher.csproj", "{637D7510-84D6-4A72-8FE0-6FE7889571EE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LauncherTests", "LauncherTests\LauncherTests.csproj", "{1127E9EF-1876-442D-B92F-077126D15CF9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{637D7510-84D6-4A72-8FE0-6FE7889571EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{637D7510-84D6-4A72-8FE0-6FE7889571EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{637D7510-84D6-4A72-8FE0-6FE7889571EE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1127E9EF-1876-442D-B92F-077126D15CF9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1127E9EF-1876-442D-B92F-077126D15CF9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1127E9EF-1876-442D-B92F-077126D15CF9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1127E9EF-1876-442D-B92F-077126D15CF9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

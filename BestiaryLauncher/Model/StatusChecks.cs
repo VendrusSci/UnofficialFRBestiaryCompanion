@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -7,16 +8,16 @@ namespace BestiaryLauncher.Model
 {
     public static class StatusChecks
     {
-        public static bool IsVersionDifferent(VersionType project, string version)
+        public static bool IsVersionDifferent(ILoadFiles loader, VersionType project, string version)
         {
             bool result = false;
             switch (project)
             {
                 case VersionType.UbcVersion:
-                    result = File.ReadAllText(ApplicationPaths.UbcVersionFile) == version;
+                    result = loader.LoadAsString(ApplicationPaths.UbcVersionFile) != version;
                     break;
                 case VersionType.LauncherVersion:
-                    result = File.ReadAllText(ApplicationPaths.LauncherVersionFile) == version;
+                    result = loader.LoadAsString(ApplicationPaths.LauncherVersionFile) != version;
                     break;
             }
             return result;
@@ -57,7 +58,7 @@ namespace BestiaryLauncher.Model
             );
         }
 
-        public static bool DownloadAndCompare(ILoadFiles loader, string localPath, IDownloadFiles downloader, string remoteUrl)
+        private static bool DownloadAndCompare(ILoadFiles loader, string localPath, IDownloadFiles downloader, string remoteUrl)
         {
             bool result = false;
             var localContents = loader.LoadAsString(localPath);
@@ -65,7 +66,7 @@ namespace BestiaryLauncher.Model
             
             if (localContents != null && remoteContents != null)
             {
-                if (localContents.SequenceEqual(remoteContents))
+                if (!localContents.SequenceEqual(remoteContents))
                 {
                     result = true;
                 }
@@ -73,27 +74,10 @@ namespace BestiaryLauncher.Model
             return result;
         }
 
-        public static string GetLatestVersionNumber(string remotePath, string fileName)
+        public static string GetLatestVersionNumber(IDownloadFiles downloader, string remotePath
+            )
         {
-            string tempPath = Path.Combine(ApplicationPaths.GetTempDirectory(), fileName);
-            if (File.Exists(tempPath))
-            {
-                File.Delete(tempPath);
-            }
-            using (WebClient client = new WebClient())
-            {
-                try
-                {
-                    client.DownloadFile(remotePath, tempPath);
-                    return File.ReadAllText(tempPath);
-                }
-                catch (WebException)
-                {
-                    //MainViewModel.UserActionLog.Error("Failed to download file");
-                }
-
-            }
-            return null;
+            return downloader.DownloadAsString(remotePath);
         }
     }
 
@@ -107,6 +91,16 @@ namespace BestiaryLauncher.Model
         byte[] Download(string url);
     }
 
+    public interface IDeleteFiles
+    {
+        void Delete(string filePath);
+    }
+
+    public interface IUnzipFiles
+    {
+        string Unzip(string filePath);
+    }
+
     static class FileDownloaderExtensionMethods
     {
         public static string DownloadAsString(this IDownloadFiles downloader, string url)
@@ -117,6 +111,18 @@ namespace BestiaryLauncher.Model
                 return null;
             }
             return Encoding.ASCII.GetString(data);
+        }
+
+        public static string DownloadToDirectory(this IDownloadFiles downloader, string url, string directoryPath)
+        {
+            var fileName = Path.Combine(directoryPath, Path.GetFileName(url));
+            var data = downloader.Download(url);
+            if (data != null)
+            {
+                File.WriteAllBytes(Path.Combine(directoryPath, Path.GetFileName(url)), data);
+                return fileName;
+            }
+            return null;
         }
     }
     
@@ -168,6 +174,27 @@ namespace BestiaryLauncher.Model
             }
 
             return null;
+        }
+    }
+
+    class FileDeleter : IDeleteFiles
+    {
+        public void Delete(string filePath)
+        {
+            File.Delete(filePath);
+        }
+    }
+
+    class FileUnzipper : IUnzipFiles
+    {
+        public string Unzip(string filePath)
+        {
+            using (ZipArchive archive = ZipFile.OpenRead(filePath))
+            {
+                var dirPath = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
+                archive.ExtractToDirectory(dirPath);
+                return dirPath;
+            }
         }
     }
 }

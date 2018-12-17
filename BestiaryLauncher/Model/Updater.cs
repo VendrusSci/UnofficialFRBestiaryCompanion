@@ -25,8 +25,8 @@ namespace BestiaryLauncher.Model
         {
             Directory.CreateDirectory(ApplicationPaths.GetTempDirectory());
             LatestReleasePath = ApplicationPaths.RemoteGitReleasePath + LatestUbcVersion;
-            LatestUbcVersion = StatusChecks.GetLatestVersionNumber(ApplicationPaths.RemoteUbcVersionFile, ApplicationPaths.UbcVersionFile);
-            LatestLauncherVersion = StatusChecks.GetLatestVersionNumber(ApplicationPaths.RemoteGitReleasePath, ApplicationPaths.LauncherVersionFile);
+            LatestUbcVersion = StatusChecks.GetLatestVersionNumber(new FileDownloader(), ApplicationPaths.RemoteUbcVersionFile);
+            LatestLauncherVersion = StatusChecks.GetLatestVersionNumber(new FileDownloader(), ApplicationPaths.RemoteGitReleasePath);
         }
 
         public void LaunchUbc()
@@ -38,13 +38,13 @@ namespace BestiaryLauncher.Model
 
         public bool LauncherUpdateAvailable()
         {
-            return StatusChecks.IsVersionDifferent(VersionType.LauncherVersion, LatestLauncherVersion);
+            return StatusChecks.IsVersionDifferent(new FileLoader(), VersionType.LauncherVersion, LatestLauncherVersion);
         }
 
         public bool FamiliarUpdateAvailable()
         {
             bool result = false;
-            if(StatusChecks.IsVersionDifferent(VersionType.UbcVersion, LatestUbcVersion) != true)
+            if(StatusChecks.IsVersionDifferent(new FileLoader(), VersionType.UbcVersion, LatestUbcVersion) != true)
             {
                 result = StatusChecks.FamiliarUpdateAvailable(new FileLoader(), new FileDownloader());
             }
@@ -54,7 +54,7 @@ namespace BestiaryLauncher.Model
         public bool UbcUpdateAvailable()
         {
             bool result = false;
-            if (StatusChecks.IsVersionDifferent(VersionType.UbcVersion, LatestUbcVersion) != true)
+            if (StatusChecks.IsVersionDifferent(new FileLoader(), VersionType.UbcVersion, LatestUbcVersion) != true)
             {
                 result = StatusChecks.UbcUpdateAvailable(new FileLoader(), new FileDownloader(), Path.Combine(LatestReleasePath, ApplicationPaths.UbcExeFile));
             }
@@ -67,13 +67,14 @@ namespace BestiaryLauncher.Model
             //Requires updating:
             //Bestiary.png
             string bestiaryImgName = "bestiary.png";
-            result |= GetFileAndOverwrite(Path.Combine(ApplicationPaths.GetResourcesDirectory(), bestiaryImgName), 
-                "https://raw.githubusercontent.com/VendrusSci/UnofficialFRBestiaryCompanion/master/Bestiary/Resources/bestiary.png", 
-                Path.Combine(ApplicationPaths.GetTempDirectory(), bestiaryImgName));
+            result |= GetFileAndOverwrite(Path.Combine(ApplicationPaths.GetResourcesDirectory(), bestiaryImgName),
+                new FileDownloader(),
+                ApplicationPaths.RemoteBestiaryImgPath);
             //Executable
-            result |= GetFileAndOverwrite(Path.Combine(ApplicationPaths.GetDataDirectory(),ApplicationPaths.UbcExeFile),
-                Path.Combine(LatestReleasePath, ApplicationPaths.UbcExeFile),
-                Path.Combine(ApplicationPaths.GetTempDirectory(), ApplicationPaths.UbcExeFile));
+            result |= GetFileAndOverwrite(
+                Path.Combine(ApplicationPaths.GetDataDirectory(),ApplicationPaths.UbcExeFile),
+                new FileDownloader(),
+                Path.Combine(LatestReleasePath, ApplicationPaths.UbcExeFile));
             //DisplayIcons
             result |= GetResourcesFolderAndOverwrite("DisplayIcons");
             //ViewIcons
@@ -103,24 +104,30 @@ namespace BestiaryLauncher.Model
             //Rename own executable
             File.Move(Path.Combine(ApplicationPaths.GetDataDirectory(), ApplicationPaths.LauncherExeFile), "Backup_" + ApplicationPaths.LauncherExeFile);
             //Load in new executable
-            return GetFileAndOverwrite(Path.Combine(ApplicationPaths.GetDataDirectory(), ApplicationPaths.LauncherExeFile),
-                Path.Combine(LatestReleasePath, ApplicationPaths.LauncherExeFile),
-                Path.Combine(ApplicationPaths.GetTempDirectory(), ApplicationPaths.LauncherExeFile));
+            return GetFileAndOverwrite(
+                Path.Combine(ApplicationPaths.GetDataDirectory(), ApplicationPaths.LauncherExeFile),
+                new FileDownloader(),
+                Path.Combine(LatestReleasePath, ApplicationPaths.LauncherExeFile)
+                );
         }
 
         public static bool UpdateVersionFile(VersionType software)
         {
             if (software == VersionType.UbcVersion)
             {
-                return GetFileAndOverwrite(ApplicationPaths.GetUBCVersionPath(),
-                    ApplicationPaths.RemoteUbcVersionFile,
-                    Path.Combine(ApplicationPaths.GetTempDirectory(), ApplicationPaths.UbcVersionFile));
+                return GetFileAndOverwrite(
+                    ApplicationPaths.GetUBCVersionPath(),
+                    new FileDownloader(),
+                    ApplicationPaths.RemoteUbcVersionFile
+                    );
             }
             else if (software == VersionType.LauncherVersion)
             {
-                return GetFileAndOverwrite(ApplicationPaths.GetLauncherVersionPath(),
-                    ApplicationPaths.RemoteLauncherVersionFile,
-                    Path.Combine(ApplicationPaths.GetTempDirectory(), ApplicationPaths.LauncherVersionFile));
+                return GetFileAndOverwrite(
+                    ApplicationPaths.GetLauncherVersionPath(),
+                    new FileDownloader(),
+                    ApplicationPaths.RemoteLauncherVersionFile
+                    );
             }
             else
             {
@@ -128,116 +135,51 @@ namespace BestiaryLauncher.Model
             }
         }
 
-        private static bool GetFileAndOverwrite(string localPath, string remotePath, string tempPath)
+        private static string m_FileBackup = ".bak";
+        private static bool GetFileAndOverwrite(string localPath, IDownloadFiles downloader, string remotePath)
         {
-            if(!File.Exists(tempPath))
+            var backupPath = localPath + m_FileBackup;
+            if(File.Exists(backupPath))
             {
-                using(WebClient client = new WebClient())
-                {
-                    try
-                    {
-                        client.DownloadFile(remotePath, tempPath);
-                    }
-                    catch(WebException ex)
-                    {
-                        //Debug text here
-                    }
-                }
+                File.Delete(backupPath);
             }
-            File.Copy(tempPath, localPath, true);
-            if (GetHashOfFile(localPath) == GetHashOfFile(tempPath))
+            File.Move(localPath, backupPath);
+            string tempPath = downloader.DownloadToDirectory(remotePath, localPath);
+            if(tempPath == null)
             {
-                return true;
-            }
-            else
-            {
+                File.Move(backupPath, localPath);
                 return false;
             }
+            return true;
         }
 
+        
         private bool GetResourcesFolderAndOverwrite(string folderName)
         {
-            return GetFolderAndOverwrite(Path.Combine(ApplicationPaths.GetResourcesDirectory(), folderName),
+            return GetFolderAndOverwrite(
+                new FileDownloader(),
                 Path.Combine(LatestReleasePath, folderName + ".zip"),
-                Path.Combine(ApplicationPaths.GetTempDirectory(), folderName));
+                Path.Combine(ApplicationPaths.GetResourcesDirectory(), folderName),
+                new FileUnzipper()
+                );
         }
 
-        private static bool GetFolderAndOverwrite(string localDir, string remoteZip, string tempZip)
+        private static string m_FolderBackup = "_Bkup";
+        private static bool GetFolderAndOverwrite(IDownloadFiles downloader, string remoteZip, string localDir, IUnzipFiles unzipper)
         {
-            string tempDir = Path.GetDirectoryName(tempZip) + Path.GetFileNameWithoutExtension(tempZip);
-            if(!File.Exists(tempZip))
+            var zipFile = downloader.DownloadToDirectory(remoteZip, localDir);
+            if(zipFile != null)
             {
-                using (WebClient client = new WebClient())
+                var backupPath = localDir + m_FolderBackup;
+                if(Directory.Exists(backupPath))
                 {
-                    try
-                    {
-                        client.DownloadFile(remoteZip, tempZip);
-                    }
-                    catch(WebException ex)
-                    {
-                        //Debug text here
-                    }
+                    Directory.Delete(backupPath);
                 }
-            }
-            if(File.Exists(tempZip))
-            {
-                using (ZipArchive archive = ZipFile.OpenRead(tempZip))
-                {
-                    archive.ExtractToDirectory(tempDir);
-                }
-            }
-            foreach(var file in Directory.GetFiles(localDir))
-            {
-                File.Delete(file);
-            }
-            foreach(var file in Directory.GetFiles(tempDir))
-            {
-                File.Copy(file, Path.Combine(localDir, file));
-            }
-            if(GetHashOfFolder(tempDir) == GetHashOfFolder(localDir))
-            {
+                Directory.Move(localDir, backupPath);
+                var folderPath = unzipper.Unzip(zipFile);
                 return true;
             }
-            else
-            {
-                return false;
-            }
-        }
-
-        private static string GetHashOfFile(string filePath)
-        {
-            using (var filestream = new FileStream(filePath, FileMode.Open))
-            {
-                var sha = SHA256.Create();
-                return BitConverter.ToString(sha.ComputeHash(filestream)).ToLower();
-            }
-        }
-
-        private static string GetHashOfFolder(string path)
-        {
-            var files = Directory.GetFiles(path).OrderBy(p => p).ToList();
-            SHA256 sha = SHA256.Create();
-            for(int i = 0; i < files.Count; i++)
-            {
-                string file = files[i];
-
-                //hash path
-                string relativePath = file.Substring(path.Length + 1);
-                byte[] pathBytes = Encoding.UTF8.GetBytes(relativePath.ToLower());
-                sha.TransformBlock(pathBytes, 0, pathBytes.Length, pathBytes, 0);
-
-                //hash contents
-                byte[] contentBytes = File.ReadAllBytes(file);
-                if (i == files.Count - 1)
-                {
-                    sha.TransformFinalBlock(contentBytes, 0, contentBytes.Length);
-                }
-                else
-                {
-                    sha.TransformBlock(contentBytes, 0, contentBytes.Length, contentBytes, 0);
-                }
-            }
-            return BitConverter.ToString(sha.Hash).ToLower();
+            return false;
         }
     }
 }
