@@ -35,15 +35,18 @@ namespace BestiaryLauncher.ViewModels
             SoftwareUpdateStatus = m_Hidden;
             UbcExists = false;
 
-            if (m_Updater.LauncherUpdateAvailable())
+            if(m_Updater.SoftwareUpdateAvailable())
             {
-                //Set Launcher update stuff to visible
-                LauncherUpdateStatus = m_Visible;
-            }
-            else if(m_Updater.UbcUpdateAvailable())
-            {
-                //Set UBC update stuff to visible
-                SoftwareUpdateStatus = m_Visible;
+                if (m_Updater.LauncherUpdateAvailable())
+                {
+                    //Set Launcher update stuff to visible
+                    LauncherUpdateStatus = m_Visible;
+                }
+                else
+                {
+                    //Set UBC update stuff to visible
+                    SoftwareUpdateStatus = m_Visible;
+                }
             }
             else
             {
@@ -59,7 +62,6 @@ namespace BestiaryLauncher.ViewModels
             {
                 LaunchButtonText = "Awaiting Install";
                 UbcExists = false;
-
             }
         }
 

@@ -1,11 +1,6 @@
-﻿using System;
-using System.Diagnostics;
-using System.IO;
-using System.IO.Compression;
+﻿using System.IO;
 using System.Linq;
-using System.Net;
-using System.Security.Cryptography;
-using System.Text;
+using Newtonsoft.Json;
 
 namespace BestiaryLauncher.Model
 {
@@ -38,9 +33,9 @@ namespace BestiaryLauncher.Model
             m_DirectoryManipulator = directoryManipulator;
             m_ProcessStarter = processStarter;
 
-            LatestReleasePath = ApplicationPaths.RemoteGitReleasePath + LatestUbcVersion;
             LatestUbcVersion = StatusChecks.GetLatestVersionNumber(m_FileDownloader, ApplicationPaths.RemoteUbcVersionFile);
             LatestLauncherVersion = StatusChecks.GetLatestVersionNumber(m_FileDownloader, ApplicationPaths.RemoteLauncherVersionFile);
+            LatestReleasePath = ApplicationPaths.RemoteGitReleasePath + FetchLatestReleaseNumber();
         }
 
         public void LaunchUbc()
@@ -204,6 +199,13 @@ namespace BestiaryLauncher.Model
                 return true;
             }
             return false;
+        }
+
+        private string FetchLatestReleaseNumber()
+        {
+            string releaseInfo = m_FileDownloader.DownloadAsString(ApplicationPaths.RemoteGitReleaseInfoPath);
+            dynamic releaseObject = JsonConvert.DeserializeObject(releaseInfo);
+            return releaseObject.tag_name;
         }
     }
 }
