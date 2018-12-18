@@ -72,11 +72,6 @@ namespace BestiaryLauncher.Model
         {
             bool result = true;
             //Requires updating:
-            //Bestiary.png
-            result &= GetFileAndOverwrite(Path.Combine(ApplicationPaths.GetResourcesDirectory(), ApplicationPaths.bestiaryImgFile),
-                m_FileDownloader,
-                ApplicationPaths.RemoteBestiaryImgPath,
-                m_FileManipulator);
             //Executable
             result &= GetFileAndOverwrite(
                 Path.Combine(ApplicationPaths.GetBestiaryDirectory(),ApplicationPaths.UbcExeFile),
@@ -84,9 +79,9 @@ namespace BestiaryLauncher.Model
                 Path.Combine(LatestReleasePath, ApplicationPaths.UbcExeFile),
                 m_FileManipulator);
             //DisplayIcons
-            result &= GetResourcesFolderAndOverwrite("DisplayIcons");
+            result &= GetBestiaryResourcesFolderAndOverwrite("DisplayIcons");
             //ViewIcons
-            result &= GetResourcesFolderAndOverwrite("ViewIcons");
+            result &= GetBestiaryResourcesFolderAndOverwrite("ViewIcons");
 
             return result;
         }
@@ -96,11 +91,11 @@ namespace BestiaryLauncher.Model
             bool result = true;
             //Requires updating:
             //Icons
-            result &= GetResourcesFolderAndOverwrite("Icons");
+            result &= GetBestiaryResourcesFolderAndOverwrite("Icons");
             //Images
-            result &= GetResourcesFolderAndOverwrite("Images");
+            result &= GetBestiaryResourcesFolderAndOverwrite("Images");
             //FamiliarData folder contents
-            result &= GetResourcesFolderAndOverwrite("FamiliarData");
+            result &= GetBestiaryResourcesFolderAndOverwrite("FamiliarData");
 
             return result;
         }
@@ -110,10 +105,10 @@ namespace BestiaryLauncher.Model
             //Requires updating:
             //Launcher.exe
             //Rename own executable
-            m_FileManipulator.Move(Path.Combine(ApplicationPaths.GetDataDirectory(), ApplicationPaths.LauncherExeFile), "Backup_" + ApplicationPaths.LauncherExeFile);
+            m_FileManipulator.Move(Path.Combine(ApplicationPaths.GetLauncherDirectory(), ApplicationPaths.LauncherExeFile), "Backup_" + ApplicationPaths.LauncherExeFile);
             //Load in new executable
             return GetFileAndOverwrite(
-                Path.Combine(ApplicationPaths.GetDataDirectory(), ApplicationPaths.LauncherExeFile),
+                Path.Combine(ApplicationPaths.GetLauncherDirectory(), ApplicationPaths.LauncherExeFile),
                 m_FileDownloader,
                 Path.Combine(LatestReleasePath, ApplicationPaths.LauncherExeFile),
                 m_FileManipulator
@@ -165,12 +160,12 @@ namespace BestiaryLauncher.Model
         }
 
         
-        private bool GetResourcesFolderAndOverwrite(string folderName)
+        private bool GetBestiaryResourcesFolderAndOverwrite(string folderName)
         {
             return GetFolderAndOverwrite(
                 m_FileDownloader,
                 Path.Combine(LatestReleasePath, folderName + ".zip"),
-                Path.Combine(ApplicationPaths.GetResourcesDirectory(), folderName),
+                Path.Combine(ApplicationPaths.GetBestiaryResourcesDirectory(), folderName),
                 m_FileUnzipper,
                 m_DirectoryManipulator
                 );

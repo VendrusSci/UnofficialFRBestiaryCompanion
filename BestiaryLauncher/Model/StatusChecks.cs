@@ -33,7 +33,7 @@ namespace BestiaryLauncher.Model
         {
             return DownloadAndCompare(
                 loader,
-                Path.Combine(ApplicationPaths.GetResourcesDirectory(), ApplicationPaths.FRDataFile),
+                Path.Combine(ApplicationPaths.GetBestiaryResourcesDirectory(), ApplicationPaths.FRDataFile),
                 downloader,
                 ApplicationPaths.RemoteFRDataFile
             );
@@ -53,7 +53,7 @@ namespace BestiaryLauncher.Model
         {
             return DownloadAndCompare(
                 loader,
-                Path.Combine(ApplicationPaths.GetDataDirectory(), ApplicationPaths.LauncherExeFile),
+                Path.Combine(ApplicationPaths.GetLauncherDirectory(), ApplicationPaths.LauncherExeFile),
                 downloader,
                 remotePath
             );

@@ -12,64 +12,52 @@ namespace BestiaryLauncher.Model
         public static string LauncherVersionFile = "launcherversion.txt";
         public static string UbcVersionFile = "version.txt";
         public static string FRDataFile = "FRData.xml";
-        public static string UserDataFile = "UserData.xml";
-        public static string BookmarkFile = "BookmarkData.xml";
         public static string UbcExeFile = "Bestiary.exe";
         public static string LauncherExeFile = "BestiaryLauncher.exe";
-        public static string bestiaryImgFile = "bestiary.png";
 
         public static string RemoteLauncherVersionFile = "https://raw.githubusercontent.com/VendrusSci/UnofficialFRBestiaryCompanion/master/BestiaryLauncher/launcherversion.txt";
         public static string RemoteUbcVersionFile = "https://raw.githubusercontent.com/VendrusSci/UnofficialFRBestiaryCompanion/master/Bestiary/Resources/version.txt";
         public static string RemoteFRDataFile = "https://raw.githubusercontent.com/VendrusSci/UnofficialFRBestiaryCompanion/master/Bestiary/Resources/FRData.xml";
         public static string RemoteGitReleasePath = "https://github.com/VendrusSci/UnofficialFRBestiaryCompanion/releases/download/";
-        public static string RemoteBestiaryImgPath = "https://raw.githubusercontent.com/VendrusSci/UnofficialFRBestiaryCompanion/master/Bestiary/Resources/bestiary.png";
 
-
-        public static string GetDataDirectory()
+        public static string GetLauncherDirectory()
         {
-#if DEBUG
-            return Path.Combine("..\\..\\..\\", "Bestiary");
-#else
             return Directory.GetCurrentDirectory();
-#endif
+        }
+
+        public static string GetLauncherResourcesDirectory()
+        {
+            return Path.Combine(GetLauncherDirectory(), "Resources");
+        }
+
+        public static string GetLauncherImagesDirectory()
+        {
+            return Path.Combine(GetLauncherResourcesDirectory(), "LauncherImages");
         }
 
         public static string GetBestiaryDirectory()
         {
-#if DEBUG
-            return Path.Combine(GetDataDirectory(), "bin", "Debug");
-#else
-            return GetDataDirectory();
-#endif
+            return Path.Combine(GetLauncherDirectory(), "Unofficial Bestiary Companion");
         }
 
-        public static string GetResourcesDirectory()
+        public static string GetBestiaryResourcesDirectory()
         {
-            return Path.Combine(GetDataDirectory(), "Resources");
+            return Path.Combine(GetBestiaryDirectory(), "Resources");
+        }
+
+        public static string GetBestiaryUserDataDirectory()
+        {
+            return Path.Combine(GetBestiaryDirectory(), "User Data");
         }
 
         public static string GetLauncherVersionPath()
         {
-#if DEBUG
-            return Path.Combine("..\\..\\", LauncherVersionFile);
-#else
-            return Path.Combine(GetResourcesDirectory(), LauncherVersionFile);
-#endif
+            return Path.Combine(GetLauncherResourcesDirectory(), LauncherVersionFile);
         }
 
         public static string GetUBCVersionPath()
         {
-            return Path.Combine(GetResourcesDirectory(), UbcVersionFile);
-        }
-
-        public static string GetTempDirectory()
-        {
-            return Path.Combine(GetDataDirectory(), "Temp");
-        }
-        
-        public static string GetUserDirectory()
-        {
-            return Path.Combine(GetDataDirectory(), "User Data");
+            return Path.Combine(GetBestiaryResourcesDirectory(), UbcVersionFile);
         }
     }
 }
