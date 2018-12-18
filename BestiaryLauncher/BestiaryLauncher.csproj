@@ -68,6 +68,7 @@
     <Compile Include="Model\Manifest.cs" />
     <Compile Include="Model\StatusChecks.cs" />
     <Compile Include="Model\Updater.cs" />
+    <Compile Include="Model\TestDownloader.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
