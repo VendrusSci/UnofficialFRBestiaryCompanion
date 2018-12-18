@@ -23,6 +23,7 @@ namespace LauncherTests.Model
             unzipper = Substitute.For<IUnzipFiles>();
             fileManipulator = Substitute.For<IManipulateFiles>();
             directoryManipulator = Substitute.For<IManipulateDirectories>();
+            processStarter = Substitute.For<IStartProcesses>();
         }
 
         [Test]
@@ -184,7 +185,7 @@ namespace LauncherTests.Model
         {
             downloader.Download(Arg.Any<string>())
                 .Returns(_ => null);
-            directoryManipulator.Exists(Arg.Any<string>()).Returns(false);
+            directoryManipulator.Exists(Arg.Any<string>()).Returns(true);
             Updater updater = new Updater(loader, downloader, unzipper, fileManipulator, directoryManipulator, processStarter);
             var wasSuccess = updater.UpdateVersionFile(VersionType.UbcVersion);
             Assert.IsFalse(wasSuccess, "Update should have failed");
@@ -193,7 +194,7 @@ namespace LauncherTests.Model
         [Test]
         public void TestUpdateVersionFileLauncherWithSuccess()
         {
-            directoryManipulator.Exists(Arg.Any<string>()).Returns(false);
+            directoryManipulator.Exists(Arg.Any<string>()).Returns(true);
             Updater updater = new Updater(loader, downloader, unzipper, fileManipulator, directoryManipulator, processStarter);
             var wasSuccess = updater.UpdateVersionFile(VersionType.LauncherVersion);
             Assert.IsTrue(wasSuccess, "Update should have suceeded");

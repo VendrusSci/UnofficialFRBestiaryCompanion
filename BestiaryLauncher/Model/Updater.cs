@@ -102,17 +102,23 @@ namespace BestiaryLauncher.Model
 
         public bool UpdateLauncher()
         {
+            bool result = true;
             //Requires updating:
             //Launcher.exe
             //Rename own executable
             m_FileManipulator.Move(Path.Combine(ApplicationPaths.GetLauncherDirectory(), ApplicationPaths.LauncherExeFile), "Backup_" + ApplicationPaths.LauncherExeFile);
             //Load in new executable
-            return GetFileAndOverwrite(
+            result &= GetFileAndOverwrite(
                 Path.Combine(ApplicationPaths.GetLauncherDirectory(), ApplicationPaths.LauncherExeFile),
                 m_FileDownloader,
                 Path.Combine(LatestReleasePath, ApplicationPaths.LauncherExeFile),
                 m_FileManipulator
                 );
+            result &= GetFolderAndOverwrite(
+                ApplicationPaths.GetLauncherImagesDirectory(),
+                Path.Combine(LatestReleasePath, Path.GetFileName(ApplicationPaths.GetLauncherImagesDirectory()) + ".zip")
+                );
+            return result;
         }
 
         public bool UpdateVersionFile(VersionType software)
@@ -142,48 +148,59 @@ namespace BestiaryLauncher.Model
         }
 
         private static string m_FileBackup = ".bak";
-        private bool GetFileAndOverwrite(string localPath, IDownloadFiles downloader, string remotePath, IManipulateFiles fileInterface)
+        private bool GetFileAndOverwrite(string localPath, IDownloadFiles downloader, string remotePath, IManipulateFiles fileManipulator)
         {
             var backupPath = localPath + m_FileBackup;
-            if(fileInterface.Exists(backupPath))
+            //Delete any backups that exist
+            if(fileManipulator.Exists(backupPath))
             {
-                fileInterface.Delete(backupPath);
+                fileManipulator.Delete(backupPath);
             }
-            fileInterface.Move(localPath, backupPath);
+            //Backup the existing file if it has already been installed
+            if(fileManipulator.Exists(localPath))
+            {
+                fileManipulator.Move(localPath, backupPath);
+            }
+            
             string tempPath = downloader.DownloadToDirectory(remotePath, Path.GetDirectoryName(localPath), m_FileManipulator);
             if(tempPath == null)
             {
-                fileInterface.Move(backupPath, localPath);
+                if (fileManipulator.Exists(backupPath))
+                {
+                    fileManipulator.Move(backupPath, localPath);
+                }
                 return false;
             }
             return true;
         }
 
-        
         private bool GetBestiaryResourcesFolderAndOverwrite(string folderName)
         {
             return GetFolderAndOverwrite(
-                m_FileDownloader,
-                Path.Combine(LatestReleasePath, folderName + ".zip"),
                 Path.Combine(ApplicationPaths.GetBestiaryResourcesDirectory(), folderName),
-                m_FileUnzipper,
-                m_DirectoryManipulator
+                Path.Combine(LatestReleasePath, folderName + ".zip")
                 );
         }
 
         private static string m_FolderBackup = "_Bkup";
-        private bool GetFolderAndOverwrite(IDownloadFiles downloader, string remoteZip, string localDir, IUnzipFiles unzipper, IManipulateDirectories directoryInterface)
+        private bool GetFolderAndOverwrite(string localDir, string remoteZip)
         {
-            var zipFile = downloader.DownloadToDirectory(remoteZip, localDir, m_FileManipulator);
+            var zipFile = m_FileDownloader.DownloadToDirectory(remoteZip, Path.GetDirectoryName(localDir), m_FileManipulator);
             if(zipFile != null)
             {
                 var backupPath = localDir + m_FolderBackup;
-                if(directoryInterface.Exists(backupPath))
+                //If backup exists, delete it
+                if(m_DirectoryManipulator.Exists(backupPath))
                 {
-                    directoryInterface.Delete(backupPath);
+                    m_DirectoryManipulator.Delete(backupPath);
                 }
-                directoryInterface.Move(localDir, backupPath);
-                var folderPath = unzipper.Unzip(zipFile);
+                //if current directory exists, make it a backup
+                if(m_DirectoryManipulator.Exists(localDir))
+                {
+                    m_DirectoryManipulator.Move(localDir, backupPath);
+                }
+                
+                var folderPath = m_FileUnzipper.Unzip(zipFile);
                 return true;
             }
             return false;

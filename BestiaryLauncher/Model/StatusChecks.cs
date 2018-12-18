@@ -104,6 +104,7 @@ namespace BestiaryLauncher.Model
         void Delete(string dirPath);
         bool Exists(string dirPath);
         void Move(string sourceDir, string destDir);
+        void Create(string dirPath);
     }
 
     public interface IUnzipFiles
@@ -235,6 +236,11 @@ namespace BestiaryLauncher.Model
         public void Move(string sourceDir, string destDir)
         {
             Directory.Move(sourceDir, destDir);
+        }
+
+        public void Create(string dirPath)
+        {
+            Directory.CreateDirectory(dirPath);
         }
     }
 

@@ -11,6 +11,8 @@ namespace BestiaryLauncher.ViewModels
         public string SoftwareUpdateStatus { get; private set; }
         public string LaunchButtonText { get; private set; }
         public string UpdateStatusText { get; private set; }
+        public bool UbcExists { get; private set; }
+
         private string m_Hidden = "Hidden";
         private string m_Visible = "Visible";
         private string m_LaunchButtonUpdateAvailable = "Postpone Update and Launch";
@@ -19,6 +21,7 @@ namespace BestiaryLauncher.ViewModels
         private string m_UpdateFail = "Update Failed, check connection or report bug";
 
         private ICloseApplications m_ApplicationCloser;
+        private IManipulateDirectories m_DirectoryManipulator;
         private Updater m_Updater;
         public MainViewModel(ILoadFiles fileLoader, IDownloadFiles fileDownloader, IUnzipFiles fileUnzipper,
             IManipulateFiles fileManipulator, IManipulateDirectories directoryManipulator, 
@@ -26,9 +29,13 @@ namespace BestiaryLauncher.ViewModels
         {
             m_Updater = new Updater(fileLoader, fileDownloader, fileUnzipper, fileManipulator, directoryManipulator, processStarter);
             m_ApplicationCloser = applicationCloser;
+            m_DirectoryManipulator = directoryManipulator;
+
             LauncherUpdateStatus = m_Hidden;
             SoftwareUpdateStatus = m_Hidden;
-            if(m_Updater.LauncherUpdateAvailable())
+            UbcExists = false;
+
+            if (m_Updater.LauncherUpdateAvailable())
             {
                 //Set Launcher update stuff to visible
                 LauncherUpdateStatus = m_Visible;
@@ -37,11 +44,22 @@ namespace BestiaryLauncher.ViewModels
             {
                 //Set UBC update stuff to visible
                 SoftwareUpdateStatus = m_Visible;
-                LaunchButtonText = m_LaunchButtonUpdateAvailable;
             }
             else
             {
                 NoUpdate.Execute(null);
+            }
+
+            if (directoryManipulator.Exists(ApplicationPaths.GetBestiaryDirectory()))
+            {
+                LaunchButtonText = m_LaunchButtonUpdateAvailable;
+                UbcExists = true;
+            }
+            else
+            {
+                LaunchButtonText = "Awaiting Install";
+                UbcExists = false;
+
             }
         }
 
@@ -86,6 +104,14 @@ namespace BestiaryLauncher.ViewModels
                     m_UpdateFamiliars = new LambdaCommand(
                         onExecute: (p) =>
                         {
+                            //If the folder structure does not exist, need to create it
+                            if(!m_DirectoryManipulator.Exists(ApplicationPaths.GetBestiaryDirectory()))
+                            {
+                                m_DirectoryManipulator.Create(ApplicationPaths.GetBestiaryDirectory());
+                                m_DirectoryManipulator.Create(ApplicationPaths.GetBestiaryResourcesDirectory());
+                                m_DirectoryManipulator.Create(ApplicationPaths.GetBestiaryUserDataDirectory());
+                            }
+
                             UpdateStatusText = "Updating Familiars...";
                             bool result = m_Updater.UpdateFamiliars();
                             UpdateStatusText = result ? m_UpdateSuccess : m_UpdateFail;
@@ -93,7 +119,6 @@ namespace BestiaryLauncher.ViewModels
                             {
                                 LaunchButtonText = m_LaunchButtonNoUpdateAvailable;
                             }
-
                         },
                         onCanExecute: (p) =>
                         {
@@ -124,14 +149,10 @@ namespace BestiaryLauncher.ViewModels
                                 result = m_Updater.UpdateFamiliars();
                                 UpdateStatusText = result ? m_UpdateSuccess : m_UpdateFail;
                             }
-                            if (!CheckForUbcUpdates())
-                            {
-                                LaunchButtonText = m_LaunchButtonNoUpdateAvailable;
-                            }
                         },
                         onCanExecute: (p) =>
                         {
-                            return m_Updater.UbcUpdateAvailable();
+                            return m_Updater.UbcUpdateAvailable() | (!UbcExists);
                         }
                     );
                 }

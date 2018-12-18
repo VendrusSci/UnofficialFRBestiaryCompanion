@@ -94,8 +94,7 @@ namespace LauncherTests
             loader.Load(Path.Combine(ApplicationPaths.GetBestiaryDirectory(), ApplicationPaths.UbcExeFile)).Returns(Encoding.ASCII.GetBytes("this is old"));
             var downloader = Substitute.For<IDownloadFiles>();
             downloader.Download("testUrl").Returns(Encoding.ASCII.GetBytes("this is old"));
-            var updateAvailable = StatusChecks.FamiliarUpdateAvailable(loader, downloader);
-            loader.Received().Load(Path.Combine(ApplicationPaths.GetBestiaryDirectory(), ApplicationPaths.UbcExeFile));
+            var updateAvailable = StatusChecks.UbcUpdateAvailable(loader, downloader, "testUrl");
             downloader.Received().Download("testUrl");
             Assert.IsFalse(updateAvailable, "UBC update should be available");
         }

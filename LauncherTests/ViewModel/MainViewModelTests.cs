@@ -106,7 +106,7 @@ namespace LauncherTests.ViewModel
             loader.Load(Path.Combine(ApplicationPaths.GetBestiaryDirectory(), ApplicationPaths.UbcExeFile))
                 .Returns(Encoding.ASCII.GetBytes("this is old"));
             downloader.Download(Arg.Any<string>()).Returns(Encoding.ASCII.GetBytes("this is old"));
-            directoryManipulator.Exists(Arg.Any<string>()).Returns(false);
+            directoryManipulator.Exists(Arg.Any<string>()).Returns(true);
             MainViewModel viewModel = new MainViewModel(loader, downloader, unzipper, fileManipulator, directoryManipulator, processStarter, applicationCloser);
             var isAvailable = viewModel.UpdateSoftware.CanExecute(null);
             Assert.IsFalse(isAvailable, "Update should not be available");
@@ -115,7 +115,7 @@ namespace LauncherTests.ViewModel
         [Test]
         public void TestUpdateFamiliarsExecuteWithSuccess()
         {
-            directoryManipulator.Exists(Arg.Any<string>()).Returns(false);
+            directoryManipulator.Exists(Arg.Any<string>()).Returns(true);
             MainViewModel viewModel = new MainViewModel(loader, downloader, unzipper, fileManipulator, directoryManipulator, processStarter, applicationCloser);
             viewModel.UpdateFamiliars.Execute(null);
             Assert.IsTrue(viewModel.UpdateStatusText == "Update Successful", "Update should have completed");

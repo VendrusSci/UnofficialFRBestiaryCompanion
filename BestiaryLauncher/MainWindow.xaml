@@ -15,24 +15,26 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         
         <Image Grid.Row="0" MinHeight="200"/>
+        <TextBlock Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding UpdateStatusText}"/>
         
-        <Grid Grid.Row ="1" Visibility="{Binding SoftwareUpdateStatus}">
+        <Grid Grid.Row ="2" Visibility="{Binding SoftwareUpdateStatus}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <TextBlock Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding UpdateStatusText}"/>
-            <Button Grid.Row="1" Content="Update All" Command="{Binding UpdateSoftware}"/>
-            <Button Grid.Row="2" Content="Update Familiars Only" Command="{Binding UpdateFamiliars}"/>
-            <Button Grid.Row="3" Content="{Binding LaunchButtonText}" Command="{Binding NoUpdate}"/>
+            
+            <Button Grid.Row="0" Content="Update All" Command="{Binding UpdateSoftware}"/>
+            <Button Grid.Row="1" Content="Update Familiars Only" Command="{Binding UpdateFamiliars}" IsEnabled="{Binding UbcExists}"/>
+            <Button Grid.Row="2" Content="{Binding LaunchButtonText}" Command="{Binding NoUpdate}" IsEnabled="{Binding UbcExists}"/>
         </Grid>
         
-        <Grid Grid.Row="1" Visibility="{Binding LauncherUpdateStatus}">
+        <Grid Grid.Row="2" Visibility="{Binding LauncherUpdateStatus}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="Auto"/>
@@ -48,7 +50,7 @@
                 <Run Text="until the launcher is updated"/>
             </TextBlock>
             <Button Grid.Row="1"  Content="Update Launcher" Command="{Binding UpdateLauncher}"/>
-            <Button Grid.Row="2" Content="Ignore Update and Run UBC" Command="{Binding NoUpdate}"/>
+            <Button Grid.Row="2" Content="Ignore Update and Run UBC" Command="{Binding NoUpdate}" IsEnabled="{Binding UbcExists}"/>
         </Grid>
     </Grid>
 </Window>
