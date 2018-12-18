@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Bestiary.ViewWindows"
         xmlns:local_vm="clr-namespace:Bestiary.ViewModel.Dataviews"
         mc:Ignorable="d"
-        Title="FRBestiaryView" Height="630" Width="820">
+        Title="FRBestiaryView" Height="640" Width="830">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -46,39 +46,30 @@
                 <RowDefinition/>
             </Grid.RowDefinitions>
             <ContentControl Grid.Row="0" Grid.Column="0">
-                <local:FRBestiaryFamControl DataContext="{Binding Familiars[0]}"/>
+                <local:FRBestiaryFamControl DataContext="{Binding Familiars[0]}" BorderBrush="Black" BorderThickness="1"/>
             </ContentControl>
             <ContentControl Grid.Row="0" Grid.Column="1">
-                <local:FRBestiaryFamControl DataContext="{Binding Familiars[1]}"/>
+                <local:FRBestiaryFamControl DataContext="{Binding Familiars[1]}" BorderBrush="Black" BorderThickness="1"/>
             </ContentControl>
             <ContentControl Grid.Row="0" Grid.Column="2">
-                <local:FRBestiaryFamControl DataContext="{Binding Familiars[2]}"/>
+                <local:FRBestiaryFamControl DataContext="{Binding Familiars[2]}" BorderBrush="Black" BorderThickness="1"/>
             </ContentControl>
             <ContentControl Grid.Row="0" Grid.Column="3">
-                <local:FRBestiaryFamControl DataContext="{Binding Familiars[3]}"/>
+                <local:FRBestiaryFamControl DataContext="{Binding Familiars[3]}" BorderBrush="Black" BorderThickness="1"/>
             </ContentControl>
-            
+
             <ContentControl Grid.Row="1" Grid.Column="0">
-                <local:FRBestiaryFamControl DataContext="{Binding Familiars[4]}"/>
+                <local:FRBestiaryFamControl DataContext="{Binding Familiars[4]}" BorderBrush="Black" BorderThickness="1"/>
             </ContentControl>
             <ContentControl Grid.Row="1" Grid.Column="1">
-                <local:FRBestiaryFamControl DataContext="{Binding Familiars[5]}"/>
+                <local:FRBestiaryFamControl DataContext="{Binding Familiars[5]}" BorderBrush="Black" BorderThickness="1"/>
             </ContentControl>
             <ContentControl Grid.Row="1" Grid.Column="2">
-                <local:FRBestiaryFamControl DataContext="{Binding Familiars[6]}"/>
+                <local:FRBestiaryFamControl DataContext="{Binding Familiars[6]}" BorderBrush="Black" BorderThickness="1"/>
             </ContentControl>
             <ContentControl Grid.Row="1" Grid.Column="3">
-                <local:FRBestiaryFamControl DataContext="{Binding Familiars[7]}"/>
+                <local:FRBestiaryFamControl DataContext="{Binding Familiars[7]}" BorderBrush="Black" BorderThickness="1"/>
             </ContentControl>
-            <!--<local:FRBestiaryFamControl Grid.Row="0" Grid.Column="0" DataContext="{Binding RelativeSource={RelativeSource Self}}" Content="{Binding Familiars[0]}"/>
-            <local:FRBestiaryFamControl Grid.Row="0" Grid.Column="1" Content="{Binding Familiars[1]}"/>
-            <local:FRBestiaryFamControl Grid.Row="0" Grid.Column="2" Content="{Binding Familiars[2]}"/>
-            <local:FRBestiaryFamControl Grid.Row="0" Grid.Column="3" Content="{Binding Familiars[3]}"/>
-
-            <local:FRBestiaryFamControl Grid.Row="1" Grid.Column="0" Content="{Binding Familiars[4]}"/>
-            <local:FRBestiaryFamControl Grid.Row="1" Grid.Column="1" Content="{Binding Familiars[5]}"/>
-            <local:FRBestiaryFamControl Grid.Row="1" Grid.Column="2" Content="{Binding Familiars[6]}"/>
-            <local:FRBestiaryFamControl Grid.Row="1" Grid.Column="3" Content="{Binding Familiars[7]}"/>-->
         </Grid>
     </Grid>
 </Window>

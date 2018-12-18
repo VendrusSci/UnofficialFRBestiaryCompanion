@@ -6,9 +6,8 @@
         xmlns:local="clr-namespace:Bestiary"
         xmlns:local_model="clr-namespace:Bestiary.Model"
         xmlns:local_vm="clr-namespace:Bestiary.ViewModel"
-        xmlns:sys="clr-namespace:System.Collections;assembly=mscorlib"
         mc:Ignorable="d"
-        Title="Add a Familiar" Height="500" Width="360"
+        Title="Add a Familiar" Height="550" Width="360"
         WindowStartupLocation="CenterOwner">
     <Window.Resources>
         <Style TargetType="Label">
@@ -45,11 +44,15 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <Label Grid.Row="0" HorizontalAlignment="Center" FontSize="16" Content="Add a familiar"/>
-            <Grid Grid.Row="1">
+            <TextBlock Grid.Row="1" TextAlignment="Center" Margin="5" Text="All fields must contain information before clicking Confirm"/>
+            <TextBlock Grid.Row="2" TextAlignment="Center" Margin="5" Foreground="{Binding InfoTextColour}" Text="{Binding StatusInfo}"/>
+            <Grid Grid.Row="3">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="*"/>
@@ -73,7 +76,7 @@
                 <ComboBox Grid.Column="1" Grid.Row="3" ItemsSource="{Binding FamiliarParameters.AvailableAvailabilities}" SelectedItem="{Binding FamiliarParameters.SelectedAvailability}"/>
                 <ComboBox Grid.Column="2" Grid.Row="4" ItemsSource="{Binding FamiliarParameters.AvailableSources}" SelectedItem="{Binding FamiliarParameters.SelectedSource}"/>
             </Grid>
-            <Grid Grid.Row="2">
+            <Grid Grid.Row="4">
                 <GroupBox Grid.Row="2" Header="Source Subtypes" Margin="5">
                     <ItemsControl ItemsSource="{Binding FamiliarParameters.ParameterSelectorList}">
                         <ItemsControl.Resources>
@@ -94,7 +97,7 @@
                     </ItemsControl>
                 </GroupBox>
             </Grid>
-            <Grid Grid.Row="3">
+            <Grid Grid.Row="5">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />
                     <ColumnDefinition />

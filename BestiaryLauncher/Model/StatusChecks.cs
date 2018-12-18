@@ -1,7 +1,6 @@
 ﻿using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
-using System.Linq;
 using System.Net;
 using System.Text;
 using System.Windows;
@@ -19,15 +18,15 @@ namespace BestiaryLauncher.Model
                     result = loader.LoadAsString(ApplicationPaths.UbcVersionFile) != version;
                     break;
                 case VersionType.LauncherVersion:
-                    result = loader.LoadAsString(ApplicationPaths.LauncherVersionFile) != version;
-                    break;
+                    var localVersion = loader.LoadAsString(ApplicationPaths.GetLauncherVersionPath());
+                    return localVersion != version;
             }
             return result;
         }
 
         public static bool SoftwareExists()
         {
-            return File.Exists(Path.Combine(ApplicationPaths.GetDataDirectory(), ApplicationPaths.UbcExeFile));
+            return File.Exists(Path.Combine(ApplicationPaths.GetBestiaryDirectory(), ApplicationPaths.UbcExeFile));
         }
 
         public static bool FamiliarUpdateAvailable(ILoadFiles loader, IDownloadFiles downloader)
@@ -44,7 +43,7 @@ namespace BestiaryLauncher.Model
         {
             return DownloadAndCompare(
                 loader,
-                Path.Combine(ApplicationPaths.GetDataDirectory(), ApplicationPaths.UbcExeFile),
+                Path.Combine(ApplicationPaths.GetBestiaryDirectory(), ApplicationPaths.UbcExeFile),
                 downloader,
                 remotePath
             );

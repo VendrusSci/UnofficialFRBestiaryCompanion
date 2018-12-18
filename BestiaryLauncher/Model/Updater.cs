@@ -45,7 +45,7 @@ namespace BestiaryLauncher.Model
 
         public void LaunchUbc()
         {
-            m_ProcessStarter.Start(Path.Combine(ApplicationPaths.GetDataDirectory(), ApplicationPaths.UbcExeFile));
+            m_ProcessStarter.Start(Path.Combine(ApplicationPaths.GetBestiaryDirectory(), ApplicationPaths.UbcExeFile));
         }
 
         public bool SoftwareUpdateAvailable()
@@ -79,7 +79,7 @@ namespace BestiaryLauncher.Model
                 m_FileManipulator);
             //Executable
             result &= GetFileAndOverwrite(
-                Path.Combine(ApplicationPaths.GetDataDirectory(),ApplicationPaths.UbcExeFile),
+                Path.Combine(ApplicationPaths.GetBestiaryDirectory(),ApplicationPaths.UbcExeFile),
                 m_FileDownloader,
                 Path.Combine(LatestReleasePath, ApplicationPaths.UbcExeFile),
                 m_FileManipulator);

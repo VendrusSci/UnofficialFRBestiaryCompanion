@@ -15,8 +15,8 @@ namespace Bestiary.ViewModel
 
         public string Name { get; set; }
         public int Id { get; set; }
-        private ICRUD<Familiar> m_KnownFamiliar;
-        private ICRUD<OwnedFamiliar> m_OwnedFamiliar;
+        private ICRUD<Familiar> m_KnownFamiliar = null;
+        private ICRUD<OwnedFamiliar> m_OwnedFamiliar = null;
         private IModel m_Model;
 
         public FamiliarDeleteViewModel(IModel model)
@@ -64,15 +64,23 @@ namespace Bestiary.ViewModel
                     m_DeleteFamiliar = new LambdaCommand(
                         onExecute: (p) =>
                         {
-                            MainViewModel.UserActionLog.Info($"Deleting familiar: {Id}");
-                            m_KnownFamiliar.Delete();
-                            m_OwnedFamiliar = m_Model.LookupOwnedFamiliar(Id);
-                            if(m_OwnedFamiliar != null)
+                            if(Id != 0 && m_Model.LookupFamiliar(Id) != null)
                             {
-                                MainViewModel.UserActionLog.Info($"Owned familiar found, deleting that too");
-                                m_OwnedFamiliar.Delete();
-                                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("m_OwnedFamiliar"));
+                                MainViewModel.UserActionLog.Info($"Deleting familiar: {Id}");
+                                m_KnownFamiliar.Delete();
+                                m_OwnedFamiliar = m_Model.LookupOwnedFamiliar(Id);
+                                if(m_OwnedFamiliar != null)
+                                {
+                                    MainViewModel.UserActionLog.Info($"Owned familiar found, deleting that too");
+                                    m_OwnedFamiliar.Delete();
+                                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("m_OwnedFamiliar"));
+                                }
                             }
+                            
+                        },
+                        onCanExecute: (p) =>
+                        {
+                            return m_KnownFamiliar != null;
                         }
                     );
                 }

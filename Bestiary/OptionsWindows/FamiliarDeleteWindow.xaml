@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Bestiary"
         mc:Ignorable="d"
-        Title="Delete Familiar" Height="150" Width="300" d:DesignHeight="150"
+        Title="Delete Familiar" Height="200" Width="300" d:DesignHeight="150"
         WindowStartupLocation="CenterOwner">
     <Grid>
         <Grid.RowDefinitions>
@@ -13,10 +13,16 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <TextBox Grid.Row="0" HorizontalContentAlignment="Center" Margin="2" Text="{Binding Id}"/>
-        <TextBox Grid.Row="1" HorizontalContentAlignment="Center" Margin="2"  Text="{Binding Name}"/>
-        <Button Grid.Row="2"  Margin="5" Content="Load name from ID" Command="{Binding LoadName}"/>
-        <Button Grid.Row="3" Margin="5" Content="Delete" Command="{Binding DeleteFamiliar}"/>
+        <TextBlock Grid.Row="0" Margin="5 10 5 5" TextAlignment="Center">
+            <Run Text="Enter ID, click Check ID to make sure it exists,"/>
+            <LineBreak/>
+            <Run Text="then click Delete to remove a familiar"/>
+        </TextBlock> 
+        <TextBox Grid.Row="1" HorizontalContentAlignment="Center" Margin="2" Text="{Binding Id}"/>
+        <TextBlock Grid.Row="2" HorizontalAlignment="Center" Margin="2"  Text="{Binding Name}"/>
+        <Button Grid.Row="3"  Margin="5" Content="Check ID" Command="{Binding LoadName}"/>
+        <Button Grid.Row="4" Margin="5" Content="Delete" Command="{Binding DeleteFamiliar}"/>
     </Grid>
 </Window>

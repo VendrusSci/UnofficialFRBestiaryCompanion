@@ -28,9 +28,18 @@ namespace BestiaryLauncher.Model
         public static string GetDataDirectory()
         {
 #if DEBUG
-            return "..\\..\\";
+            return Path.Combine("..\\..\\..\\", "Bestiary");
 #else
             return Directory.GetCurrentDirectory();
+#endif
+        }
+
+        public static string GetBestiaryDirectory()
+        {
+#if DEBUG
+            return Path.Combine(GetDataDirectory(), "bin", "Debug");
+#else
+            return GetDataDirectory();
 #endif
         }
 
@@ -41,7 +50,11 @@ namespace BestiaryLauncher.Model
 
         public static string GetLauncherVersionPath()
         {
-            return Path.Combine(GetDataDirectory(), LauncherVersionFile);
+#if DEBUG
+            return Path.Combine("..\\..\\", LauncherVersionFile);
+#else
+            return Path.Combine(GetResourcesDirectory(), LauncherVersionFile);
+#endif
         }
 
         public static string GetUBCVersionPath()
