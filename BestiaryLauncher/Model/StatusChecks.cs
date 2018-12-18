@@ -9,19 +9,10 @@ namespace BestiaryLauncher.Model
 {
     public static class StatusChecks
     {
-        public static bool IsVersionDifferent(ILoadFiles loader, VersionType project, string version)
+        public static bool IsVersionDifferent(ILoadFiles loader, string version)
         {
-            bool result = false;
-            switch (project)
-            {
-                case VersionType.UbcVersion:
-                    result = loader.LoadAsString(ApplicationPaths.UbcVersionFile) != version;
-                    break;
-                case VersionType.LauncherVersion:
-                    var localVersion = loader.LoadAsString(ApplicationPaths.GetLauncherVersionPath());
-                    return localVersion != version;
-            }
-            return result;
+            var localVersion = loader.LoadAsString(ApplicationPaths.GetVersionPath());
+            return localVersion != version;
         }
 
         public static bool SoftwareExists()
@@ -73,11 +64,6 @@ namespace BestiaryLauncher.Model
                 }
             }
             return result;
-        }
-
-        public static string GetLatestVersionNumber(IDownloadFiles downloader, string remotePath)
-        {
-            return downloader.DownloadAsString(remotePath);
         }
     }
 
@@ -184,11 +170,12 @@ namespace BestiaryLauncher.Model
         {
             using (WebClient client = new WebClient())
             {
+                client.Headers[HttpRequestHeader.UserAgent] = "UBCLauncher";
                 try
                 {
                     return client.DownloadData(url);
                 }
-                catch (WebException)
+                catch (WebException ex)
                 {
                     //MainViewModel.UserActionLog.Error("Failed to download file");
                 }

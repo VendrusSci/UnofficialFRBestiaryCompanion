@@ -12,9 +12,9 @@ namespace LauncherTests
         public void TestIsVersionDifferentWithSameVersion()
         {
             var loader = Substitute.For<ILoadFiles>();
-            loader.Load(ApplicationPaths.UbcVersionFile).Returns(Encoding.ASCII.GetBytes("expected version"));
-            var wasDifferent = StatusChecks.IsVersionDifferent(loader, VersionType.UbcVersion, "expected version");
-            loader.Received().Load(ApplicationPaths.UbcVersionFile);
+            loader.Load(ApplicationPaths.VersionFile).Returns(Encoding.ASCII.GetBytes("expected version"));
+            var wasDifferent = StatusChecks.IsVersionDifferent(loader, "expected version");
+            loader.Received().Load(ApplicationPaths.VersionFile);
             Assert.IsFalse(wasDifferent, "expected version should match");
         }
 
@@ -22,33 +22,12 @@ namespace LauncherTests
         public void TestIsVersionDifferentWithDifferentVersion()
         {
             var loader = Substitute.For<ILoadFiles>();
-            loader.Load(ApplicationPaths.UbcVersionFile).Returns(Encoding.ASCII.GetBytes("unexpected version"));
-            var wasDifferent = StatusChecks.IsVersionDifferent(loader, VersionType.UbcVersion, "expected version");
-            loader.Received().Load(ApplicationPaths.UbcVersionFile);
+            loader.Load(ApplicationPaths.VersionFile).Returns(Encoding.ASCII.GetBytes("unexpected version"));
+            var wasDifferent = StatusChecks.IsVersionDifferent(loader, "expected version");
+            loader.Received().Load(ApplicationPaths.VersionFile);
             Assert.IsTrue(wasDifferent, "expected version should NOT match");
         }
 
-        [Test]
-        public void TestIsLauncherVersionDifferentWithSameVersion()
-        {
-            var loader = Substitute.For<ILoadFiles>();
-            loader.Load(ApplicationPaths.GetLauncherVersionPath()).Returns(Encoding.ASCII.GetBytes("expected launcher version"));
-            var wasDifferent = StatusChecks.IsVersionDifferent(loader, VersionType.LauncherVersion, "expected launcher version");
-            loader.Received().Load(ApplicationPaths.GetLauncherVersionPath());
-            Assert.IsFalse(wasDifferent, "expected launcher version should match");
-        }
-
-        [Test]
-        public void TestIsLauncherVersionDifferentWithDifferentVersion()
-        {
-            var loader = Substitute.For<ILoadFiles>();
-            loader.Load(ApplicationPaths.GetLauncherVersionPath()).Returns(Encoding.ASCII.GetBytes("unexpected launcher version"));
-            var wasDifferent = StatusChecks.IsVersionDifferent(loader, VersionType.LauncherVersion, "expected launcher version");
-            loader.Received().Load(ApplicationPaths.GetLauncherVersionPath());
-            Assert.IsTrue(wasDifferent, "expected launcher version should NOT match");
-        }
-
-        [Test]
         public void TestLauncherUpdateAvailableWithAvailable()
         {
             var loader = Substitute.For<ILoadFiles>();
@@ -121,16 +100,6 @@ namespace LauncherTests
             var updateAvailable = StatusChecks.FamiliarUpdateAvailable(loader, downloader);
             loader.Received().Load(Path.Combine(ApplicationPaths.GetBestiaryResourcesDirectory(), ApplicationPaths.FRDataFile));
             Assert.IsFalse(updateAvailable, "Familiar update should be available");
-        }
-
-        [Test]
-        public void TestGetLatestVersionNumber()
-        {
-            var downloader = Substitute.For<IDownloadFiles>();
-            downloader.Download("testUrl").Returns(Encoding.ASCII.GetBytes("this is a version number"));
-            var versionNumber = StatusChecks.GetLatestVersionNumber(downloader, "testUrl");
-            downloader.Received().Download("testUrl");
-            Assert.IsTrue(versionNumber == "this is a version number", "Version number received");
         }
     }
 }

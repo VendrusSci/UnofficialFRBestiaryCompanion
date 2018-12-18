@@ -29,8 +29,8 @@ namespace LauncherTests.Model
         [Test]
         public void TestIsLauncherUpdateAvailableWithAvailable()
         {
-            downloader.Download(ApplicationPaths.RemoteLauncherVersionFile).Returns(Encoding.ASCII.GetBytes("this is new"));
-            loader.Load(ApplicationPaths.GetLauncherVersionPath()).Returns(Encoding.ASCII.GetBytes("this is old"));
+            downloader.Download(Arg.Any<string>()).Returns(Encoding.ASCII.GetBytes("this is new"));
+            loader.Load(ApplicationPaths.GetVersionPath()).Returns(Encoding.ASCII.GetBytes("this is old"));
             Updater updater = new Updater(loader, downloader, unzipper, fileManipulator, directoryManipulator, processStarter);
             var wasDifferent = updater.LauncherUpdateAvailable();
             Assert.IsTrue(wasDifferent, "Update should be available");
@@ -39,8 +39,8 @@ namespace LauncherTests.Model
         [Test]
         public void TestIsLauncherUpdateAvailableWithNotAvailable()
         {
-            downloader.Download(ApplicationPaths.RemoteLauncherVersionFile).Returns(Encoding.ASCII.GetBytes("this is old"));
-            loader.Load(ApplicationPaths.GetLauncherVersionPath()).Returns(Encoding.ASCII.GetBytes("this is old"));
+            downloader.Download(Arg.Any<string>()).Returns(Encoding.ASCII.GetBytes("this is old"));
+            loader.Load(ApplicationPaths.GetVersionPath()).Returns(Encoding.ASCII.GetBytes("this is old"));
             Updater updater = new Updater(loader, downloader, unzipper, fileManipulator, directoryManipulator, processStarter);
             var wasDifferent = updater.LauncherUpdateAvailable();
             Assert.IsFalse(wasDifferent, "Update should not be available");
@@ -49,8 +49,8 @@ namespace LauncherTests.Model
         [Test]
         public void TestIsSoftwareUpdateAvailableWithAvailable()
         {
-            downloader.Download(ApplicationPaths.RemoteUbcVersionFile).Returns(Encoding.ASCII.GetBytes("this is new"));
-            loader.Load(ApplicationPaths.UbcVersionFile).Returns(Encoding.ASCII.GetBytes("this is old"));
+            downloader.Download(Arg.Any<string>()).Returns(Encoding.ASCII.GetBytes("this is new"));
+            loader.Load(ApplicationPaths.VersionFile).Returns(Encoding.ASCII.GetBytes("this is old"));
             Updater updater = new Updater(loader, downloader, unzipper, fileManipulator, directoryManipulator, processStarter);
             var wasDifferent = updater.SoftwareUpdateAvailable();
             Assert.IsTrue(wasDifferent, "Update should be available");
@@ -59,8 +59,8 @@ namespace LauncherTests.Model
         [Test]
         public void TestIsSoftwareUpdateAvailableWithNotAvailable()
         {
-            downloader.Download(ApplicationPaths.RemoteUbcVersionFile).Returns(Encoding.ASCII.GetBytes("this is old"));
-            loader.Load(ApplicationPaths.UbcVersionFile).Returns(Encoding.ASCII.GetBytes("this is old"));
+            downloader.Download(Arg.Any<string>()).Returns(Encoding.ASCII.GetBytes("this is old"));
+            loader.Load(ApplicationPaths.VersionFile).Returns(Encoding.ASCII.GetBytes("this is old"));
             Updater updater = new Updater(loader, downloader, unzipper, fileManipulator, directoryManipulator, processStarter);
             var wasDifferent = updater.SoftwareUpdateAvailable();
             Assert.IsFalse(wasDifferent, "Update should not be available");
@@ -176,7 +176,7 @@ namespace LauncherTests.Model
         {
             directoryManipulator.Exists(Arg.Any<string>()).Returns(false);
             Updater updater = new Updater(loader, downloader, unzipper, fileManipulator, directoryManipulator, processStarter);
-            var wasSuccess = updater.UpdateVersionFile(VersionType.UbcVersion);
+            var wasSuccess = updater.UpdateVersionFile();
             Assert.IsTrue(wasSuccess, "Update should have suceeded");
         }
 
@@ -187,7 +187,7 @@ namespace LauncherTests.Model
                 .Returns(_ => null);
             directoryManipulator.Exists(Arg.Any<string>()).Returns(true);
             Updater updater = new Updater(loader, downloader, unzipper, fileManipulator, directoryManipulator, processStarter);
-            var wasSuccess = updater.UpdateVersionFile(VersionType.UbcVersion);
+            var wasSuccess = updater.UpdateVersionFile();
             Assert.IsFalse(wasSuccess, "Update should have failed");
         }
 
@@ -196,7 +196,7 @@ namespace LauncherTests.Model
         {
             directoryManipulator.Exists(Arg.Any<string>()).Returns(true);
             Updater updater = new Updater(loader, downloader, unzipper, fileManipulator, directoryManipulator, processStarter);
-            var wasSuccess = updater.UpdateVersionFile(VersionType.LauncherVersion);
+            var wasSuccess = updater.UpdateVersionFile();
             Assert.IsTrue(wasSuccess, "Update should have suceeded");
         }
 
@@ -207,7 +207,7 @@ namespace LauncherTests.Model
                 .Returns(_ => null);
             directoryManipulator.Exists(Arg.Any<string>()).Returns(false);
             Updater updater = new Updater(loader, downloader, unzipper, fileManipulator, directoryManipulator, processStarter);
-            var wasSuccess = updater.UpdateVersionFile(VersionType.LauncherVersion);
+            var wasSuccess = updater.UpdateVersionFile();
             Assert.IsFalse(wasSuccess, "Update should have failed");
         }
     }

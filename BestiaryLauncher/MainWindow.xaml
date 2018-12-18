@@ -27,11 +27,12 @@
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             
-            <Button Grid.Row="0" Content="Update All" Command="{Binding UpdateSoftware}"/>
-            <Button Grid.Row="1" Content="Update Familiars Only" Command="{Binding UpdateFamiliars}" IsEnabled="{Binding UbcExists}"/>
-            <Button Grid.Row="2" Content="{Binding LaunchButtonText}" Command="{Binding NoUpdate}" IsEnabled="{Binding UbcExists}"/>
+            <Button Grid.Row="1" Content="Update All" Command="{Binding UpdateSoftware}"/>
+            <Button Grid.Row="2" Content="Update Familiars Only" Command="{Binding UpdateFamiliars}" IsEnabled="{Binding UbcExists}"/>
+            <Button Grid.Row="3" Content="{Binding LaunchButtonText}" Command="{Binding NoUpdate}" IsEnabled="{Binding UbcExists}"/>
         </Grid>
         
         <Grid Grid.Row="2" Visibility="{Binding LauncherUpdateStatus}">

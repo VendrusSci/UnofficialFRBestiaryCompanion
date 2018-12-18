@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using System.Linq;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace BestiaryLauncher.Model
 {
@@ -12,9 +13,8 @@ namespace BestiaryLauncher.Model
 
     public class Updater
     {
-        private string LatestUbcVersion;
-        private string LatestLauncherVersion;
         private string LatestReleasePath;
+        private string LatestVersionNumber;
 
         private ILoadFiles m_FileLoader;
         private IDownloadFiles m_FileDownloader;
@@ -22,6 +22,9 @@ namespace BestiaryLauncher.Model
         private IManipulateFiles m_FileManipulator;
         private IManipulateDirectories m_DirectoryManipulator;
         private IStartProcesses m_ProcessStarter;
+
+        private ManifestData m_LatestManifestData;
+        private ManifestData m_LocalManifestData;
 
         public Updater(ILoadFiles fileLoader, IDownloadFiles fileDownloader, IUnzipFiles fileUnzipper, 
             IManipulateFiles fileManipulator, IManipulateDirectories directoryManipulator, IStartProcesses processStarter)
@@ -33,9 +36,13 @@ namespace BestiaryLauncher.Model
             m_DirectoryManipulator = directoryManipulator;
             m_ProcessStarter = processStarter;
 
-            LatestUbcVersion = StatusChecks.GetLatestVersionNumber(m_FileDownloader, ApplicationPaths.RemoteUbcVersionFile);
-            LatestLauncherVersion = StatusChecks.GetLatestVersionNumber(m_FileDownloader, ApplicationPaths.RemoteLauncherVersionFile);
-            LatestReleasePath = ApplicationPaths.RemoteGitReleasePath + FetchLatestReleaseNumber();
+            LatestVersionNumber = FetchLatestVersion();
+            LatestReleasePath = Path.Combine(ApplicationPaths.RemoteGitReleasePath, LatestVersionNumber);
+
+            m_LatestManifestData = new Manifest(m_FileManipulator)
+                .FetchLatest(m_FileDownloader, Path.Combine(LatestReleasePath, "manifest.txt"));
+            m_LocalManifestData = new Manifest(m_FileManipulator)
+                .FetchLocal(m_FileLoader, Path.Combine(ApplicationPaths.GetLauncherResourcesDirectory(), "manifest.txt"));
         }
 
         public void LaunchUbc()
@@ -45,101 +52,110 @@ namespace BestiaryLauncher.Model
 
         public bool SoftwareUpdateAvailable()
         {
-            return StatusChecks.IsVersionDifferent(m_FileLoader, VersionType.UbcVersion, LatestUbcVersion);
+            return StatusChecks.IsVersionDifferent(m_FileLoader, LatestVersionNumber);
         }
 
         public bool LauncherUpdateAvailable()
         {
-            return StatusChecks.IsVersionDifferent(m_FileLoader, VersionType.LauncherVersion, LatestLauncherVersion);
+            return (m_LatestManifestData.LauncherExe != m_LocalManifestData.LauncherExe) 
+                || (m_LatestManifestData.LauncherImagesZip != m_LocalManifestData.LauncherImagesZip);
         }
 
         public bool FamiliarUpdateAvailable()
         {
-             return StatusChecks.FamiliarUpdateAvailable(m_FileLoader, m_FileDownloader);
+            return (m_LatestManifestData.FamiliarDataZip != m_LocalManifestData.FamiliarDataZip)
+                || (m_LatestManifestData.IconsZip != m_LocalManifestData.IconsZip)
+                || (m_LatestManifestData.ImagesZip != m_LocalManifestData.ImagesZip);
         }
 
         public bool UbcUpdateAvailable()
         {
-            return StatusChecks.UbcUpdateAvailable(m_FileLoader, m_FileDownloader, Path.Combine(LatestReleasePath, ApplicationPaths.UbcExeFile));
+            return (m_LatestManifestData.BestiaryExe != m_LocalManifestData.BestiaryExe)
+                || (m_LatestManifestData.DisplayIconsZip != m_LocalManifestData.DisplayIconsZip)
+                || (m_LatestManifestData.ViewIconsZip != m_LocalManifestData.ViewIconsZip);
         }
 
         public bool UpdateUbcSoftware()
         {
             bool result = true;
-            //Requires updating:
             //Executable
-            result &= GetFileAndOverwrite(
-                Path.Combine(ApplicationPaths.GetBestiaryDirectory(),ApplicationPaths.UbcExeFile),
-                m_FileDownloader,
-                Path.Combine(LatestReleasePath, ApplicationPaths.UbcExeFile),
-                m_FileManipulator);
+            if(m_LatestManifestData.BestiaryExe != m_LocalManifestData.BestiaryExe)
+            {
+                result &= GetFileAndOverwrite(
+                    Path.Combine(ApplicationPaths.GetBestiaryDirectory(),ApplicationPaths.UbcExeFile),
+                    m_FileDownloader,
+                    Path.Combine(LatestReleasePath, ApplicationPaths.UbcExeFile),
+                    m_FileManipulator);
+            }
             //DisplayIcons
-            result &= GetBestiaryResourcesFolderAndOverwrite("DisplayIcons");
+            if(m_LatestManifestData.DisplayIconsZip != m_LocalManifestData.DisplayIconsZip)
+            {
+                result &= GetBestiaryResourcesFolderAndOverwrite("DisplayIcons");
+            }
             //ViewIcons
-            result &= GetBestiaryResourcesFolderAndOverwrite("ViewIcons");
-
+            if(m_LatestManifestData.ViewIconsZip != m_LocalManifestData.ViewIconsZip)
+            {
+                result &= GetBestiaryResourcesFolderAndOverwrite("ViewIcons");
+            }
             return result;
         }
 
         public bool UpdateFamiliars()
         {
             bool result = true;
-            //Requires updating:
             //Icons
-            result &= GetBestiaryResourcesFolderAndOverwrite("Icons");
+            if(m_LatestManifestData.IconsZip != m_LocalManifestData.IconsZip)
+            {
+                result &= GetBestiaryResourcesFolderAndOverwrite("Icons");
+            }
             //Images
-            result &= GetBestiaryResourcesFolderAndOverwrite("Images");
+            if(m_LatestManifestData.ImagesZip != m_LocalManifestData.ImagesZip)
+            {
+                result &= GetBestiaryResourcesFolderAndOverwrite("Images");
+            }
             //FamiliarData folder contents
-            result &= GetBestiaryResourcesFolderAndOverwrite("FamiliarData");
-
+            if(m_LatestManifestData.FamiliarDataZip != m_LocalManifestData.FamiliarDataZip)
+            {
+                result &= GetBestiaryResourcesFolderAndOverwrite("FamiliarData");
+            }
             return result;
         }
 
         public bool UpdateLauncher()
         {
             bool result = true;
-            //Requires updating:
             //Launcher.exe
-            //Rename own executable
-            m_FileManipulator.Move(Path.Combine(ApplicationPaths.GetLauncherDirectory(), ApplicationPaths.LauncherExeFile), "Backup_" + ApplicationPaths.LauncherExeFile);
-            //Load in new executable
-            result &= GetFileAndOverwrite(
-                Path.Combine(ApplicationPaths.GetLauncherDirectory(), ApplicationPaths.LauncherExeFile),
-                m_FileDownloader,
-                Path.Combine(LatestReleasePath, ApplicationPaths.LauncherExeFile),
-                m_FileManipulator
-                );
-            result &= GetFolderAndOverwrite(
-                ApplicationPaths.GetLauncherImagesDirectory(),
-                Path.Combine(LatestReleasePath, Path.GetFileName(ApplicationPaths.GetLauncherImagesDirectory()) + ".zip")
-                );
+            if (m_LatestManifestData.LauncherExe != m_LocalManifestData.LauncherExe)
+            {
+                //Rename own executable
+                var exePath = Path.Combine(ApplicationPaths.GetLauncherDirectory(), ApplicationPaths.LauncherExeFile);
+                var backupExePath = Path.Combine(ApplicationPaths.GetLauncherDirectory(), "bkup_" + ApplicationPaths.LauncherExeFile);
+                if (m_FileManipulator.Exists(backupExePath))
+                {
+                    m_FileManipulator.Delete(backupExePath);
+                }
+                m_FileManipulator.Move(exePath, backupExePath);
+                //Load in new executable
+                result &= GetFileAndOverwrite(
+                    Path.Combine(ApplicationPaths.GetLauncherDirectory(), ApplicationPaths.LauncherExeFile),
+                    m_FileDownloader,
+                    Path.Combine(LatestReleasePath, ApplicationPaths.LauncherExeFile),
+                    m_FileManipulator
+                    );
+            }
+            if (m_LatestManifestData.LauncherExe != m_LocalManifestData.LauncherExe)
+            {
+                result &= GetFolderAndOverwrite(
+                    ApplicationPaths.GetLauncherImagesDirectory(),
+                    Path.Combine(LatestReleasePath, Path.GetFileName(ApplicationPaths.GetLauncherImagesDirectory()) + ".zip")
+                    );
+            }
             return result;
         }
 
-        public bool UpdateVersionFile(VersionType software)
+        public bool UpdateVersionFile()
         {
-            if (software == VersionType.UbcVersion)
-            {
-                return GetFileAndOverwrite(
-                    ApplicationPaths.GetUBCVersionPath(),
-                    m_FileDownloader,
-                    ApplicationPaths.RemoteUbcVersionFile,
-                    m_FileManipulator
-                    );
-            }
-            else if (software == VersionType.LauncherVersion)
-            {
-                return GetFileAndOverwrite(
-                    ApplicationPaths.GetLauncherVersionPath(),
-                    m_FileDownloader,
-                    ApplicationPaths.RemoteLauncherVersionFile,
-                    m_FileManipulator
-                    );
-            }
-            else
-            {
-                return false;
-            }
+            return false;
         }
 
         private static string m_FileBackup = ".bak";
@@ -201,11 +217,18 @@ namespace BestiaryLauncher.Model
             return false;
         }
 
-        private string FetchLatestReleaseNumber()
+        private string FetchLatestVersion()
         {
-            string releaseInfo = m_FileDownloader.DownloadAsString(ApplicationPaths.RemoteGitReleaseInfoPath);
-            dynamic releaseObject = JsonConvert.DeserializeObject(releaseInfo);
-            return releaseObject.tag_name;
+            string releaseInfoJsonText = m_FileDownloader.DownloadAsString(ApplicationPaths.RemoteGitReleaseInfoPath);
+            var releaseInfoJsonObject = JObject.Parse(releaseInfoJsonText);
+            if(releaseInfoJsonObject.TryGetValue("tag_name", out var tagName))
+            {
+                if (tagName.Type == JTokenType.String)
+                {
+                    return tagName.Value<string>();
+                }
+            }
+            return null;
         }
     }
 }

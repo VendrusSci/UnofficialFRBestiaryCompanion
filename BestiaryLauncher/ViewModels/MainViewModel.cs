@@ -183,7 +183,7 @@ namespace BestiaryLauncher.ViewModels
 
         private bool CheckForUbcUpdates()
         {
-            return (m_Updater.UbcUpdateAvailable() & m_Updater.FamiliarUpdateAvailable());
+            return (m_Updater.UbcUpdateAvailable() || m_Updater.FamiliarUpdateAvailable());
         }
     }
 }

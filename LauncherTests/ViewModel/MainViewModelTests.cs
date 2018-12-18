@@ -51,7 +51,7 @@ namespace LauncherTests.ViewModel
         [Test]
         public void TestUpdateLauncherOnExecuteWithUpdateAvailable()
         {
-            loader.Load(ApplicationPaths.LauncherVersionFile).Returns(Encoding.ASCII.GetBytes("this is old"));
+            loader.Load(ApplicationPaths.GetVersionPath()).Returns(Encoding.ASCII.GetBytes("this is old"));
             downloader.Download(Arg.Any<string>()).Returns(Encoding.ASCII.GetBytes("this is new"));
             directoryManipulator.Exists(Arg.Any<string>()).Returns(false);
             MainViewModel viewModel = new MainViewModel(loader, downloader, unzipper, fileManipulator, directoryManipulator, processStarter, applicationCloser);
@@ -62,7 +62,7 @@ namespace LauncherTests.ViewModel
         [Test]
         public void TestUpdateLauncherOnExecuteWithNoUpdateAvailable()
         {
-            loader.Load(ApplicationPaths.GetLauncherVersionPath()).Returns(Encoding.ASCII.GetBytes("this is old"));
+            loader.Load(ApplicationPaths.GetVersionPath()).Returns(Encoding.ASCII.GetBytes("this is old"));
             downloader.Download(Arg.Any<string>()).Returns(Encoding.ASCII.GetBytes("this is old"));
             directoryManipulator.Exists(Arg.Any<string>()).Returns(false);
             MainViewModel viewModel = new MainViewModel(loader, downloader, unzipper, fileManipulator, directoryManipulator, processStarter, applicationCloser);
