@@ -1,9 +1,8 @@
 ﻿using System.ComponentModel;
 using System.IO;
-using System.Linq;
 using System.Text;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using BestiaryLauncher.ViewModels;
 
 namespace BestiaryLauncher.Model
 {
@@ -83,35 +82,53 @@ namespace BestiaryLauncher.Model
             //Executable
             if(m_LatestManifestData.UnofficialBestiaryCompanionZip != m_LocalManifestData.UnofficialBestiaryCompanionZip)
             {
+                MainViewModel.UserActionLog.Info("UBC zip update available");
                 var interimResult = GetFolderAndOverwrite(
                     Path.Combine(ApplicationPaths.GetBestiaryDirectory(),ApplicationPaths.UbcZip),
                     Path.Combine(LatestReleasePath, ApplicationPaths.UbcZip));
                 if (interimResult)
                 {
+                    MainViewModel.UserActionLog.Info("UBC zip update successful");
                     m_LocalManifestData.UnofficialBestiaryCompanionZip = m_LatestManifestData.UnofficialBestiaryCompanionZip;
                     Manifest.UpdateManifest(m_FileManipulator, m_LocalManifestData);
+                }
+                else
+                {
+                    MainViewModel.UserActionLog.Error("UBC zip update failed");
                 }
                 result &= interimResult;
             }
             //DisplayIcons
             if(m_LatestManifestData.DisplayIconsZip != m_LocalManifestData.DisplayIconsZip)
             {
+                MainViewModel.UserActionLog.Info("DisplayIcons zip update available");
                 var interimResult = GetBestiaryResourcesFolderAndOverwrite("DisplayIcons");
                 if (interimResult)
                 {
+                    MainViewModel.UserActionLog.Info("DisplayIcons zip update successful");
                     m_LocalManifestData.DisplayIconsZip = m_LatestManifestData.DisplayIconsZip;
                     Manifest.UpdateManifest(m_FileManipulator, m_LocalManifestData);
+                }
+                else
+                {
+                    MainViewModel.UserActionLog.Error("DisplayIcons zip update failed");
                 }
                 result &= interimResult;
             }
             //ViewIcons
             if(m_LatestManifestData.ViewIconsZip != m_LocalManifestData.ViewIconsZip)
             {
+                MainViewModel.UserActionLog.Info("ViewIcons zip update available");
                 var interimResult = GetBestiaryResourcesFolderAndOverwrite("ViewIcons");
                 if (interimResult)
                 {
+                    MainViewModel.UserActionLog.Info("ViewIcons zip update successful");
                     m_LocalManifestData.ViewIconsZip = m_LatestManifestData.ViewIconsZip;
                     Manifest.UpdateManifest(m_FileManipulator, m_LocalManifestData);
+                }
+                else
+                {
+                    MainViewModel.UserActionLog.Error("ViewIcons zip update failed");
                 }
                 result &= interimResult;
             }
@@ -124,33 +141,51 @@ namespace BestiaryLauncher.Model
             //Icons
             if(m_LatestManifestData.IconsZip != m_LocalManifestData.IconsZip)
             {
+                MainViewModel.UserActionLog.Info("Icons zip update available");
                 var interimResult = GetBestiaryResourcesFolderAndOverwrite("Icons");
                 if (interimResult)
                 {
+                    MainViewModel.UserActionLog.Info("Icons zip update successful");
                     m_LocalManifestData.IconsZip = m_LatestManifestData.IconsZip;
                     Manifest.UpdateManifest(m_FileManipulator, m_LocalManifestData);
+                }
+                else
+                {
+                    MainViewModel.UserActionLog.Error("Icons zip update failed");
                 }
                 result &= interimResult;
             }
             //Images
             if(m_LatestManifestData.ImagesZip != m_LocalManifestData.ImagesZip)
             {
+                MainViewModel.UserActionLog.Info("Images zip update available");
                 var interimResult = GetBestiaryResourcesFolderAndOverwrite("Images");
                 if (interimResult)
                 {
+                    MainViewModel.UserActionLog.Info("Images zip update successful");
                     m_LocalManifestData.ImagesZip = m_LatestManifestData.ImagesZip;
                     Manifest.UpdateManifest(m_FileManipulator, m_LocalManifestData);
+                }
+                else
+                {
+                    MainViewModel.UserActionLog.Error("Images zip update failed");
                 }
                 result &= interimResult;
             }
             //FamiliarData folder contents
             if(m_LatestManifestData.FamiliarDataZip != m_LocalManifestData.FamiliarDataZip)
             {
+                MainViewModel.UserActionLog.Info("Familiar data update available");
                 var interimResult = GetBestiaryResourcesFolderAndOverwrite("FamiliarData");
                 if (interimResult)
                 {
+                    MainViewModel.UserActionLog.Info("Familiar data update successful");
                     m_LocalManifestData.FamiliarDataZip = m_LatestManifestData.FamiliarDataZip;
                     Manifest.UpdateManifest(m_FileManipulator, m_LocalManifestData);
+                }
+                else
+                {
+                    MainViewModel.UserActionLog.Error("Familiar data update failed");
                 }
                 result &= interimResult;
             }
@@ -163,13 +198,17 @@ namespace BestiaryLauncher.Model
             //Launcher.exe
             if (m_LatestManifestData.UBCLauncherZip != m_LocalManifestData.UBCLauncherZip)
             {
+                MainViewModel.UserActionLog.Info("Launcher zip update available");
                 //Rename own executable
+                MainViewModel.UserActionLog.Info("Renaming executable");
                 var exePath = Path.Combine(ApplicationPaths.GetLauncherDirectory(), ApplicationPaths.LauncherExe);
                 var backupExePath = Path.Combine(ApplicationPaths.GetLauncherDirectory(), "bkup_" + ApplicationPaths.LauncherExe);
                 if (m_FileManipulator.Exists(backupExePath))
                 {
+                    MainViewModel.UserActionLog.Info("Deleting old backup");
                     m_FileManipulator.Delete(backupExePath);
                 }
+                MainViewModel.UserActionLog.Info("Creating backup");
                 m_FileManipulator.Move(exePath, backupExePath);
                 //Load in new executable
                 var interimResult = GetFolderAndOverwrite(
@@ -177,21 +216,32 @@ namespace BestiaryLauncher.Model
                     Path.Combine(LatestReleasePath, ApplicationPaths.LauncherZip));
                 if(interimResult)
                 {
+                    MainViewModel.UserActionLog.Info("Launcher zip update successful");
                     m_LocalManifestData.UBCLauncherZip = m_LatestManifestData.UBCLauncherZip;
                     Manifest.UpdateManifest(m_FileManipulator, m_LocalManifestData);
+                }
+                else
+                {
+                    MainViewModel.UserActionLog.Error("Launcher zip update failed");
                 }
                 result &= interimResult;
             }
             if (m_LatestManifestData.LauncherImagesZip != m_LocalManifestData.LauncherImagesZip)
             {
+                MainViewModel.UserActionLog.Info("Launcher images zip update available");
                 var interimResult = GetFolderAndOverwrite(
                     ApplicationPaths.GetLauncherImagesDirectory(),
                     Path.Combine(LatestReleasePath, Path.GetFileName(ApplicationPaths.GetLauncherImagesDirectory()) + ".zip")
                     );
                 if (interimResult)
                 {
+                    MainViewModel.UserActionLog.Info("Launcher images zip update successful");
                     m_LocalManifestData.LauncherImagesZip = m_LatestManifestData.LauncherImagesZip;
                     Manifest.UpdateManifest(m_FileManipulator, m_LocalManifestData);
+                }
+                else
+                {
+                    MainViewModel.UserActionLog.Error("Launcher images zip update failed");
                 }
                 result &= interimResult;
             }
