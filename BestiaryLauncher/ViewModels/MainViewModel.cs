@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Threading.Tasks;
 using System.Threading;
+using System.Windows.Media.Imaging;
 
 namespace BestiaryLauncher.ViewModels
 {
@@ -15,6 +16,7 @@ namespace BestiaryLauncher.ViewModels
         public string LaunchButtonText { get; private set; }
         public string UpdateStatusText { get; private set; }
         public bool UbcExists { get; private set; }
+        public BitmapImage HeaderImage { get; private set; }
 
         private string m_LaunchButtonUpdateAvailable = "Postpone Update and Launch";
         private string m_LaunchButtonNoUpdateAvailable = "Launch";
@@ -37,6 +39,8 @@ namespace BestiaryLauncher.ViewModels
             LauncherUpdateStatus = Visibility.Hidden;
             SoftwareUpdateStatus = Visibility.Hidden;
             UbcExists = false;
+
+            HeaderImage = ImageLoader.LoadImage(ApplicationPaths.GetHeaderImagePath());
 
             if (m_Updater.SoftwareUpdateAvailable())
             {
@@ -176,6 +180,7 @@ namespace BestiaryLauncher.ViewModels
                                 {
                                     UserActionLog.Info("UBC update succeeded");
                                     UpdateStatusText = m_UpdateSuccess;
+                                    HeaderImage = ImageLoader.LoadImage(ApplicationPaths.GetHeaderImagePath());
                                 }
                                 else
                                 {

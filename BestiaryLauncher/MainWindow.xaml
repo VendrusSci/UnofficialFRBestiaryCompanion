@@ -19,9 +19,9 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         
-        <Image Grid.Row="0" MinHeight="200"/>
-        <TextBlock Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding UpdateStatusText}"/>
-        
+        <TextBlock Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding UpdateStatusText}"/>
+        <Image Grid.Row="0" Grid.RowSpan="3" VerticalAlignment="Top" MinHeight="200" Margin="5" Source="{Binding HeaderImage}"/>
+
         <Grid Grid.Row ="2" Visibility="{Binding SoftwareUpdateStatus}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
@@ -41,7 +41,7 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center">
+            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Bottom" TextAlignment="Center">
                 <Run FontSize="16" FontWeight="Bold" Text="Launcher is out of date!"/>
                 <LineBreak/>
                 <Run Text="You can still run the software in its current state,"/>

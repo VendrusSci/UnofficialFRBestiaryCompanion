@@ -13,6 +13,7 @@ namespace BestiaryLauncher.Model
         public static string UbcExe = "Bestiary.exe";
         public static string LauncherZip = "UBCLauncher.zip";
         public static string LauncherExe = "BestiaryLauncher.exe";
+        public static string HeaderImage = "UBC.png";
 
         public static string RemoteFRDataFile = "https://raw.githubusercontent.com/VendrusSci/UnofficialFRBestiaryCompanion/master/Bestiary/Resources/FRData.xml";
         public static string RemoteGitReleasePath = "https://github.com/VendrusSci/UnofficialFRBestiaryCompanion/releases/download/";
@@ -48,9 +49,9 @@ namespace BestiaryLauncher.Model
             return Path.Combine(GetBestiaryDirectory(), "User Data");
         }
 
-        //public static string GetVersionPath()
-        //{
-        //    return Path.Combine(GetLauncherResourcesDirectory(), VersionFile);
-        //}
+        public static string GetHeaderImagePath()
+        {
+            return Path.Combine(GetBestiaryResourcesDirectory(), "DisplayIcons", HeaderImage);
+        }
     }
 }
