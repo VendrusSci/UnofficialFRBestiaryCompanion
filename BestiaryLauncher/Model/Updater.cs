@@ -330,7 +330,7 @@ namespace BestiaryLauncher.Model
 
         public bool IsVersionDifferent(string version)
         {
-            var localVersion = m_LocalManifestData.Version; //m_FileLoader.LoadAsString(ApplicationPaths.GetVersionPath());
+            var localVersion = m_LocalManifestData.Version;
             return localVersion != version;
         }
 
