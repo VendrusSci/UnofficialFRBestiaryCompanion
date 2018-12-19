@@ -196,7 +196,7 @@ namespace BestiaryLauncher.ViewModels
                                     UpdateStatusText = "Update complete!";
                                     UbcExists = true;
                                     LaunchButtonText = "Launch UBC";
-                                    m_Updater.UpdateVersionFile();
+                                    m_Updater.UpdateVersion();
                                 }
                                 else
                                 {

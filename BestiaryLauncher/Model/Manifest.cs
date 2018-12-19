@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
+﻿using System.IO;
 using System.Text;
-using System.Threading.Tasks;
 using Newtonsoft.Json;
 
 namespace BestiaryLauncher.Model
@@ -59,6 +55,8 @@ namespace BestiaryLauncher.Model
 
     public class ManifestData
     {
+        public string Version { get; set; }
+
         public string UBCLauncherZip { get; set; }
         public string UnofficialBestiaryCompanionZip { get; set; }
 

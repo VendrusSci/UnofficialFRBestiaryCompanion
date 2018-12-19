@@ -248,9 +248,10 @@ namespace BestiaryLauncher.Model
             return result;
         }
 
-        public bool UpdateVersionFile()
+        public bool UpdateVersion()
         {
-            m_FileManipulator.WriteAllBytes(ApplicationPaths.GetVersionPath(), Encoding.ASCII.GetBytes(LatestVersionNumber));
+            m_LocalManifestData.Version = LatestVersionNumber;
+            Manifest.UpdateManifest(m_FileManipulator, m_LocalManifestData);
             return true;
         }
 
@@ -329,7 +330,7 @@ namespace BestiaryLauncher.Model
 
         public bool IsVersionDifferent(string version)
         {
-            var localVersion = m_FileLoader.LoadAsString(ApplicationPaths.GetVersionPath());
+            var localVersion = m_LocalManifestData.Version; //m_FileLoader.LoadAsString(ApplicationPaths.GetVersionPath());
             return localVersion != version;
         }
 

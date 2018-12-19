@@ -9,8 +9,6 @@ namespace BestiaryLauncher.Model
 {
     public static class ApplicationPaths
     {
-        public static string VersionFile = "version.txt";
-        //public static string FRDataFile = "FRData.xml";
         public static string UbcZip = "UnofficialBestiaryCompanion.zip";
         public static string UbcExe = "Bestiary.exe";
         public static string LauncherZip = "UBCLauncher.zip";
@@ -50,9 +48,9 @@ namespace BestiaryLauncher.Model
             return Path.Combine(GetBestiaryDirectory(), "User Data");
         }
 
-        public static string GetVersionPath()
-        {
-            return Path.Combine(GetLauncherResourcesDirectory(), VersionFile);
-        }
+        //public static string GetVersionPath()
+        //{
+        //    return Path.Combine(GetLauncherResourcesDirectory(), VersionFile);
+        //}
     }
 }
