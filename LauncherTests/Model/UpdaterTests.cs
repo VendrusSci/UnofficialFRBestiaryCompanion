@@ -66,34 +66,34 @@ namespace LauncherTests.Model
             Assert.IsFalse(wasDifferent, "Update should not be available");
         }
 
-        [Test]
-        public void TestFamiliarUpdateAvailableWithAvailable()
-        {
-            downloader.Download(ApplicationPaths.RemoteFRDataFile).Returns(Encoding.ASCII.GetBytes("this is new"));
-            loader.Load(Path.Combine(ApplicationPaths.GetBestiaryResourcesDirectory(), ApplicationPaths.FRDataFile))
-                .Returns(Encoding.ASCII.GetBytes("this is old"));
-            Updater updater = new Updater(loader, downloader, unzipper, fileManipulator, directoryManipulator, processStarter);
-            var wasAvailable = updater.FamiliarUpdateAvailable();
-            Assert.IsTrue(wasAvailable, "Familiar update should be available");
-        }
+        //[Test]
+        //public void TestFamiliarUpdateAvailableWithAvailable()
+        //{
+        //    downloader.Download(ApplicationPaths.RemoteFRDataFile).Returns(Encoding.ASCII.GetBytes("this is new"));
+        //    loader.Load(Path.Combine(ApplicationPaths.GetBestiaryResourcesDirectory(), ApplicationPaths.FRDataFile))
+        //        .Returns(Encoding.ASCII.GetBytes("this is old"));
+        //    Updater updater = new Updater(loader, downloader, unzipper, fileManipulator, directoryManipulator, processStarter);
+        //    var wasAvailable = updater.FamiliarUpdateAvailable();
+        //    Assert.IsTrue(wasAvailable, "Familiar update should be available");
+        //}
 
-        [Test]
-        public void TestFamiliarUpdateAvailableWithNotAvailable()
-        {
-            downloader.Download(ApplicationPaths.RemoteFRDataFile).Returns(Encoding.ASCII.GetBytes("this is old"));
-            loader.Load(Path.Combine(ApplicationPaths.GetBestiaryResourcesDirectory(), ApplicationPaths.FRDataFile))
-                .Returns(Encoding.ASCII.GetBytes("this is old"));
-            Updater updater = new Updater(loader, downloader, unzipper, fileManipulator, directoryManipulator, processStarter);
-            var wasAvailable = updater.FamiliarUpdateAvailable();
-            Assert.IsFalse(wasAvailable, "Familiar update should not be available");
-        }
+        //[Test]
+        //public void TestFamiliarUpdateAvailableWithNotAvailable()
+        //{
+        //    downloader.Download(ApplicationPaths.RemoteFRDataFile).Returns(Encoding.ASCII.GetBytes("this is old"));
+        //    loader.Load(Path.Combine(ApplicationPaths.GetBestiaryResourcesDirectory(), ApplicationPaths.FRDataFile))
+        //        .Returns(Encoding.ASCII.GetBytes("this is old"));
+        //    Updater updater = new Updater(loader, downloader, unzipper, fileManipulator, directoryManipulator, processStarter);
+        //    var wasAvailable = updater.FamiliarUpdateAvailable();
+        //    Assert.IsFalse(wasAvailable, "Familiar update should not be available");
+        //}
 
         [Test]
         public void TestUbcUpdateAvailableWithAvailable()
         {
             downloader.Download(Arg.Any<string>())
                 .Returns(Encoding.ASCII.GetBytes("this is new"));
-            loader.Load(Path.Combine(ApplicationPaths.GetBestiaryDirectory(), ApplicationPaths.UbcExeFile))
+            loader.Load(Path.Combine(ApplicationPaths.GetBestiaryDirectory(), ApplicationPaths.UbcZip))
                 .Returns(Encoding.ASCII.GetBytes("this is old"));
             Updater updater = new Updater(loader, downloader, unzipper, fileManipulator, directoryManipulator, processStarter);
             var wasAvailable = updater.UbcUpdateAvailable();
@@ -104,7 +104,7 @@ namespace LauncherTests.Model
         public void TestUbcUpdateAvailableWithNotAvailable()
         {
             downloader.Download(Arg.Any<string>()).Returns(Encoding.ASCII.GetBytes("this is old"));
-            loader.Load(Path.Combine(ApplicationPaths.GetBestiaryDirectory(), ApplicationPaths.UbcExeFile))
+            loader.Load(Path.Combine(ApplicationPaths.GetBestiaryDirectory(), ApplicationPaths.UbcZip))
                 .Returns(Encoding.ASCII.GetBytes("this is old"));
             Updater updater = new Updater(loader, downloader, unzipper, fileManipulator, directoryManipulator, processStarter);
             var wasAvailable = updater.UbcUpdateAvailable();

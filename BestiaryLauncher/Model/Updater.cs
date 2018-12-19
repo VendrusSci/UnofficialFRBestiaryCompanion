@@ -47,7 +47,7 @@ namespace BestiaryLauncher.Model
 
         public void LaunchUbc()
         {
-            m_ProcessStarter.Start(Path.Combine(ApplicationPaths.GetBestiaryDirectory(), ApplicationPaths.UbcExeFile));
+            m_ProcessStarter.Start(Path.Combine(ApplicationPaths.GetBestiaryDirectory(), ApplicationPaths.UbcZip));
         }
 
         public bool SoftwareUpdateAvailable()
@@ -57,7 +57,7 @@ namespace BestiaryLauncher.Model
 
         public bool LauncherUpdateAvailable()
         {
-            return (m_LatestManifestData.LauncherExe != m_LocalManifestData.LauncherExe) 
+            return (m_LatestManifestData.UBCLauncherZip != m_LocalManifestData.UBCLauncherZip) 
                 || (m_LatestManifestData.LauncherImagesZip != m_LocalManifestData.LauncherImagesZip);
         }
 
@@ -70,7 +70,7 @@ namespace BestiaryLauncher.Model
 
         public bool UbcUpdateAvailable()
         {
-            return (m_LatestManifestData.BestiaryExe != m_LocalManifestData.BestiaryExe)
+            return (m_LatestManifestData.UnofficialBestiaryCompanionZip != m_LocalManifestData.UnofficialBestiaryCompanionZip)
                 || (m_LatestManifestData.DisplayIconsZip != m_LocalManifestData.DisplayIconsZip)
                 || (m_LatestManifestData.ViewIconsZip != m_LocalManifestData.ViewIconsZip);
         }
@@ -79,13 +79,11 @@ namespace BestiaryLauncher.Model
         {
             bool result = true;
             //Executable
-            if(m_LatestManifestData.BestiaryExe != m_LocalManifestData.BestiaryExe)
+            if(m_LatestManifestData.UnofficialBestiaryCompanionZip != m_LocalManifestData.UnofficialBestiaryCompanionZip)
             {
-                result &= GetFileAndOverwrite(
-                    Path.Combine(ApplicationPaths.GetBestiaryDirectory(),ApplicationPaths.UbcExeFile),
-                    m_FileDownloader,
-                    Path.Combine(LatestReleasePath, ApplicationPaths.UbcExeFile),
-                    m_FileManipulator);
+                result &= GetFolderAndOverwrite(
+                    Path.Combine(ApplicationPaths.GetBestiaryDirectory(),ApplicationPaths.UbcZip),
+                    Path.Combine(LatestReleasePath, ApplicationPaths.UbcZip));
             }
             //DisplayIcons
             if(m_LatestManifestData.DisplayIconsZip != m_LocalManifestData.DisplayIconsZip)
@@ -125,25 +123,22 @@ namespace BestiaryLauncher.Model
         {
             bool result = true;
             //Launcher.exe
-            if (m_LatestManifestData.LauncherExe != m_LocalManifestData.LauncherExe)
+            if (m_LatestManifestData.UBCLauncherZip != m_LocalManifestData.UBCLauncherZip)
             {
                 //Rename own executable
-                var exePath = Path.Combine(ApplicationPaths.GetLauncherDirectory(), ApplicationPaths.LauncherExeFile);
-                var backupExePath = Path.Combine(ApplicationPaths.GetLauncherDirectory(), "bkup_" + ApplicationPaths.LauncherExeFile);
+                var exePath = Path.Combine(ApplicationPaths.GetLauncherDirectory(), ApplicationPaths.LauncherExe);
+                var backupExePath = Path.Combine(ApplicationPaths.GetLauncherDirectory(), "bkup_" + ApplicationPaths.LauncherExe);
                 if (m_FileManipulator.Exists(backupExePath))
                 {
                     m_FileManipulator.Delete(backupExePath);
                 }
                 m_FileManipulator.Move(exePath, backupExePath);
                 //Load in new executable
-                result &= GetFileAndOverwrite(
-                    Path.Combine(ApplicationPaths.GetLauncherDirectory(), ApplicationPaths.LauncherExeFile),
-                    m_FileDownloader,
-                    Path.Combine(LatestReleasePath, ApplicationPaths.LauncherExeFile),
-                    m_FileManipulator
-                    );
+                result &= GetFolderAndOverwrite(
+                    Path.Combine(ApplicationPaths.GetLauncherDirectory(), ApplicationPaths.LauncherZip),
+                    Path.Combine(LatestReleasePath, ApplicationPaths.LauncherZip));
             }
-            if (m_LatestManifestData.LauncherExe != m_LocalManifestData.LauncherExe)
+            if (m_LatestManifestData.UBCLauncherZip != m_LocalManifestData.UBCLauncherZip)
             {
                 result &= GetFolderAndOverwrite(
                     ApplicationPaths.GetLauncherImagesDirectory(),

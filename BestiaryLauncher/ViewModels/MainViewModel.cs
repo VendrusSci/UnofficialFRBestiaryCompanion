@@ -106,14 +106,6 @@ namespace BestiaryLauncher.ViewModels
                     m_UpdateFamiliars = new LambdaCommand(
                         onExecute: (p) =>
                         {
-                            //If the folder structure does not exist, need to create it
-                            if(!m_DirectoryManipulator.Exists(ApplicationPaths.GetBestiaryDirectory()))
-                            {
-                                m_DirectoryManipulator.Create(ApplicationPaths.GetBestiaryDirectory());
-                                m_DirectoryManipulator.Create(ApplicationPaths.GetBestiaryResourcesDirectory());
-                                m_DirectoryManipulator.Create(ApplicationPaths.GetBestiaryUserDataDirectory());
-                            }
-
                             UpdateStatusText = "Updating Familiars...";
                             bool result = m_Updater.UpdateFamiliars();
                             UpdateStatusText = result ? m_UpdateSuccess : m_UpdateFail;
@@ -142,6 +134,14 @@ namespace BestiaryLauncher.ViewModels
                     m_UpdateSoftware = new LambdaCommand(
                         onExecute: (p) =>
                         {
+                            //If the folder structure does not exist, need to create it
+                            if (!m_DirectoryManipulator.Exists(ApplicationPaths.GetBestiaryDirectory()))
+                            {
+                                m_DirectoryManipulator.Create(ApplicationPaths.GetBestiaryDirectory());
+                                m_DirectoryManipulator.Create(ApplicationPaths.GetBestiaryResourcesDirectory());
+                                m_DirectoryManipulator.Create(ApplicationPaths.GetBestiaryUserDataDirectory());
+                            }
+
                             UpdateStatusText = "Updating Software...";
                             bool result = m_Updater.UpdateUbcSoftware();
                             UpdateStatusText = result ? m_UpdateSuccess : m_UpdateFail;

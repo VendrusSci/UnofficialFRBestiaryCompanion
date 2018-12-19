@@ -48,8 +48,8 @@ namespace BestiaryLauncher.Model
 
     public class ManifestData
     {
-        public string LauncherExe { get; set; }
-        public string BestiaryExe { get; set; }
+        public string UBCLauncherZip { get; set; }
+        public string UnofficialBestiaryCompanionZip { get; set; }
 
         public string FamiliarDataZip { get; set; }
 

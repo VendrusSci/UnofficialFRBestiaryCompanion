@@ -17,37 +17,7 @@ namespace BestiaryLauncher.Model
 
         public static bool SoftwareExists()
         {
-            return File.Exists(Path.Combine(ApplicationPaths.GetBestiaryDirectory(), ApplicationPaths.UbcExeFile));
-        }
-
-        public static bool FamiliarUpdateAvailable(ILoadFiles loader, IDownloadFiles downloader)
-        {
-            return DownloadAndCompare(
-                loader,
-                Path.Combine(ApplicationPaths.GetBestiaryResourcesDirectory(), ApplicationPaths.FRDataFile),
-                downloader,
-                ApplicationPaths.RemoteFRDataFile
-            );
-        }
-
-        public static bool UbcUpdateAvailable(ILoadFiles loader, IDownloadFiles downloader, string remotePath)
-        {
-            return DownloadAndCompare(
-                loader,
-                Path.Combine(ApplicationPaths.GetBestiaryDirectory(), ApplicationPaths.UbcExeFile),
-                downloader,
-                remotePath
-            );
-        }
-
-        public static bool LauncherUpdateAvailable(ILoadFiles loader, IDownloadFiles downloader, string remotePath)
-        {
-            return DownloadAndCompare(
-                loader,
-                Path.Combine(ApplicationPaths.GetLauncherDirectory(), ApplicationPaths.LauncherExeFile),
-                downloader,
-                remotePath
-            );
+            return File.Exists(Path.Combine(ApplicationPaths.GetBestiaryDirectory(), ApplicationPaths.UbcZip));
         }
 
         private static bool DownloadAndCompare(ILoadFiles loader, string localPath, IDownloadFiles downloader, string remoteUrl)
@@ -212,7 +182,7 @@ namespace BestiaryLauncher.Model
     {
         public void Delete(string dirPath)
         {
-            Directory.Delete(dirPath);
+            Directory.Delete(dirPath, true);
         }
 
         public bool Exists(string dirPath)
@@ -235,12 +205,28 @@ namespace BestiaryLauncher.Model
     {
         public string Unzip(string filePath)
         {
+            var dirPath = Path.GetDirectoryName(filePath);
             using (ZipArchive archive = ZipFile.OpenRead(filePath))
             {
-                var dirPath = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
-                archive.ExtractToDirectory(dirPath);
-                return dirPath;
+                try
+                {
+                    archive.ExtractToDirectory(dirPath);
+                }
+                catch(System.IO.IOException)
+                {
+                    foreach(var file in archive.Entries)
+                    {
+                        var unzippedFile = Path.Combine(dirPath, file.Name);
+                        if (File.Exists(unzippedFile))
+                        {
+                            File.Move(unzippedFile, unzippedFile + ".bak");
+                        }
+                    }
+                    archive.ExtractToDirectory(dirPath);
+                }
             }
+            File.Delete(filePath);
+            return dirPath;
         }
     }
 

@@ -269,3 +269,5 @@ __pycache__/
 /Bestiary/Resources/DisplayIcons
 /BestiaryLauncher/Resources/manifest.txt
 /BestiaryTestData
+/Bestiary/Bestiary.exe
+/BestiaryReleaseData

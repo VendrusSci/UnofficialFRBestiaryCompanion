@@ -10,9 +10,10 @@ namespace BestiaryLauncher.Model
     public static class ApplicationPaths
     {
         public static string VersionFile = "version.txt";
-        public static string FRDataFile = "FRData.xml";
-        public static string UbcExeFile = "Bestiary.exe";
-        public static string LauncherExeFile = "BestiaryLauncher.exe";
+        //public static string FRDataFile = "FRData.xml";
+        public static string UbcZip = "UnofficialBestiaryCompanion.zip";
+        public static string LauncherZip = "UBCLauncher.zip";
+        public static string LauncherExe = "BestiaryLauncher.exe";
 
         public static string RemoteFRDataFile = "https://raw.githubusercontent.com/VendrusSci/UnofficialFRBestiaryCompanion/master/Bestiary/Resources/FRData.xml";
         public static string RemoteGitReleasePath = "https://github.com/VendrusSci/UnofficialFRBestiaryCompanion/releases/download/";
