@@ -50,16 +50,7 @@ def hash_file(file_name):
     return hash_algorithm.hexdigest()
 
 
-def main():
-    parser = argparse.ArgumentParser(
-        description="utility for generating manifests for UBC"
-    )
-    parser.add_argument(
-        'release_path', help='path to release files to generate manifest for'
-    )
-    args = parser.parse_args()
-
-    release_path = args.release_path
+def generate_manifest(release_path):
     launcher_exe_path = os.path.join(release_path, "UBCLauncher.zip")
     bestiary_exe_path = os.path.join(release_path, "UnofficialBestiaryCompanion.zip")
     familiar_data_zip_path = os.path.join(release_path, "FamiliarData.zip")
@@ -83,6 +74,17 @@ def main():
 
     with open(os.path.join(release_path, "manifest.txt"), "w") as f:
         f.write(json_string)
+
+
+def main():
+    parser = argparse.ArgumentParser(
+        description="utility for generating manifests for UBC"
+    )
+    parser.add_argument(
+        'release_path', help='path to release files to generate manifest for'
+    )
+    args = parser.parse_args()
+    generate_manifest(args.release_path)
 
 
 if __name__ == "__main__":
