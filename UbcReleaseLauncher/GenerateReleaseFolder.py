@@ -15,6 +15,7 @@ icons = "Icons"
 familiar_data = "FamiliarData"
 display_icons = "DisplayIcons"
 view_icons = "ViewIcons"
+full_software_folder = "UnofficialBestiaryCompanion"
 
 
 def clear_folder(folder):
@@ -27,14 +28,27 @@ def clear_folder(folder):
             print(e)
 
 
+def generate_full_software_zip(bestiary_resources, bestiary_main, bestiary_launcher,
+                               bestiary_launcher_resources, output_folder):
+    basedir = os.path.join(os.getcwd(), 'UBC')
+    os.makedirs(os.path.join(basedir, 'Resources'))
+    os.makedirs(os.path.join(basedir, "Unofficial Bestiary Companion\\User Data"))
+    shutil.copytree(bestiary_resources, "UBC\\Unofficial Bestiary Companion\\Resources")
+    shutil.copytree(bestiary_launcher_resources, "UBC\\Resources\\LauncherImages")
+    shutil.copy(os.path.join(bestiary_main, "Bestiary.exe"), "UBC\\Unofficial Bestiary Companion")
+    shutil.copy(os.path.join(bestiary_main, "log4net.dll"), "UBC\\Unofficial Bestiary Companion")
+    shutil.copy(os.path.join(bestiary_launcher, "BestiaryLauncher.exe"), "UBC\\")
+    shutil.copy(os.path.join(bestiary_launcher, "log4net.dll"), "UBC\\")
+    shutil.copy(os.path.join(bestiary_launcher, "Newtonsoft.Json.dll"), "UBC\\")
+    shutil.make_archive("UBC", 'zip', os.getcwd(), "UBC")
+    shutil.move("UBC.zip", output_folder)
+    shutil.rmtree(basedir)
+
+
 def generate_zip_of_files(zip_name, root_folder, contents):
     gen_zip = zipfile.ZipFile(zip_name + '.zip', mode='w')
-    try:
-        for item in contents:
-            gen_zip.write(os.path.join(root_folder, item), item)
-    finally:
-        gen_zip.close()
-    return gen_zip
+    for item in contents:
+        gen_zip.write(os.path.join(root_folder, item), item)
 
 
 def main():
@@ -73,6 +87,9 @@ def main():
     shutil.move(launcher_folder + ".zip", args.output_folder)
     generate_zip_of_files(ubc_folder, bestiary_main, ubc_files)
     shutil.move(ubc_folder + ".zip", args.output_folder)
+
+    generate_full_software_zip(bestiary_resources, bestiary_main, bestiary_launcher,
+                               bestiary_launcher_resources, args.output_folder)
 
     GenerateManifest.generate_manifest(args.output_folder)
 

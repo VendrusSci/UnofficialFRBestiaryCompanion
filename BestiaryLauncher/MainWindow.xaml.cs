@@ -13,7 +13,7 @@ namespace BestiaryLauncher
         public MainWindow()
         {
             InitializeComponent();
-            DataContext = new MainViewModel(new FileLoader(), new TestDownloader(), new FileUnzipper(),
+            DataContext = new MainViewModel(new FileLoader(), new FileDownloader(), new FileUnzipper(),
                 new FileManipulator(), new DirectoryManipulator(), new ProcessStarter(), new ApplicationCloser());
         }
     }
