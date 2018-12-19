@@ -3,6 +3,7 @@ using Bestiary;
 using System.Windows.Input;
 using System.Windows;
 using System.ComponentModel;
+using System.IO;
 
 namespace BestiaryLauncher.ViewModels
 {
@@ -52,7 +53,7 @@ namespace BestiaryLauncher.ViewModels
                 NoUpdate.Execute(null);
             }
 
-            if (directoryManipulator.Exists(ApplicationPaths.GetBestiaryDirectory()))
+            if (fileManipulator.Exists(Path.Combine(ApplicationPaths.GetBestiaryDirectory(), ApplicationPaths.UbcExe)))
             {
                 LaunchButtonText = m_LaunchButtonUpdateAvailable;
                 UbcExists = true;
