@@ -1,5 +1,4 @@
 ﻿using BestiaryLauncher.Model;
-using Bestiary;
 using System.Windows.Input;
 using System.Windows;
 using System.ComponentModel;
