@@ -44,6 +44,17 @@ namespace BestiaryLauncher.Model
                 return null;
             }
         }
+
+        public static void UpdateManifest(IManipulateFiles fileManipulator, ManifestData manifestData)
+        {
+            var fullPath = Path.Combine(ApplicationPaths.GetLauncherResourcesDirectory(), "manifest.txt");
+            if (fileManipulator.Exists(fullPath))
+            {
+                //need something there!
+                var json = JsonConvert.SerializeObject(manifestData);
+                fileManipulator.WriteAllBytes(fullPath, Encoding.ASCII.GetBytes(json));
+            }
+        }
     }
 
     public class ManifestData

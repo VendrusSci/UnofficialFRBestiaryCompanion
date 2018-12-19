@@ -1,5 +1,7 @@
-﻿using System.IO;
+﻿using System.ComponentModel;
+using System.IO;
 using System.Linq;
+using System.Text;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -11,7 +13,7 @@ namespace BestiaryLauncher.Model
         UbcVersion
     }
 
-    public class Updater
+    public class Updater : INotifyPropertyChanged
     {
         private string LatestReleasePath;
         private string LatestVersionNumber;
@@ -47,12 +49,12 @@ namespace BestiaryLauncher.Model
 
         public void LaunchUbc()
         {
-            m_ProcessStarter.Start(Path.Combine(ApplicationPaths.GetBestiaryDirectory(), ApplicationPaths.UbcZip));
+            m_ProcessStarter.Start(Path.Combine(ApplicationPaths.GetBestiaryDirectory(), ApplicationPaths.UbcExe));
         }
 
         public bool SoftwareUpdateAvailable()
         {
-            return StatusChecks.IsVersionDifferent(m_FileLoader, LatestVersionNumber);
+            return IsVersionDifferent(LatestVersionNumber);
         }
 
         public bool LauncherUpdateAvailable()
@@ -81,19 +83,37 @@ namespace BestiaryLauncher.Model
             //Executable
             if(m_LatestManifestData.UnofficialBestiaryCompanionZip != m_LocalManifestData.UnofficialBestiaryCompanionZip)
             {
-                result &= GetFolderAndOverwrite(
+                var interimResult = GetFolderAndOverwrite(
                     Path.Combine(ApplicationPaths.GetBestiaryDirectory(),ApplicationPaths.UbcZip),
                     Path.Combine(LatestReleasePath, ApplicationPaths.UbcZip));
+                if (interimResult)
+                {
+                    m_LocalManifestData.UnofficialBestiaryCompanionZip = m_LatestManifestData.UnofficialBestiaryCompanionZip;
+                    Manifest.UpdateManifest(m_FileManipulator, m_LocalManifestData);
+                }
+                result &= interimResult;
             }
             //DisplayIcons
             if(m_LatestManifestData.DisplayIconsZip != m_LocalManifestData.DisplayIconsZip)
             {
-                result &= GetBestiaryResourcesFolderAndOverwrite("DisplayIcons");
+                var interimResult = GetBestiaryResourcesFolderAndOverwrite("DisplayIcons");
+                if (interimResult)
+                {
+                    m_LocalManifestData.DisplayIconsZip = m_LatestManifestData.DisplayIconsZip;
+                    Manifest.UpdateManifest(m_FileManipulator, m_LocalManifestData);
+                }
+                result &= interimResult;
             }
             //ViewIcons
             if(m_LatestManifestData.ViewIconsZip != m_LocalManifestData.ViewIconsZip)
             {
-                result &= GetBestiaryResourcesFolderAndOverwrite("ViewIcons");
+                var interimResult = GetBestiaryResourcesFolderAndOverwrite("ViewIcons");
+                if (interimResult)
+                {
+                    m_LocalManifestData.ViewIconsZip = m_LatestManifestData.ViewIconsZip;
+                    Manifest.UpdateManifest(m_FileManipulator, m_LocalManifestData);
+                }
+                result &= interimResult;
             }
             return result;
         }
@@ -104,17 +124,35 @@ namespace BestiaryLauncher.Model
             //Icons
             if(m_LatestManifestData.IconsZip != m_LocalManifestData.IconsZip)
             {
-                result &= GetBestiaryResourcesFolderAndOverwrite("Icons");
+                var interimResult = GetBestiaryResourcesFolderAndOverwrite("Icons");
+                if (interimResult)
+                {
+                    m_LocalManifestData.IconsZip = m_LatestManifestData.IconsZip;
+                    Manifest.UpdateManifest(m_FileManipulator, m_LocalManifestData);
+                }
+                result &= interimResult;
             }
             //Images
             if(m_LatestManifestData.ImagesZip != m_LocalManifestData.ImagesZip)
             {
-                result &= GetBestiaryResourcesFolderAndOverwrite("Images");
+                var interimResult = GetBestiaryResourcesFolderAndOverwrite("Images");
+                if (interimResult)
+                {
+                    m_LocalManifestData.ImagesZip = m_LatestManifestData.ImagesZip;
+                    Manifest.UpdateManifest(m_FileManipulator, m_LocalManifestData);
+                }
+                result &= interimResult;
             }
             //FamiliarData folder contents
             if(m_LatestManifestData.FamiliarDataZip != m_LocalManifestData.FamiliarDataZip)
             {
-                result &= GetBestiaryResourcesFolderAndOverwrite("FamiliarData");
+                var interimResult = GetBestiaryResourcesFolderAndOverwrite("FamiliarData");
+                if (interimResult)
+                {
+                    m_LocalManifestData.FamiliarDataZip = m_LatestManifestData.FamiliarDataZip;
+                    Manifest.UpdateManifest(m_FileManipulator, m_LocalManifestData);
+                }
+                result &= interimResult;
             }
             return result;
         }
@@ -134,23 +172,36 @@ namespace BestiaryLauncher.Model
                 }
                 m_FileManipulator.Move(exePath, backupExePath);
                 //Load in new executable
-                result &= GetFolderAndOverwrite(
+                var interimResult = GetFolderAndOverwrite(
                     Path.Combine(ApplicationPaths.GetLauncherDirectory(), ApplicationPaths.LauncherZip),
                     Path.Combine(LatestReleasePath, ApplicationPaths.LauncherZip));
+                if(interimResult)
+                {
+                    m_LocalManifestData.UBCLauncherZip = m_LatestManifestData.UBCLauncherZip;
+                    Manifest.UpdateManifest(m_FileManipulator, m_LocalManifestData);
+                }
+                result &= interimResult;
             }
-            if (m_LatestManifestData.UBCLauncherZip != m_LocalManifestData.UBCLauncherZip)
+            if (m_LatestManifestData.LauncherImagesZip != m_LocalManifestData.LauncherImagesZip)
             {
-                result &= GetFolderAndOverwrite(
+                var interimResult = GetFolderAndOverwrite(
                     ApplicationPaths.GetLauncherImagesDirectory(),
                     Path.Combine(LatestReleasePath, Path.GetFileName(ApplicationPaths.GetLauncherImagesDirectory()) + ".zip")
                     );
+                if (interimResult)
+                {
+                    m_LocalManifestData.LauncherImagesZip = m_LatestManifestData.LauncherImagesZip;
+                    Manifest.UpdateManifest(m_FileManipulator, m_LocalManifestData);
+                }
+                result &= interimResult;
             }
             return result;
         }
 
         public bool UpdateVersionFile()
         {
-            return false;
+            m_FileManipulator.WriteAllBytes(ApplicationPaths.GetVersionPath(), Encoding.ASCII.GetBytes(LatestVersionNumber));
+            return true;
         }
 
         private static string m_FileBackup = ".bak";
@@ -225,5 +276,13 @@ namespace BestiaryLauncher.Model
             }
             return null;
         }
+
+        public bool IsVersionDifferent(string version)
+        {
+            var localVersion = m_FileLoader.LoadAsString(ApplicationPaths.GetVersionPath());
+            return localVersion != version;
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
     }
 }

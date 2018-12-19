@@ -12,6 +12,7 @@ namespace BestiaryLauncher.Model
         public static string VersionFile = "version.txt";
         //public static string FRDataFile = "FRData.xml";
         public static string UbcZip = "UnofficialBestiaryCompanion.zip";
+        public static string UbcExe = "Bestiary.exe";
         public static string LauncherZip = "UBCLauncher.zip";
         public static string LauncherExe = "BestiaryLauncher.exe";
 

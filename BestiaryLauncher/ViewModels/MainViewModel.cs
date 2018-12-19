@@ -2,19 +2,18 @@
 using Bestiary;
 using System.Windows.Input;
 using System.Windows;
+using System.ComponentModel;
 
 namespace BestiaryLauncher.ViewModels
 {
-    public class MainViewModel
+    public class MainViewModel : INotifyPropertyChanged
     {
-        public string LauncherUpdateStatus { get; private set; }
-        public string SoftwareUpdateStatus { get; private set; }
+        public Visibility LauncherUpdateStatus { get; private set; }
+        public Visibility SoftwareUpdateStatus { get; private set; }
         public string LaunchButtonText { get; private set; }
         public string UpdateStatusText { get; private set; }
         public bool UbcExists { get; private set; }
 
-        private string m_Hidden = "Hidden";
-        private string m_Visible = "Visible";
         private string m_LaunchButtonUpdateAvailable = "Postpone Update and Launch";
         private string m_LaunchButtonNoUpdateAvailable = "Launch";
         private string m_UpdateSuccess = "Update Successful";
@@ -31,8 +30,8 @@ namespace BestiaryLauncher.ViewModels
             m_ApplicationCloser = applicationCloser;
             m_DirectoryManipulator = directoryManipulator;
 
-            LauncherUpdateStatus = m_Hidden;
-            SoftwareUpdateStatus = m_Hidden;
+            LauncherUpdateStatus = Visibility.Hidden;
+            SoftwareUpdateStatus = Visibility.Hidden;
             UbcExists = false;
 
             if(m_Updater.SoftwareUpdateAvailable())
@@ -40,12 +39,12 @@ namespace BestiaryLauncher.ViewModels
                 if (m_Updater.LauncherUpdateAvailable())
                 {
                     //Set Launcher update stuff to visible
-                    LauncherUpdateStatus = m_Visible;
+                    LauncherUpdateStatus = Visibility.Visible;
                 }
                 else
                 {
                     //Set UBC update stuff to visible
-                    SoftwareUpdateStatus = m_Visible;
+                    SoftwareUpdateStatus = Visibility.Visible;
                 }
             }
             else
@@ -78,8 +77,8 @@ namespace BestiaryLauncher.ViewModels
                             if(m_Updater.UpdateLauncher())
                             {
                                 UpdateStatusText = "Launcher update complete";
-                                LauncherUpdateStatus = m_Hidden;
-                                SoftwareUpdateStatus = m_Visible;
+                                LauncherUpdateStatus = Visibility.Hidden;
+                                SoftwareUpdateStatus = Visibility.Visible;
                             }
                             else
                             {
@@ -148,8 +147,12 @@ namespace BestiaryLauncher.ViewModels
                             if (m_Updater.FamiliarUpdateAvailable())
                             {
                                 UpdateStatusText = "Updating Familiars...";
-                                result = m_Updater.UpdateFamiliars();
+                                result &= m_Updater.UpdateFamiliars();
                                 UpdateStatusText = result ? m_UpdateSuccess : m_UpdateFail;
+                            }
+                            if(result)
+                            {
+                                m_Updater.UpdateVersionFile();
                             }
                         },
                         onCanExecute: (p) =>
@@ -185,5 +188,7 @@ namespace BestiaryLauncher.ViewModels
         {
             return (m_Updater.UbcUpdateAvailable() || m_Updater.FamiliarUpdateAvailable());
         }
+
+        public event PropertyChangedEventHandler PropertyChanged;
     }
 }

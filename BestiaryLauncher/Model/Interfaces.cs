@@ -7,36 +7,6 @@ using System.Windows;
 
 namespace BestiaryLauncher.Model
 {
-    public static class StatusChecks
-    {
-        public static bool IsVersionDifferent(ILoadFiles loader, string version)
-        {
-            var localVersion = loader.LoadAsString(ApplicationPaths.GetVersionPath());
-            return localVersion != version;
-        }
-
-        public static bool SoftwareExists()
-        {
-            return File.Exists(Path.Combine(ApplicationPaths.GetBestiaryDirectory(), ApplicationPaths.UbcZip));
-        }
-
-        private static bool DownloadAndCompare(ILoadFiles loader, string localPath, IDownloadFiles downloader, string remoteUrl)
-        {
-            bool result = false;
-            var localContents = loader.LoadAsString(localPath);
-            var remoteContents = downloader.DownloadAsString(remoteUrl);
-            
-            if (localContents != null && remoteContents != null)
-            {
-                if (localContents != remoteContents)
-                {
-                    result = true;
-                }
-            }
-            return result;
-        }
-    }
-
     public interface ILoadFiles
     {
         byte[] Load(string filepath);
@@ -217,9 +187,14 @@ namespace BestiaryLauncher.Model
                     foreach(var file in archive.Entries)
                     {
                         var unzippedFile = Path.Combine(dirPath, file.Name);
+                        var backupFile = unzippedFile + ".bak";
+                        if(File.Exists(backupFile))
+                        {
+                            File.Delete(backupFile);
+                        }
                         if (File.Exists(unzippedFile))
                         {
-                            File.Move(unzippedFile, unzippedFile + ".bak");
+                            File.Move(unzippedFile, backupFile);
                         }
                     }
                     archive.ExtractToDirectory(dirPath);
@@ -234,7 +209,12 @@ namespace BestiaryLauncher.Model
     {
         public void Start(string filePath)
         {
-            Process.Start(filePath);
+            var startInfo = new ProcessStartInfo
+            {
+                FileName = filePath,
+                WorkingDirectory = Path.GetDirectoryName(filePath),
+            };
+            Process.Start(startInfo);
         }
     }
 

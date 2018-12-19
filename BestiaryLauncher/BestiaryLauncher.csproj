@@ -66,7 +66,7 @@
     </ApplicationDefinition>
     <Compile Include="Model\ApplicationPaths.cs" />
     <Compile Include="Model\Manifest.cs" />
-    <Compile Include="Model\StatusChecks.cs" />
+    <Compile Include="Model\Interfaces.cs" />
     <Compile Include="Model\Updater.cs" />
     <Compile Include="Model\TestDownloader.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
@@ -116,8 +116,12 @@
       <Name>Bestiary</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Resource Include="FodyWeavers.xml" />
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\packages\Fody.3.3.3\build\Fody.targets" Condition="Exists('..\packages\Fody.3.3.3\build\Fody.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Fody.3.3.3\build\Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Fody.3.3.3\build\Fody.targets'))" />
+  </Target>
 </Project>
