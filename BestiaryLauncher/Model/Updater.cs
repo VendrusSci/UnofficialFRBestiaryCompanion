@@ -257,14 +257,14 @@ namespace BestiaryLauncher.Model
 
         public bool AnyUpdatesRemaining()
         {
-            return (m_LatestManifestData.DisplayIconsZip == m_LocalManifestData.DisplayIconsZip)
+            return !((m_LatestManifestData.DisplayIconsZip == m_LocalManifestData.DisplayIconsZip)
                 && (m_LatestManifestData.FamiliarDataZip == m_LocalManifestData.FamiliarDataZip)
                 && (m_LatestManifestData.IconsZip == m_LocalManifestData.IconsZip)
                 && (m_LatestManifestData.ImagesZip == m_LocalManifestData.ImagesZip)
                 && (m_LatestManifestData.LauncherImagesZip == m_LocalManifestData.LauncherImagesZip)
                 && (m_LatestManifestData.UBCLauncherZip == m_LocalManifestData.UBCLauncherZip)
                 && (m_LatestManifestData.UnofficialBestiaryCompanionZip == m_LocalManifestData.UnofficialBestiaryCompanionZip)
-                && (m_LatestManifestData.ViewIconsZip == m_LocalManifestData.ViewIconsZip);
+                && (m_LatestManifestData.ViewIconsZip == m_LocalManifestData.ViewIconsZip));
         }
 
         private static string m_FileBackup = ".bak";
