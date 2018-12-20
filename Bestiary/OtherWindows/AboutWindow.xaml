@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Bestiary"
         mc:Ignorable="d"
-        Title="About" Height="250" Width="300">
+        Title="About" Height="250" Width="320">
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -13,7 +13,10 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <TextBlock Grid.Row="0"  HorizontalAlignment="Center" TextAlignment="Center" Margin="5" FontWeight="Bold" Text="Unofficial Bestiary Companion Version 1.2.0.0"/>
+        <TextBlock Grid.Row="0"  HorizontalAlignment="Center" TextAlignment="Center" Margin="5" FontWeight="Bold">
+            <Run Text="Unofficial Bestiary Companion Version "/>
+            <Run Text="{Binding Version, Mode=OneTime}"/>
+        </TextBlock>
         <TextBlock Grid.Row="1"  HorizontalAlignment="Center" TextAlignment="Center" Margin="5" TextWrapping="Wrap" Text="All familiar images and information are © Stormlight Workshop LLC."/>
         <TextBlock Grid.Row="2"  HorizontalAlignment="Center" TextAlignment="Center" Margin="5" TextWrapping="Wrap" Text="This software is free and open source, and is intended for personal use only"/>
         <TextBlock Grid.Row="3"  HorizontalAlignment="Center" TextAlignment="Center" Margin="5" TextWrapping="Wrap" Text="While we will endeavour to keep the keep the software and familiar list up to date, no guarantees are made."/>

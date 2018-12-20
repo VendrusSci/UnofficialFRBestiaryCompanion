@@ -7,13 +7,22 @@ using System.Threading.Tasks;
 
 namespace Bestiary.Model
 {
+    enum SpecialState
+    {
+        [Description("Bookmark")]
+        Bookmarked,
+        [Description("No Bookmark")]
+        NotBookmarked,
+        New
+    }
+
     class FamiliarFilters : INotifyPropertyChanged
     {
         //Filters
         public OwnershipStatus[] AvailableOwnedStatus => ListEnumValues<OwnershipStatus>();
         public OwnershipStatus? SelectedOwnedStatus { get; set; }
-        public BookmarkState[] AvailableBookmarkStates => ListEnumValues<BookmarkState>();
-        public BookmarkState? SelectedBookmarkState { get; set; }
+        public SpecialState[] AvailableSpecialStates => ListEnumValues<SpecialState>();
+        public SpecialState? SelectedSpecialState { get; set; }
         public BondingLevels[] AvailableBondingLevels => ListEnumValues<BondingLevels>();
         public BondingLevels? SelectedBondingLevel { get; set; }
         public bool BondingLevelInvert { get; set; }

@@ -153,7 +153,7 @@
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
                         <Label Grid.Column="0" Grid.Row="0" Content="Ownership"/>
-                        <Label Grid.Column="0" Grid.Row="1" Content="Bookmarked"/>
+                        <Label Grid.Column="0" Grid.Row="1" Content="Special"/>
                         <Label Grid.Column="0" Grid.Row="2" Content="Bonding Level"/>
                         <Label Grid.Column="0" Grid.Row="3" Content="Location"/>
                         <Label Grid.Column="0" Grid.Row="4" Content="Availability"/>
@@ -167,8 +167,8 @@
                                 </DataTemplate>
                             </ComboBox.ItemTemplate>
                         </ComboBox>
-                        <ComboBox Grid.Column="1" Grid.Row="1" ItemsSource="{Binding FamiliarParameters.AvailableBookmarkStates}" 
-                                  SelectedItem="{Binding FamiliarParameters.SelectedBookmarkState}" HorizontalAlignment="Stretch">
+                        <ComboBox Grid.Column="1" Grid.Row="1" ItemsSource="{Binding FamiliarParameters.AvailableSpecialStates}" 
+                                  SelectedItem="{Binding FamiliarParameters.SelectedSpecialState}" HorizontalAlignment="Stretch">
                             <ComboBox.ItemTemplate>
                                 <DataTemplate>
                                     <TextBlock Text="{Binding Converter={StaticResource DescConverter}, Mode=OneTime}"/>

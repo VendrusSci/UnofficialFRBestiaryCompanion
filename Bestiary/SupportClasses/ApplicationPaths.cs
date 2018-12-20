@@ -42,5 +42,15 @@ namespace Bestiary
         {
             return Path.Combine(GetResourcesDirectory(), "FamiliarData");
         }
+
+        public static string GetVersionPath()
+        {
+            return Path.Combine("..\\", "Resources", "manifest.txt");
+        }
+
+        public static string GetNewFamsPath()
+        {
+            return Path.Combine(GetFamiliarDataDirectory(), "New.txt");
+        }
     }
 }

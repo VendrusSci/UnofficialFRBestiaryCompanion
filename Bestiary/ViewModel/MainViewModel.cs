@@ -44,6 +44,7 @@ namespace Bestiary.ViewModel
         public FamiliarViewModel[] FilteredFamiliars { get; private set; }
 
         private LambdaCommand m_FetchFamiliars;
+        private List<int> m_NewFams;
 
         public ICommand FetchFamiliars
         {
@@ -103,9 +104,9 @@ namespace Bestiary.ViewModel
                                     UserActionLog.Info("Owned filter cleared");
                                     FamiliarParameters.SelectedOwnedStatus = null;
                                     break;
-                                case BookmarkState bs:
-                                    UserActionLog.Info("Bookmark filter cleared");
-                                    FamiliarParameters.SelectedBookmarkState = null;
+                                case SpecialState bs:
+                                    UserActionLog.Info("Special filter cleared");
+                                    FamiliarParameters.SelectedSpecialState = null;
                                     break;
                                 case BondingLevels bl:
                                     UserActionLog.Info("Bonding filter cleared");
@@ -146,8 +147,8 @@ namespace Bestiary.ViewModel
                             {
                                 case OwnershipStatus b:
                                     return FamiliarParameters.SelectedOwnedStatus != null;
-                                case BookmarkState bs:
-                                    return FamiliarParameters.SelectedBookmarkState != null;
+                                case SpecialState bs:
+                                    return FamiliarParameters.SelectedSpecialState != null;
                                 case BondingLevels bl:
                                     return FamiliarParameters.SelectedBondingLevel != null;
                                 case Sources s:
@@ -207,10 +208,21 @@ namespace Bestiary.ViewModel
                 UserActionLog.Info($"    Filter: Ownership status {FamiliarParameters.SelectedOwnedStatus}");
                 filteredFamiliars = filteredFamiliars.Where(f => f.Owned == FamiliarParameters.SelectedOwnedStatus);
             }
-            if (FamiliarParameters.SelectedBookmarkState != null)
+            if (FamiliarParameters.SelectedSpecialState != null)
             {
-                UserActionLog.Info($"    Filter: Bookmark state {FamiliarParameters.SelectedBookmarkState}");
-                filteredFamiliars = filteredFamiliars.Where(f => f.Bookmarked == FamiliarParameters.SelectedBookmarkState);
+                UserActionLog.Info($"    Filter: Special state {FamiliarParameters.SelectedSpecialState}");
+                if(FamiliarParameters.SelectedSpecialState == SpecialState.Bookmarked)
+                {
+                    filteredFamiliars = filteredFamiliars.Where(f => f.Bookmarked == BookmarkState.Bookmarked);
+                }
+                else if (FamiliarParameters.SelectedSpecialState == SpecialState.NotBookmarked)
+                {
+                    filteredFamiliars = filteredFamiliars.Where(f => f.Bookmarked == BookmarkState.NotBookmarked);
+                }
+                else if (FamiliarParameters.SelectedSpecialState == SpecialState.New)
+                {
+                    filteredFamiliars = filteredFamiliars.Where(f => m_NewFams.Contains(f.Familiar.Id));
+                }
             }
             if (FamiliarParameters.SelectedLocationType != null)
             {
@@ -248,7 +260,7 @@ namespace Bestiary.ViewModel
                         {
                             UserActionLog.Info("All filters cleared");
                             FamiliarParameters.SelectedOwnedStatus = null;
-                            FamiliarParameters.SelectedBookmarkState = null;
+                            FamiliarParameters.SelectedSpecialState = null;
                             FamiliarParameters.SelectedBondingLevel = null;
                             FamiliarParameters.SelectedSource = null;
                             FamiliarParameters.SelectedAvailability = null;  
@@ -351,7 +363,7 @@ namespace Bestiary.ViewModel
                 if (m_openAboutWindow == null)
                 {
                     UserActionLog.Info("About window opened");
-                    m_openAboutWindow = new OpenDialogCommand<AboutWindow>(Window, _ => new AboutWindow());
+                    m_openAboutWindow = new OpenDialogCommand<AboutWindow>(Window, _ => new AboutWindow(m_Version));
                 }
                 return m_openAboutWindow;
             }
@@ -502,12 +514,39 @@ namespace Bestiary.ViewModel
             return filteredFamiliars;
         }
 
+        private string FetchVersion()
+        {
+            try
+            {
+                var manifestText = File.ReadAllText(ApplicationPaths.GetVersionPath());
+                var manifestItems = manifestText.Split(',');
+                var versionInfoArr = manifestItems.First(i => i.Contains("Version")).Split('"');;
+                string version = versionInfoArr.First(i => i.Contains("v"));
+                return version;
+            }
+            catch
+            {
+                return "";
+            }
+        }
+
+        private string m_Version;
         private string m_FRDataPath;
         public MainViewModel(MainWindow window, IModel model, string FRDataPath)
         {
             Window = window;
             Model = model;
             m_FRDataPath = FRDataPath;
+
+            m_Version = FetchVersion();
+            try
+            {
+                m_NewFams = File.ReadAllLines(ApplicationPaths.GetNewFamsPath()).Select(int.Parse).ToList();
+            }
+            catch
+            {
+                m_NewFams = new List<int>();
+            }
 
             UserActionLog.Info("Application opened!");
             FamiliarParameters = new FamiliarFilters();

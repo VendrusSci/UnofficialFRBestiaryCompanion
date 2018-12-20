@@ -142,6 +142,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ViewModel\AboutViewModel.cs" />
     <Compile Include="ViewModel\Converters\EnemyTypeToColourConverter.cs" />
     <Compile Include="ViewModel\Converters\OwnedToBoolConverter.cs" />
     <Compile Include="ViewModel\Dataviews\ColiseumViewModel.cs" />
