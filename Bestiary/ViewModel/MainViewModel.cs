@@ -220,7 +220,7 @@ namespace Bestiary.ViewModel
             if (FamiliarParameters.SelectedAvailability != null)
             {
                 UserActionLog.Info($"    Filter: Availability {FamiliarParameters.SelectedAvailability}");
-                filteredFamiliars = FamiliarParameters.AvailabilityInvert ? filteredFamiliars.Where(f => f.Familiar.Availability == FamiliarParameters.SelectedAvailability) : filteredFamiliars.Where(f => f.Familiar.Availability == FamiliarParameters.SelectedAvailability);
+                filteredFamiliars = FamiliarParameters.AvailabilityInvert ? filteredFamiliars.Where(f => f.Familiar.Availability != FamiliarParameters.SelectedAvailability) : filteredFamiliars.Where(f => f.Familiar.Availability == FamiliarParameters.SelectedAvailability);
             }
             if (FamiliarParameters.SelectedSource != null)
             {
