@@ -14,12 +14,12 @@
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        
-        <TextBlock Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding UpdateStatusText}"/>
+
+        <TextBlock Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Bottom" Text="{Binding UpdateStatusText}"/>
         <Image Grid.Row="0" Grid.RowSpan="3" VerticalAlignment="Top" MinHeight="200" Margin="5" Source="{Binding HeaderImage}"/>
 
         <Grid Grid.Row ="2" Visibility="{Binding SoftwareUpdateStatus}">
@@ -29,19 +29,23 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            
+
             <Button Grid.Row="1" Content="Update All" Command="{Binding UpdateSoftware}"/>
             <Button Grid.Row="2" Content="Update Familiars Only" Command="{Binding UpdateFamiliars}" IsEnabled="{Binding UbcExists}"/>
             <Button Grid.Row="3" Content="{Binding LaunchButtonText}" Command="{Binding NoUpdate}" IsEnabled="{Binding UbcExists}"/>
         </Grid>
-        
+
         <Grid Grid.Row="2" Visibility="{Binding LauncherUpdateStatus}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="101*"/>
+                <ColumnDefinition Width="191*"/>
+            </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Bottom" TextAlignment="Center">
+            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Bottom" TextAlignment="Center" Grid.ColumnSpan="2" Margin="19,0,19,29" Grid.RowSpan="2">
                 <Run FontSize="16" FontWeight="Bold" Text="Launcher is out of date!"/>
                 <LineBreak/>
                 <Run Text="You can still run the software in its current state,"/>
@@ -52,8 +56,8 @@
                 <LineBreak/>
                 <Run FontWeight="Bold" Text="This will automatically restart the launcher."/>
             </TextBlock>
-            <Button Grid.Row="1"  Content="Update Launcher" Command="{Binding UpdateLauncher}"/>
-            <Button Grid.Row="2" Content="Ignore Update and Run UBC" Command="{Binding NoUpdate}" IsEnabled="{Binding UbcExists}"/>
+            <Button Grid.Row="1"  Content="Update Launcher" Command="{Binding UpdateLauncher}" Grid.ColumnSpan="2"/>
+            <Button Grid.Row="2" Content="Ignore Update and Run UBC" Command="{Binding NoUpdate}" IsEnabled="{Binding UbcExists}" Grid.ColumnSpan="2"/>
         </Grid>
     </Grid>
 </Window>

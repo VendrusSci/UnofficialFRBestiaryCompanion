@@ -91,6 +91,10 @@ namespace BestiaryLauncher.ViewModels
                             if (m_Updater.UpdateLauncher())
                             {
                                 UserActionLog.Info("Launcher update successful");
+                                if (!m_Updater.AnyUpdatesRemaining())
+                                {
+                                    m_Updater.UpdateVersion();
+                                }
                                 Thread.Sleep(2000);
                                 m_ProcessStarter.Start(Path.Combine(ApplicationPaths.GetLauncherDirectory(), ApplicationPaths.LauncherExe));
                                 m_ApplicationCloser.Close();
@@ -140,6 +144,10 @@ namespace BestiaryLauncher.ViewModels
                                     UbcExists = true;
                                     LaunchButtonText = m_LaunchButtonNoUpdateAvailable;
                                 }
+                                if (!m_Updater.AnyUpdatesRemaining())
+                                {
+                                    m_Updater.UpdateVersion();
+                                }
                             });
                         },
                         onCanExecute: (p) =>
@@ -180,7 +188,6 @@ namespace BestiaryLauncher.ViewModels
                                 {
                                     UserActionLog.Info("UBC update succeeded");
                                     UpdateStatusText = m_UpdateSuccess;
-                                    HeaderImage = ImageLoader.LoadImage(ApplicationPaths.GetHeaderImagePath());
                                 }
                                 else
                                 {
@@ -200,13 +207,20 @@ namespace BestiaryLauncher.ViewModels
                                     UpdateStatusText = "Update complete!";
                                     UbcExists = true;
                                     LaunchButtonText = "Launch UBC";
-                                    m_Updater.UpdateVersion();
                                 }
                                 else
                                 {
                                     UserActionLog.Error("Familiar update failed");
                                 }
+                                if(!m_Updater.AnyUpdatesRemaining())
+                                {
+                                    m_Updater.UpdateVersion();
+                                }
                             });
+                            if(LaunchButtonText == "Launch UBC")
+                            {
+                                HeaderImage = ImageLoader.LoadImage(ApplicationPaths.GetHeaderImagePath());
+                            }
                         },
                         onCanExecute: (p) =>
                         {
@@ -228,6 +242,10 @@ namespace BestiaryLauncher.ViewModels
                     m_NoUpdate = new LambdaCommand(
                         onExecute: (p) =>
                         {
+                            if (!m_Updater.AnyUpdatesRemaining())
+                            {
+                                m_Updater.UpdateVersion();
+                            }
                             UserActionLog.Info("Launching UBC");
                             m_Updater.LaunchUbc();
                             UserActionLog.Info("Closing launcher");

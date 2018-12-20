@@ -31,10 +31,9 @@ def clear_folder(folder):
 def generate_full_software_zip(bestiary_resources, bestiary_main, bestiary_launcher,
                                bestiary_launcher_resources, output_folder):
     basedir = os.path.join(os.getcwd(), 'UBC')
-    os.makedirs(os.path.join(basedir, 'Resources'))
     os.makedirs(os.path.join(basedir, "Unofficial Bestiary Companion\\User Data"))
     shutil.copytree(bestiary_resources, "UBC\\Unofficial Bestiary Companion\\Resources")
-    shutil.copytree(bestiary_launcher_resources, "UBC\\Resources\\LauncherImages")
+    shutil.copytree(bestiary_launcher_resources, "UBC\\Resources")
     shutil.copy(os.path.join(bestiary_main, "Bestiary.exe"), "UBC\\Unofficial Bestiary Companion")
     shutil.copy(os.path.join(bestiary_main, "log4net.dll"), "UBC\\Unofficial Bestiary Companion")
     shutil.copy(os.path.join(bestiary_main, "log4net.config"), "UBC\\Unofficial Bestiary Companion")
