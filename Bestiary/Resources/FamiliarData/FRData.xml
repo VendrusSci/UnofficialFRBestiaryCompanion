@@ -1827,7 +1827,7 @@
       </Source>
     </Familiar>
     <Familiar>
-      <Availability>Always</Availability>
+      <Availability>Cycling</Availability>
       <FlavourText>Bonepicker gryphons stockpile bones for later consumption.</FlavourText>
       <Id>18437</Id>
       <Name>Duskthicket Bonepicker</Name>
