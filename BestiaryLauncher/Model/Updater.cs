@@ -15,7 +15,7 @@ namespace BestiaryLauncher.Model
     public class Updater : INotifyPropertyChanged
     {
         private string LatestReleasePath;
-        private string LatestVersionNumber;
+        public string LatestVersionNumber;
 
         private ILoadFiles m_FileLoader;
         private IDownloadFiles m_FileDownloader;
@@ -38,12 +38,15 @@ namespace BestiaryLauncher.Model
             m_ProcessStarter = processStarter;
 
             LatestVersionNumber = FetchLatestVersion();
-            LatestReleasePath = Path.Combine(ApplicationPaths.RemoteGitReleasePath, LatestVersionNumber);
+            if(LatestVersionNumber != null)
+            {
+                LatestReleasePath = Path.Combine(ApplicationPaths.RemoteGitReleasePath, LatestVersionNumber);
 
-            m_LatestManifestData = new Manifest(m_FileManipulator)
-                .FetchLatest(m_FileDownloader, Path.Combine(LatestReleasePath, "manifest.txt"));
-            m_LocalManifestData = new Manifest(m_FileManipulator)
-                .FetchLocal(m_FileLoader, Path.Combine(ApplicationPaths.GetLauncherResourcesDirectory(), "manifest.txt"));
+                m_LatestManifestData = new Manifest(m_FileManipulator)
+                    .FetchLatest(m_FileDownloader, Path.Combine(LatestReleasePath, "manifest.txt"));
+                m_LocalManifestData = new Manifest(m_FileManipulator)
+                    .FetchLocal(m_FileLoader, Path.Combine(ApplicationPaths.GetLauncherResourcesDirectory(), "manifest.txt"));
+            }
         }
 
         public void LaunchUbc()

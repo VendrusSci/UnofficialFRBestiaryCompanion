@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Bestiary.ViewWindows"
         mc:Ignorable="d"
         WindowStartupLocation="CenterOwner"
-        Title="ColiseumView" Height="450" Width="800">
+        Title="ColiseumView" Height="500" Width="800">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>

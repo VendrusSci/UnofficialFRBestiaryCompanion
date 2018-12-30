@@ -142,7 +142,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="OptionsWindows\ClearBookmarksWindow.xaml.cs">
+      <DependentUpon>ClearBookmarksWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewModel\AboutViewModel.cs" />
+    <Compile Include="ViewModel\ClearBookmarksViewModel.cs" />
     <Compile Include="ViewModel\Converters\EnemyTypeToColourConverter.cs" />
     <Compile Include="ViewModel\Converters\OwnedToBoolConverter.cs" />
     <Compile Include="ViewModel\Dataviews\ColiseumViewModel.cs" />
@@ -158,6 +162,10 @@
     <Compile Include="ViewWindows\VenueControl.xaml.cs">
       <DependentUpon>VenueControl.xaml</DependentUpon>
     </Compile>
+    <Page Include="OptionsWindows\ClearBookmarksWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="OtherWindows\AboutWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>XamlIntelliSenseFileGenerator</Generator>

@@ -84,19 +84,20 @@
         </Grid.RowDefinitions>
         <Menu Grid.Row="0" Height="20">
             <MenuItem Width="Auto" Header="Options">
-                <MenuItem Width="Auto" Header="Add new Familiar" Command="{Binding OpenAddFamiliarWindow}"/>
-                <MenuItem Width="Auto" Header="Delete Familiar" Command="{Binding OpenDeleteFamiliarWindow}"/>
-                <MenuItem Width="Auto" Header="Initialisation Options" Command="{Binding OpenInitialisationWindow}"/>
+                <MenuItem Width="Auto" Header="Clear Bookmarks" Command="{Binding OpenClearBookmarksWindow}"/>
                 <MenuItem Width="Auto" Header="Copyable Results List" Command="{Binding OpenResultListWindow}"/>
             </MenuItem>
             <MenuItem Width="Auto" Header="Views">
                 <MenuItem Width="Auto" Header="Flight Rising Bestiary" Command="{Binding OpenFRBestiaryView}"/>
                 <MenuItem Width="Auto" Header="Coliseum" Command="{Binding OpenColiseumView}"/>
             </MenuItem>
-            <MenuItem Width="Auto" Header="Other">
+            <MenuItem Width="Auto" Header="Help">
                 <MenuItem Width="Auto" Header="Support" Command="{Binding OpenSupportInfoWindow}"/>
-                <MenuItem Width="Auto" Header="Check for Updates" Command="{Binding OpenFetchUpdateWindow}"/>
                 <MenuItem Width="Auto" Header="About" Command="{Binding OpenAboutWindow}"/>
+            </MenuItem>
+            <MenuItem Width="Auto" Header="Advanced">
+                <MenuItem Width="Auto" Header="Add new Familiar" Command="{Binding OpenAddFamiliarWindow}"/>
+                <MenuItem Width="Auto" Header="Delete Familiar" Command="{Binding OpenDeleteFamiliarWindow}"/>
             </MenuItem>
         </Menu>
         <Grid Grid.Row="1">
@@ -213,7 +214,7 @@
                         </ComboBox>
 
                         <Button Grid.Column="2" Grid.Row="0" Content="Clear" Command="{Binding ClearOption}" CommandParameter="{Binding FamiliarParameters.SelectedOwnedStatus}"/>
-                        <Button Grid.Column="2" Grid.Row="1" Content="Clear" Command="{Binding ClearOption}" CommandParameter="{Binding FamiliarParameters.SlectedSpecialState}"/>
+                        <Button Grid.Column="2" Grid.Row="1" Content="Clear" Command="{Binding ClearOption}" CommandParameter="{Binding FamiliarParameters.SelectedSpecialState}"/>
                         <Button Grid.Column="2" Grid.Row="2" Content="Clear" Command="{Binding ClearOption}" CommandParameter="{Binding FamiliarParameters.SelectedBondingLevel}"/>
                         <Button Grid.Column="2" Grid.Row="3" Content="Clear" Command="{Binding ClearOption}" CommandParameter="{Binding FamiliarParameters.SelectedLocationType}"/>
                         <Button Grid.Column="2" Grid.Row="4" Content="Clear" Command="{Binding ClearOption}" CommandParameter="{Binding FamiliarParameters.SelectedAvailability}"/>
@@ -319,6 +320,15 @@
                         <DataGrid.InputBindings>
                             <MouseBinding MouseAction="LeftDoubleClick" Command="{Binding OpenDataFamiliarWindow}" CommandParameter="{Binding FilteredFamiliars/}"/>
                         </DataGrid.InputBindings>
+                        <DataGrid.ContextMenu>
+                            <ContextMenu ItemsSource="{Binding ResultsActions}">
+                                <ContextMenu.ItemTemplate>
+                                    <DataTemplate DataType="MenuItem">
+                                        <MenuItem Header="{Binding Name}" Command="{Binding Action}"/>
+                                    </DataTemplate>
+                                </ContextMenu.ItemTemplate>
+                            </ContextMenu>
+                        </DataGrid.ContextMenu>
                         <DataGrid.Columns>
                             <DataGridTemplateColumn Header="Icon" Width="Auto" IsReadOnly="True">
                                 <DataGridTemplateColumn.CellTemplate>

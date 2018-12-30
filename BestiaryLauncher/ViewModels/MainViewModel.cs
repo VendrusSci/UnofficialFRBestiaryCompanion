@@ -13,6 +13,7 @@ namespace BestiaryLauncher.ViewModels
     {
         public Visibility LauncherUpdateStatus { get; private set; }
         public Visibility SoftwareUpdateStatus { get; private set; }
+        public Visibility InternetConnectionStatus { get; private set; }
         public string LaunchButtonText { get; private set; }
         public string UpdateStatusText { get; private set; }
         public bool UbcExists { get; private set; }
@@ -23,6 +24,8 @@ namespace BestiaryLauncher.ViewModels
         private string m_UpdateSuccess = "Update Successful";
         private string m_UpdateFail = "Update Failed, check connection or report bug";
 
+        private bool m_InternetExists = true;
+
         private ICloseApplications m_ApplicationCloser;
         private IStartProcesses m_ProcessStarter;
         private IManipulateDirectories m_DirectoryManipulator;
@@ -32,37 +35,18 @@ namespace BestiaryLauncher.ViewModels
             IStartProcesses processStarter, ICloseApplications applicationCloser)
         {
             m_Updater = new Updater(fileLoader, fileDownloader, fileUnzipper, fileManipulator, directoryManipulator, processStarter);
+            m_InternetExists = m_Updater.LatestVersionNumber != null;
+
             m_ApplicationCloser = applicationCloser;
             m_DirectoryManipulator = directoryManipulator;
             m_ProcessStarter = processStarter;
 
             LauncherUpdateStatus = Visibility.Hidden;
             SoftwareUpdateStatus = Visibility.Hidden;
+            InternetConnectionStatus = Visibility.Hidden;
             UbcExists = false;
 
             HeaderImage = ImageLoader.LoadImage(ApplicationPaths.GetHeaderImagePath());
-
-            if (m_Updater.SoftwareUpdateAvailable())
-            {
-                UserActionLog.Info("Version different, update available");
-                if (m_Updater.LauncherUpdateAvailable())
-                {
-                    UserActionLog.Info("Launcher update available");
-                    //Set Launcher update stuff to visible
-                    LauncherUpdateStatus = Visibility.Visible;
-                }
-                else
-                {
-                    UserActionLog.Info("No launcher update available");
-                    //Set UBC update stuff to visible
-                    SoftwareUpdateStatus = Visibility.Visible;
-                }
-            }
-            else
-            {
-                UserActionLog.Info("Version identical, launching UBC");
-                NoUpdate.Execute(null);
-            }
 
             if (fileManipulator.Exists(Path.Combine(ApplicationPaths.GetBestiaryDirectory(), ApplicationPaths.UbcExe)))
             {
@@ -74,6 +58,36 @@ namespace BestiaryLauncher.ViewModels
                 UserActionLog.Info("No UBC exists, awaiting first install");
                 LaunchButtonText = "Awaiting Install";
                 UbcExists = false;
+            }
+
+            if (m_InternetExists)
+            {
+                if (m_Updater.SoftwareUpdateAvailable())
+                {
+                    UserActionLog.Info("Version different, update available");
+                    if (m_Updater.LauncherUpdateAvailable())
+                    {
+                        UserActionLog.Info("Launcher update available");
+                        //Set Launcher update stuff to visible
+                        LauncherUpdateStatus = Visibility.Visible;
+                    }
+                    else
+                    {
+                        UserActionLog.Info("No launcher update available");
+                        //Set UBC update stuff to visible
+                        SoftwareUpdateStatus = Visibility.Visible;
+                    }
+                }
+                else
+                {
+                    UserActionLog.Info("Version identical, launching UBC");
+                    NoUpdate.Execute(null);
+                }
+            }
+            else
+            {
+                UserActionLog.Error("Cannot access Git, no update checking/updating available");
+                InternetConnectionStatus = Visibility.Visible;
             }
         }
 
@@ -217,10 +231,7 @@ namespace BestiaryLauncher.ViewModels
                                     m_Updater.UpdateVersion();
                                 }
                             });
-                            if(LaunchButtonText == "Launch UBC")
-                            {
-                                HeaderImage = ImageLoader.LoadImage(ApplicationPaths.GetHeaderImagePath());
-                            }
+                            HeaderImage = ImageLoader.LoadImage(ApplicationPaths.GetHeaderImagePath());
                         },
                         onCanExecute: (p) =>
                         {

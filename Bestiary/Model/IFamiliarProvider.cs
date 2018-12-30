@@ -58,6 +58,7 @@ namespace Bestiary.Model
                 {
                     OwnedFamiliar?.Update(f => f.BondingLevel = value.Value);
                     MainViewModel.UserActionLog.Debug($"Bonding level set as {value.Value} for {Familiar.Name} ({Familiar.Id})");
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("BondLevel"));
                 }
             }
         }

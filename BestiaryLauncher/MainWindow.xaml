@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BestiaryLauncher"
         mc:Ignorable="d"
-        Title="UBC Launcher" Height="450" Width="300">
+        Title="UBC Launcher" Height="450" Width="320">
     <Window.Resources>
         <Style TargetType="{x:Type Button}">
             <Setter Property="VerticalContentAlignment" Value="Center"/>
@@ -22,7 +22,18 @@
         <TextBlock Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Bottom" Text="{Binding UpdateStatusText}"/>
         <Image Grid.Row="0" Grid.RowSpan="3" VerticalAlignment="Top" MinHeight="200" Margin="5" Source="{Binding HeaderImage}"/>
 
-        <Grid Grid.Row ="2" Visibility="{Binding SoftwareUpdateStatus}">
+        <Grid Grid.Row="2" Visibility="{Binding InternetConnectionStatus}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Row="0" VerticalAlignment="Bottom" HorizontalAlignment="Center" 
+                       TextAlignment="Center" FontWeight="Bold" Margin="10" FontSize="16"
+                       Text="Cannot connect to update source"/>
+            <Button Grid.Row="3" Content="Launch UBC" Command="{Binding NoUpdate}" IsEnabled="{Binding UbcExists}"/>
+        </Grid>
+        
+        <Grid Grid.Row="2" Visibility="{Binding SoftwareUpdateStatus}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="Auto"/>
@@ -30,16 +41,15 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
+            <TextBlock Grid.Row="0" VerticalAlignment="Bottom" HorizontalAlignment="Center" 
+                       TextAlignment="Center" FontWeight="Bold" Margin="10" FontSize="16"
+                       Text="Sofware update available!"/>
             <Button Grid.Row="1" Content="Update All" Command="{Binding UpdateSoftware}"/>
             <Button Grid.Row="2" Content="Update Familiars Only" Command="{Binding UpdateFamiliars}" IsEnabled="{Binding UbcExists}"/>
             <Button Grid.Row="3" Content="{Binding LaunchButtonText}" Command="{Binding NoUpdate}" IsEnabled="{Binding UbcExists}"/>
         </Grid>
 
         <Grid Grid.Row="2" Visibility="{Binding LauncherUpdateStatus}">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="101*"/>
-                <ColumnDefinition Width="191*"/>
-            </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="Auto"/>

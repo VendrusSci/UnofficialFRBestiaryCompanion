@@ -91,12 +91,12 @@ namespace Bestiary.ViewModel.Dataviews
 
         private void OnFamiliarCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            MainViewModel.UserActionLog.Debug($"Change event raised ({e.Action})");
+            //MainViewModel.UserActionLog.Debug($"Change event raised ({e.Action})");
             if (e.NewItems != null)
             {
                 foreach (var newFamiliar in e.NewItems.OfType<FamiliarViewModel>())
                 {
-                    MainViewModel.UserActionLog.Debug($"now listening for changes to ({newFamiliar.Info.Familiar.Name})");
+                    //MainViewModel.UserActionLog.Debug($"now listening for changes to ({newFamiliar.Info.Familiar.Name})");
                     newFamiliar.PropertyChanged += OnSingleFamiliarChanged;
                 }
             }
@@ -104,7 +104,7 @@ namespace Bestiary.ViewModel.Dataviews
             {
                 foreach (var oldFamiliar in e.OldItems.OfType<FamiliarViewModel>())
                 {
-                    MainViewModel.UserActionLog.Debug($"no longer listening for changes to ({oldFamiliar.Info.Familiar.Name})");
+                    //MainViewModel.UserActionLog.Debug($"no longer listening for changes to ({oldFamiliar.Info.Familiar.Name})");
                     oldFamiliar.PropertyChanged -= OnSingleFamiliarChanged;
                 }
             }

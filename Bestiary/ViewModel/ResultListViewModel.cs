@@ -1,10 +1,6 @@
 ﻿using Bestiary.Model;
-using System;
-using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 
@@ -20,8 +16,8 @@ namespace Bestiary.ViewModel
         private string NotCopied = "Copy to Clipboard";
         private string Copied = "Text Copied!";
 
-        private FamiliarViewModel[] m_Familiars;
-        public ResultListViewModel(FamiliarViewModel[] familiars)
+        private ObservableCollection<FamiliarViewModel> m_Familiars;
+        public ResultListViewModel(ObservableCollection<FamiliarViewModel> familiars)
         {
             m_Familiars = familiars;
 

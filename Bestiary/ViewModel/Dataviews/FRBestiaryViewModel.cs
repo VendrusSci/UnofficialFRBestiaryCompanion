@@ -14,6 +14,7 @@ namespace Bestiary.ViewModel.Dataviews
     class FRBestiaryViewModel : INotifyPropertyChanged
     {
         private IModel m_Model;
+        private int[] m_SortedFamiliarIds;
         private OwnershipStatus[] m_AvailableOwnedStatus;
         private BondingLevels[] m_AvailableBondingLevels;
         private LocationTypes[] m_AvailableLocationTypes;
@@ -29,6 +30,7 @@ namespace Bestiary.ViewModel.Dataviews
             RightArrow = ImageLoader.LoadImage(Path.Combine(ApplicationPaths.GetResourcesDirectory(), "ViewIcons", "arrow_right.png"));
 
             Familiars = new BestiaryViewInfo[8];
+            m_SortedFamiliarIds = m_Model.Familiars.OrderBy(f => m_Model.LookupFamiliar(f).Fetch().Name).ToArray();            
 
             LoadFamiliars();
         }
@@ -63,7 +65,7 @@ namespace Bestiary.ViewModel.Dataviews
                             }
                             else if(m_PageCount + change >= m_MaxPages)
                             {
-                                m_PageCount = m_MaxPages;
+                                m_PageCount = m_MaxPages-1;
                             }
                             else
                             {
@@ -105,14 +107,21 @@ namespace Bestiary.ViewModel.Dataviews
         {
             for(int position = 0; position < 8; position++)
             {
-                Familiars[position] = new BestiaryViewInfo(m_Model, LoadFamiliar(position), m_AvailableOwnedStatus, m_AvailableBondingLevels, m_AvailableLocationTypes);
+                try
+                {
+                    Familiars[position] = new BestiaryViewInfo(m_Model, LoadFamiliar(position), m_AvailableOwnedStatus, m_AvailableBondingLevels, m_AvailableLocationTypes);
+                }
+                catch
+                {
+                    Familiars[position] = null;
+                }
             }
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Familiars)));
         }
 
         private FamiliarInfo LoadFamiliar(int position)
         {
-            int Id = m_Model.Familiars.ElementAt(m_PageCount * 8 + position);
+            int Id = m_SortedFamiliarIds[m_PageCount * 8 + position];
             return new FamiliarInfo(m_Model.LookupFamiliar(Id), m_Model.LookupOwnedFamiliar(Id), m_Model.LookupBookmarkedFamiliar(Id));
         }
 
@@ -136,6 +145,7 @@ namespace Bestiary.ViewModel.Dataviews
             AvailableLocationTypes = availableLocationTypes;
             AvailableOwnedStatus = availableOwnedStatus;
             AvailableBondingLevels = availableBondingLevels;
+
             Image = ImageLoader.LoadImage(Path.Combine(ApplicationPaths.GetResourcesDirectory(), "Images", FamiliarInfo.Familiar.Id + ".png"));
             OwnedButtonText = FamiliarInfo.OwnedFamiliar != null ? m_setNotOwned : m_setOwned;
         }

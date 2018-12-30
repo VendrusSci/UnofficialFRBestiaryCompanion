@@ -7,6 +7,9 @@ using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using Bestiary.Model;
 using Bestiary.ViewWindows;
+using Bestiary.OptionsWindows;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 
 namespace Bestiary.ViewModel
 {
@@ -41,7 +44,7 @@ namespace Bestiary.ViewModel
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public FamiliarViewModel[] FilteredFamiliars { get; private set; }
+        public ObservableCollection<FamiliarViewModel> FilteredFamiliars { get; private set; }
 
         private LambdaCommand m_FetchFamiliars;
         private List<int> m_NewFams;
@@ -77,10 +80,22 @@ namespace Bestiary.ViewModel
                             }
                             UserActionLog.Info("Applying search");
                             tempFamiliars = ApplySearch(tempFamiliars);
-                            FilteredFamiliars = tempFamiliars
-                                .Select(f => new FamiliarViewModel(m_Model, f, FamiliarParameters.AvailableLocationTypes))
-                                .ToArray();
-                            FilteredFamiliars = ApplySort(FilteredFamiliars);
+                            var tempFamiliarViewModels = tempFamiliars
+                                .Select(f => new FamiliarViewModel(m_Model, f, FamiliarParameters.AvailableLocationTypes)).ToArray();
+                            tempFamiliarViewModels = ApplySort(tempFamiliarViewModels);
+
+                            FilteredFamiliars = new ObservableCollection<FamiliarViewModel>();
+                            FilteredFamiliars.CollectionChanged += OnFamiliarCollectionChanged;
+                            foreach (var familiar in tempFamiliarViewModels)
+                            {
+                                FilteredFamiliars.Add(familiar);
+                            }
+
+                            ResultCount = FilteredFamiliars.Count();
+                            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("OwnedCount"));
+                            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("AwakenedCount"));
+                            //OwnedCount = FilteredFamiliars.Count(f => f.Info.Owned == OwnershipStatus.Owned);
+                            //AwakenedCount = FilteredFamiliars.Count(f => f.Info.BondLevel == BondingLevels.Awakened);
                         }
                     );
                 }
@@ -180,7 +195,15 @@ namespace Bestiary.ViewModel
                         onExecute: (p) =>
                         {
                             UserActionLog.Info("Applying sort");
-                            FilteredFamiliars = ApplySort(FilteredFamiliars);
+                            var tempFamiliars = ApplySort(FilteredFamiliars.ToArray());
+                            FilteredFamiliars = new ObservableCollection<FamiliarViewModel>();
+                            FilteredFamiliars.CollectionChanged += OnFamiliarCollectionChanged;
+                            foreach (var familiar in tempFamiliars)
+                            {
+                                FilteredFamiliars.Add(familiar);
+                            }
+                            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("OwnedCount"));
+                            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("AwakenedCount"));
                         }
                     );
                 }
@@ -192,8 +215,8 @@ namespace Bestiary.ViewModel
         internal IModel Model { get => m_Model; set => m_Model = value; }
 
         public int ResultCount { get; set; }
-        public int OwnedCount { get; set; }
-        public int AwakenedCount { get; set; }
+        public int OwnedCount => FilteredFamiliars.Where(f => f.Info.Owned == OwnershipStatus.Owned).Count();
+        public int AwakenedCount => FilteredFamiliars.Where(f => f.Info.BondLevel == BondingLevels.Awakened).Count();
         private IEnumerable<FamiliarInfo> ApplyFilters(IEnumerable<FamiliarInfo> familiars)
         {
             IEnumerable<FamiliarInfo> filteredFamiliars = familiars;
@@ -240,10 +263,6 @@ namespace Bestiary.ViewModel
                 var lookingFor = FamiliarParameters.SourceMap[FamiliarParameters.SelectedSource.Value];
                 filteredFamiliars = filteredFamiliars.Where(f => f.Familiar.Source.GetType() == lookingFor);
             }
-
-            ResultCount = filteredFamiliars.Count();
-            OwnedCount = filteredFamiliars.Count(f => f.Owned == OwnershipStatus.Owned);
-            AwakenedCount = filteredFamiliars.Count(f => f.BondLevel == BondingLevels.Awakened);
 
             return filteredFamiliars;
         }
@@ -451,6 +470,23 @@ namespace Bestiary.ViewModel
             }
         }
 
+        private BaseCommand m_OpenClearBookmarksWindow;
+        public ICommand OpenClearBookmarksWindow
+        {
+            get
+            {
+                if(m_OpenClearBookmarksWindow == null)
+                {
+                    m_OpenClearBookmarksWindow = new OpenDialogCommand<ClearBookmarksWindow>(
+                        Window,
+                        _ => new ClearBookmarksWindow(m_Model),
+                        afterClosed: _ => FetchFamiliars.Execute(null)
+                    );
+                }
+                return m_OpenClearBookmarksWindow;
+            }
+        }
+
         private FamiliarViewModel[] ApplySort(FamiliarViewModel[] familiars)
         {
             FamiliarViewModel[] sortedFamiliars = familiars;
@@ -510,7 +546,6 @@ namespace Bestiary.ViewModel
                     }
                 }
             }
-            SearchText = "";
             return filteredFamiliars;
         }
 
@@ -548,26 +583,177 @@ namespace Bestiary.ViewModel
                 m_NewFams = new List<int>();
             }
 
+            SetResultsActions();
+
             UserActionLog.Info("Application opened!");
             FamiliarParameters = new FamiliarFilters();
             FetchFamiliars.Execute(null);
             SelectedSortType = SortTypes.Alphabetical;
             SortResults.Execute(null);
             UserActionLog.Info("Familiars loaded on open");
-
-            try
-            {
-                var bestiaryIconPath = Path.Combine(ApplicationPaths.GetResourcesDirectory(), "bestiary.png");
-                Icon = ImageLoader.LoadImage(bestiaryIconPath);
-            }
-            catch (FileNotFoundException)
-            {
-                UserActionLog.Error("Bestiary file not found");
-                // :(
-            }
-
         }
+
+        private void OnFamiliarCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            //MainViewModel.UserActionLog.Debug($"Change event raised ({e.Action})");
+            if (e.NewItems != null)
+            {
+                foreach (var newFamiliar in e.NewItems.OfType<FamiliarViewModel>())
+                {
+                    //MainViewModel.UserActionLog.Debug($"now listening for changes to ({newFamiliar.Info.Familiar.Name})");
+                    newFamiliar.PropertyChanged += OnSingleFamiliarChanged;
+                }
+            }
+            if (e.OldItems != null)
+            {
+                foreach (var oldFamiliar in e.OldItems.OfType<FamiliarViewModel>())
+                {
+                    //MainViewModel.UserActionLog.Debug($"no longer listening for changes to ({oldFamiliar.Info.Familiar.Name})");
+                    oldFamiliar.PropertyChanged -= OnSingleFamiliarChanged;
+                }
+            }
+        }
+
+        private void OnSingleFamiliarChanged(object sender, PropertyChangedEventArgs e)
+        {
+            var familiar = sender as FamiliarViewModel;
+            if (familiar != null)
+            {
+                UserActionLog.Debug($"noticed change on familiar ({familiar.Info.Familiar.Name})");
+            }
+            else
+            {
+                UserActionLog.Debug($"noticed change on familiar (???)");
+            }
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("OwnedCount"));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("AwakenedCount"));
+        }
+
+        public ObservableCollection<ResultsAction> ResultsActions { get; private set; }
+        private void SetResultsActions()
+        {
+            ResultsActions = new ObservableCollection<ResultsAction>();
+            ResultsActions.Add(new ResultsAction("Set to Owned", SetResultsOwned));
+            ResultsActions.Add(new ResultsAction("Set to Not Owned", SetResultsNotOwned));
+            ResultsActions.Add(new ResultsAction("Set to Awakened", SetResultsAwakened));
+            ResultsActions.Add(new ResultsAction("Set to Wary", SetResultsWary));
+        }
+
+        private LambdaCommand m_SetResultsAwakened;
+        public ICommand SetResultsAwakened
+        {
+            get
+            {
+                if(m_SetResultsAwakened == null)
+                {
+                    m_SetResultsAwakened = new LambdaCommand(
+                        onExecute: (p) =>
+                        {
+                            foreach(var familiar in FilteredFamiliars)
+                            {
+                                if(familiar.Info.Owned == OwnershipStatus.Owned)
+                                {
+                                    familiar.Info.BondLevel = BondingLevels.Awakened;
+                                }
+                            }
+                        }
+                    );
+                }
+                return m_SetResultsAwakened;
+            }
+        }
+
+        private LambdaCommand m_SetResultsWary;
+        public ICommand SetResultsWary
+        {
+            get
+            {
+                if (m_SetResultsWary == null)
+                {
+                    m_SetResultsWary = new LambdaCommand(
+                        onExecute: (p) =>
+                        {
+                            foreach (var familiar in FilteredFamiliars)
+                            {
+                                if (familiar.Info.Owned == OwnershipStatus.Owned)
+                                {
+                                    familiar.Info.BondLevel = BondingLevels.Wary;
+                                }
+                            }
+                        }
+                    );
+                }
+                return m_SetResultsWary;
+            }
+        }
+
+        private LambdaCommand m_SetResultsOwned;
+        public ICommand SetResultsOwned
+        {
+            get
+            {
+                if (m_SetResultsOwned == null)
+                {
+                    m_SetResultsOwned = new LambdaCommand(
+                        onExecute: (p) =>
+                        {
+                            foreach (var familiar in FilteredFamiliars)
+                            {
+                                if (familiar.Info.Owned != OwnershipStatus.Owned)
+                                {
+                                    familiar.SetOwned.Execute(null);
+                                }
+                            }
+                        }
+                    );
+                }
+                return m_SetResultsOwned;
+            }
+        }
+
+        private LambdaCommand m_SetResultsNotOwned;
+        public ICommand SetResultsNotOwned
+        {
+            get
+            {
+                if (m_SetResultsNotOwned == null)
+                {
+                    m_SetResultsNotOwned = new LambdaCommand(
+                        onExecute: (p) =>
+                        {
+                            foreach (var familiar in FilteredFamiliars)
+                            {
+                                if (familiar.Info.Owned == OwnershipStatus.Owned)
+                                {
+                                    familiar.Info.OwnedFamiliar.Delete();
+                                }
+                            }
+                            FetchFamiliars.Execute(null);
+                        }
+                    );
+                }
+                return m_SetResultsNotOwned;
+            }
+        }
+
+
 
         public static readonly log4net.ILog UserActionLog = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
     }
+
+
+    class ResultsAction : INotifyPropertyChanged
+    {
+        public string Name { get; private set; }
+        public ICommand Action { get; private set; }
+
+        public ResultsAction(string name, ICommand action)
+        {
+            Name = name;
+            Action = action;
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+    }
+
 }
