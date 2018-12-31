@@ -1,0 +1,245 @@
+﻿<Window x:Class="Bestiary.OtherWindows.UserGuideWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Bestiary.OtherWindows"
+        mc:Ignorable="d"
+        Title="UserGuideWindow" Height="450" Width="800">
+    <Grid>
+        <TabControl TabStripPlacement="Left">
+            <TabItem Header="Getting Started">
+                <Grid Margin="10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Grid.Column="0" FontSize="16" FontWeight="Bold" Text="Getting Started"/>
+                    <ScrollViewer Grid.Row="1" Grid.Column="0">
+                        <TextBlock  TextWrapping="WrapWithOverflow">
+                            <Run Text="Welcome to the Unofficial Bestiary Companion!"/>
+                            <LineBreak/>
+                            <Run Text="This section is a quick guide to getting your software set up with the familiars you own"/>
+                            <LineBreak/>
+                            <LineBreak/>
+                            <Run FontWeight="Bold" FontSize="14" Text="Entering Familiars"/>
+                            <LineBreak/>
+                            <Run Text="Individual familiars can be set as 'owned' using the 'Gotcha!' button in the results list. Once registered as owned, their bonding level and location in your account can be set. Neither of these are required, but setting them allows you to filter results based on those settings."/>
+                            <LineBreak/>
+                            <LineBreak/>
+                            <Run Text="Familiars can be set in bulk using the right-click context menu options. These options act on the current list of results, and can do any of the following:"/>
+                            <LineBreak/>
+                            <BulletDecorator>
+                                <BulletDecorator.Bullet>
+                                    <Ellipse Height="5" Width="5" Fill="Black"/>
+                                </BulletDecorator.Bullet>
+                                <TextBlock Text=" Set to Owned"/>
+                            </BulletDecorator>
+                            <LineBreak/>
+                            <BulletDecorator>
+                                <BulletDecorator.Bullet>
+                                    <Ellipse Height="5" Width="5" Fill="Black"/>
+                                </BulletDecorator.Bullet>
+                                <TextBlock Text=" Set to Not Owned"/>
+                            </BulletDecorator>
+                            <LineBreak/>
+                            <BulletDecorator>
+                                <BulletDecorator.Bullet>
+                                    <Ellipse Height="5" Width="5" Fill="Black"/>
+                                </BulletDecorator.Bullet>
+                                <TextBlock Text=" Set to Awakened"/>
+                            </BulletDecorator>
+                            <LineBreak/>
+                            <BulletDecorator>
+                                <BulletDecorator.Bullet>
+                                    <Ellipse Height="5" Width="5" Fill="Black"/>
+                                </BulletDecorator.Bullet>
+                                <TextBlock Text=" Set to Wary"/>
+                            </BulletDecorator>
+                            <LineBreak/>
+                            <LineBreak/>
+                            <Run Text="Awakened and Wary setting will only act on familiars in the results list that are already owned. Setting any of these options on a results list with a large number of results may take some time, but typically under a minute in all cases. This option is most effectively used in conjunction with filters (see Filters, Searching and Sorting)."/>
+                            <LineBreak/>
+                            <Run Text="If a familiar is set as Owned that should not be, this can be changed by double-clicking the familiar to access the Info window for that familiar (see Familiar Info tab)"/>
+                        </TextBlock>
+                    </ScrollViewer>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Interface">
+                <Grid Margin="10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Grid.Column="0" FontSize="16" FontWeight="Bold" Text="Interface" Height="Auto"/>
+                    <ScrollViewer Grid.Row="1" Grid.Column="0">
+                        <TextBlock TextWrapping="Wrap" MaxHeight="370">
+                            <Run Text="This section is a guide to the various methods of specifying familiars to display."/>
+                            <LineBreak/>
+                            <LineBreak/>
+                            <Run FontSize="14" FontWeight="Bold" Text="Filters"/>
+                            <LineBreak/>
+                            <Run Text="All filters are optional dropdown boxes which you can click to select the desired category of familiar. Multiple filters can be used at a time. Each filter has a Clear button beside it, which can be used to clear the filter value and prevent it from affecting the results. Some filters have an 'Exclude' checkbox beside them, which can be used to invert the results (i.e. having Awakened and Exclude selected in the Bonding Level filter will return all familiars that are not Awakened)."/>
+                            <LineBreak/>
+                            <LineBreak/>
+                            <Run Text="The filter options are as follows:"/>
+                            <LineBreak/>
+                            <Run Text="Ownership - Whether or not you have set the familiar as Owned"/>
+                            <LineBreak/>
+                            <Run Text="Bonding Level - What level you have set the bonding level to"/>
+                            <LineBreak/>
+                            <Run Text="Special - Non-FR tags on a familiar, such as Bookmarked or New"/>
+                            <LineBreak/>
+                            <Run Text="Availability - Criteria to do with when it is possible to get a familiar, such as only during NotN or Retired"/>
+                            <LineBreak/>
+                            <Run Text="Source - Where the familiar originally came from, such as Gathering or Festival"/>
+                            <LineBreak/>
+                            <LineBreak/>
+                            <Run Text="When a Source is selected, a set of sub-filters will also appear (where appropriate). These allow you to select more detailed information such as which Gathering type to filter on, or which Festival year."/>
+                            <LineBreak/>
+                            <LineBreak/>
+                            <Run FontSize="14" FontWeight="Bold" Text="Searching"/>
+                            <LineBreak/>
+                            <Run Text="Searching is performed using the Search bar. Exact matches are not required, and where there are no familiars whose names contain the typed text, the software will retrieve a list of 'best guesses' (so Skoll will retrieve Skoll)."/>
+                            <LineBreak/>
+                            <LineBreak/>
+                            <Run Text="A search can be triggered by hitting the Go button to the right of the search box, the Go button at the bottom of the filters, and by hitting the enter key when the search box is selected. This will apply both the search term and any filters that have been selected."/>
+                            <LineBreak/>
+                            <LineBreak/>
+                            <Run FontSize="14" FontWeight="Bold" Text="Sorting"/>
+                            <LineBreak/>
+                            <Run Text="The sorting options are directly above the results list. These change the ordering of the pre-existing results list, with options such as Alphabetical, Bonding Level and Hoard Order. Reverse options are also available. The selected sort method is applied when the Filter or Search Go button is pressed, but can be changed without re-running a search by using the Go button next to the Sort dropdown."/>
+                    </TextBlock>
+                    </ScrollViewer>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Filtering">
+                <Grid Margin="10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Grid.Column="0" FontSize="16" FontWeight="Bold" Text="Filtering, Searching and Sorting"/>
+                    <ScrollViewer Grid.Row="1" Grid.Column="0">
+                        <TextBlock TextWrapping="Wrap" MaxHeight="370">
+                        </TextBlock>
+                    </ScrollViewer>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Familiar Info">
+                <Grid Margin="10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Grid.Column="0" FontSize="16" FontWeight="Bold" Text="Familiar Info"/>
+                    <ScrollViewer Grid.Row="1" Grid.Column="0">
+                        <TextBlock TextWrapping="Wrap" MaxHeight="370">
+                        </TextBlock>
+                    </ScrollViewer>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Bookmarking">
+                <Grid Margin="10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Grid.Column="0" FontSize="16" FontWeight="Bold" Text="Bookmarking"/>
+                    <ScrollViewer Grid.Row="1" Grid.Column="0">
+                        <TextBlock TextWrapping="Wrap" MaxHeight="370">
+                        </TextBlock>
+                    </ScrollViewer>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Views">
+                <Grid Margin="10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Grid.Column="0" FontSize="16" FontWeight="Bold" Text="Views"/>
+                    <ScrollViewer Grid.Row="1" Grid.Column="0">
+                        <TextBlock TextWrapping="Wrap" MaxHeight="370">
+                        </TextBlock>
+                    </ScrollViewer>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Updating">
+                <Grid Margin="10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Grid.Column="0" FontSize="16" FontWeight="Bold" Text="Updating"/>
+                    <ScrollViewer Grid.Row="1" Grid.Column="0">
+                        <TextBlock TextWrapping="Wrap" MaxHeight="370">
+                        </TextBlock>
+                    </ScrollViewer>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Transferring Data">
+                <Grid Margin="10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Grid.Column="0" FontSize="16" FontWeight="Bold" Text="Transferring Familiar Data"/>
+                    <ScrollViewer Grid.Row="1" Grid.Column="0">
+                        <TextBlock TextWrapping="Wrap" MaxHeight="370">
+                        </TextBlock>
+                    </ScrollViewer>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Advanced Options">
+                <Grid Margin="10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Grid.Column="0" FontSize="16" FontWeight="Bold" Text="Advanced Options"/>
+                    <ScrollViewer Grid.Row="1" Grid.Column="0">
+                        <TextBlock TextWrapping="Wrap" MaxHeight="370">
+                        </TextBlock>
+                    </ScrollViewer>
+                </Grid>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Window>

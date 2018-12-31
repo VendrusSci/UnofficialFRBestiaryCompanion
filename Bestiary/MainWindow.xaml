@@ -94,6 +94,7 @@
             <MenuItem Width="Auto" Header="Help">
                 <MenuItem Width="Auto" Header="Support" Command="{Binding OpenSupportInfoWindow}"/>
                 <MenuItem Width="Auto" Header="About" Command="{Binding OpenAboutWindow}"/>
+                <MenuItem Width="Auto" Header="User Guide" Command="{Binding OpenUserGuideWindow}"/>
             </MenuItem>
             <MenuItem Width="Auto" Header="Advanced">
                 <MenuItem Width="Auto" Header="Add new Familiar" Command="{Binding OpenAddFamiliarWindow}"/>

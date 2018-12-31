@@ -388,38 +388,6 @@ namespace Bestiary.ViewModel
             }
         }
 
-        private BaseCommand m_openFetchUpdateWindow;
-        public ICommand OpenFetchUpdateWindow
-        {
-            get
-            {
-                if (m_openFetchUpdateWindow == null)
-                {
-                    UserActionLog.Info("Update window opened");
-                    m_openFetchUpdateWindow = new OpenDialogCommand<FetchUpdateWindow>(Window, _ => new FetchUpdateWindow(m_Model, m_FRDataPath));
-                }
-                return m_openFetchUpdateWindow;
-            }
-        }
-
-        private BaseCommand m_OpenInitialisationWindow;
-        public ICommand OpenInitialisationWindow
-        {
-            get
-            {
-                if(m_OpenInitialisationWindow == null)
-                {
-                    UserActionLog.Info("Initialisation window opened");
-                    m_OpenInitialisationWindow = new OpenDialogCommand<InitialisationWindow>(
-                        Window, 
-                        _ => new InitialisationWindow(m_Model),
-                        afterClosed: _ => FetchFamiliars.Execute(null)
-                    );
-                }
-                return m_OpenInitialisationWindow;
-            }
-        }
-
         private BaseCommand m_OpenResultListWindow;
         public ICommand OpenResultListWindow
         {
