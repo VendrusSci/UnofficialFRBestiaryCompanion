@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Bestiary.OtherWindows"
         mc:Ignorable="d"
-        Title="UserGuideWindow" Height="450" Width="800">
+        Title="User Guide" Height="450" Width="800">
     <Grid>
         <TabControl TabStripPlacement="Left">
             <TabItem Header="Getting Started">
@@ -19,8 +19,8 @@
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
                     <TextBlock Grid.Row="0" Grid.Column="0" FontSize="16" FontWeight="Bold" Text="Getting Started"/>
-                    <ScrollViewer Grid.Row="1" Grid.Column="0">
-                        <TextBlock  TextWrapping="WrapWithOverflow">
+                    <ScrollViewer Grid.Row="1" Grid.Column="0" VerticalScrollBarVisibility="Auto" Height="370">
+                        <TextBlock TextWrapping="Wrap" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Auto">
                             <Run Text="Welcome to the Unofficial Bestiary Companion!"/>
                             <LineBreak/>
                             <Run Text="This section is a quick guide to getting your software set up with the familiars you own"/>
@@ -80,8 +80,24 @@
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
                     <TextBlock Grid.Row="0" Grid.Column="0" FontSize="16" FontWeight="Bold" Text="Interface" Height="Auto"/>
-                    <ScrollViewer Grid.Row="1" Grid.Column="0">
-                        <TextBlock TextWrapping="Wrap" MaxHeight="370">
+                    <ScrollViewer Grid.Row="1" Grid.Column="0" VerticalScrollBarVisibility="Auto" Height="370">
+                        <Image Source="{Binding InterfaceImage}"/>
+                    </ScrollViewer>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Filtering">
+                <Grid Margin="10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Grid.Column="0" FontSize="16" FontWeight="Bold" Text="Filtering, Searching and Sorting"/>
+                    <ScrollViewer Grid.Row="1" Grid.Column="0" VerticalScrollBarVisibility="Auto" Height="370">
+                        <TextBlock TextWrapping="Wrap" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Auto">
                             <Run Text="This section is a guide to the various methods of specifying familiars to display."/>
                             <LineBreak/>
                             <LineBreak/>
@@ -111,29 +127,14 @@
                             <Run Text="Searching is performed using the Search bar. Exact matches are not required, and where there are no familiars whose names contain the typed text, the software will retrieve a list of 'best guesses' (so Skoll will retrieve Skoll)."/>
                             <LineBreak/>
                             <LineBreak/>
-                            <Run Text="A search can be triggered by hitting the Go button to the right of the search box, the Go button at the bottom of the filters, and by hitting the enter key when the search box is selected. This will apply both the search term and any filters that have been selected."/>
+                            <Run Text="A search can be triggered by hitting the Go button at the bottom of the filters or by hitting the enter key when the search box is selected. This will apply both the search term and any filters that have been selected."/>
                             <LineBreak/>
                             <LineBreak/>
                             <Run FontSize="14" FontWeight="Bold" Text="Sorting"/>
                             <LineBreak/>
                             <Run Text="The sorting options are directly above the results list. These change the ordering of the pre-existing results list, with options such as Alphabetical, Bonding Level and Hoard Order. Reverse options are also available. The selected sort method is applied when the Filter or Search Go button is pressed, but can be changed without re-running a search by using the Go button next to the Sort dropdown."/>
-                    </TextBlock>
-                    </ScrollViewer>
-                </Grid>
-            </TabItem>
-            <TabItem Header="Filtering">
-                <Grid Margin="10">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="Auto"/>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                    </Grid.RowDefinitions>
-                    <TextBlock Grid.Row="0" Grid.Column="0" FontSize="16" FontWeight="Bold" Text="Filtering, Searching and Sorting"/>
-                    <ScrollViewer Grid.Row="1" Grid.Column="0">
-                        <TextBlock TextWrapping="Wrap" MaxHeight="370">
+                            <LineBreak/>
+                            <LineBreak/>
                         </TextBlock>
                     </ScrollViewer>
                 </Grid>
@@ -149,8 +150,15 @@
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
                     <TextBlock Grid.Row="0" Grid.Column="0" FontSize="16" FontWeight="Bold" Text="Familiar Info"/>
-                    <ScrollViewer Grid.Row="1" Grid.Column="0">
-                        <TextBlock TextWrapping="Wrap" MaxHeight="370">
+                    <ScrollViewer Grid.Row="1" Grid.Column="0" VerticalScrollBarVisibility="Auto" Height="370">
+                        <TextBlock TextWrapping="Wrap" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Auto">
+                            <Run Text="This section is a guide to the detailed familiar information window"/>
+                            <LineBreak/>
+                            <LineBreak/>
+                            <Run Text="Each familiar makes available detailed information on how to obtain it. This can be accessed by double-clicking on the familiar in the results list, which will pop up a new window specific to that familiar. Available information includes name, in-game description, and source details."/>
+                            <LineBreak/>
+                            <LineBreak/>
+                            <Run Text="Additionally, in the familiar window you can set ownership information (i.e. Ownership Status, Bonding Level and Account Location). As opposed to the main window, Ownership Status can be set to either Owned and Not Owned"/>
                         </TextBlock>
                     </ScrollViewer>
                 </Grid>
@@ -168,6 +176,15 @@
                     <TextBlock Grid.Row="0" Grid.Column="0" FontSize="16" FontWeight="Bold" Text="Bookmarking"/>
                     <ScrollViewer Grid.Row="1" Grid.Column="0">
                         <TextBlock TextWrapping="Wrap" MaxHeight="370">
+                            <Run Text="This section is a guide to Bookmarking"/>
+                            <LineBreak/>
+                            <LineBreak/>
+                            <Run Text="Bookmarking exists to create a user-defined filter option. Bookmarking a familiar is performed by clicking the icon on the far right of a familiar result, which will turn it red. Removing a bookmark is performed by clicking the same button, which will turn it grey. It is also possible to clear all bookmarks at once by using the Clear All Bookmarks menu option."/>
+                            <LineBreak/>
+                            <LineBreak/>
+                            <Run Text="Bookmarks can be filtered on using the Special filter, either by 'Bookmarked' or 'Not bookmarked'"/>
+                            <LineBreak/>
+                            <LineBreak/>
                         </TextBlock>
                     </ScrollViewer>
                 </Grid>
@@ -183,8 +200,27 @@
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
                     <TextBlock Grid.Row="0" Grid.Column="0" FontSize="16" FontWeight="Bold" Text="Views"/>
-                    <ScrollViewer Grid.Row="1" Grid.Column="0">
-                        <TextBlock TextWrapping="Wrap" MaxHeight="370">
+                    <ScrollViewer Grid.Row="1" Grid.Column="0" VerticalScrollBarVisibility="Auto" Height="370">
+                        <TextBlock TextWrapping="Wrap" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Auto">
+                            <Run Text="This section is a guide to the alternate methods of viewing the Bestiary."/>
+                            <LineBreak/>
+                            <LineBreak/>
+                            <Run FontSize="14" FontWeight="Bold" Text="Official Bestiary"/>
+                            <LineBreak/>
+                            <Run Text="This view mimics the Flight Rising bestiary as closely as possible. Pages can be jumped to via the textbox top centre, or moved through using the arrow buttons on either side. This view contains the information available in the bestiary, plus the ability to toggle a familiar between owned and not owned, and set the bonding level and location in your account."/>
+                            <LineBreak/>
+                            <LineBreak/>
+                            <Run Text="This view exists primarily as an alternate method of entering familiars (where comparison to a bestiary may be easier), a test of the view system, and for masochists."/>
+                            <LineBreak/>
+                            <LineBreak/>
+                            <Run FontSize="14" FontWeight="Bold" Text="Coliseum"/>
+                            <LineBreak/>
+                            <Run Text="This view provides individual tabs for different Coliseum venues. The results window is almost identical to the main window, but with familiars effectively pre-filtered and without bookmarking. As in the main window, double-clicking will open up a familiar info window for the familiar clicked on."/>
+                            <LineBreak/>
+                            <LineBreak/>
+                            <Run Text="At the top of each tab, a count of the number of familiars owned and what percentage of the available familiars in the venue that is is displayed."/>
+                            <LineBreak/>
+                            <LineBreak/>
                         </TextBlock>
                     </ScrollViewer>
                 </Grid>
@@ -200,25 +236,36 @@
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
                     <TextBlock Grid.Row="0" Grid.Column="0" FontSize="16" FontWeight="Bold" Text="Updating"/>
-                    <ScrollViewer Grid.Row="1" Grid.Column="0">
-                        <TextBlock TextWrapping="Wrap" MaxHeight="370">
-                        </TextBlock>
-                    </ScrollViewer>
-                </Grid>
-            </TabItem>
-            <TabItem Header="Transferring Data">
-                <Grid Margin="10">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="Auto"/>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                    </Grid.RowDefinitions>
-                    <TextBlock Grid.Row="0" Grid.Column="0" FontSize="16" FontWeight="Bold" Text="Transferring Familiar Data"/>
-                    <ScrollViewer Grid.Row="1" Grid.Column="0">
-                        <TextBlock TextWrapping="Wrap" MaxHeight="370">
+                    <ScrollViewer Grid.Row="1" Grid.Column="0" VerticalScrollBarVisibility="Auto" Height="370">
+                        <TextBlock TextWrapping="Wrap" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Auto">
+                            <Run Text="This section is a guide to how the UBC and its launcher update."/>
+                            <LineBreak/>
+                            <LineBreak/>
+                            <Run FontSize="14" FontWeight="Bold" Text="Automatic Updates"/>
+                            <LineBreak/>
+                            <Run Text="Automatic updating is provided through the launcher. When launching the UBC through the launcher executable, it checks to see whether its version is the same as the most recent version available in the UBC Git repository. If it is, the software will launch immediately. If it is unable to find the online version, this will be reported and you will be able to click a button to launch the software."/>
+                            <Run Text="However, if the version is found and is determined to be different, the launcher will retrieve a text file that lets it work out what areas of the software have changed."/>
+                            <LineBreak/>
+                            <LineBreak/>
+                            <Run FontWeight="Bold" Text="Launcher has changed"/>
+                            <LineBreak/>
+                            <Run Text="Launcher will prompt you to update the launcher, which will cause it to download the new software and automatically restart with the update in place. Alternatively, you can ignore the launcher update, but this will prevent any future UBC updates until updated."/>
+                            <LineBreak/>
+                            <LineBreak/>
+                            <Run FontWeight="Bold" Text="UBC has changed"/>
+                            <LineBreak/>
+                            <Run Text="Launcher will prompt you to update the software. The 'Update All' button will be enabled (the 'Update Familiars' button may also be enabled). Clicking 'Update All' will fully update the main UBC software and, disable the buttons and give you the option to launch the UBC. Alternatively, you can choose to ignore the update and launch the UBC"/>
+                            <LineBreak/>
+                            <LineBreak/>
+                            <Run FontWeight="Bold" Text="Familiars have changed"/>
+                            <LineBreak/>
+                            <Run Text="Launcher will prompty you to update the familiars. The 'Update Familiars' button will be enabled (the 'Update All' button may also be enabled). Clicking 'Update Familiars' will update only the familiars, disable that button and give you the option to launch the UBC. Alternatively, you can choose to ignore the update and launch the UBC."/>
+                            <LineBreak/>
+                            <LineBreak/>
+                            <Run FontSize="14" FontWeight="Bold" Text="Manual Updates"/>
+                            <Run Text="If the launcher is not functioning, the simplest way to update the software is to download the new version, then use the 'Import From Old Version' option in the Menu. Select the User Data folder in the old UBC version, then click OK. This will transfer all your personal familiar information over to the new version."/>
+                            <LineBreak/>
+                            <LineBreak/>
                         </TextBlock>
                     </ScrollViewer>
                 </Grid>
@@ -234,8 +281,28 @@
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
                     <TextBlock Grid.Row="0" Grid.Column="0" FontSize="16" FontWeight="Bold" Text="Advanced Options"/>
-                    <ScrollViewer Grid.Row="1" Grid.Column="0">
-                        <TextBlock TextWrapping="Wrap" MaxHeight="370">
+                    <ScrollViewer Grid.Row="1" Grid.Column="0" VerticalScrollBarVisibility="Auto" Height="370">
+                        <TextBlock TextWrapping="Wrap" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Auto">
+                            <Run Text="This section is a guide to the Advanced Options in the Menu."/>
+                            <LineBreak/>
+                            <LineBreak/>
+                            <Run FontSize="14" FontWeight="Bold" Text="Adding and Removing Familiars"/>
+                            <LineBreak/>
+                            <Run Text="Adding familiars is primarily intended for developer use, to enable familiars to be added in order to create updates. Removing familiars exists because Mistakes Were Made. However, should the developer be unable to continue updating/too slow/on holiday, this allows any user to add new familiars and therefore continue tracking pending the next formal update. So long as the ID entered is correct, all ownership information and bookmarking will carry over."/>
+                            <LineBreak/>
+                            <LineBreak/>
+                            <Run FontWeight="Bold" Text="Adding familiars"/>
+                            <LineBreak/>
+                            <Run Text="When adding a familiar, all information boxes must be filled in and all dropdowns contain a selected item. Missing anything should cause the software to give an error and prevent you from attempting to add a familiar. If I've got it wrong, it'll probably just crash. Sorry about that. Adding a familiar will not close the window, just clear the typed information ready for a new familiar because the extra clicking when adding a 20-familiar venue would drive me loopy."/>
+                            <LineBreak/>
+                            <LineBreak/>
+                            <Run Text="This does not include the ability to add the icon/image. While these are not necessary for the software to work, if you want to add them you'll need to download the images from FR into the Images and Icons folders in the Bestiary Resources folder. Images downloaded from FR should be named after their ID, and require no modification."/>
+                            <LineBreak/>
+                            <LineBreak/>
+                            <Run FontWeight="Bold" Text="Removing familiars"/>
+                            <Run Text="Removing a familiar requires its ID, which is most easily found by opening either the icon or the image in FR with 'open image in new tab' or similar and then looking for the number in the URL. Enter the ID into the box, then click 'Fetch Name' to check that you have the right familiar. At this point, you can click 'Delete' to remove the familiar. Clicking the 'Fetch Name' button again should return 'ID not found'."/>
+                            <LineBreak/>
+                            <LineBreak/>
                         </TextBlock>
                     </ScrollViewer>
                 </Grid>

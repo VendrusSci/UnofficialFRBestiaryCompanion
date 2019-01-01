@@ -153,6 +153,7 @@
     <Compile Include="ViewModel\Converters\EnemyTypeToColourConverter.cs" />
     <Compile Include="ViewModel\Converters\OwnedToBoolConverter.cs" />
     <Compile Include="ViewModel\Dataviews\ColiseumViewModel.cs" />
+    <Compile Include="ViewModel\UserGuideViewModel.cs" />
     <Compile Include="ViewWindows\ColiseumView.xaml.cs">
       <DependentUpon>ColiseumView.xaml</DependentUpon>
     </Compile>

@@ -10,6 +10,7 @@ using Bestiary.ViewWindows;
 using Bestiary.OptionsWindows;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using Bestiary.OtherWindows;
 
 namespace Bestiary.ViewModel
 {
@@ -452,6 +453,25 @@ namespace Bestiary.ViewModel
                     );
                 }
                 return m_OpenClearBookmarksWindow;
+            }
+        }
+
+        private LambdaCommand m_OpenUserGuideWindow;
+        public ICommand OpenUserGuideWindow
+        {
+            get
+            {
+                if(m_OpenUserGuideWindow == null)
+                {
+                    m_OpenUserGuideWindow = new LambdaCommand(
+                        onExecute: (p) =>
+                        {
+                            UserGuideWindow userGuide = new UserGuideWindow();
+                            userGuide.Show();
+                        }
+                    );
+                }
+                return m_OpenUserGuideWindow;
             }
         }
 
