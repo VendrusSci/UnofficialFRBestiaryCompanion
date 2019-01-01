@@ -272,3 +272,6 @@ __pycache__/
 /Bestiary/Bestiary.exe
 /BestiaryReleaseData
 /UbcReleaseLauncher/venv
+/Bestiary/User Data/BookmarkData.xml
+/Bestiary/User Data/BookmarkData.xml.bak
+/Bestiary/User Data/UserData.xml.bak
