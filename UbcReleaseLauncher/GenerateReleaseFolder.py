@@ -6,7 +6,7 @@ import GenerateManifest
 
 
 ubc_folder = "UnofficialBestiaryCompanion"
-ubc_files = ["Bestiary.exe", "log4net.dll", "log4net.config"]
+ubc_files = ["Bestiary.exe", "log4net.dll", "log4net.config", "Ookii.Dialogs.Wpf.dll"]
 launcher_folder = "UBCLauncher"
 launcher_files = ["BestiaryLauncher.exe", "log4net.dll", "log4net.config", "Newtonsoft.Json.dll"]
 launcher_images = "LauncherImages"
@@ -37,6 +37,7 @@ def generate_full_software_zip(bestiary_resources, bestiary_main, bestiary_launc
     shutil.copy(os.path.join(bestiary_main, "Bestiary.exe"), "UBC\\Unofficial Bestiary Companion")
     shutil.copy(os.path.join(bestiary_main, "log4net.dll"), "UBC\\Unofficial Bestiary Companion")
     shutil.copy(os.path.join(bestiary_main, "log4net.config"), "UBC\\Unofficial Bestiary Companion")
+    shutil.copy(os.path.join(bestiary_main, "Ookii.Dialogs.Wpf.dll"), "UBC\\Unofficial Bestiary Companion")
     shutil.copy(os.path.join(bestiary_launcher, "BestiaryLauncher.exe"), "UBC\\")
     shutil.copy(os.path.join(bestiary_launcher, "log4net.dll"), "UBC\\")
     shutil.copy(os.path.join(bestiary_launcher, "log4net.config"), "UBC\\")
