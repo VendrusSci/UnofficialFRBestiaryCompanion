@@ -64,6 +64,9 @@
     <Reference Include="Microsoft.Win32.Primitives, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Win32.Primitives.4.3.0\lib\net46\Microsoft.Win32.Primitives.dll</HintPath>
     </Reference>
+    <Reference Include="Ookii.Dialogs.Wpf, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ookii.Dialogs.Wpf.1.0.0\lib\net45\Ookii.Dialogs.Wpf.dll</HintPath>
+    </Reference>
     <Reference Include="PresentationFramework.Aero2" />
     <Reference Include="PropertyChanged, Version=2.6.0.0, Culture=neutral, PublicKeyToken=ee3ee20bcf148ddd, processorArchitecture=MSIL">
       <HintPath>..\packages\PropertyChanged.Fody.2.6.0\lib\net452\PropertyChanged.dll</HintPath>
@@ -78,9 +81,11 @@
       <HintPath>..\packages\System.Console.4.3.1\lib\net46\System.Console.dll</HintPath>
     </Reference>
     <Reference Include="System.Data" />
+    <Reference Include="System.Design" />
     <Reference Include="System.Diagnostics.DiagnosticSource, Version=4.0.4.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Diagnostics.DiagnosticSource.4.6.0-preview.18571.3\lib\net46\System.Diagnostics.DiagnosticSource.dll</HintPath>
     </Reference>
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Globalization.Calendars, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Globalization.Calendars.4.3.0\lib\net46\System.Globalization.Calendars.dll</HintPath>
     </Reference>
@@ -110,6 +115,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Security.Cryptography.Algorithms, Version=4.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Security.Cryptography.Algorithms.4.3.1\lib\net461\System.Security.Cryptography.Algorithms.dll</HintPath>
     </Reference>
@@ -145,6 +151,9 @@
     <Compile Include="OptionsWindows\ClearBookmarksWindow.xaml.cs">
       <DependentUpon>ClearBookmarksWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="OptionsWindows\ImportFromOldWindow.xaml.cs">
+      <DependentUpon>ImportFromOldWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="OtherWindows\UserGuideWindow.xaml.cs">
       <DependentUpon>UserGuideWindow.xaml</DependentUpon>
     </Compile>
@@ -153,6 +162,7 @@
     <Compile Include="ViewModel\Converters\EnemyTypeToColourConverter.cs" />
     <Compile Include="ViewModel\Converters\OwnedToBoolConverter.cs" />
     <Compile Include="ViewModel\Dataviews\ColiseumViewModel.cs" />
+    <Compile Include="ViewModel\ImportFromOldViewModel.cs" />
     <Compile Include="ViewModel\UserGuideViewModel.cs" />
     <Compile Include="ViewWindows\ColiseumView.xaml.cs">
       <DependentUpon>ColiseumView.xaml</DependentUpon>
@@ -214,16 +224,20 @@
     <Compile Include="ViewModel\GatherControlViewModel.cs" />
     <Compile Include="ViewModel\Converters\LongestItemToWidthConverter.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
-    <Compile Include="OptionsWindows\FamiliarAddWindow.xaml.cs">
+    <Compile Include="AdvancedWindows\FamiliarAddWindow.xaml.cs">
       <DependentUpon>FamiliarAddWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="OptionsWindows\FamiliarDeleteWindow.xaml.cs">
+    <Compile Include="AdvancedWindows\FamiliarDeleteWindow.xaml.cs">
       <DependentUpon>FamiliarDeleteWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModel\SupportClasses\OpenDialogCommand.cs" />
     <Compile Include="ViewModel\ResultListViewModel.cs" />
     <Compile Include="ViewModel\SupportViewModel.cs" />
     <Page Include="FamiliarDataWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="OptionsWindows\ImportFromOldWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -247,11 +261,11 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="OptionsWindows\FamiliarAddWindow.xaml">
+    <Page Include="AdvancedWindows\FamiliarAddWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="OptionsWindows\FamiliarDeleteWindow.xaml">
+    <Page Include="AdvancedWindows\FamiliarDeleteWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -331,7 +345,9 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Services\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Fody.3.3.3\build\Fody.targets" Condition="Exists('..\packages\Fody.3.3.3\build\Fody.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

@@ -11,6 +11,7 @@ using Bestiary.OptionsWindows;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using Bestiary.OtherWindows;
+using Ookii.Dialogs.Wpf;
 
 namespace Bestiary.ViewModel
 {
@@ -472,6 +473,22 @@ namespace Bestiary.ViewModel
                     );
                 }
                 return m_OpenUserGuideWindow;
+            }
+        }
+
+        private BaseCommand m_OpenFolderImportWindow;
+        public ICommand OpenFolderImportWindow
+        {
+            get
+            {
+                if(m_OpenFolderImportWindow == null)
+                {
+                    m_OpenFolderImportWindow = new OpenDialogCommand<ImportFromOldWindow>(
+                        Window,
+                        _ => new ImportFromOldWindow()
+                    );
+                }
+                return m_OpenFolderImportWindow;
             }
         }
 

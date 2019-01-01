@@ -86,19 +86,20 @@
             <MenuItem Width="Auto" Header="Options">
                 <MenuItem Width="Auto" Header="Clear Bookmarks" Command="{Binding OpenClearBookmarksWindow}"/>
                 <MenuItem Width="Auto" Header="Copyable Results List" Command="{Binding OpenResultListWindow}"/>
+                <MenuItem Width="Auto" Header="Import from Old Version" Command="{Binding OpenFolderImportWindow}"/>
             </MenuItem>
             <MenuItem Width="Auto" Header="Views">
                 <MenuItem Width="Auto" Header="Flight Rising Bestiary" Command="{Binding OpenFRBestiaryView}"/>
                 <MenuItem Width="Auto" Header="Coliseum" Command="{Binding OpenColiseumView}"/>
             </MenuItem>
+            <MenuItem Width="Auto" Header="Advanced">
+                <MenuItem Width="Auto" Header="Add new Familiar" Command="{Binding OpenAddFamiliarWindow}"/>
+                <MenuItem Width="Auto" Header="Delete Familiar" Command="{Binding OpenDeleteFamiliarWindow}"/>
+            </MenuItem>
             <MenuItem Width="Auto" Header="Help">
                 <MenuItem Width="Auto" Header="Support" Command="{Binding OpenSupportInfoWindow}"/>
                 <MenuItem Width="Auto" Header="About" Command="{Binding OpenAboutWindow}"/>
                 <MenuItem Width="Auto" Header="User Guide" Command="{Binding OpenUserGuideWindow}"/>
-            </MenuItem>
-            <MenuItem Width="Auto" Header="Advanced">
-                <MenuItem Width="Auto" Header="Add new Familiar" Command="{Binding OpenAddFamiliarWindow}"/>
-                <MenuItem Width="Auto" Header="Delete Familiar" Command="{Binding OpenDeleteFamiliarWindow}"/>
             </MenuItem>
         </Menu>
         <Grid Grid.Row="1">
