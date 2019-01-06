@@ -180,6 +180,7 @@
     </Compile>
     <Compile Include="Services\CsvImportExport.cs" />
     <Compile Include="Services\GoogleSheets.cs" />
+    <Compile Include="Services\Settings.cs" />
     <Compile Include="ViewModel\AboutViewModel.cs" />
     <Compile Include="ViewModel\ClearBookmarksViewModel.cs" />
     <Compile Include="ViewModel\Converters\EnemyTypeToColourConverter.cs" />
