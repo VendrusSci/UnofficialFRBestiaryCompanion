@@ -12,6 +12,7 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using Bestiary.OtherWindows;
 using Ookii.Dialogs.Wpf;
+using CalculatedProperties;
 
 namespace Bestiary.ViewModel
 {
@@ -95,7 +96,7 @@ namespace Bestiary.ViewModel
 
                             ResultCount = FilteredFamiliars.Count();
                             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("OwnedCount"));
-                            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("AwakenedCount"));
+                            //PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("AwakenedCount"));
                             //OwnedCount = FilteredFamiliars.Count(f => f.Info.Owned == OwnershipStatus.Owned);
                             //AwakenedCount = FilteredFamiliars.Count(f => f.Info.BondLevel == BondingLevels.Awakened);
                         }
@@ -205,7 +206,7 @@ namespace Bestiary.ViewModel
                                 FilteredFamiliars.Add(familiar);
                             }
                             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("OwnedCount"));
-                            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("AwakenedCount"));
+                            //PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("AwakenedCount"));
                         }
                     );
                 }
@@ -218,7 +219,7 @@ namespace Bestiary.ViewModel
 
         public int ResultCount { get; set; }
         public int OwnedCount => FilteredFamiliars.Where(f => f.Info.Owned == OwnershipStatus.Owned).Count();
-        public int AwakenedCount => FilteredFamiliars.Where(f => f.Info.BondLevel == BondingLevels.Awakened).Count();
+        public int AwakenedCount { get { return Property.Calculated(() => FilteredFamiliars.Where(f => f.Info.BondLevel == BondingLevels.Awakened).Count()); } }
         private IEnumerable<FamiliarInfo> ApplyFilters(IEnumerable<FamiliarInfo> familiars)
         {
             IEnumerable<FamiliarInfo> filteredFamiliars = familiars;
@@ -572,6 +573,7 @@ namespace Bestiary.ViewModel
 
         private string m_Version;
         private string m_FRDataPath;
+        private readonly PropertyHelper Property;
         public MainViewModel(MainWindow window, IModel model, string FRDataPath)
         {
             Window = window;
@@ -588,6 +590,7 @@ namespace Bestiary.ViewModel
                 m_NewFams = new List<int>();
             }
 
+            Property = new PropertyHelper(RaisePropertyChanged);
             SetResultsActions();
 
             UserActionLog.Info("Application opened!");
@@ -596,6 +599,12 @@ namespace Bestiary.ViewModel
             SelectedSortType = SortTypes.Alphabetical;
             SortResults.Execute(null);
             UserActionLog.Info("Familiars loaded on open");
+        }
+
+        private void RaisePropertyChanged(PropertyChangedEventArgs args)
+        {
+            if (PropertyChanged != null)
+                PropertyChanged(this, args);
         }
 
         private void OnFamiliarCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
