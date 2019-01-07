@@ -11,16 +11,18 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <Grid Grid.Row="0" HorizontalAlignment="Right" Width="812">
+        <Grid Grid.Row="1" HorizontalAlignment="Right" Width="812">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Button Grid.Column="0" Command="{Binding ChangePage}" CommandParameter="dec">
-                <Image Source="{Binding LeftArrow}"/>
+            <Button Grid.Column="0" Command="{Binding ChangePage}" CommandParameter="dec" Width="40">
+                <Image Source="{Binding LeftArrow}" Height="30"/>
             </Button>
             <TextBox Grid.Column="1" Margin="2" HorizontalAlignment="Right"
                      HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
@@ -30,11 +32,11 @@
                 </TextBox.InputBindings>
             </TextBox>
             <Button Grid.Column="2" Margin="5 0 0 0" Height="25" Width="30" HorizontalAlignment="Left" Content="Go" Command="{Binding GoToPage}"/>
-            <Button Grid.Column="3" Command="{Binding ChangePage}" CommandParameter="inc">
-                <Image Source="{Binding RightArrow}"/>
+            <Button Grid.Column="3" Command="{Binding ChangePage}" CommandParameter="inc" Width="40">
+                <Image Source="{Binding RightArrow}" Height="30"/>
             </Button>
         </Grid>
-        <Grid Grid.Row="1" Margin="2" Background="White">
+        <Grid Grid.Row="3" Margin="2" Background="White">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>

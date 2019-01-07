@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -30,7 +31,10 @@ namespace Bestiary.ViewModel.Dataviews
             RightArrow = ImageLoader.LoadImage(Path.Combine(ApplicationPaths.GetResourcesDirectory(), "ViewIcons", "arrow_right.png"));
 
             Familiars = new BestiaryViewInfo[8];
-            m_SortedFamiliarIds = m_Model.Familiars.OrderBy(f => m_Model.LookupFamiliar(f).Fetch().Name).ToArray();            
+
+            CultureInfo culture = new CultureInfo("de", false);
+
+            m_SortedFamiliarIds = m_Model.Familiars.OrderBy(f => m_Model.LookupFamiliar(f).Fetch().Name, StringComparer.Create(culture, false)).ToArray();            
 
             LoadFamiliars();
         }
