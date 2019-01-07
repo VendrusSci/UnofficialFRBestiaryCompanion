@@ -6,6 +6,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using Bestiary.Services;
 
 namespace Bestiary
 {
@@ -22,7 +23,7 @@ namespace Bestiary
             var frDataPath = Path.Combine(dataDirectory, "Resources/FamiliarData/FRData.xml");
             var userDataPath = Path.Combine(dataDirectory, "User Data/UserData.xml");
             var bookmarkDataPath = Path.Combine(dataDirectory, "User Data/BookmarkData.xml");
-            DataContext = new MainViewModel(this, new XmlModelStorage(frDataPath, userDataPath, bookmarkDataPath), frDataPath);
+            DataContext = new MainViewModel(this, new XmlModelStorage(frDataPath, userDataPath, bookmarkDataPath), frDataPath, new SettingsHandler());
         }
 
         public void ChangeSelectedRow(object Sender, MouseButtonEventArgs e)

@@ -7,7 +7,7 @@ using System.ComponentModel;
 namespace Bestiary.Model
 {
     #region Enums
-    enum Flights
+    public enum Flights
     {
         [Description("Earth")]
         Earth,
@@ -33,7 +33,7 @@ namespace Bestiary.Model
         Arcane
     }
 
-    enum Sources
+    public enum Sources
     {
         Coliseum,
         Marketplace,
@@ -68,7 +68,7 @@ namespace Bestiary.Model
         Awakened
     }
 
-    enum GatherTypes
+    public enum GatherTypes
     {
         Hunting,
         Fishing,
@@ -79,13 +79,13 @@ namespace Bestiary.Model
         Scavenging
     }
 
-    enum MarketPlaceTypes
+    public enum MarketPlaceTypes
     {
         Treasure,
         Gem
     }
 
-    enum EnemyTypes
+    public enum EnemyTypes
     {
         Boss,
         Normal

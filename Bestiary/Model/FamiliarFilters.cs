@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Bestiary.Model
 {
-    enum SpecialState
+    public enum SpecialState
     {
         [Description("Bookmark")]
         Bookmarked,
@@ -16,7 +16,7 @@ namespace Bestiary.Model
         New
     }
 
-    class FamiliarFilters : INotifyPropertyChanged
+    public class FamiliarFilters : INotifyPropertyChanged
     {
         //Filters
         public OwnershipStatus[] AvailableOwnedStatus => ListEnumValues<OwnershipStatus>();

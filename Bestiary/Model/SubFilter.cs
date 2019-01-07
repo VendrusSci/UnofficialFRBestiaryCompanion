@@ -8,7 +8,7 @@ using System.Windows.Input;
 
 namespace Bestiary.Model
 {
-    interface IAmSubFilter
+    public interface IAmSubFilter
     {
         IEnumerable<FamiliarInfo> Apply(IEnumerable<FamiliarInfo> toFilter);
         ICommand Clear { get; }

@@ -11,8 +11,7 @@ using Bestiary.OptionsWindows;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using Bestiary.OtherWindows;
-using Ookii.Dialogs.Wpf;
-using CalculatedProperties;
+using Bestiary.Services;
 
 namespace Bestiary.ViewModel
 {
@@ -33,7 +32,6 @@ namespace Bestiary.ViewModel
 
     class MainViewModel : INotifyPropertyChanged
     {
-        private IModel m_Model;
         public FamiliarFilters FamiliarParameters { get; set; }
         public BitmapImage Icon { get; private set; }
 
@@ -51,6 +49,41 @@ namespace Bestiary.ViewModel
 
         private LambdaCommand m_FetchFamiliars;
         private List<int> m_NewFams;
+
+        private IModel m_Model;
+        private SettingsHandler m_Settings;
+        private string m_Version;
+        private string m_FRDataPath;
+        public MainViewModel(MainWindow window, IModel model, string FRDataPath, SettingsHandler settings)
+        {
+            Window = window;
+            Model = model;
+            m_FRDataPath = FRDataPath;
+
+            m_Version = FetchVersion();
+            try
+            {
+                m_NewFams = File.ReadAllLines(ApplicationPaths.GetNewFamsPath()).Select(int.Parse).ToList();
+            }
+            catch
+            {
+                m_NewFams = new List<int>();
+            }
+
+            SetResultsActions();
+            UserActionLog.Info("Application opened!");
+            FamiliarParameters = new FamiliarFilters();
+
+            m_Settings = settings;
+            m_Settings.FetchSettings();
+            ApplyDefaultSearch();
+
+            FetchFamiliars.Execute(null);
+            SelectedSortType = SortTypes.Alphabetical;
+            SortResults.Execute(null);
+            UserActionLog.Info("Familiars loaded on open");
+        }
+
 
         public ICommand FetchFamiliars
         {
@@ -96,9 +129,7 @@ namespace Bestiary.ViewModel
 
                             ResultCount = FilteredFamiliars.Count();
                             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("OwnedCount"));
-                            //PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("AwakenedCount"));
-                            //OwnedCount = FilteredFamiliars.Count(f => f.Info.Owned == OwnershipStatus.Owned);
-                            //AwakenedCount = FilteredFamiliars.Count(f => f.Info.BondLevel == BondingLevels.Awakened);
+                            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("AwakenedCount"));
                         }
                     );
                 }
@@ -206,7 +237,7 @@ namespace Bestiary.ViewModel
                                 FilteredFamiliars.Add(familiar);
                             }
                             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("OwnedCount"));
-                            //PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("AwakenedCount"));
+                            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("AwakenedCount"));
                         }
                     );
                 }
@@ -219,7 +250,7 @@ namespace Bestiary.ViewModel
 
         public int ResultCount { get; set; }
         public int OwnedCount => FilteredFamiliars.Where(f => f.Info.Owned == OwnershipStatus.Owned).Count();
-        public int AwakenedCount { get { return Property.Calculated(() => FilteredFamiliars.Where(f => f.Info.BondLevel == BondingLevels.Awakened).Count()); } }
+        public int AwakenedCount => FilteredFamiliars.Where(f => f.Info.BondLevel == BondingLevels.Awakened).Count(); 
         private IEnumerable<FamiliarInfo> ApplyFilters(IEnumerable<FamiliarInfo> familiars)
         {
             IEnumerable<FamiliarInfo> filteredFamiliars = familiars;
@@ -493,6 +524,22 @@ namespace Bestiary.ViewModel
             }
         }
 
+        private BaseCommand m_OpenSettingsWindow;
+        public ICommand OpenSettingsWindow
+        {
+            get
+            {
+                if(m_OpenSettingsWindow == null)
+                {
+                    m_OpenSettingsWindow = new OpenDialogCommand<SettingsWindow>(
+                        Window,
+                        _ => new SettingsWindow(FamiliarParameters, SearchText, m_Settings)
+                    );
+                }
+                return m_OpenSettingsWindow;
+            }
+        }
+
         private FamiliarViewModel[] ApplySort(FamiliarViewModel[] familiars)
         {
             FamiliarViewModel[] sortedFamiliars = familiars;
@@ -569,42 +616,6 @@ namespace Bestiary.ViewModel
             {
                 return "";
             }
-        }
-
-        private string m_Version;
-        private string m_FRDataPath;
-        private readonly PropertyHelper Property;
-        public MainViewModel(MainWindow window, IModel model, string FRDataPath)
-        {
-            Window = window;
-            Model = model;
-            m_FRDataPath = FRDataPath;
-
-            m_Version = FetchVersion();
-            try
-            {
-                m_NewFams = File.ReadAllLines(ApplicationPaths.GetNewFamsPath()).Select(int.Parse).ToList();
-            }
-            catch
-            {
-                m_NewFams = new List<int>();
-            }
-
-            Property = new PropertyHelper(RaisePropertyChanged);
-            SetResultsActions();
-
-            UserActionLog.Info("Application opened!");
-            FamiliarParameters = new FamiliarFilters();
-            FetchFamiliars.Execute(null);
-            SelectedSortType = SortTypes.Alphabetical;
-            SortResults.Execute(null);
-            UserActionLog.Info("Familiars loaded on open");
-        }
-
-        private void RaisePropertyChanged(PropertyChangedEventArgs args)
-        {
-            if (PropertyChanged != null)
-                PropertyChanged(this, args);
         }
 
         private void OnFamiliarCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
@@ -750,6 +761,24 @@ namespace Bestiary.ViewModel
             }
         }
 
+        public void ApplyDefaultSearch()
+        {
+            SearchText = m_Settings.SelectedDefaultSearch.SearchText;
+            FamiliarParameters.SelectedAvailability = m_Settings.SelectedDefaultSearch.Availability;
+            FamiliarParameters.SelectedBondingLevel = m_Settings.SelectedDefaultSearch.BondLevel;
+            FamiliarParameters.SelectedCycleYear = new CycleYear(m_Settings.SelectedDefaultSearch.Year != null ? m_Settings.SelectedDefaultSearch.Year.Value : 0);
+            FamiliarParameters.SelectedEnemyType = m_Settings.SelectedDefaultSearch.EnemyType;
+            FamiliarParameters.SelectedFlight = m_Settings.SelectedDefaultSearch.Flight;
+            FamiliarParameters.SelectedGatherType = m_Settings.SelectedDefaultSearch.GatherType;
+            FamiliarParameters.SelectedLevel = m_Settings.SelectedDefaultSearch.MinLevel != null ? m_Settings.SelectedDefaultSearch.MinLevel.Value : 0;
+            FamiliarParameters.SelectedLocationType = m_Settings.SelectedDefaultSearch.Location;
+            FamiliarParameters.SelectedMarketPlaceType = m_Settings.SelectedDefaultSearch.MarketPlace;
+            FamiliarParameters.SelectedOwnedStatus = m_Settings.SelectedDefaultSearch.Ownership;
+            FamiliarParameters.SelectedSiteEvent = m_Settings.SelectedDefaultSearch.EventName;
+            FamiliarParameters.SelectedSource = m_Settings.SelectedDefaultSearch.Source;
+            FamiliarParameters.SelectedSpecialState = m_Settings.SelectedDefaultSearch.Special;
+            FamiliarParameters.SelectedVenueName = m_Settings.SelectedDefaultSearch.VenueName;
+        }
 
 
         public static readonly log4net.ILog UserActionLog = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);

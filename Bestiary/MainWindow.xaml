@@ -87,6 +87,7 @@
                 <MenuItem Width="Auto" Header="Clear Bookmarks" Command="{Binding OpenClearBookmarksWindow}"/>
                 <MenuItem Width="Auto" Header="Copyable Results List" Command="{Binding OpenResultListWindow}"/>
                 <MenuItem Width="Auto" Header="Import from Old Version" Command="{Binding OpenFolderImportWindow}"/>
+                <MenuItem Width="Auto" Header="Settings" Command="{Binding OpenSettingsWindow}"/>
             </MenuItem>
             <MenuItem Width="Auto" Header="Views">
                 <MenuItem Width="Auto" Header="Flight Rising Bestiary" Command="{Binding OpenFRBestiaryView}"/>

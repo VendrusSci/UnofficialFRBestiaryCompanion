@@ -57,5 +57,10 @@ namespace Bestiary
         {
             return Path.Combine(GetFamiliarDataDirectory(), "New.txt");
         }
+
+        public static string GetSettingsPath()
+        {
+            return Path.Combine(GetUserDirectory(), "Settings.txt");
+        }
     }
 }

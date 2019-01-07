@@ -175,6 +175,9 @@
     <Compile Include="OptionsWindows\ImportFromOldWindow.xaml.cs">
       <DependentUpon>ImportFromOldWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="OptionsWindows\SettingsWindow.xaml.cs">
+      <DependentUpon>SettingsWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="OtherWindows\UserGuideWindow.xaml.cs">
       <DependentUpon>UserGuideWindow.xaml</DependentUpon>
     </Compile>
@@ -182,11 +185,12 @@
     <Compile Include="Services\GoogleSheets.cs" />
     <Compile Include="Services\Settings.cs" />
     <Compile Include="ViewModel\AboutViewModel.cs" />
-    <Compile Include="ViewModel\ClearBookmarksViewModel.cs" />
+    <Compile Include="ViewModel\OptionsViews\ClearBookmarksViewModel.cs" />
     <Compile Include="ViewModel\Converters\EnemyTypeToColourConverter.cs" />
     <Compile Include="ViewModel\Converters\OwnedToBoolConverter.cs" />
     <Compile Include="ViewModel\Dataviews\ColiseumViewModel.cs" />
-    <Compile Include="ViewModel\ImportFromOldViewModel.cs" />
+    <Compile Include="ViewModel\OptionsViews\ImportFromOldViewModel.cs" />
+    <Compile Include="ViewModel\OptionsViews\SettingsViewModel.cs" />
     <Compile Include="ViewModel\UserGuideViewModel.cs" />
     <Compile Include="ViewWindows\ColiseumView.xaml.cs">
       <DependentUpon>ColiseumView.xaml</DependentUpon>
@@ -201,6 +205,10 @@
       <DependentUpon>VenueControl.xaml</DependentUpon>
     </Compile>
     <Page Include="OptionsWindows\ClearBookmarksWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="OptionsWindows\SettingsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -255,7 +263,7 @@
       <DependentUpon>FamiliarDeleteWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModel\SupportClasses\OpenDialogCommand.cs" />
-    <Compile Include="ViewModel\ResultListViewModel.cs" />
+    <Compile Include="ViewModel\OptionsViews\ResultListViewModel.cs" />
     <Compile Include="ViewModel\SupportViewModel.cs" />
     <Page Include="FamiliarDataWindow.xaml">
       <SubType>Designer</SubType>

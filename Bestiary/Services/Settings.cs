@@ -1,91 +1,122 @@
 ﻿using Bestiary.Model;
-using System;
-using System.Collections.Generic;
+using Newtonsoft.Json;
 using System.Drawing;
-using System.Linq;
+using System.IO;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Bestiary.Services
 {
-    class Settings
+    public class SettingsHandler
     {
-        private Theme m_Dark = new Theme(Color.DarkGray, Color.DarkSlateGray, Color.Gray, Color.Gray, Color.Gray, Color.White);
-        private Theme m_Rainbow = new Theme(Color.LightCyan, Color.LightGreen, Color.LightSkyBlue, Color.LightYellow, Color.LightPink, Color.Black);
-        private Theme m_Bluegreen = new Theme(Color.Aquamarine, Color.Aqua, Color.Cyan, Color.LightCyan, Color.LightCyan, Color.DarkBlue);
-        private Theme m_Official = null;
+        private static Theme m_Dark = new Theme(Color.DarkGray, Color.DarkSlateGray, Color.Gray, Color.Gray, Color.Gray, Color.White, Color.White);
+        private static Theme m_Rainbow = new Theme(Color.LightCyan, Color.LightGreen, Color.LightSkyBlue, Color.LightYellow, Color.LightPink, Color.Black, Color.Black);
+        private static Theme m_Bluegreen = new Theme(Color.Aquamarine, Color.Aqua, Color.Cyan, Color.LightCyan, Color.LightCyan, Color.DarkBlue, Color.DarkBlue);
+        private static Theme m_Default = new Theme(Color.White, Color.White, ColorTranslator.FromHtml("#FBE9D9"), 
+            ColorTranslator.FromHtml("#F0F0F0"), ColorTranslator.FromHtml("#F0F0F0"), Color.Black, Color.Black);
+        private static Theme m_Official = new Theme(ColorTranslator.FromHtml("#6E1C02"), ColorTranslator.FromHtml("#DECB9C"), Color.White, Color.White, 
+            ColorTranslator.FromHtml("#6E1C02"), Color.Black, ColorTranslator.FromHtml("#DECB9C"));
 
+        public Theme SelectedTheme { get; set; }
+        public DefaultSearch SelectedDefaultSearch { get; set; }
+        public string BackupSpreadsheetId { get; set; }
+
+        public SettingsHandler(Theme theme = null, DefaultSearch defaultSearch = null)
+        {
+            if(theme == null)
+            {
+                SelectedTheme = m_Default;
+            }
+
+            if(defaultSearch == null)
+            {
+                SelectedDefaultSearch = new DefaultSearch
+                {
+                    BondLevelExclude = false,
+                    LocationExclude = false,
+                    AvailabilityExclude = false,
+                    Year = 0,
+                    MinLevel = 0,
+                };
+            }
+        }
+
+        public void FetchSettings()
+        {
+            if(File.Exists(ApplicationPaths.GetSettingsPath()))
+            {
+                string settingsText = File.ReadAllText(ApplicationPaths.GetSettingsPath());
+                var settings = JsonConvert.DeserializeObject<Settings>(settingsText);
+                BackupSpreadsheetId = settings.BackupSpreadsheetId;
+                SelectedDefaultSearch = settings.SelectedDefaultSearch;
+                SelectedTheme = settings.SelectedTheme;
+            }
+        }
+
+        public void SaveSettings()
+        {
+            var settings = new Settings
+            {
+                BackupSpreadsheetId = BackupSpreadsheetId,
+                SelectedDefaultSearch = SelectedDefaultSearch,
+                SelectedTheme = SelectedTheme
+            };
+
+            var json = JsonConvert.SerializeObject(settings);
+            File.WriteAllBytes(ApplicationPaths.GetSettingsPath(), Encoding.ASCII.GetBytes(json));
+        }
+    }
+
+    public class Settings
+    {
         public Theme SelectedTheme { get; set; }
         public DefaultSearch SelectedDefaultSearch { get; set; }
         public string BackupSpreadsheetId { get; set; }
     }
 
 
-    class Theme
+    public class Theme
     {
         public Color BackgroundColour { get; private set; }
         public Color ResultWindowColour { get; private set; }
         public Color ResultWindowAltColour { get; private set; }
-        public Color DropdownColour { get; private set; }
+        public Color ControlColour { get; private set; }
         public Color MenuColour { get; private set; }
         public Color TextColour { get; private set; }
+        public Color MenuTextColour { get; private set; }
 
         public Theme(Color backgroundColour, Color resultWindowColour, Color resultWindowAltColour,
-            Color dropdownColour, Color menuColour, Color textColour)
+            Color controlColour, Color menuColour, Color textColour, Color menuTextColour)
         {
             BackgroundColour = backgroundColour;
             ResultWindowColour = resultWindowColour;
             ResultWindowAltColour = resultWindowColour;
-            DropdownColour = dropdownColour;
+            ControlColour = controlColour;
             MenuColour = menuColour;
             TextColour = textColour;
+            MenuTextColour = menuTextColour;
         }
     }
 
-    class DefaultSearch
+    public class DefaultSearch
     {
-        public OwnershipStatus Ownership { get; private set; }
-        public SpecialState Special { get; private set; }
-        public BondingLevels BondLevel { get; private set; }
-        public bool BondLevelExclude { get; private set; }
-        public LocationTypes Location { get; private set; }
-        public bool LocationExclude { get; private set; }
-        public Availabilities Availability { get; private set; }
-        public bool AvailabilityExclude { get; private set; }
-        public string Source { get; private set; }
-        public string VenueName { get; private set; }
-        public EnemyTypes EnemyType { get; private set; }
-        public MarketPlaceTypes MarketPlace { get; private set; }
-        public Flights Flight { get; private set; }
-        public int Year { get; private set; }
-        public string EventName { get; private set; }
-        public GatherTypes GatherType { get; private set; }
-        public int MinLevel { get; private set; }
-
-        public DefaultSearch(OwnershipStatus ownership, SpecialState special, BondingLevels bondLevel,
-            bool bondLevelExclude, LocationTypes location, bool locationExclude, Availabilities availability,
-            bool availabilityExclude, string source, string venueName, EnemyTypes enemyType,
-            MarketPlaceTypes marketPlace, Flights flight, int year, string eventName,
-            GatherTypes gatherType, int minLevel)
-        {
-            Ownership = ownership;
-            Special = special;
-            BondLevel = bondLevel;
-            BondLevelExclude = bondLevelExclude;
-            Location = location;
-            LocationExclude = locationExclude;
-            Availability = availability;
-            AvailabilityExclude = availabilityExclude;
-            Source = source;
-            VenueName = venueName;
-            EnemyType = enemyType;
-            MarketPlace = marketPlace;
-            Flight = flight;
-            Year = year;
-            EventName = eventName;
-            GatherType = gatherType;
-            MinLevel = minLevel;
-        }
+        public OwnershipStatus? Ownership;
+        public SpecialState? Special;
+        public BondingLevels? BondLevel;
+        public bool BondLevelExclude;
+        public LocationTypes? Location;
+        public bool LocationExclude;
+        public Availabilities? Availability;
+        public bool AvailabilityExclude;
+        public Sources? Source;
+        public string VenueName;
+        public EnemyTypes? EnemyType;
+        public MarketPlaceTypes? MarketPlace;
+        public Flights? Flight;
+        public int? Year;
+        public string EventName;
+        public GatherTypes? GatherType;
+        public int? MinLevel;
+        public string SearchText;
     }
 
     class BookmarkGroups
