@@ -1,0 +1,62 @@
+﻿<Window x:Class="Bestiary.OptionsWindows.ThemeSelectorWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Bestiary.OptionsWindows"
+        xmlns:local_c="clr-namespace:Bestiary.ViewModel.Converters"
+        mc:Ignorable="d"
+        Title="Theme Selector" Height="220" Width="400">
+    <Window.Resources>
+        <local_c:BrushToColourConverter x:Key="BrushToColour"/>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Row="0" Margin="5" TextAlignment="Center" FontSize="14">
+            <Run Text="Select the theme you want to use, then hit Set Theme!"/>
+            <LineBreak/>
+            <Run Text="Theme colours are displayed below the dropdown"/>
+        </TextBlock>
+        <ComboBox Grid.Row="1" Margin="10" ItemsSource="{Binding ThemeList}" 
+                  SelectedItem="{Binding SelectedTheme}" SelectedIndex="1">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <ComboBoxItem Content="{Binding ThemeName}"/>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Rectangle Grid.Column="1" Width="40" Height="30" Margin="5"
+                       Fill="{Binding SelectedTheme.BackgroundColour, Mode=OneWay, Converter={StaticResource BrushToColour}}"/>
+            <Rectangle Grid.Column="2" Width="40" Height="30" Margin="5"
+                       Fill="{Binding SelectedTheme.ResultWindowColour, Mode=OneWay, Converter={StaticResource BrushToColour}}"/>
+            <Rectangle Grid.Column="3" Width="40" Height="30" Margin="5"
+                       Fill="{Binding SelectedTheme.ResultWindowAltColour, Mode=OneWay, Converter={StaticResource BrushToColour}}"/>
+            <Rectangle Grid.Column="4" Width="40" Height="30" Margin="5"
+                       Fill="{Binding SelectedTheme.ControlColour, Mode=OneWay, Converter={StaticResource BrushToColour}}"/>
+            <Rectangle Grid.Column="5" Width="40" Height="30" Margin="5"
+                       Fill="{Binding SelectedTheme.ControlHoverColour, Mode=OneWay, Converter={StaticResource BrushToColour}}"/>
+            <Rectangle Grid.Column="6" Width="40" Height="30" Margin="5"
+                       Fill="{Binding SelectedTheme.MenuColour, Mode=OneWay, Converter={StaticResource BrushToColour}}"/>
+            <Rectangle Grid.Column="7" Width="40" Height="30" Margin="5"
+                       Fill="{Binding SelectedTheme.BorderColour, Mode=OneWay, Converter={StaticResource BrushToColour}}"/>
+        </Grid>
+        <Button Grid.Row="3" Margin="10" Content="Set Theme" Command="{Binding SaveTheme}"/>
+    </Grid>
+</Window>

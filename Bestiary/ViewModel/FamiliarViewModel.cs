@@ -1,5 +1,7 @@
 ﻿using Bestiary.Model;
+using Bestiary.Services;
 using System;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
@@ -49,8 +51,8 @@ namespace Bestiary.ViewModel
         }
  
         public event PropertyChangedEventHandler PropertyChanged;
-
-        public FamiliarViewModel(IModel model, FamiliarInfo info, LocationTypes[] availableLocationTypes)
+        public Theme Theme { get; private set; }
+        public FamiliarViewModel(IModel model, FamiliarInfo info, LocationTypes[] availableLocationTypes, Theme theme)
         {
             Info = info;
             AvailableLocationTypes = availableLocationTypes;
@@ -58,6 +60,9 @@ namespace Bestiary.ViewModel
             AvailableBondingLevels = ListEnumValues<BondingLevels>();
             AvailableBookmarkStates = ListEnumValues<BookmarkState>();
             m_Model = model;
+            Theme = theme;
+
+            SetResultsActions();
 
             PropertyChanged += (e, p) =>
             {
@@ -148,5 +153,93 @@ namespace Bestiary.ViewModel
             return Enum.GetValues(typeof(T)).Cast<T>()
                 .ToArray();
         }
+
+        public ObservableCollection<ResultsAction> ResultsActions { get; private set; }
+        private void SetResultsActions()
+        {
+            ResultsActions = new ObservableCollection<ResultsAction>();
+            ResultsActions.Add(new ResultsAction("Set to Owned", SetOwned));
+            ResultsActions.Add(new ResultsAction("Set to Not Owned", SetNotOwned));
+            ResultsActions.Add(new ResultsAction("Set to Awakened", SetAwakened));
+            ResultsActions.Add(new ResultsAction("Set to Wary", SetWary));
+        }
+
+        private LambdaCommand m_SetAwakened;
+        public ICommand SetAwakened
+        {
+            get
+            {
+                if (m_SetAwakened == null)
+                {
+                    m_SetAwakened = new LambdaCommand(
+                        onExecute: (p) =>
+                        {
+                            if (Info.Owned == OwnershipStatus.Owned)
+                            {
+                                Info.BondLevel = BondingLevels.Awakened;
+                            }
+                        }
+                    );
+                }
+                return m_SetAwakened;
+            }
+        }
+
+        private LambdaCommand m_SetWary;
+        public ICommand SetWary
+        {
+            get
+            {
+                if (m_SetWary == null)
+                {
+                    m_SetWary = new LambdaCommand(
+                        onExecute: (p) =>
+                        {
+                            if (Info.Owned == OwnershipStatus.Owned)
+                            {
+                                Info.BondLevel = BondingLevels.Wary;
+                            }
+                        }
+                    );
+                }
+                return m_SetWary;
+            }
+        }
+
+        private LambdaCommand m_SetNotOwned;
+        public ICommand SetNotOwned
+        {
+            get
+            {
+                if (m_SetNotOwned == null)
+                {
+                    m_SetNotOwned = new LambdaCommand(
+                        onExecute: (p) =>
+                        {
+                            if (Info.Owned == OwnershipStatus.Owned)
+                            {
+                                Info.OwnedFamiliar.Delete();
+                            }
+                            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Info"));
+                        }
+                    );
+                }
+                return m_SetNotOwned;
+            }
+        }
+    }
+
+    public class ResultsAction : INotifyPropertyChanged
+    {
+        public string Name { get; private set; }
+        public ICommand Action { get; private set; }
+
+        public ResultsAction(string name, ICommand action)
+        {
+            Name = name;
+            Action = action;
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
     }
 }

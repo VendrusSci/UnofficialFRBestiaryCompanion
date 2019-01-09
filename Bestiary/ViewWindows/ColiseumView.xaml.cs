@@ -1,4 +1,5 @@
 ﻿using Bestiary.Model;
+using Bestiary.Services;
 using Bestiary.ViewModel.Dataviews;
 using System.Windows;
 
@@ -9,10 +10,10 @@ namespace Bestiary.ViewWindows
     /// </summary>
     public partial class ColiseumView : Window
     {
-        public ColiseumView(IModel model, OwnershipStatus[] availableOwnedStatus, BondingLevels[] availableBondingLevels, LocationTypes[] availableLocationTypes)
+        public ColiseumView(IModel model, OwnershipStatus[] availableOwnedStatus, BondingLevels[] availableBondingLevels, LocationTypes[] availableLocationTypes, Theme theme)
         {
             InitializeComponent();
-            DataContext = new ColiseumViewModel(model, availableOwnedStatus, availableBondingLevels, availableLocationTypes);
+            DataContext = new ColiseumViewModel(model, availableOwnedStatus, availableBondingLevels, availableLocationTypes, theme);
         }
     }
 }

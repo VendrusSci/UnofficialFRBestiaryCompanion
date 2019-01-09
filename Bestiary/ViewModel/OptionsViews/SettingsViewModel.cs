@@ -1,4 +1,5 @@
 ﻿using Bestiary.Model;
+using Bestiary.OptionsWindows;
 using Bestiary.Services;
 using System.ComponentModel;
 using System.Windows.Input;
@@ -16,6 +17,7 @@ namespace Bestiary.ViewModel
             FilterDefaultButtonText = "Set Current Filter as Default";
             FilterDefaultSetAvailable = true;
             m_Settings = settings;
+            m_SearchText = searchText;
         }
 
         public string FilterDefaultButtonText { get; private set; }
@@ -45,11 +47,11 @@ namespace Bestiary.ViewModel
                                 EnemyType = m_Filters.SelectedEnemyType,
                                 MarketPlace = m_Filters.SelectedMarketPlaceType,
                                 Flight = m_Filters.SelectedFlight,
-                                Year = m_Filters.SelectedCycleYear.YearNumber,
+                                Year = m_Filters.SelectedCycleYear != null ? (int?)m_Filters.SelectedCycleYear.YearNumber : null,
                                 EventName = m_Filters.SelectedSiteEvent,
                                 GatherType = m_Filters.SelectedGatherType,
                                 MinLevel = m_Filters.SelectedLevel,
-                                SearchText = m_SearchText,
+                                SearchText = m_SearchText != null ? m_SearchText : "",
                             };
                             FilterDefaultButtonText = "Filter set as default";
                             FilterDefaultSetAvailable = false;
@@ -58,6 +60,25 @@ namespace Bestiary.ViewModel
                     );
                 }
                 return m_SetDefaultFilter;
+            }
+        }
+
+        private LambdaCommand m_OpenThemeSelectorWindow;
+        public ICommand OpenThemeSelectorWindow
+        {
+            get
+            {
+                if(m_OpenThemeSelectorWindow == null)
+                {
+                    m_OpenThemeSelectorWindow = new LambdaCommand(
+                        onExecute: (p) =>
+                        {
+                            ThemeSelectorWindow window = new ThemeSelectorWindow(m_Settings);
+                            window.ShowDialog();
+                        }
+                    );
+                }
+                return m_OpenThemeSelectorWindow;
             }
         }
 

@@ -1,4 +1,5 @@
 ﻿using Bestiary.Model;
+using Bestiary.Services;
 using Bestiary.ViewWindows;
 using System;
 using System.Collections.Generic;
@@ -19,13 +20,15 @@ namespace Bestiary.ViewModel.Dataviews
         private BondingLevels[] m_AvailableBondingLevels;
         private LocationTypes[] m_AvailableLocationTypes;
         private FamiliarInfo[] m_ColiseumFamiliars;
+        public Theme Theme;
 
-        public ColiseumViewModel(IModel model, OwnershipStatus[] AvailableOwnedStatus, BondingLevels[] AvailableBondingLevels, LocationTypes[] AvailableLocationTypes)
+        public ColiseumViewModel(IModel model, OwnershipStatus[] AvailableOwnedStatus, BondingLevels[] AvailableBondingLevels, LocationTypes[] AvailableLocationTypes, Theme theme)
         {
             m_Model = model;
             m_AvailableBondingLevels = AvailableBondingLevels;
             m_AvailableOwnedStatus = AvailableOwnedStatus;
             m_AvailableLocationTypes = AvailableLocationTypes;
+            Theme = theme;
 
             m_ColiseumFamiliars = m_Model.Familiars
                                .Select(id => m_Model.LookupFamiliar(id).Fetch())
@@ -58,7 +61,7 @@ namespace Bestiary.ViewModel.Dataviews
         {
             var familiars = m_ColiseumFamiliars
                 .Where(f => ((Coliseum)f.Familiar.Source).VenueName == name)
-                .Select(f => new FamiliarViewModel(m_Model, f, m_AvailableLocationTypes));
+                .Select(f => new FamiliarViewModel(m_Model, f, m_AvailableLocationTypes, Theme));
             return new ColiseumVenue(m_Model, name, familiars);
         }
 

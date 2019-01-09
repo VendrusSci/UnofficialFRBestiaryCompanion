@@ -32,9 +32,9 @@ namespace Bestiary.ViewModel.Dataviews
 
             Familiars = new BestiaryViewInfo[8];
 
-            CultureInfo culture = new CultureInfo("de", false);
+            CultureInfo culture = new CultureInfo("jp", false);
 
-            m_SortedFamiliarIds = m_Model.Familiars.OrderBy(f => m_Model.LookupFamiliar(f).Fetch().Name, StringComparer.Create(culture, false)).ToArray();            
+            m_SortedFamiliarIds = m_Model.Familiars.OrderBy(f => m_Model.LookupFamiliar(f).Fetch().Name, Comparer<string>.Default).ToArray();            
 
             LoadFamiliars();
         }

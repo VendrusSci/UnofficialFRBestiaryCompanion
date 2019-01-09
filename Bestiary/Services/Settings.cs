@@ -1,20 +1,21 @@
 ﻿using Bestiary.Model;
 using Newtonsoft.Json;
-using System.Drawing;
 using System.IO;
 using System.Text;
+using System.Windows.Media;
 
 namespace Bestiary.Services
 {
     public class SettingsHandler
     {
-        private static Theme m_Dark = new Theme(Color.DarkGray, Color.DarkSlateGray, Color.Gray, Color.Gray, Color.Gray, Color.White, Color.White);
-        private static Theme m_Rainbow = new Theme(Color.LightCyan, Color.LightGreen, Color.LightSkyBlue, Color.LightYellow, Color.LightPink, Color.Black, Color.Black);
-        private static Theme m_Bluegreen = new Theme(Color.Aquamarine, Color.Aqua, Color.Cyan, Color.LightCyan, Color.LightCyan, Color.DarkBlue, Color.DarkBlue);
-        private static Theme m_Default = new Theme(Color.White, Color.White, ColorTranslator.FromHtml("#FBE9D9"), 
-            ColorTranslator.FromHtml("#F0F0F0"), ColorTranslator.FromHtml("#F0F0F0"), Color.Black, Color.Black);
-        private static Theme m_Official = new Theme(ColorTranslator.FromHtml("#6E1C02"), ColorTranslator.FromHtml("#DECB9C"), Color.White, Color.White, 
-            ColorTranslator.FromHtml("#6E1C02"), Color.Black, ColorTranslator.FromHtml("#DECB9C"));
+        public Theme Dark = new Theme(Brushes.DarkGray, Brushes.DarkSlateGray, Brushes.Gray, Brushes.Gray, Brushes.DarkGray, Brushes.Gray, Brushes.White, Brushes.White, Brushes.Gray);
+        public Theme Rainbow = new Theme(Brushes.PaleTurquoise, Brushes.LightCyan, Brushes.LightSkyBlue, Brushes.LightYellow, Brushes.LightSalmon, Brushes.LightPink, Brushes.Green, Brushes.Purple, Brushes.GreenYellow);
+        public Theme Bluegreen = new Theme(Brushes.Aquamarine, Brushes.Aqua, Brushes.Cyan, Brushes.LightCyan, Brushes.LightGreen, Brushes.LightCyan, Brushes.DarkBlue, Brushes.DarkBlue, Brushes.SeaGreen);
+        public Theme Default = new Theme(Brushes.White, Brushes.White, (SolidColorBrush)(new BrushConverter().ConvertFrom("#FBE9D9")), (SolidColorBrush)(new BrushConverter().ConvertFrom("#F0F0F0")), 
+            Brushes.LightGray, (SolidColorBrush)(new BrushConverter().ConvertFrom("#F0F0F0")), Brushes.Black, Brushes.Black, Brushes.Gray);
+        public Theme Official = new Theme((SolidColorBrush)(new BrushConverter().ConvertFrom("#6E1C02")), (SolidColorBrush)(new BrushConverter().ConvertFrom("#DECB9C")), 
+            Brushes.White, Brushes.White, (SolidColorBrush)(new BrushConverter().ConvertFrom("#DECB9C")), (SolidColorBrush)(new BrushConverter().ConvertFrom("#6E1C02")), Brushes.Black, 
+            (SolidColorBrush)(new BrushConverter().ConvertFrom("#DECB9C")), (SolidColorBrush)(new BrushConverter().ConvertFrom("#6E1C02")));
 
         public Theme SelectedTheme { get; set; }
         public DefaultSearch SelectedDefaultSearch { get; set; }
@@ -24,7 +25,7 @@ namespace Bestiary.Services
         {
             if(theme == null)
             {
-                SelectedTheme = m_Default;
+                SelectedTheme = Default;
             }
 
             if(defaultSearch == null)
@@ -76,24 +77,28 @@ namespace Bestiary.Services
 
     public class Theme
     {
-        public Color BackgroundColour { get; private set; }
-        public Color ResultWindowColour { get; private set; }
-        public Color ResultWindowAltColour { get; private set; }
-        public Color ControlColour { get; private set; }
-        public Color MenuColour { get; private set; }
-        public Color TextColour { get; private set; }
-        public Color MenuTextColour { get; private set; }
+        public SolidColorBrush BackgroundColour { get; private set; }
+        public SolidColorBrush ResultWindowColour { get; private set; }
+        public SolidColorBrush ResultWindowAltColour { get; private set; }
+        public SolidColorBrush ControlColour { get; private set; }
+        public SolidColorBrush ControlHoverColour { get; private set; }
+        public SolidColorBrush MenuColour { get; private set; }
+        public SolidColorBrush TextColour { get; private set; }
+        public SolidColorBrush MenuTextColour { get; private set; }
+        public SolidColorBrush BorderColour { get; private set; }
 
-        public Theme(Color backgroundColour, Color resultWindowColour, Color resultWindowAltColour,
-            Color controlColour, Color menuColour, Color textColour, Color menuTextColour)
+        public Theme(SolidColorBrush backgroundColour, SolidColorBrush resultWindowColour, SolidColorBrush resultWindowAltColour,
+            SolidColorBrush controlColour, SolidColorBrush controlHoverColour, SolidColorBrush menuColour, SolidColorBrush textColour, SolidColorBrush menuTextColour, SolidColorBrush borderColour)
         {
             BackgroundColour = backgroundColour;
             ResultWindowColour = resultWindowColour;
             ResultWindowAltColour = resultWindowColour;
             ControlColour = controlColour;
+            ControlHoverColour = controlHoverColour;
             MenuColour = menuColour;
             TextColour = textColour;
             MenuTextColour = menuTextColour;
+            BorderColour = borderColour;
         }
     }
 

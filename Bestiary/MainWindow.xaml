@@ -13,81 +13,35 @@
         Icon="{Binding Icon}"
         WindowStartupLocation="CenterScreen">
     <Window.Resources>
-        <local_c:LongestItemToWidthConverter x:Key="ComboBoxWidthConverter"/>
-        <local_c:ItemToDescriptionConverter x:Key="DescConverter"/>
-        <local_c:BondLevelToIconConverter x:Key="BondLevelToIcon"/>
-        <local_c:BookmarkStateToIconConverter x:Key="BookmarkedToIcon"/>
-
-        <Style TargetType="{x:Type Label}">
-            <Setter Property="VerticalAlignment" Value="Center"/>
-            <Setter Property="HorizontalAlignment" Value="Center"/>
-            <Setter Property="HorizontalContentAlignment" Value="Center"/>
-        </Style>
-        <Style TargetType="{x:Type TextBlock}">
-            <Setter Property="VerticalAlignment" Value="Center"/>
-            <Setter Property="HorizontalAlignment" Value="Center"/>
-        </Style>
-        <Style TargetType="{x:Type CheckBox}">
-            <Setter Property="VerticalAlignment" Value="Center"/>
-        </Style>
-        <Style TargetType="{x:Type ComboBox}">
-            <Setter Property="VerticalAlignment" Value="Center"/>
-            <Setter Property="HorizontalAlignment" Value="Center"/>
-            <Setter Property="Margin" Value="5"/>
-        </Style>
-        <Style TargetType="{x:Type Button}">
-            <Setter Property="VerticalContentAlignment" Value="Center"/>
-            <Setter Property="Margin" Value="5"/>
-        </Style>
-        <Style TargetType="{x:Type DataGridCell}">
-            <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="VerticalContentAlignment" Value="Center"/>
-            <Setter Property="VerticalAlignment" Value="Center"/>
-            <Style.Triggers>
-                <Trigger Property="IsSelected" Value="true">
-                    <Setter Property="Foreground" Value="Black"/>
-                    <Setter Property="BorderThickness" Value="0"/>
-                </Trigger>
-                <Trigger Property="IsSelected" Value="false">
-                    <Setter Property="BorderThickness" Value="0"/>
-                </Trigger>
-            </Style.Triggers>
-        </Style>
-        <Style TargetType="{x:Type DataGridRow}">
-            <EventSetter Event="Control.PreviewMouseDoubleClick" Handler="ChangeSelectedRow"/>
-            <EventSetter Event="UIElement.PreviewMouseLeftButtonDown" Handler="ChangeSelectedRow"/>
-            <Style.Triggers>
-                <Trigger Property="IsSelected" Value="true">
-                    <Setter Property="BorderBrush" Value="Black"/>
-                    <Setter Property="BorderThickness" Value="1"/>
-                </Trigger>
-                <Trigger Property="IsSelected" Value="false">
-                    <Setter Property="BorderBrush" Value="Transparent"/>
-                    <Setter Property="BorderThickness" Value="1"/>
-                </Trigger>
-            </Style.Triggers>
-        </Style>
-        <Style x:Key="FocusVisual">
-            <Setter Property="Control.Template">
-                <Setter.Value>
-                    <ControlTemplate>
-                        <Rectangle Margin="2" SnapsToDevicePixels="true" Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" StrokeThickness="1" StrokeDashArray="1 2"/>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
+        <ResourceDictionary>
+            <local_c:LongestItemToWidthConverter x:Key="ComboBoxWidthConverter"/>
+            <local_c:ItemToDescriptionConverter x:Key="DescConverter"/>
+            <local_c:BondLevelToIconConverter x:Key="BondLevelToIcon"/>
+            <local_c:BondLevelToColourConverter x:Key="BondLevelToColour"/>
+            <local_c:BookmarkStateToIconConverter x:Key="BookmarkedToIcon"/>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="ResourceDictionaries/ComboBoxResources.xaml"/>
+                <ResourceDictionary Source="ResourceDictionaries/MainViewStyles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Menu Grid.Row="0" Height="20">
+        <Menu Grid.Row="0" Height="20" Background="{Binding Theme.MenuColour, Mode=OneWay}">
             <MenuItem Width="Auto" Header="Options">
                 <MenuItem Width="Auto" Header="Clear Bookmarks" Command="{Binding OpenClearBookmarksWindow}"/>
-                <MenuItem Width="Auto" Header="Copyable Results List" Command="{Binding OpenResultListWindow}"/>
                 <MenuItem Width="Auto" Header="Import from Old Version" Command="{Binding OpenFolderImportWindow}"/>
                 <MenuItem Width="Auto" Header="Settings" Command="{Binding OpenSettingsWindow}"/>
+            </MenuItem>
+            <MenuItem Width="Auto" Header="Results">
+                <MenuItem Width="Auto" Header="Copyable Results List" Command="{Binding OpenResultListWindow}"/>
+                <MenuItem Width="Auto" Header="Set Results to Owned" Command="{Binding SetOwned}"/>
+                <MenuItem Width="Auto" Header="Set Results to Not Owned" Command="{Binding SetNotOwned}"/>
+                <MenuItem Width="Auto" Header="Set Results to Awakened" Command="{Binding SetAwakened}"/>
+                <MenuItem Width="Auto" Header="Set Results to Wary" Command="{Binding SetWary}"/>
             </MenuItem>
             <MenuItem Width="Auto" Header="Views">
                 <MenuItem Width="Auto" Header="Flight Rising Bestiary" Command="{Binding OpenFRBestiaryView}"/>
@@ -103,7 +57,7 @@
                 <MenuItem Width="Auto" Header="User Guide" Command="{Binding OpenUserGuideWindow}"/>
             </MenuItem>
         </Menu>
-        <Grid Grid.Row="1">
+        <Grid Grid.Row="1" Background="{Binding Theme.BackgroundColour, Mode=OneWay}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
@@ -116,7 +70,7 @@
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
-                <GroupBox Grid.Row="0" Header="Search">
+                <GroupBox Grid.Row="0" Header="Search" Margin="5">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
@@ -131,11 +85,12 @@
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto"/>
                                 <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
-                            <CheckBox Grid.Column="0" IsChecked="{Binding ExactChecked}" HorizontalAlignment="Left"/>
-                            <Label Grid.Column="1" HorizontalAlignment ="Left" Content="Exact"/>
-                            <Button Grid.Column="2" HorizontalAlignment="Right" Content="Clear all filters" Command="{Binding ClearAllFilters}"/>
+                            <CheckBox Grid.Column="0" IsChecked="{Binding ExactChecked}" HorizontalAlignment="Left" Margin="0,8"/>
+                            <Label Grid.Column="1" HorizontalAlignment ="Left" Content="Exact" Margin="1,2,0,2"/>
+                            <Button Grid.Column="3" HorizontalAlignment="Right" Content="Clear all filters" Command="{Binding ClearAllFilters}" Margin="0,5,2,5"/>
                         </Grid>
                     </Grid>
                 </GroupBox>
@@ -162,56 +117,68 @@
                         <Label Grid.Column="0" Grid.Row="3" Content="Location"/>
                         <Label Grid.Column="0" Grid.Row="4" Content="Availability"/>
                         <Label Grid.Column="0" Grid.Row="5" Content="Source"/>
-                        
-                        <ComboBox Grid.Column="1" Grid.Row="0" ItemsSource="{Binding FamiliarParameters.AvailableOwnedStatus}" 
+
+                        <ComboBox Grid.Column="1" Grid.Row="0" Template="{StaticResource ComboBoxControlThemed}"
+                                  ItemsSource="{Binding FamiliarParameters.AvailableOwnedStatus}" 
+                                  ItemContainerStyle="{StaticResource ComboBoxItemThemed}"
                                   SelectedItem="{Binding FamiliarParameters.SelectedOwnedStatus}" HorizontalAlignment="Stretch">
                             <ComboBox.ItemTemplate>
                                 <DataTemplate>
-                                    <TextBlock Text="{Binding Converter={StaticResource DescConverter}, Mode=OneTime}"/>
+                                    <ComboBoxItem Content="{Binding Converter={StaticResource DescConverter}, Mode=OneTime}"/>
                                 </DataTemplate>
                             </ComboBox.ItemTemplate>
                         </ComboBox>
-                        <ComboBox Grid.Column="1" Grid.Row="1" ItemsSource="{Binding FamiliarParameters.AvailableSpecialStates}" 
+                        <ComboBox Grid.Column="1" Grid.Row="1" Template="{DynamicResource ComboBoxControlThemed}"
+                                  ItemsSource="{Binding FamiliarParameters.AvailableSpecialStates}" 
+                                  ItemContainerStyle="{StaticResource ComboBoxItemThemed}"
                                   SelectedItem="{Binding FamiliarParameters.SelectedSpecialState}" HorizontalAlignment="Stretch">
                             <ComboBox.ItemTemplate>
                                 <DataTemplate>
-                                    <TextBlock Text="{Binding Converter={StaticResource DescConverter}, Mode=OneTime}"/>
+                                    <ComboBoxItem Content="{Binding Converter={StaticResource DescConverter}, Mode=OneTime}"/>
                                 </DataTemplate>
                             </ComboBox.ItemTemplate>
                         </ComboBox>
-                        <ComboBox Grid.Column="1" Grid.Row="2" ItemsSource="{Binding FamiliarParameters.AvailableBondingLevels}" 
+                        <ComboBox Grid.Column="1" Grid.Row="2" Template="{DynamicResource ComboBoxControlThemed}"
+                                  ItemContainerStyle="{DynamicResource ComboBoxItemThemed}"
+                                  ItemsSource="{Binding FamiliarParameters.AvailableBondingLevels}" 
                                   SelectedItem="{Binding FamiliarParameters.SelectedBondingLevel}" HorizontalAlignment="Stretch"
                                   Margin="5">
                             <ComboBox.ItemTemplate>
                                 <DataTemplate>
-                                    <StackPanel Orientation="Horizontal">
+                                    <StackPanel Orientation="Horizontal" x:Name="BondLevelBlock">
                                         <Image Margin="0 0 2 0" Width="10" Height="10" Source="{Binding Converter={StaticResource BondLevelToIcon}}"/>
                                         <TextBlock Text="{Binding Converter={StaticResource DescConverter}, Mode=OneTime}"/>
                                     </StackPanel>
                                 </DataTemplate>
                             </ComboBox.ItemTemplate>
                         </ComboBox>
-                        <ComboBox Grid.Column="1" Grid.Row="3" ItemsSource="{Binding FamiliarParameters.AvailableLocationTypes}" 
+                        <ComboBox Grid.Column="1" Grid.Row="3" Template="{StaticResource ComboBoxControlThemed}"
+                                  ItemsSource="{Binding FamiliarParameters.AvailableLocationTypes}" 
+                                  ItemContainerStyle="{StaticResource ComboBoxItemThemed}"
                                   SelectedItem="{Binding FamiliarParameters.SelectedLocationType}" HorizontalAlignment="Stretch">
                             <ComboBox.ItemTemplate>
                                 <DataTemplate>
-                                    <TextBlock Text="{Binding Converter={StaticResource DescConverter}, Mode=OneTime}"/>
+                                    <ComboBoxItem Content="{Binding Converter={StaticResource DescConverter}, Mode=OneTime}"/>
                                 </DataTemplate>
                             </ComboBox.ItemTemplate>
                         </ComboBox>
-                        <ComboBox Grid.Column="1" Grid.Row="4" ItemsSource="{Binding FamiliarParameters.AvailableAvailabilities}" 
+                        <ComboBox Grid.Column="1" Grid.Row="4" Template="{StaticResource ComboBoxControlThemed}"
+                                  ItemsSource="{Binding FamiliarParameters.AvailableAvailabilities}" 
+                                  ItemContainerStyle="{StaticResource ComboBoxItemThemed}"
                                   SelectedItem="{Binding FamiliarParameters.SelectedAvailability}" HorizontalAlignment="Stretch">
                             <ComboBox.ItemTemplate>
                                 <DataTemplate>
-                                    <TextBlock Text="{Binding Converter={StaticResource DescConverter}, Mode=OneTime}"/>
+                                    <ComboBoxItem Content="{Binding Converter={StaticResource DescConverter}, Mode=OneTime}"/>
                                 </DataTemplate>
                             </ComboBox.ItemTemplate>
                         </ComboBox>
-                        <ComboBox Grid.Column="1" Grid.Row="5" ItemsSource="{Binding FamiliarParameters.AvailableSources}" 
+                        <ComboBox Grid.Column="1" Grid.Row="5" Template="{StaticResource ComboBoxControlThemed}"
+                                  ItemsSource="{Binding FamiliarParameters.AvailableSources}" 
+                                  ItemContainerStyle="{StaticResource ComboBoxItemThemed}"
                                   SelectedItem="{Binding FamiliarParameters.SelectedSource}" HorizontalAlignment="Stretch">
                             <ComboBox.ItemTemplate>
                                 <DataTemplate>
-                                    <TextBlock Text="{Binding Converter={StaticResource DescConverter}, Mode=OneTime}"/>
+                                    <ComboBoxItem Content="{Binding Converter={StaticResource DescConverter}, Mode=OneTime}"/>
                                 </DataTemplate>
                             </ComboBox.ItemTemplate>
                         </ComboBox>
@@ -284,7 +251,8 @@
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
                         <Label Grid.Column="0" Width="Auto" HorizontalContentAlignment="Center" Content="Sort by:"/>
-                        <ComboBox Grid.Column="1" Margin="5" ItemsSource="{Binding AvailableSortTypes}" SelectedItem="{Binding SelectedSortType, Mode=TwoWay}" 
+                        <ComboBox Grid.Column="1" Margin="5" Template="{StaticResource ComboBoxControlThemed}"
+                                  ItemsSource="{Binding AvailableSortTypes}" SelectedItem="{Binding SelectedSortType, Mode=TwoWay}" 
                                   IsSynchronizedWithCurrentItem="True" Width="{Binding AvailableSortTypes, Converter={StaticResource ComboBoxWidthConverter}}">
                             <ComboBox.ItemTemplate>
                                 <DataTemplate>
@@ -294,13 +262,14 @@
                         </ComboBox>
                         <Button Grid.Column="2" Margin="5" Content="Go" Width="30"  Command="{Binding SortResults}"/>
                         <Label Grid.Column="4" Width="Auto" HorizontalContentAlignment="Center" Content="Results:"/>
-                        <Label Grid.Column="5" Width="50" Margin="5" VerticalContentAlignment="Center" Content="{Binding ResultCount}"/>
+                        <TextBlock Grid.Column="5" Width="50" Margin="5" VerticalAlignment="Center" Text="{Binding ResultCount}" Background="{Binding Theme.BackgroundColour}"/>
                         <Label Grid.Column="6" Width="Auto" HorizontalContentAlignment="Center" Content="Owned:"/>
-                        <Label Grid.Column="7" Width="50" Margin="5" VerticalContentAlignment="Center"  Content="{Binding OwnedCount}"/>
+                        <TextBlock Grid.Column="7" Width="50" Margin="5" VerticalAlignment="Center" Text="{Binding OwnedCount}" Background="{Binding Theme.BackgroundColour}"/>
                         <Label Grid.Column="8" Width="Auto" HorizontalContentAlignment="Center" Content="Awakened:"/>
-                        <Label Grid.Column="9" Width="50" Margin="5" VerticalContentAlignment="Center"  Content="{Binding AwakenedCount}"/>
+                        <TextBlock Grid.Column="9" Width="50" Margin="5" VerticalAlignment="Center" Text="{Binding AwakenedCount}" Background="{Binding Theme.BackgroundColour}"/>
                     </Grid>
-                    <DataGrid Grid.Row ="1" Width="Auto" Height="Auto" AlternatingRowBackground="#FBE9D9" AlternationCount="2"
+                    <DataGrid Grid.Row ="1" Width="Auto" Height="Auto" Background="{Binding Theme.ResultWindowColour}"
+                              AlternatingRowBackground="{Binding Theme.ResultWindowAltColour, Mode=OneWay}" AlternationCount="2"
                               AutoGenerateColumns="False" GridLinesVisibility="None" 
                               ItemsSource="{Binding FilteredFamiliars}" IsSynchronizedWithCurrentItem="True">
                         <DataGrid.Resources>
@@ -319,19 +288,15 @@
                                     </Trigger>
                                 </Style.Triggers>
                             </Style>
+                            <Style x:Key="ResultsWindowStyle" TargetType="{x:Type DataGridRow}">
+                                <EventSetter Event="Control.PreviewMouseDoubleClick" Handler="ChangeSelectedRow"/>
+                                <EventSetter Event="UIElement.PreviewMouseLeftButtonDown" Handler="ChangeSelectedRow"/>
+                                <EventSetter Event="UIElement.PreviewMouseRightButtonDown" Handler="ChangeSelectedRow"/>
+                            </Style>
                         </DataGrid.Resources>
                         <DataGrid.InputBindings>
                             <MouseBinding MouseAction="LeftDoubleClick" Command="{Binding OpenDataFamiliarWindow}" CommandParameter="{Binding FilteredFamiliars/}"/>
                         </DataGrid.InputBindings>
-                        <DataGrid.ContextMenu>
-                            <ContextMenu ItemsSource="{Binding ResultsActions}">
-                                <ContextMenu.ItemTemplate>
-                                    <DataTemplate DataType="MenuItem">
-                                        <MenuItem Header="{Binding Name}" Command="{Binding Action}"/>
-                                    </DataTemplate>
-                                </ContextMenu.ItemTemplate>
-                            </ContextMenu>
-                        </DataGrid.ContextMenu>
                         <DataGrid.Columns>
                             <DataGridTemplateColumn Header="Icon" Width="Auto" IsReadOnly="True">
                                 <DataGridTemplateColumn.CellTemplate>
@@ -350,7 +315,8 @@
                             <DataGridTemplateColumn Header="Bonding Level" IsReadOnly="False">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
-                                        <ComboBox MinWidth="90" IsEditable="False" ItemsSource="{Binding AvailableBondingLevels}" 
+                                        <ComboBox MinWidth="90" IsEditable="False" Template="{StaticResource ComboBoxControlThemed}"
+                                                  ItemContainerStyle="{StaticResource ComboBoxItemThemed}" ItemsSource="{Binding AvailableBondingLevels}" 
                                                   HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
                                                   IsEnabled="{Binding Info.Owned, Converter={StaticResource OwnedToBoolConverter}}" 
                                                   SelectedItem="{Binding Info.BondLevel, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
@@ -372,6 +338,7 @@
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
                                         <ComboBox  ItemsSource="{Binding AvailableLocationTypes}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" MinWidth="90"
+                                                   Template="{StaticResource ComboBoxControlThemed}" ItemContainerStyle="{StaticResource ComboBoxItemThemed}"
                                                    SelectedItem="{Binding Info.Location, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                                    IsSynchronizedWithCurrentItem="True" IsEnabled="{Binding Info.Owned, Converter={StaticResource OwnedToBoolConverter}}">
                                             <ComboBox.ItemTemplate>

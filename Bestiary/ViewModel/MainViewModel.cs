@@ -44,8 +44,8 @@ namespace Bestiary.ViewModel
         public bool ExactChecked {get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
-
         public ObservableCollection<FamiliarViewModel> FilteredFamiliars { get; private set; }
+        public Theme Theme { get; private set; }
 
         private LambdaCommand m_FetchFamiliars;
         private List<int> m_NewFams;
@@ -70,13 +70,13 @@ namespace Bestiary.ViewModel
                 m_NewFams = new List<int>();
             }
 
-            SetResultsActions();
             UserActionLog.Info("Application opened!");
             FamiliarParameters = new FamiliarFilters();
 
             m_Settings = settings;
             m_Settings.FetchSettings();
             ApplyDefaultSearch();
+            Theme = m_Settings.SelectedTheme;
 
             FetchFamiliars.Execute(null);
             SelectedSortType = SortTypes.Alphabetical;
@@ -117,7 +117,7 @@ namespace Bestiary.ViewModel
                             UserActionLog.Info("Applying search");
                             tempFamiliars = ApplySearch(tempFamiliars);
                             var tempFamiliarViewModels = tempFamiliars
-                                .Select(f => new FamiliarViewModel(m_Model, f, FamiliarParameters.AvailableLocationTypes)).ToArray();
+                                .Select(f => new FamiliarViewModel(m_Model, f, FamiliarParameters.AvailableLocationTypes, Theme)).ToArray();
                             tempFamiliarViewModels = ApplySort(tempFamiliarViewModels);
 
                             FilteredFamiliars = new ObservableCollection<FamiliarViewModel>();
@@ -465,7 +465,7 @@ namespace Bestiary.ViewModel
                 {
                     m_OpenColiseumView = new OpenDialogCommand<ColiseumView>(
                         Window,
-                        _ => new ColiseumView(m_Model, FamiliarParameters.AvailableOwnedStatus, FamiliarParameters.AvailableBondingLevels, FamiliarParameters.AvailableLocationTypes)
+                        _ => new ColiseumView(m_Model, FamiliarParameters.AvailableOwnedStatus, FamiliarParameters.AvailableBondingLevels, FamiliarParameters.AvailableLocationTypes, Theme)
                     );
                 }
                 return m_OpenColiseumView;
@@ -652,26 +652,17 @@ namespace Bestiary.ViewModel
             }
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("OwnedCount"));
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("AwakenedCount"));
+            FetchFamiliars.Execute(null);
         }
 
-        public ObservableCollection<ResultsAction> ResultsActions { get; private set; }
-        private void SetResultsActions()
-        {
-            ResultsActions = new ObservableCollection<ResultsAction>();
-            ResultsActions.Add(new ResultsAction("Set to Owned", SetResultsOwned));
-            ResultsActions.Add(new ResultsAction("Set to Not Owned", SetResultsNotOwned));
-            ResultsActions.Add(new ResultsAction("Set to Awakened", SetResultsAwakened));
-            ResultsActions.Add(new ResultsAction("Set to Wary", SetResultsWary));
-        }
-
-        private LambdaCommand m_SetResultsAwakened;
-        public ICommand SetResultsAwakened
+        private LambdaCommand m_SetAwakened;
+        public ICommand SetAwakened
         {
             get
             {
-                if(m_SetResultsAwakened == null)
+                if(m_SetAwakened == null)
                 {
-                    m_SetResultsAwakened = new LambdaCommand(
+                    m_SetAwakened = new LambdaCommand(
                         onExecute: (p) =>
                         {
                             foreach(var familiar in FilteredFamiliars)
@@ -684,18 +675,18 @@ namespace Bestiary.ViewModel
                         }
                     );
                 }
-                return m_SetResultsAwakened;
+                return m_SetAwakened;
             }
         }
 
-        private LambdaCommand m_SetResultsWary;
-        public ICommand SetResultsWary
+        private LambdaCommand m_SetWary;
+        public ICommand SetWary
         {
             get
             {
-                if (m_SetResultsWary == null)
+                if (m_SetWary == null)
                 {
-                    m_SetResultsWary = new LambdaCommand(
+                    m_SetWary = new LambdaCommand(
                         onExecute: (p) =>
                         {
                             foreach (var familiar in FilteredFamiliars)
@@ -708,18 +699,18 @@ namespace Bestiary.ViewModel
                         }
                     );
                 }
-                return m_SetResultsWary;
+                return m_SetWary;
             }
         }
 
-        private LambdaCommand m_SetResultsOwned;
-        public ICommand SetResultsOwned
+        private LambdaCommand m_SetOwned;
+        public ICommand SetOwned
         {
             get
             {
-                if (m_SetResultsOwned == null)
+                if (m_SetOwned == null)
                 {
-                    m_SetResultsOwned = new LambdaCommand(
+                    m_SetOwned = new LambdaCommand(
                         onExecute: (p) =>
                         {
                             foreach (var familiar in FilteredFamiliars)
@@ -732,18 +723,18 @@ namespace Bestiary.ViewModel
                         }
                     );
                 }
-                return m_SetResultsOwned;
+                return m_SetOwned;
             }
         }
 
-        private LambdaCommand m_SetResultsNotOwned;
-        public ICommand SetResultsNotOwned
+        private LambdaCommand m_SetNotOwned;
+        public ICommand SetNotOwned
         {
             get
             {
-                if (m_SetResultsNotOwned == null)
+                if (m_SetNotOwned == null)
                 {
-                    m_SetResultsNotOwned = new LambdaCommand(
+                    m_SetNotOwned = new LambdaCommand(
                         onExecute: (p) =>
                         {
                             foreach (var familiar in FilteredFamiliars)
@@ -757,7 +748,7 @@ namespace Bestiary.ViewModel
                         }
                     );
                 }
-                return m_SetResultsNotOwned;
+                return m_SetNotOwned;
             }
         }
 
@@ -783,20 +774,4 @@ namespace Bestiary.ViewModel
 
         public static readonly log4net.ILog UserActionLog = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
     }
-
-
-    class ResultsAction : INotifyPropertyChanged
-    {
-        public string Name { get; private set; }
-        public ICommand Action { get; private set; }
-
-        public ResultsAction(string name, ICommand action)
-        {
-            Name = name;
-            Action = action;
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-    }
-
 }

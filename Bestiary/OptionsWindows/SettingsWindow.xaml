@@ -22,7 +22,7 @@
         </TextBlock>
         <TextBlock Grid.Row="1" Margin="5 10 5 5" HorizontalAlignment="Center" 
                    Text="Select the colour scheme theme from available presets"/>
-        <Button Grid.Row="2" Content="Select Theme" Margin="20 5 20 5" Command="{Binding OpenSelectThemeWindow}"/>
+        <Button Grid.Row="2" Content="Select Theme" Margin="20 5 20 5" Command="{Binding OpenThemeSelectorWindow}"/>
         <TextBlock Grid.Row="3" Margin="5 10 5 5" HorizontalAlignment="Center">
             <Run Text="Set the currently applied filter and search options "/>
             <LineBreak/>

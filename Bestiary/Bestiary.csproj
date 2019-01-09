@@ -178,6 +178,9 @@
     <Compile Include="OptionsWindows\SettingsWindow.xaml.cs">
       <DependentUpon>SettingsWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="OptionsWindows\ThemeSelectorWindow.xaml.cs">
+      <DependentUpon>ThemeSelectorWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="OtherWindows\UserGuideWindow.xaml.cs">
       <DependentUpon>UserGuideWindow.xaml</DependentUpon>
     </Compile>
@@ -185,12 +188,15 @@
     <Compile Include="Services\GoogleSheets.cs" />
     <Compile Include="Services\Settings.cs" />
     <Compile Include="ViewModel\AboutViewModel.cs" />
-    <Compile Include="ViewModel\OptionsViews\ClearBookmarksViewModel.cs" />
+    <Compile Include="ViewModel\Converters\BondLevelToColourConverter.cs" />
+    <Compile Include="ViewModel\Converters\BrushToColourConverter.cs" />
     <Compile Include="ViewModel\Converters\EnemyTypeToColourConverter.cs" />
+    <Compile Include="ViewModel\OptionsViews\ClearBookmarksViewModel.cs" />
     <Compile Include="ViewModel\Converters\OwnedToBoolConverter.cs" />
     <Compile Include="ViewModel\Dataviews\ColiseumViewModel.cs" />
     <Compile Include="ViewModel\OptionsViews\ImportFromOldViewModel.cs" />
     <Compile Include="ViewModel\OptionsViews\SettingsViewModel.cs" />
+    <Compile Include="ViewModel\OptionsViews\ThemeSelectorViewModel.cs" />
     <Compile Include="ViewModel\UserGuideViewModel.cs" />
     <Compile Include="ViewWindows\ColiseumView.xaml.cs">
       <DependentUpon>ColiseumView.xaml</DependentUpon>
@@ -209,6 +215,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="OptionsWindows\SettingsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="OptionsWindows\ThemeSelectorWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -274,6 +284,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="OtherWindows\UserGuideWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ResourceDictionaries\ComboBoxResources.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ResourceDictionaries\MainViewStyles.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
