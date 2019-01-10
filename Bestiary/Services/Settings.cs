@@ -8,12 +8,12 @@ namespace Bestiary.Services
 {
     public class SettingsHandler
     {
-        public Theme Dark = new Theme(Brushes.DarkGray, Brushes.DarkSlateGray, Brushes.Gray, Brushes.Gray, Brushes.DarkGray, Brushes.Gray, Brushes.White, Brushes.White, Brushes.Gray);
+        public Theme Dark = new Theme(Brushes.DarkGray, Brushes.Black, Brushes.DarkGray, Brushes.Gray, Brushes.DarkGray, Brushes.Gray, Brushes.White, Brushes.White, Brushes.Gray);
         public Theme Rainbow = new Theme(Brushes.PaleTurquoise, Brushes.LightCyan, Brushes.LightSkyBlue, Brushes.LightYellow, Brushes.LightSalmon, Brushes.LightPink, Brushes.Green, Brushes.Purple, Brushes.GreenYellow);
-        public Theme Bluegreen = new Theme(Brushes.Aquamarine, Brushes.Aqua, Brushes.Cyan, Brushes.LightCyan, Brushes.LightGreen, Brushes.LightCyan, Brushes.DarkBlue, Brushes.DarkBlue, Brushes.SeaGreen);
+        public Theme Bluegreen = new Theme(Brushes.Aquamarine, Brushes.LightBlue, Brushes.Cyan, Brushes.LightCyan, Brushes.LightGreen, Brushes.LightCyan, Brushes.DarkBlue, Brushes.DarkBlue, Brushes.SeaGreen);
         public Theme Default = new Theme(Brushes.White, Brushes.White, (SolidColorBrush)(new BrushConverter().ConvertFrom("#FBE9D9")), (SolidColorBrush)(new BrushConverter().ConvertFrom("#F0F0F0")), 
             Brushes.LightGray, (SolidColorBrush)(new BrushConverter().ConvertFrom("#F0F0F0")), Brushes.Black, Brushes.Black, Brushes.Gray);
-        public Theme Official = new Theme((SolidColorBrush)(new BrushConverter().ConvertFrom("#6E1C02")), (SolidColorBrush)(new BrushConverter().ConvertFrom("#DECB9C")), 
+        public Theme Official = new Theme((SolidColorBrush)(new BrushConverter().ConvertFrom("#F4F4F4")), (SolidColorBrush)(new BrushConverter().ConvertFrom("#dbd6c7")), 
             Brushes.White, Brushes.White, (SolidColorBrush)(new BrushConverter().ConvertFrom("#DECB9C")), (SolidColorBrush)(new BrushConverter().ConvertFrom("#6E1C02")), Brushes.Black, 
             (SolidColorBrush)(new BrushConverter().ConvertFrom("#DECB9C")), (SolidColorBrush)(new BrushConverter().ConvertFrom("#6E1C02")));
 
@@ -92,7 +92,7 @@ namespace Bestiary.Services
         {
             BackgroundColour = backgroundColour;
             ResultWindowColour = resultWindowColour;
-            ResultWindowAltColour = resultWindowColour;
+            ResultWindowAltColour = resultWindowAltColour;
             ControlColour = controlColour;
             ControlHoverColour = controlHoverColour;
             MenuColour = menuColour;

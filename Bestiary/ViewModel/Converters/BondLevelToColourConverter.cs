@@ -14,27 +14,31 @@ namespace Bestiary.ViewModel.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            BondingLevels? level = value as BondingLevels?;
-            switch(level)
+            if(value != null)
             {
-                case BondingLevels.Awakened:
-                    return Color.Gold;
-                case BondingLevels.Loyal:
-                    return Color.Pink;
-                case BondingLevels.Companion:
-                    return Color.MediumAquamarine;
-                case BondingLevels.Inquisitive:
-                    return Color.SkyBlue;
-                case BondingLevels.Relaxed:
-                    return Color.LightSalmon;
-                case BondingLevels.Tolerant:
-                    return Color.PaleGreen;
-                case BondingLevels.Wary:
-                    return Color.Tan;
-                default:
-                    return Color.LightGray;
+                BondingLevels level = (BondingLevels)value;
+                switch(level)
+                {
+                    case BondingLevels.Awakened:
+                        return Brushes.Gold;
+                    case BondingLevels.Loyal:
+                        return Brushes.Pink;
+                    case BondingLevels.Companion:
+                        return Brushes.MediumAquamarine;
+                    case BondingLevels.Inquisitive:
+                        return Brushes.SkyBlue;
+                    case BondingLevels.Relaxed:
+                        return Brushes.LightSalmon;
+                    case BondingLevels.Tolerant:
+                        return Brushes.PaleGreen;
+                    case BondingLevels.Wary:
+                        return Brushes.Tan;
+                    default:
+                        return Brushes.LightGray;
+                }
             }
-            //return Color.LightGray;
+            
+            return Brushes.Gray;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

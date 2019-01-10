@@ -32,29 +32,29 @@
         </Grid.RowDefinitions>
         <Menu Grid.Row="0" Height="20" Background="{Binding Theme.MenuColour, Mode=OneWay}">
             <MenuItem Width="Auto" Header="Options">
-                <MenuItem Width="Auto" Header="Clear Bookmarks" Command="{Binding OpenClearBookmarksWindow}"/>
-                <MenuItem Width="Auto" Header="Import from Old Version" Command="{Binding OpenFolderImportWindow}"/>
-                <MenuItem Width="Auto" Header="Settings" Command="{Binding OpenSettingsWindow}"/>
+                <MenuItem Style="{StaticResource SubMenuItems}" Width="Auto" Header="Clear Bookmarks" Command="{Binding OpenClearBookmarksWindow}"/>
+                <MenuItem Style="{StaticResource SubMenuItems}" Width="Auto" Header="Import from Old Version" Command="{Binding OpenFolderImportWindow}"/>
+                <MenuItem Style="{StaticResource SubMenuItems}" Width="Auto" Header="Settings" Command="{Binding OpenSettingsWindow}"/>
             </MenuItem>
             <MenuItem Width="Auto" Header="Results">
-                <MenuItem Width="Auto" Header="Copyable Results List" Command="{Binding OpenResultListWindow}"/>
-                <MenuItem Width="Auto" Header="Set Results to Owned" Command="{Binding SetOwned}"/>
-                <MenuItem Width="Auto" Header="Set Results to Not Owned" Command="{Binding SetNotOwned}"/>
-                <MenuItem Width="Auto" Header="Set Results to Awakened" Command="{Binding SetAwakened}"/>
-                <MenuItem Width="Auto" Header="Set Results to Wary" Command="{Binding SetWary}"/>
+                <MenuItem Style="{StaticResource SubMenuItems}" Width="Auto" Header="Copyable Results List" Command="{Binding OpenResultListWindow}"/>
+                <MenuItem Style="{StaticResource SubMenuItems}" Width="Auto" Header="Set Results to Owned" Command="{Binding SetOwned}"/>
+                <MenuItem Style="{StaticResource SubMenuItems}" Width="Auto" Header="Set Results to Not Owned" Command="{Binding SetNotOwned}"/>
+                <MenuItem Style="{StaticResource SubMenuItems}" Width="Auto" Header="Set Results to Awakened" Command="{Binding SetAwakened}"/>
+                <MenuItem Style="{StaticResource SubMenuItems}" Width="Auto" Header="Set Results to Wary" Command="{Binding SetWary}"/>
             </MenuItem>
             <MenuItem Width="Auto" Header="Views">
-                <MenuItem Width="Auto" Header="Flight Rising Bestiary" Command="{Binding OpenFRBestiaryView}"/>
-                <MenuItem Width="Auto" Header="Coliseum" Command="{Binding OpenColiseumView}"/>
+                <MenuItem Style="{StaticResource SubMenuItems}" Width="Auto" Header="Flight Rising Bestiary" Command="{Binding OpenFRBestiaryView}"/>
+                <MenuItem Style="{StaticResource SubMenuItems}" Width="Auto" Header="Coliseum" Command="{Binding OpenColiseumView}"/>
             </MenuItem>
             <MenuItem Width="Auto" Header="Advanced">
-                <MenuItem Width="Auto" Header="Add new Familiar" Command="{Binding OpenAddFamiliarWindow}"/>
-                <MenuItem Width="Auto" Header="Delete Familiar" Command="{Binding OpenDeleteFamiliarWindow}"/>
+                <MenuItem Style="{StaticResource SubMenuItems}" Width="Auto" Header="Add new Familiar" Command="{Binding OpenAddFamiliarWindow}"/>
+                <MenuItem Style="{StaticResource SubMenuItems}" Width="Auto" Header="Delete Familiar" Command="{Binding OpenDeleteFamiliarWindow}"/>
             </MenuItem>
             <MenuItem Width="Auto" Header="Help">
-                <MenuItem Width="Auto" Header="Support" Command="{Binding OpenSupportInfoWindow}"/>
-                <MenuItem Width="Auto" Header="About" Command="{Binding OpenAboutWindow}"/>
-                <MenuItem Width="Auto" Header="User Guide" Command="{Binding OpenUserGuideWindow}"/>
+                <MenuItem Style="{StaticResource SubMenuItems}" Width="Auto" Header="Support" Command="{Binding OpenSupportInfoWindow}"/>
+                <MenuItem Style="{StaticResource SubMenuItems}" Width="Auto" Header="About" Command="{Binding OpenAboutWindow}"/>
+                <MenuItem Style="{StaticResource SubMenuItems}" Width="Auto" Header="User Guide" Command="{Binding OpenUserGuideWindow}"/>
             </MenuItem>
         </Menu>
         <Grid Grid.Row="1" Background="{Binding Theme.BackgroundColour, Mode=OneWay}">
@@ -124,7 +124,7 @@
                                   SelectedItem="{Binding FamiliarParameters.SelectedOwnedStatus}" HorizontalAlignment="Stretch">
                             <ComboBox.ItemTemplate>
                                 <DataTemplate>
-                                    <ComboBoxItem Content="{Binding Converter={StaticResource DescConverter}, Mode=OneTime}"/>
+                                    <TextBlock Text="{Binding Converter={StaticResource DescConverter}, Mode=OneTime}"/>
                                 </DataTemplate>
                             </ComboBox.ItemTemplate>
                         </ComboBox>
@@ -134,7 +134,7 @@
                                   SelectedItem="{Binding FamiliarParameters.SelectedSpecialState}" HorizontalAlignment="Stretch">
                             <ComboBox.ItemTemplate>
                                 <DataTemplate>
-                                    <ComboBoxItem Content="{Binding Converter={StaticResource DescConverter}, Mode=OneTime}"/>
+                                    <TextBlock Text="{Binding Converter={StaticResource DescConverter}, Mode=OneTime}"/>
                                 </DataTemplate>
                             </ComboBox.ItemTemplate>
                         </ComboBox>
@@ -158,7 +158,7 @@
                                   SelectedItem="{Binding FamiliarParameters.SelectedLocationType}" HorizontalAlignment="Stretch">
                             <ComboBox.ItemTemplate>
                                 <DataTemplate>
-                                    <ComboBoxItem Content="{Binding Converter={StaticResource DescConverter}, Mode=OneTime}"/>
+                                    <TextBlock Text="{Binding Converter={StaticResource DescConverter}, Mode=OneTime}"/>
                                 </DataTemplate>
                             </ComboBox.ItemTemplate>
                         </ComboBox>
@@ -168,7 +168,7 @@
                                   SelectedItem="{Binding FamiliarParameters.SelectedAvailability}" HorizontalAlignment="Stretch">
                             <ComboBox.ItemTemplate>
                                 <DataTemplate>
-                                    <ComboBoxItem Content="{Binding Converter={StaticResource DescConverter}, Mode=OneTime}"/>
+                                    <TextBlock Text="{Binding Converter={StaticResource DescConverter}, Mode=OneTime}"/>
                                 </DataTemplate>
                             </ComboBox.ItemTemplate>
                         </ComboBox>
@@ -178,7 +178,7 @@
                                   SelectedItem="{Binding FamiliarParameters.SelectedSource}" HorizontalAlignment="Stretch">
                             <ComboBox.ItemTemplate>
                                 <DataTemplate>
-                                    <ComboBoxItem Content="{Binding Converter={StaticResource DescConverter}, Mode=OneTime}"/>
+                                    <TextBlock Text="{Binding Converter={StaticResource DescConverter}, Mode=OneTime}"/>
                                 </DataTemplate>
                             </ComboBox.ItemTemplate>
                         </ComboBox>
@@ -252,9 +252,10 @@
                         </Grid.ColumnDefinitions>
                         <Label Grid.Column="0" Width="Auto" HorizontalContentAlignment="Center" Content="Sort by:"/>
                         <ComboBox Grid.Column="1" Margin="5" Template="{StaticResource ComboBoxControlThemed}"
+                                  ItemContainerStyle="{StaticResource ComboBoxItemThemed}"
                                   ItemsSource="{Binding AvailableSortTypes}" SelectedItem="{Binding SelectedSortType, Mode=TwoWay}" 
                                   IsSynchronizedWithCurrentItem="True" Width="{Binding AvailableSortTypes, Converter={StaticResource ComboBoxWidthConverter}}">
-                            <ComboBox.ItemTemplate>
+                            <ComboBox.ItemTemplate >
                                 <DataTemplate>
                                     <TextBlock Text="{Binding Converter={StaticResource DescConverter}, Mode=OneTime}"/>
                                 </DataTemplate>
@@ -268,9 +269,8 @@
                         <Label Grid.Column="8" Width="Auto" HorizontalContentAlignment="Center" Content="Awakened:"/>
                         <TextBlock Grid.Column="9" Width="50" Margin="5" VerticalAlignment="Center" Text="{Binding AwakenedCount}" Background="{Binding Theme.BackgroundColour}"/>
                     </Grid>
-                    <DataGrid Grid.Row ="1" Width="Auto" Height="Auto" Background="{Binding Theme.ResultWindowColour}"
-                              AlternatingRowBackground="{Binding Theme.ResultWindowAltColour, Mode=OneWay}" AlternationCount="2"
-                              AutoGenerateColumns="False" GridLinesVisibility="None" 
+                    <DataGrid Grid.Row ="1" Width="Auto" Height="Auto"
+                              AlternationCount="2" AutoGenerateColumns="False" GridLinesVisibility="None" 
                               ItemsSource="{Binding FilteredFamiliars}" IsSynchronizedWithCurrentItem="True">
                         <DataGrid.Resources>
                             <local_c:OwnedToBoolConverter x:Key="OwnedToBoolConverter"/>
@@ -294,6 +294,29 @@
                                 <EventSetter Event="UIElement.PreviewMouseRightButtonDown" Handler="ChangeSelectedRow"/>
                             </Style>
                         </DataGrid.Resources>
+                        <DataGrid.RowStyle>
+                            <Style TargetType="{x:Type DataGridRow}">
+                                <Setter Property="ContextMenu">
+                                    <Setter.Value>
+                                        <ContextMenu ItemsSource="{Binding ResultsActions}" Width="Auto">
+                                            <ContextMenu.ItemTemplate>
+                                                <DataTemplate DataType="MenuItem">
+                                                    <MenuItem Header="{Binding Name}" Command="{Binding Action}"/>
+                                                </DataTemplate>
+                                            </ContextMenu.ItemTemplate>
+                                        </ContextMenu>
+                                    </Setter.Value>
+                                </Setter>
+                                <Style.Triggers>
+                                    <Trigger Property="AlternationIndex" Value="0">
+                                        <Setter Property="Background" Value="{Binding Theme.ResultWindowColour, Mode=OneWay}"/>
+                                    </Trigger>
+                                    <Trigger Property="AlternationIndex" Value="1">
+                                        <Setter Property="Background" Value="{Binding Theme.ResultWindowAltColour, Mode=OneWay}"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </DataGrid.RowStyle>
                         <DataGrid.InputBindings>
                             <MouseBinding MouseAction="LeftDoubleClick" Command="{Binding OpenDataFamiliarWindow}" CommandParameter="{Binding FilteredFamiliars/}"/>
                         </DataGrid.InputBindings>

@@ -533,7 +533,12 @@ namespace Bestiary.ViewModel
                 {
                     m_OpenSettingsWindow = new OpenDialogCommand<SettingsWindow>(
                         Window,
-                        _ => new SettingsWindow(FamiliarParameters, SearchText, m_Settings)
+                        _ => new SettingsWindow(FamiliarParameters, SearchText, m_Settings),
+                        afterClosed: _ =>
+                        {
+                            m_Settings.FetchSettings();
+                            Theme = m_Settings.SelectedTheme;
+                        }
                     );
                 }
                 return m_OpenSettingsWindow;
