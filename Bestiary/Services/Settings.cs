@@ -8,7 +8,7 @@ namespace Bestiary.Services
 {
     public class SettingsHandler
     {
-        public Theme Dark = new Theme(Brushes.DarkGray, Brushes.Black, Brushes.DarkGray, Brushes.Gray, Brushes.DarkGray, Brushes.Gray, Brushes.White, Brushes.White, Brushes.Gray);
+        public Theme Dark = new Theme(Brushes.DimGray, (SolidColorBrush)(new BrushConverter().ConvertFrom("#444444")), (SolidColorBrush)(new BrushConverter().ConvertFrom("#525252")), Brushes.Gray, Brushes.DarkGray, Brushes.Gray, Brushes.White, Brushes.LightGray, (SolidColorBrush)(new BrushConverter().ConvertFrom("#444444")));
         public Theme Rainbow = new Theme(Brushes.PaleTurquoise, Brushes.LightCyan, Brushes.LightSkyBlue, Brushes.LightYellow, Brushes.LightSalmon, Brushes.LightPink, Brushes.Green, Brushes.Purple, Brushes.GreenYellow);
         public Theme Bluegreen = new Theme(Brushes.Aquamarine, Brushes.LightBlue, Brushes.Cyan, Brushes.LightCyan, Brushes.LightGreen, Brushes.LightCyan, Brushes.DarkBlue, Brushes.DarkBlue, Brushes.SeaGreen);
         public Theme Default = new Theme(Brushes.White, Brushes.White, (SolidColorBrush)(new BrushConverter().ConvertFrom("#FBE9D9")), (SolidColorBrush)(new BrushConverter().ConvertFrom("#F0F0F0")), 

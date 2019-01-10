@@ -14,6 +14,8 @@ namespace Bestiary.ViewModel.OptionsViews
         public ThemeDisplayer SelectedTheme { get; set; }
         private SettingsHandler m_Settings;
         public List<ThemeDisplayer> ThemeList { get; private set; }
+        private ThemeDisplayer m_CurrentTheme;
+        public bool SetEnabled => m_CurrentTheme == SelectedTheme;
 
         public ThemeSelectorViewModel(SettingsHandler settings)
         {
@@ -36,6 +38,7 @@ namespace Bestiary.ViewModel.OptionsViews
                     m_SaveTheme = new LambdaCommand(
                         onExecute: (p) =>
                         {
+                            m_CurrentTheme = SelectedTheme;
                             m_Settings.SelectedTheme = SelectedTheme.Theme;
                             m_Settings.SaveSettings();
                         }
@@ -50,8 +53,8 @@ namespace Bestiary.ViewModel.OptionsViews
 
     public class ThemeDisplayer
     {
-        public Theme Theme { get; private set; }
-        public string ThemeName { get; private set; }
+        public Theme Theme { get; set; }
+        public string ThemeName { get; set; }
 
         public ThemeDisplayer(Theme theme, string themeName)
         {

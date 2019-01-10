@@ -54,7 +54,7 @@
     <Style TargetType="{x:Type MenuItem}">
         <Setter Property="Foreground" Value="{Binding Theme.MenuTextColour}"/>
         <Setter Property="Background" Value="{Binding Theme.MenuColour}"/>
-        <Setter Property="BorderBrush" Value="{Binding Theme.BorderColour}"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
     </Style>
     <Style x:Key="SubMenuItems" TargetType="{x:Type MenuItem}">
         <Setter Property="Foreground" Value="{Binding Theme.TextColour}"/>

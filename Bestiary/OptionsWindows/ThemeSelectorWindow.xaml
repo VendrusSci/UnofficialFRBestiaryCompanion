@@ -22,11 +22,11 @@
             <LineBreak/>
             <Run Text="Theme colours are displayed below the dropdown"/>
         </TextBlock>
-        <ComboBox Grid.Row="1" Margin="10" ItemsSource="{Binding ThemeList}" 
-                  SelectedItem="{Binding SelectedTheme}" SelectedIndex="1">
+        <ComboBox Grid.Row="1" Margin="50 10 50 10" ItemsSource="{Binding ThemeList}" 
+                  SelectedItem="{Binding SelectedTheme}">
             <ComboBox.ItemTemplate>
                 <DataTemplate>
-                    <ComboBoxItem Content="{Binding ThemeName}"/>
+                    <TextBlock Text="{Binding ThemeName}"/>
                 </DataTemplate>
             </ComboBox.ItemTemplate>
         </ComboBox>
@@ -43,20 +43,20 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Rectangle Grid.Column="1" Width="40" Height="30" Margin="5"
-                       Fill="{Binding SelectedTheme.BackgroundColour, Mode=OneWay, Converter={StaticResource BrushToColour}}"/>
+                       Fill="{Binding SelectedTheme.Theme.BackgroundColour, Mode=OneWay}"/>
             <Rectangle Grid.Column="2" Width="40" Height="30" Margin="5"
-                       Fill="{Binding SelectedTheme.ResultWindowColour, Mode=OneWay, Converter={StaticResource BrushToColour}}"/>
+                       Fill="{Binding SelectedTheme.Theme.ResultWindowColour, Mode=OneWay}"/>
             <Rectangle Grid.Column="3" Width="40" Height="30" Margin="5"
-                       Fill="{Binding SelectedTheme.ResultWindowAltColour, Mode=OneWay, Converter={StaticResource BrushToColour}}"/>
+                       Fill="{Binding SelectedTheme.Theme.ResultWindowAltColour, Mode=OneWay}"/>
             <Rectangle Grid.Column="4" Width="40" Height="30" Margin="5"
-                       Fill="{Binding SelectedTheme.ControlColour, Mode=OneWay, Converter={StaticResource BrushToColour}}"/>
+                       Fill="{Binding SelectedTheme.Theme.ControlColour, Mode=OneWay}"/>
             <Rectangle Grid.Column="5" Width="40" Height="30" Margin="5"
-                       Fill="{Binding SelectedTheme.ControlHoverColour, Mode=OneWay, Converter={StaticResource BrushToColour}}"/>
+                       Fill="{Binding SelectedTheme.Theme.ControlHoverColour, Mode=OneWay}"/>
             <Rectangle Grid.Column="6" Width="40" Height="30" Margin="5"
-                       Fill="{Binding SelectedTheme.MenuColour, Mode=OneWay, Converter={StaticResource BrushToColour}}"/>
+                       Fill="{Binding SelectedTheme.Theme.MenuColour, Mode=OneWay}"/>
             <Rectangle Grid.Column="7" Width="40" Height="30" Margin="5"
-                       Fill="{Binding SelectedTheme.BorderColour, Mode=OneWay, Converter={StaticResource BrushToColour}}"/>
+                       Fill="{Binding SelectedTheme.Theme.BorderColour, Mode=OneWay}"/>
         </Grid>
-        <Button Grid.Row="3" Margin="10" Content="Set Theme" Command="{Binding SaveTheme}"/>
+        <Button Grid.Row="3" Margin="10" Content="Set Theme" Command="{Binding SaveTheme}" IsCancel="True"/>
     </Grid>
 </Window>

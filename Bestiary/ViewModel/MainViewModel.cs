@@ -538,6 +538,7 @@ namespace Bestiary.ViewModel
                         {
                             m_Settings.FetchSettings();
                             Theme = m_Settings.SelectedTheme;
+                            FetchFamiliars.Execute(null);
                         }
                     );
                 }
