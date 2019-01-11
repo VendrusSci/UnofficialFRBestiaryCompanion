@@ -11,7 +11,7 @@ namespace Bestiary.Services
         public Theme Dark = new Theme((SolidColorBrush)(new BrushConverter().ConvertFrom("#555555")), (SolidColorBrush)(new BrushConverter().ConvertFrom("#444444")), (SolidColorBrush)(new BrushConverter().ConvertFrom("#525252")), Brushes.Gray, Brushes.DarkGray, Brushes.Gray, Brushes.White, Brushes.White, (SolidColorBrush)(new BrushConverter().ConvertFrom("#444444")));
 
         public Theme Rainbow = new Theme(
-            (SolidColorBrush)(new BrushConverter().ConvertFrom("#F8FF94")),
+            (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFFFFF")),
             (SolidColorBrush)(new BrushConverter().ConvertFrom("#B3FFFF")),
             (SolidColorBrush)(new BrushConverter().ConvertFrom("#CC99FF")),
             (SolidColorBrush)(new BrushConverter().ConvertFrom("#94FF9B")),
@@ -35,7 +35,7 @@ namespace Bestiary.Services
         public Theme Default = new Theme(Brushes.White, Brushes.White, (SolidColorBrush)(new BrushConverter().ConvertFrom("#FBE9D9")), (SolidColorBrush)(new BrushConverter().ConvertFrom("#F0F0F0")), 
             Brushes.LightGray, (SolidColorBrush)(new BrushConverter().ConvertFrom("#F0F0F0")), Brushes.Black, Brushes.Black, Brushes.Gray);
 
-        public Theme Official = new Theme((SolidColorBrush)(new BrushConverter().ConvertFrom("#F4F4F4")), (SolidColorBrush)(new BrushConverter().ConvertFrom("#dbd6c7")), 
+        public Theme Official = new Theme((SolidColorBrush)(new BrushConverter().ConvertFrom("#dbd6c7")), (SolidColorBrush)(new BrushConverter().ConvertFrom("#f1eee4")), 
             Brushes.White, Brushes.White, (SolidColorBrush)(new BrushConverter().ConvertFrom("#DECB9C")), (SolidColorBrush)(new BrushConverter().ConvertFrom("#6E1C02")), Brushes.Black, 
             (SolidColorBrush)(new BrushConverter().ConvertFrom("#DECB9C")), (SolidColorBrush)(new BrushConverter().ConvertFrom("#6E1C02")));
 
