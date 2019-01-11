@@ -72,6 +72,7 @@ namespace Bestiary.ViewModel.Dataviews
     {
         public BitmapImage HeaderImage { get; private set; }
         public string Name { get; private set; }
+        public Theme Theme { get; private set; }
 
         public ObservableCollection<FamiliarViewModel> Familiars { get; private set; } = new ObservableCollection<FamiliarViewModel>();
 
@@ -84,6 +85,7 @@ namespace Bestiary.ViewModel.Dataviews
         {
             Name = name;
             m_Model = model;
+            Theme = new SettingsHandler().Default;
             HeaderImage = ImageLoader.LoadImage(Path.Combine(ApplicationPaths.GetViewIconDirectory(), name + ".png"));
             Familiars.CollectionChanged += OnFamiliarCollectionChanged;
             foreach(var familiar in familiars)
@@ -151,7 +153,7 @@ namespace Bestiary.ViewModel.Dataviews
                         onExecute: (p) =>
                         {
                             MainViewModel.UserActionLog.Info($"Familiar Data window opened: {((FamiliarViewModel)p).Info.Familiar.Name}, #{((FamiliarViewModel)p).Info.Familiar.Id}");
-                            FamiliarDataWindow familiarDataWindow = new FamiliarDataWindow((FamiliarViewModel)p, m_Model);
+                            FamiliarDataWindow familiarDataWindow = new FamiliarDataWindow((FamiliarViewModel)p, m_Model, Theme);
                             familiarDataWindow.Owner = Window;
                             familiarDataWindow.ShowDialog();
                             UpdateAllFamiliars();

@@ -1,4 +1,5 @@
 ﻿using Bestiary.Model;
+using Bestiary.Services;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
@@ -10,18 +11,20 @@ namespace Bestiary.ViewModel
     class FamiliarDataViewModel : INotifyPropertyChanged
     {
         public FamiliarViewModel FamiliarDisplayInfo { get; set; }
-        public Familiar Familiar { get; set; }
+        public Familiar Familiar { get; private set; }
         public BondingLevels? SelectedBondingLevel { get; set; }
         public LocationTypes? SelectedLocation { get; set; }
         public OwnershipStatus? SelectedOwnershipStatus { get; set; }
+        public Theme Theme { get; private set; }
 
         private IModel m_Model;
         private ICRUD<OwnedFamiliar> OwnedFamiliar;
 
-        public FamiliarDataViewModel(FamiliarViewModel info, IModel model)
+        public FamiliarDataViewModel(FamiliarViewModel info, IModel model, Theme theme)
         {
             MainViewModel.UserActionLog.Info($"Familiar data view started");
             m_Model = model;
+            Theme = theme;
             FamiliarDisplayInfo = info;
             Familiar = FamiliarDisplayInfo.Info.Familiar;
             OwnedFamiliar = FamiliarDisplayInfo.Info.OwnedFamiliar;

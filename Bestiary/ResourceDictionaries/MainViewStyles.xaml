@@ -7,10 +7,6 @@
     <Style TargetType="{x:Type Grid}">
         <Setter Property="Background" Value="{Binding Theme.BackgroundColour}"/>
     </Style>
-    <Style TargetType="{x:Type GroupBox}">
-        <Setter Property="BorderBrush" Value="{Binding Theme.BorderColour, Mode=OneWay}"/>
-        <Setter Property="Foreground" Value="{Binding Theme.TextColour}"/>
-    </Style>
 
     <Style TargetType="{x:Type Label}">
         <Setter Property="VerticalAlignment" Value="Center"/>
@@ -82,6 +78,7 @@
         <Setter Property="BorderBrush" Value="{Binding Theme.BorderColour}"/>
     </Style>
     <Style TargetType="{x:Type DataGrid}">
+        <Setter Property="Background" Value="{Binding Theme.ResultWindowColour}"/>
         <Setter Property="RowHeaderWidth" Value="0"/>
         <Setter Property="ColumnHeaderHeight" Value="0"/>
         <Setter Property="BorderBrush" Value="{Binding Theme.BorderColour}"/>
@@ -128,4 +125,61 @@
             </Setter.Value>
         </Setter>
     </Style>
+
+    <Style TargetType="ListBoxItem">
+        <Setter Property="Focusable" Value="False"/>
+        <Style.Triggers>
+            <Trigger Property="IsSelected" Value="true">
+                <Setter Property="BorderThickness" Value="0"/>
+            </Trigger>
+            <Trigger Property="IsSelected" Value="false">
+                <Setter Property="BorderThickness" Value="0"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <BorderGapMaskConverter x:Key="BorderGapMaskConverter"/>
+    <Style TargetType="{x:Type GroupBox}">
+        <Setter Property="BorderBrush" Value="{Binding Theme.BorderColour}"/>
+        <Setter Property="Foreground" Value="{Binding Theme.TextColour}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type GroupBox}">
+                    <Grid SnapsToDevicePixels="true">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="6"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="6"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="6"/>
+                        </Grid.RowDefinitions>
+                        <Border BorderBrush="Transparent" BorderThickness="{TemplateBinding BorderThickness}" Background="Transparent" Grid.ColumnSpan="4" Grid.Column="0" CornerRadius="4" Grid.Row="1" Grid.RowSpan="3"/>
+                        <Border x:Name="Header" Grid.Column="1" Padding="3,1,3,0" Grid.Row="0" Grid.RowSpan="2">
+                            <ContentPresenter ContentSource="Header" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                        </Border>
+                        <ContentPresenter Grid.ColumnSpan="2" Grid.Column="1" Margin="{TemplateBinding Padding}" Grid.Row="2" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                        <Border BorderBrush="{Binding Theme.ControlColour}" BorderThickness="{TemplateBinding BorderThickness}" Grid.ColumnSpan="4" CornerRadius="4" Grid.Row="1" Grid.RowSpan="3">
+                            <Border.OpacityMask>
+                                <MultiBinding ConverterParameter="7" Converter="{StaticResource BorderGapMaskConverter}">
+                                    <Binding ElementName="Header" Path="ActualWidth"/>
+                                    <Binding Path="ActualWidth" RelativeSource="{RelativeSource Self}"/>
+                                    <Binding Path="ActualHeight" RelativeSource="{RelativeSource Self}"/>
+                                </MultiBinding>
+                            </Border.OpacityMask>
+                            <Border BorderBrush="{Binding Theme.TextColour}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="3">
+                                <Border BorderBrush="{Binding Theme.BorderColour}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="2"/>
+                            </Border>
+                        </Border>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
 </ResourceDictionary>

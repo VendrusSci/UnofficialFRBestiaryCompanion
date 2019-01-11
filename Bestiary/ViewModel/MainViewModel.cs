@@ -385,7 +385,7 @@ namespace Bestiary.ViewModel
                 {
                     m_openDataFamiliarWindow = new OpenDialogCommand<FamiliarDataWindow>(
                         Window,
-                        p => new FamiliarDataWindow((FamiliarViewModel)p, m_Model),
+                        p => new FamiliarDataWindow((FamiliarViewModel)p, m_Model, Theme),
                         canExecute: p => p.GetType() == typeof(FamiliarViewModel),
                         afterClosed: _ => FetchFamiliars.Execute(null)
                     );

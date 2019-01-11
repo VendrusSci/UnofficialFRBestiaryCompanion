@@ -1,4 +1,5 @@
 ﻿using Bestiary.Model;
+using Bestiary.Services;
 using Bestiary.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -21,10 +22,10 @@ namespace Bestiary
     /// </summary>
     public partial class FamiliarDataWindow : Window
     {
-        public FamiliarDataWindow(FamiliarViewModel familiarData, IModel model)
+        public FamiliarDataWindow(FamiliarViewModel familiarData, IModel model, Theme theme)
         {
             InitializeComponent();
-            DataContext = new FamiliarDataViewModel(familiarData, model);
+            DataContext = new FamiliarDataViewModel(familiarData, model, theme);
         }
     }
 }

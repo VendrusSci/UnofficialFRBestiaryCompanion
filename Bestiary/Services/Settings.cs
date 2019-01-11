@@ -8,11 +8,33 @@ namespace Bestiary.Services
 {
     public class SettingsHandler
     {
-        public Theme Dark = new Theme(Brushes.DimGray, (SolidColorBrush)(new BrushConverter().ConvertFrom("#444444")), (SolidColorBrush)(new BrushConverter().ConvertFrom("#525252")), Brushes.Gray, Brushes.DarkGray, Brushes.Gray, Brushes.White, Brushes.LightGray, (SolidColorBrush)(new BrushConverter().ConvertFrom("#444444")));
-        public Theme Rainbow = new Theme(Brushes.PaleTurquoise, Brushes.LightCyan, Brushes.LightSkyBlue, Brushes.LightYellow, Brushes.LightSalmon, Brushes.LightPink, Brushes.Green, Brushes.Purple, Brushes.GreenYellow);
-        public Theme Bluegreen = new Theme(Brushes.Aquamarine, Brushes.LightBlue, Brushes.Cyan, Brushes.LightCyan, Brushes.LightGreen, Brushes.LightCyan, Brushes.DarkBlue, Brushes.DarkBlue, Brushes.SeaGreen);
+        public Theme Dark = new Theme((SolidColorBrush)(new BrushConverter().ConvertFrom("#555555")), (SolidColorBrush)(new BrushConverter().ConvertFrom("#444444")), (SolidColorBrush)(new BrushConverter().ConvertFrom("#525252")), Brushes.Gray, Brushes.DarkGray, Brushes.Gray, Brushes.White, Brushes.White, (SolidColorBrush)(new BrushConverter().ConvertFrom("#444444")));
+
+        public Theme Rainbow = new Theme(
+            (SolidColorBrush)(new BrushConverter().ConvertFrom("#F8FF94")),
+            (SolidColorBrush)(new BrushConverter().ConvertFrom("#B3FFFF")),
+            (SolidColorBrush)(new BrushConverter().ConvertFrom("#CC99FF")),
+            (SolidColorBrush)(new BrushConverter().ConvertFrom("#94FF9B")),
+            (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFAD5C")), 
+            (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFAD5C")),
+            (SolidColorBrush)(new BrushConverter().ConvertFrom("#004080")),
+            (SolidColorBrush)(new BrushConverter().ConvertFrom("#00264D")),
+            (SolidColorBrush)(new BrushConverter().ConvertFrom("#FF4DA6")));
+
+        public Theme Bluegreen = new Theme(
+            (SolidColorBrush)(new BrushConverter().ConvertFrom("#7AFFC6")),
+            (SolidColorBrush)(new BrushConverter().ConvertFrom("#00E6CF")),
+            (SolidColorBrush)(new BrushConverter().ConvertFrom("#80FFF2")),
+            (SolidColorBrush)(new BrushConverter().ConvertFrom("#B3FFD9")),
+            (SolidColorBrush)(new BrushConverter().ConvertFrom("#3DFFAB")),
+            (SolidColorBrush)(new BrushConverter().ConvertFrom("#00CCCC")),
+            (SolidColorBrush)(new BrushConverter().ConvertFrom("#0059B3")),
+            (SolidColorBrush)(new BrushConverter().ConvertFrom("#004080")),
+            (SolidColorBrush)(new BrushConverter().ConvertFrom("#009999")));
+
         public Theme Default = new Theme(Brushes.White, Brushes.White, (SolidColorBrush)(new BrushConverter().ConvertFrom("#FBE9D9")), (SolidColorBrush)(new BrushConverter().ConvertFrom("#F0F0F0")), 
             Brushes.LightGray, (SolidColorBrush)(new BrushConverter().ConvertFrom("#F0F0F0")), Brushes.Black, Brushes.Black, Brushes.Gray);
+
         public Theme Official = new Theme((SolidColorBrush)(new BrushConverter().ConvertFrom("#F4F4F4")), (SolidColorBrush)(new BrushConverter().ConvertFrom("#dbd6c7")), 
             Brushes.White, Brushes.White, (SolidColorBrush)(new BrushConverter().ConvertFrom("#DECB9C")), (SolidColorBrush)(new BrushConverter().ConvertFrom("#6E1C02")), Brushes.Black, 
             (SolidColorBrush)(new BrushConverter().ConvertFrom("#DECB9C")), (SolidColorBrush)(new BrushConverter().ConvertFrom("#6E1C02")));
