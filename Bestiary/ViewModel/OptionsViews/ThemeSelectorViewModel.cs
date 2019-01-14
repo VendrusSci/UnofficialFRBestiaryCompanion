@@ -24,7 +24,7 @@ namespace Bestiary.ViewModel.OptionsViews
             ThemeList.Add(new ThemeDisplayer(m_Settings.Default, "Default"));
             ThemeList.Add(new ThemeDisplayer(m_Settings.Dark, "Dark"));
             ThemeList.Add(new ThemeDisplayer(m_Settings.Official, "FR-Style"));
-            ThemeList.Add(new ThemeDisplayer(m_Settings.Bluegreen, "Blue-green"));
+            //ThemeList.Add(new ThemeDisplayer(m_Settings.Bluegreen, "Blue-green"));
             //ThemeList.Add(new ThemeDisplayer(m_Settings.Rainbow, "Rainbow"));
         }
 

@@ -172,7 +172,7 @@
                                     <Binding Path="ActualHeight" RelativeSource="{RelativeSource Self}"/>
                                 </MultiBinding>
                             </Border.OpacityMask>
-                            <Border BorderBrush="{Binding Theme.TextColour}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="3">
+                            <Border BorderBrush="{Binding Theme.TextColour}" BorderThickness="0" CornerRadius="3">
                                 <Border BorderBrush="{Binding Theme.BorderColour}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="2"/>
                             </Border>
                         </Border>
@@ -181,5 +181,25 @@
             </Setter.Value>
         </Setter>
     </Style>
+    
+    <ControlTemplate x:Key="ThemedButton" TargetType="{x:Type ButtonBase}">
+        <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
+            <ContentPresenter x:Name="contentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" ContentStringFormat="{TemplateBinding ContentStringFormat}" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+        </Border>
+        <ControlTemplate.Triggers>
+            <Trigger Property="Button.IsDefaulted" Value="True">
+                <Setter Property="BorderBrush" TargetName="border" Value="{Binding DataContext.Theme.ControlHoverColour, Mode=OneTime, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}"/>
+            </Trigger>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" TargetName="border" Value="{Binding DataContext.Theme.ControlHoverColour, Mode=OneTime, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}"/>
+                <Setter Property="BorderBrush" TargetName="border" Value="{Binding DataContext.Theme.BorderColour, Mode=OneTime, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}"/>
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Background" TargetName="border" Value="{Binding DataContext.Theme.ControlDisabledColour, Mode=OneTime, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}"/>
+                <Setter Property="BorderBrush" TargetName="border" Value="{Binding DataContext.Theme.BorderDisabledColour, Mode=OneTime, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}"/>
+                <Setter Property="Foreground" Value="{Binding DataContext.Theme.TextDisabledColour, Mode=OneTime, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}"/>
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
 
 </ResourceDictionary>

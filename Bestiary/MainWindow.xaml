@@ -46,6 +46,7 @@
             <MenuItem Width="Auto" Header="Views">
                 <MenuItem Style="{StaticResource SubMenuItems}" Width="Auto" Header="Flight Rising Bestiary" Command="{Binding OpenFRBestiaryView}"/>
                 <MenuItem Style="{StaticResource SubMenuItems}" Width="Auto" Header="Coliseum" Command="{Binding OpenColiseumView}"/>
+                <MenuItem Style="{StaticResource SubMenuItems}" Width="Auto" Header="Gathering" Command="{Binding OpenGatheringView}"/>
             </MenuItem>
             <MenuItem Width="Auto" Header="Advanced">
                 <MenuItem Style="{StaticResource SubMenuItems}" Width="Auto" Header="Add new Familiar" Command="{Binding OpenAddFamiliarWindow}"/>
@@ -90,7 +91,8 @@
                             </Grid.ColumnDefinitions>
                             <CheckBox Grid.Column="0" IsChecked="{Binding ExactChecked}" HorizontalAlignment="Left" Margin="0,8"/>
                             <Label Grid.Column="1" HorizontalAlignment ="Left" Content="Exact" Margin="1,2,0,2"/>
-                            <Button Grid.Column="3" HorizontalAlignment="Right" Content="Clear all filters" Command="{Binding ClearAllFilters}" Margin="0,5,2,5"/>
+                            <Button Grid.Column="3" HorizontalAlignment="Right" Template="{DynamicResource ThemedButton}"
+                                    Content="Clear all filters" Command="{Binding ClearAllFilters}" Margin="0,5,2,5"/>
                         </Grid>
                     </Grid>
                 </GroupBox>
@@ -183,12 +185,18 @@
                             </ComboBox.ItemTemplate>
                         </ComboBox>
 
-                        <Button Grid.Column="2" Grid.Row="0" Content="Clear" Command="{Binding ClearOption}" CommandParameter="{Binding FamiliarParameters.SelectedOwnedStatus}"/>
-                        <Button Grid.Column="2" Grid.Row="1" Content="Clear" Command="{Binding ClearOption}" CommandParameter="{Binding FamiliarParameters.SelectedSpecialState}"/>
-                        <Button Grid.Column="2" Grid.Row="2" Content="Clear" Command="{Binding ClearOption}" CommandParameter="{Binding FamiliarParameters.SelectedBondingLevel}"/>
-                        <Button Grid.Column="2" Grid.Row="3" Content="Clear" Command="{Binding ClearOption}" CommandParameter="{Binding FamiliarParameters.SelectedLocationType}"/>
-                        <Button Grid.Column="2" Grid.Row="4" Content="Clear" Command="{Binding ClearOption}" CommandParameter="{Binding FamiliarParameters.SelectedAvailability}"/>
-                        <Button Grid.Column="2" Grid.Row="5" Content="Clear" Command="{Binding ClearOption}" CommandParameter="{Binding FamiliarParameters.SelectedSource}"/>
+                        <Button Grid.Column="2" Grid.Row="0" Content="Clear" Template="{DynamicResource ThemedButton}"
+                                Command="{Binding ClearOption}" CommandParameter="{Binding FamiliarParameters.SelectedOwnedStatus}"/>
+                        <Button Grid.Column="2" Grid.Row="1" Content="Clear" Template="{DynamicResource ThemedButton}"
+                                Command="{Binding ClearOption}" CommandParameter="{Binding FamiliarParameters.SelectedSpecialState}"/>
+                        <Button Grid.Column="2" Grid.Row="2" Content="Clear" Template="{DynamicResource ThemedButton}"
+                                Command="{Binding ClearOption}" CommandParameter="{Binding FamiliarParameters.SelectedBondingLevel}"/>
+                        <Button Grid.Column="2" Grid.Row="3" Content="Clear" Template="{DynamicResource ThemedButton}"
+                                Command="{Binding ClearOption}" CommandParameter="{Binding FamiliarParameters.SelectedLocationType}"/>
+                        <Button Grid.Column="2" Grid.Row="4" Content="Clear" Template="{DynamicResource ThemedButton}"
+                                Command="{Binding ClearOption}" CommandParameter="{Binding FamiliarParameters.SelectedAvailability}"/>
+                        <Button Grid.Column="2" Grid.Row="5" Content="Clear" Template="{DynamicResource ThemedButton}"
+                                Command="{Binding ClearOption}" CommandParameter="{Binding FamiliarParameters.SelectedSource}"/>
 
                         <Label Grid.Column="3" Grid.Row="2" Content="Exclude:"/>
                         <Label Grid.Column="3" Grid.Row="3" Content="Exclude:"/>
@@ -229,7 +237,7 @@
                         </ItemsControl>
                     </Grid>
                 </GroupBox>
-                <Button Grid.Row="4" Content="Go" Margin="5" Command="{Binding FetchFamiliars}"/>
+                <Button Grid.Row="4" Content="Go" Margin="5" Template="{DynamicResource ThemedButton}" Command="{Binding FetchFamiliars}"/>
             </Grid>
             <GroupBox Grid.Column="1" Header="Familiars" Margin="5">
                 <Grid>
@@ -261,7 +269,7 @@
                                 </DataTemplate>
                             </ComboBox.ItemTemplate>
                         </ComboBox>
-                        <Button Grid.Column="2" Margin="5" Content="Go" Width="30"  Command="{Binding SortResults}"/>
+                        <Button Grid.Column="2" Margin="5" Content="Go" Width="30" Template="{DynamicResource ThemedButton}" Command="{Binding SortResults}"/>
                         <Label Grid.Column="4" Width="Auto" HorizontalContentAlignment="Center" Content="Results:"/>
                         <TextBlock Grid.Column="5" Width="50" Margin="5" VerticalAlignment="Center" Text="{Binding ResultCount}" Background="{Binding Theme.BackgroundColour}"/>
                         <Label Grid.Column="6" Width="Auto" HorizontalContentAlignment="Center" Content="Owned:"/>
@@ -376,7 +384,7 @@
                             <DataGridTemplateColumn  Width="Auto" IsReadOnly="True">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
-                                        <Button Content="Gotcha!" Command="{Binding SetOwned}"/>
+                                        <Button Content="Gotcha!" Template="{DynamicResource ThemedButton}" Command="{Binding SetOwned}"/>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>

@@ -386,7 +386,7 @@ namespace Bestiary.ViewModel
                     m_openDataFamiliarWindow = new OpenDialogCommand<FamiliarDataWindow>(
                         Window,
                         p => new FamiliarDataWindow((FamiliarViewModel)p, m_Model, Theme),
-                        canExecute: p => p.GetType() == typeof(FamiliarViewModel),
+                        canExecute: p => p != null ? p.GetType() == typeof(FamiliarViewModel) : false,
                         afterClosed: _ => FetchFamiliars.Execute(null)
                     );
                 }
@@ -469,6 +469,22 @@ namespace Bestiary.ViewModel
                     );
                 }
                 return m_OpenColiseumView;
+            }
+        }
+
+        private BaseCommand m_OpenGatheringView;
+        public ICommand OpenGatheringView
+        {
+            get
+            {
+                if(m_OpenGatheringView == null)
+                {
+                    m_OpenGatheringView = new OpenDialogCommand<GatherView>(
+                        Window,
+                        _ => new GatherView(m_Model, FamiliarParameters.AvailableOwnedStatus, FamiliarParameters.AvailableBondingLevels, FamiliarParameters.AvailableLocationTypes, Theme)
+                    );
+                }
+                return m_OpenGatheringView;
             }
         }
 

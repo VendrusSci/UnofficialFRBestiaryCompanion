@@ -169,6 +169,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AdvancedWindows\GatherFlightsControl.xaml.cs">
+      <DependentUpon>GatherFlightsControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="OptionsWindows\ClearBookmarksWindow.xaml.cs">
       <DependentUpon>ClearBookmarksWindow.xaml</DependentUpon>
     </Compile>
@@ -191,6 +194,7 @@
     <Compile Include="ViewModel\Converters\BondLevelToColourConverter.cs" />
     <Compile Include="ViewModel\Converters\BrushToColourConverter.cs" />
     <Compile Include="ViewModel\Converters\EnemyTypeToColourConverter.cs" />
+    <Compile Include="ViewModel\Dataviews\GatherViewModel.cs" />
     <Compile Include="ViewModel\OptionsViews\ClearBookmarksViewModel.cs" />
     <Compile Include="ViewModel\Converters\OwnedToBoolConverter.cs" />
     <Compile Include="ViewModel\Dataviews\ColiseumViewModel.cs" />
@@ -206,6 +210,12 @@
     </Compile>
     <Compile Include="ViewWindows\FRBestiaryView.xaml.cs">
       <DependentUpon>FRBestiaryView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewWindows\GatherTypeControl.xaml.cs">
+      <DependentUpon>GatherTypeControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewWindows\GatherView.xaml.cs">
+      <DependentUpon>GatherView.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewWindows\VenueControl.xaml.cs">
       <DependentUpon>VenueControl.xaml</DependentUpon>
@@ -232,9 +242,6 @@
     <Compile Include="SupportClasses\ApplicationPaths.cs" />
     <Compile Include="FamiliarDataWindow.xaml.cs">
       <DependentUpon>FamiliarDataWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="SupportClasses\GatherFlightsControl.xaml.cs">
-      <DependentUpon>GatherFlightsControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="SupportClasses\ImageLoader.cs" />
     <Compile Include="SupportClasses\BaseCommand.cs" />
@@ -299,10 +306,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="SupportClasses\GatherFlightsControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -340,6 +343,18 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ViewWindows\FRBestiaryView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AdvancedWindows\GatherFlightsControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ViewWindows\GatherTypeControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ViewWindows\GatherView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
