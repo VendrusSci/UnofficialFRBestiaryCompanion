@@ -202,4 +202,39 @@
         </ControlTemplate.Triggers>
     </ControlTemplate>
 
+    <Style x:Key="ButtonInItemsControlStyle"  TargetType="{x:Type Button}">
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Margin" Value="5"/>
+        <Setter Property="Background" Value="{Binding DataContext.Theme.ControlColour, Mode=OneTime, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ItemsControl}}}"/>
+        <Setter Property="Foreground" Value="{Binding DataContext.Theme.TextColour, Mode=OneTime, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ItemsControl}}}"/>
+        <Setter Property="BorderBrush" Value="{Binding DataContext.Theme.BorderColour, Mode=OneTime, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ItemsControl}}}"/>
+    </Style>
+
+    <ControlTemplate x:Key="ThemedButtonInItemsControl" TargetType="{x:Type ButtonBase}">
+        <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
+            <ContentPresenter x:Name="contentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" ContentStringFormat="{TemplateBinding ContentStringFormat}" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+        </Border>
+        <ControlTemplate.Triggers>
+            <Trigger Property="Button.IsDefaulted" Value="True">
+                <Setter Property="BorderBrush" TargetName="border" Value="{Binding DataContext.Theme.ControlHoverColour, Mode=OneTime, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ItemsControl}}}"/>
+            </Trigger>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" TargetName="border" Value="{Binding DataContext.Theme.ControlHoverColour, Mode=OneTime, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ItemsControl}}}"/>
+                <Setter Property="BorderBrush" TargetName="border" Value="{Binding DataContext.Theme.BorderColour, Mode=OneTime, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ItemsControl}}}"/>
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Background" TargetName="border" Value="{Binding DataContext.Theme.ControlDisabledColour, Mode=OneTime, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ItemsControl}}}"/>
+                <Setter Property="BorderBrush" TargetName="border" Value="{Binding DataContext.Theme.BorderDisabledColour, Mode=OneTime, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ItemsControl}}}"/>
+                <Setter Property="Foreground" Value="{Binding DataContext.Theme.TextDisabledColour, Mode=OneTime, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ItemsControl}}}"/>
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <Style x:Key="LabelInItemsControl"  TargetType="{x:Type Label}">
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="Foreground" Value="{Binding DataContext.Theme.TextColour, Mode=OneTime, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ItemsControl}}}"/>
+    </Style>
+
 </ResourceDictionary>
