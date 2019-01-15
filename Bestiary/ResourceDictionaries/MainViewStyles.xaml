@@ -237,4 +237,17 @@
         <Setter Property="Foreground" Value="{Binding DataContext.Theme.TextColour, Mode=OneTime, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ItemsControl}}}"/>
     </Style>
 
+    <Style x:Key="TextBlockInItemsControl" TargetType="{x:Type TextBlock}">
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="Background" Value="{Binding DataContext.Theme.ControlColour, Mode=OneTime, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ItemsControl}}}"/>
+        <Setter Property="Foreground" Value="{Binding DataContext.Theme.TextColour, Mode=OneTime, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ItemsControl}}}"/>
+    </Style>
+
+    <Style x:Key="ComboBoxInItemsControl" TargetType="{x:Type ComboBox}">
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="Margin" Value="5"/>
+        <Setter Property="Foreground" Value="{Binding DataContext.Theme.TextColour, Mode=OneTime, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ItemsControl}}}"/>
+    </Style>
 </ResourceDictionary>

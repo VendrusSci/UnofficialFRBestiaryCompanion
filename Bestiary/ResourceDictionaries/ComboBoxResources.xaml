@@ -277,8 +277,8 @@
                         <Setter Property="Template">
                             <Setter.Value>
                                 <ControlTemplate TargetType="{x:Type ToggleButton}">
-                                    <Border x:Name="templateRoot" BorderBrush="{Binding DataContext.Theme.BorderColour, Mode=OneTime, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ItemsControl}}}" BorderThickness="{TemplateBinding BorderThickness}" SnapsToDevicePixels="True" 
-                                            Background="{Binding DataContext.Theme.ControlColour, Mode=OneTime, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ItemsControl}}}">
+                                    <Border x:Name="templateRoot" BorderBrush="{Binding DataContext.Theme.BorderColour, Mode=OneTime, RelativeSource={RelativeSource Mode=FindAncestor, AncestorLevel=2, AncestorType={x:Type ItemsControl}}}" BorderThickness="{TemplateBinding BorderThickness}" SnapsToDevicePixels="True" 
+                                            Background="{Binding DataContext.Theme.ControlColour, Mode=OneTime, RelativeSource={RelativeSource Mode=FindAncestor, AncestorLevel=2, AncestorType={x:Type ItemsControl}}}">
                                         <Border x:Name="splitBorder" BorderBrush="Transparent" BorderThickness="1" HorizontalAlignment="Right" Margin="0" SnapsToDevicePixels="True" Width="{DynamicResource {x:Static SystemParameters.VerticalScrollBarWidthKey}}">
                                             <Path x:Name="Arrow" Data="F1M0,0L2.667,2.66665 5.3334,0 5.3334,-1.78168 2.6667,0.88501 0,-1.78168 0,0z" Fill="#FF606060" HorizontalAlignment="Center" Margin="0" VerticalAlignment="Center"/>
                                         </Border>
@@ -304,8 +304,8 @@
                                                 <Condition Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}}" Value="true"/>
                                                 <Condition Binding="{Binding IsEditable, RelativeSource={RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type ComboBox}}}" Value="false"/>
                                             </MultiDataTrigger.Conditions>
-                                            <Setter Property="Background" TargetName="templateRoot" Value="{Binding DataContext.Theme.ControlHoverColour, Mode=OneTime, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ItemsControl}}}"/>
-                                            <Setter Property="BorderBrush" TargetName="templateRoot" Value="{Binding DataContext.Theme.BorderColour, Mode=OneTime, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ItemsControl}}}"/>
+                                            <Setter Property="Background" TargetName="templateRoot" Value="{Binding DataContext.Theme.ControlHoverColour, Mode=OneTime, RelativeSource={RelativeSource Mode=FindAncestor, AncestorLevel=2, AncestorType={x:Type ItemsControl}}}"/>
+                                            <Setter Property="BorderBrush" TargetName="templateRoot" Value="{Binding DataContext.Theme.BorderColour, Mode=OneTime, RelativeSource={RelativeSource Mode=FindAncestor, AncestorLevel=2, AncestorType={x:Type ItemsControl}}}"/>
                                         </MultiDataTrigger>
                                         <MultiDataTrigger>
                                             <MultiDataTrigger.Conditions>
@@ -315,8 +315,8 @@
                                             <Setter Property="Background" TargetName="templateRoot" Value="Red"/>
                                             <Setter Property="BorderBrush" TargetName="templateRoot" Value="#FF7EB4EA"/>
                                             <Setter Property="Background" TargetName="splitBorder" 
-                                                    Value="{Binding DataContext.Theme.ControlColour, Mode=OneTime, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ItemsControl}}}"/>
-                                            <Setter Property="BorderBrush" TargetName="splitBorder" Value="{Binding DataContext.Theme.ControlHoverColour, Mode=OneTime, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ItemsControl}}}"/>
+                                                    Value="{Binding DataContext.Theme.ControlColour, Mode=OneTime, RelativeSource={RelativeSource Mode=FindAncestor, AncestorLevel=2, AncestorType={x:Type ItemsControl}}}"/>
+                                            <Setter Property="BorderBrush" TargetName="splitBorder" Value="{Binding DataContext.Theme.ControlHoverColour, Mode=OneTime, RelativeSource={RelativeSource Mode=FindAncestor, AncestorLevel=2, AncestorType={x:Type ItemsControl}}}"/>
                                         </MultiDataTrigger>
                                         <Trigger Property="IsPressed" Value="True">
                                             <Setter Property="Fill" TargetName="Arrow" Value="Black"/>
@@ -335,9 +335,9 @@
                                                 <Condition Binding="{Binding IsEditable, RelativeSource={RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type ComboBox}}}" Value="true"/>
                                             </MultiDataTrigger.Conditions>
                                             <Setter Property="Background" TargetName="templateRoot" Value="Cyan"/>
-                                            <Setter Property="BorderBrush" TargetName="templateRoot" Value="{Binding DataContext.Theme.ControlHoverColour, Mode=OneTime, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ItemsControl}}}"/>
+                                            <Setter Property="BorderBrush" TargetName="templateRoot" Value="{Binding DataContext.Theme.ControlHoverColour, Mode=OneTime, RelativeSource={RelativeSource Mode=FindAncestor, AncestorLevel=2, AncestorType={x:Type ItemsControl}}}"/>
                                             <Setter Property="Background" TargetName="splitBorder" Value="Maroon"/>
-                                            <Setter Property="BorderBrush" TargetName="splitBorder" Value="{Binding DataContext.Theme.ControlHoverColour, Mode=OneTime, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ItemsControl}}}"/>
+                                            <Setter Property="BorderBrush" TargetName="splitBorder" Value="{Binding DataContext.Theme.ControlHoverColour, Mode=OneTime, RelativeSource={RelativeSource Mode=FindAncestor, AncestorLevel=2, AncestorType={x:Type ItemsControl}}}"/>
                                         </MultiDataTrigger>
                                         <Trigger Property="IsEnabled" Value="False">
                                             <Setter Property="Fill" TargetName="Arrow" Value="#FFBFBFBF"/>
@@ -348,8 +348,8 @@
                                                 <Condition Binding="{Binding IsEditable, RelativeSource={RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type ComboBox}}}" Value="false"/>
                                             </MultiDataTrigger.Conditions>
                                             <Setter Property="Background" TargetName="templateRoot" 
-                                                    Value="{Binding DataContext.Theme.ControlColour, Mode=OneTime, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ItemsControl}}}"/>
-                                            <Setter Property="BorderBrush" TargetName="templateRoot" Value="{Binding DataContext.Theme.ControlHoverColour, Mode=OneTime, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ItemsControl}}}"/>
+                                                    Value="{Binding DataContext.Theme.ControlColour, Mode=OneTime, RelativeSource={RelativeSource Mode=FindAncestor, AncestorLevel=2, AncestorType={x:Type ItemsControl}}}"/>
+                                            <Setter Property="BorderBrush" TargetName="templateRoot" Value="{Binding DataContext.Theme.ControlHoverColour, Mode=OneTime, RelativeSource={RelativeSource Mode=FindAncestor, AncestorLevel=2, AncestorType={x:Type ItemsControl}}}"/>
                                         </MultiDataTrigger>
                                         <MultiDataTrigger>
                                             <MultiDataTrigger.Conditions>
@@ -406,7 +406,7 @@
         <Setter Property="Padding" Value="4,1"/>
         <Setter Property="HorizontalContentAlignment" Value="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
         <Setter Property="VerticalContentAlignment" Value="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
-        <Setter Property="Background" Value="{Binding DataContext.Theme.ControlColour, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
+        <Setter Property="Background" Value="{Binding DataContext.Theme.ControlColour, Mode=OneTime, RelativeSource={RelativeSource Mode=FindAncestor, AncestorLevel=2, AncestorType={x:Type ItemsControl}}}"/>
         <Setter Property="BorderBrush" Value="Transparent"/>
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisualIC}"/>
@@ -426,7 +426,7 @@
                                 <Condition Property="IsMouseOver" Value="True"/>
                                 <Condition Property="IsKeyboardFocused" Value="False"/>
                             </MultiTrigger.Conditions>
-                            <Setter Property="Background" TargetName="Bd" Value="{Binding DataContext.Theme.ControlHoverColour, Mode=OneTime, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ItemsControl}}}"/>
+                            <Setter Property="Background" TargetName="Bd" Value="{Binding DataContext.Theme.ControlHoverColour, Mode=OneTime, RelativeSource={RelativeSource Mode=FindAncestor, AncestorLevel=2, AncestorType={x:Type ItemsControl}}}"/>
                             <Setter Property="BorderBrush" TargetName="Bd" Value="{StaticResource ComboBoxItem.ItemsviewHover.Border}"/>
                         </MultiTrigger>
                         <MultiTrigger>
@@ -435,7 +435,7 @@
                                 <Condition Property="IsMouseOver" Value="False"/>
                                 <Condition Property="IsKeyboardFocused" Value="True"/>
                             </MultiTrigger.Conditions>
-                            <Setter Property="Background" TargetName="Bd" Value="{Binding DataContext.Theme.ControlHoverColour, Mode=OneTime, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ItemsControl}}}"/>
+                            <Setter Property="Background" TargetName="Bd" Value="{Binding DataContext.Theme.ControlHoverColour, Mode=OneTime, RelativeSource={RelativeSource Mode=FindAncestor, AncestorLevel=2, AncestorType={x:Type ItemsControl}}}"/>
                             <Setter Property="BorderBrush" TargetName="Bd" Value="{StaticResource ComboBoxItem.ItemsviewSelected.Border}"/>
                         </MultiTrigger>
                         <MultiTrigger>
@@ -443,7 +443,7 @@
                                 <Condition Property="IsSelected" Value="True"/>
                                 <Condition Property="IsMouseOver" Value="True"/>
                             </MultiTrigger.Conditions>
-                            <Setter Property="Background" TargetName="Bd" Value="{Binding DataContext.Theme.ControlHoverColour, Mode=OneTime, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ItemsControl}}}"/>
+                            <Setter Property="Background" TargetName="Bd" Value="{Binding DataContext.Theme.ControlHoverColour, Mode=OneTime, RelativeSource={RelativeSource Mode=FindAncestor, AncestorLevel=2, AncestorType={x:Type ItemsControl}}}"/>
                             <Setter Property="BorderBrush" TargetName="Bd" Value="{StaticResource ComboBoxItem.ItemsviewSelectedHover.Border}"/>
                         </MultiTrigger>
                         <MultiTrigger>
@@ -452,7 +452,7 @@
                                 <Condition Property="IsMouseOver" Value="False"/>
                                 <Condition Property="IsKeyboardFocused" Value="False"/>
                             </MultiTrigger.Conditions>
-                            <Setter Property="Background" TargetName="Bd" Value="{Binding DataContext.Theme.ControlHoverColour, Mode=OneTime, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ItemsControl}}}"/>
+                            <Setter Property="Background" TargetName="Bd" Value="{Binding DataContext.Theme.ControlHoverColour, Mode=OneTime, RelativeSource={RelativeSource Mode=FindAncestor, AncestorLevel=2, AncestorType={x:Type ItemsControl}}}"/>
                             <Setter Property="BorderBrush" TargetName="Bd" Value="{StaticResource ComboBoxItem.ItemsviewSelectedNoFocus.Border}"/>
                         </MultiTrigger>
                         <MultiTrigger>
@@ -469,12 +469,19 @@
                                 <Condition Property="IsMouseOver" Value="True"/>
                                 <Condition Property="IsKeyboardFocused" Value="True"/>
                             </MultiTrigger.Conditions>
-                            <Setter Property="Background" TargetName="Bd" Value="{Binding DataContext.Theme.ControlHoverColour, Mode=OneWay, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ItemsControl}}}"/>
-                            <Setter Property="BorderBrush" TargetName="Bd" Value="{Binding DataContext.Theme.BorderColour, Mode=OneWay, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ItemsControl}}}"/>
+                            <Setter Property="Background" TargetName="Bd" Value="{Binding DataContext.Theme.ControlHoverColour, Mode=OneWay, RelativeSource={RelativeSource Mode=FindAncestor, AncestorLevel=2, AncestorType={x:Type ItemsControl}}}"/>
+                            <Setter Property="BorderBrush" TargetName="Bd" Value="{Binding DataContext.Theme.BorderColour, Mode=OneWay, RelativeSource={RelativeSource Mode=FindAncestor, AncestorLevel=2, AncestorType={x:Type ItemsControl}}}"/>
                         </MultiTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+    </Style>
+
+    <Style x:Key="TextBlockInComboBox" TargetType="{x:Type TextBlock}">
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Foreground" Value="{Binding DataContext.Theme.TextColour, Mode=OneTime, RelativeSource={RelativeSource Mode=FindAncestor, AncestorLevel=2, AncestorType={x:Type ItemsControl}}}"/>
     </Style>
 </ResourceDictionary>
