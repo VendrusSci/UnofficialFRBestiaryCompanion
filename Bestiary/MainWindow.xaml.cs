@@ -7,6 +7,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using Bestiary.Services;
+using System;
 
 namespace Bestiary
 {
@@ -17,6 +18,7 @@ namespace Bestiary
     {
         public MainWindow()
         {
+           
             InitializeComponent();
 
             var dataDirectory = ApplicationPaths.GetDataDirectory();

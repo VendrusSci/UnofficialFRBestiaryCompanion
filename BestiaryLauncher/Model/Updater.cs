@@ -1,7 +1,7 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.IO;
-using System.Text;
-using Newtonsoft.Json.Linq;
+using System.Linq;
 using BestiaryLauncher.ViewModels;
 
 namespace BestiaryLauncher.Model
@@ -332,13 +332,15 @@ namespace BestiaryLauncher.Model
         private string FetchLatestVersion()
         {
             string releaseInfoJsonText = m_FileDownloader.DownloadAsString(ApplicationPaths.RemoteGitReleaseInfoPath);
-            var releaseInfoJsonObject = JObject.Parse(releaseInfoJsonText);
-            if(releaseInfoJsonObject.TryGetValue("tag_name", out var tagName))
+            var fieldSplit = releaseInfoJsonText.Split(',');
+            string versionField = Array.Find(fieldSplit, s => s.Contains("tag_name"));
+            var tagSplit = versionField.Split(':');
+            var quoteSplit = tagSplit[1].Split('\"');
+            string version = quoteSplit[1];
+
+            if(version != null)
             {
-                if (tagName.Type == JTokenType.String)
-                {
-                    return tagName.Value<string>();
-                }
+                return version;
             }
             return null;
         }
