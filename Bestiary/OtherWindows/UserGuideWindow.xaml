@@ -31,7 +31,7 @@
                             <Run Text="Individual familiars can be set as 'owned' using the 'Gotcha!' button in the results list. Once registered as owned, their bonding level and location in your account can be set. Neither of these are required, but setting them allows you to filter results based on those settings."/>
                             <LineBreak/>
                             <LineBreak/>
-                            <Run Text="Familiars can be set in bulk using the right-click context menu options. These options act on the current list of results, and can do any of the following:"/>
+                            <Run Text="Familiars can be set in bulk using the Results Menu options. These options act on the current list of results, and can do any of the following:"/>
                             <LineBreak/>
                             <BulletDecorator>
                                 <BulletDecorator.Bullet>
@@ -64,7 +64,7 @@
                             <LineBreak/>
                             <Run Text="Awakened and Wary setting will only act on familiars in the results list that are already owned. Setting any of these options on a results list with a large number of results may take some time, but typically under a minute in all cases. This option is most effectively used in conjunction with filters (see Filters, Searching and Sorting)."/>
                             <LineBreak/>
-                            <Run Text="If a familiar is set as Owned that should not be, this can be changed by double-clicking the familiar to access the Info window for that familiar (see Familiar Info tab)"/>
+                            <Run Text="The same options are available on single familiars by right-clicking on them, or by double-clicking to open the Info Window for that familiar"/>
                         </TextBlock>
                     </ScrollViewer>
                 </Grid>
@@ -221,6 +221,14 @@
                             <Run Text="At the top of each tab, a count of the number of familiars owned and what percentage of the available familiars in the venue that is is displayed."/>
                             <LineBreak/>
                             <LineBreak/>
+                            <Run FontSize="14" FontWeight="Bold" Text="Gathering"/>
+                            <LineBreak/>
+                            <Run Text="This view provides individual tabs for different Gathering types. The results window is almost identical to the main window, but with familiars effectively pre-filtered and without bookmarking. As in the main window, double-clicking will open up a familiar info window for the familiar clicked on."/>
+                            <LineBreak/>
+                            <LineBreak/>
+                            <Run Text="At the top of each tab, a count of the number of familiars owned and what percentage of the available familiars in the gathering type that is is displayed."/>
+                            <LineBreak/>
+                            <LineBreak/>
                         </TextBlock>
                     </ScrollViewer>
                 </Grid>
@@ -264,6 +272,89 @@
                             <LineBreak/>
                             <Run FontSize="14" FontWeight="Bold" Text="Manual Updates"/>
                             <Run Text="If the launcher is not functioning, the simplest way to update the software is to download the new version, then use the 'Import From Old Version' option in the Menu. Select the User Data folder in the old UBC version, then click OK. This will transfer all your personal familiar information over to the new version."/>
+                            <LineBreak/>
+                            <LineBreak/>
+                        </TextBlock>
+                    </ScrollViewer>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Options Menu">
+                <Grid Margin="10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Grid.Column="0" FontSize="16" FontWeight="Bold" Text="Options Menu"/>
+                    <ScrollViewer Grid.Row="1" Grid.Column="0" VerticalScrollBarVisibility="Auto" Height="370">
+                        <TextBlock TextWrapping="Wrap" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Auto">
+                            <Run Text="This section is a guide to the Options Menu."/>
+                            <LineBreak/>
+                            <LineBreak/>
+                            <Run FontSize="14" FontWeight="Bold" Text="Clear Bookmarks"/>
+                            <LineBreak/>
+                            <Run Text="Clicking this option will open a window that gives you the option to Clear Bookmarks or Close. The Clear Bookmarks option is only available if there are bookmarks set, and will remove all bookmarks."/>
+                            <LineBreak/>
+                            <LineBreak/>
+                            <Run FontWeight="Bold" Text="Import from Old Version"/>
+                            <LineBreak/>
+                            <Run Text="If you are manually changing versions, this option lets you import your familiar ownership/bookmarking/etc data. The window contains instructions on how to use it."/>
+                            <LineBreak/>
+                            <LineBreak/>
+                            <Run FontWeight="Bold" Text="Settings"/>
+                            <Run Text="The currently available settings options are Themes and Default Search"/>
+                            <LineBreak/>
+                            <Run Text="Themes allows you to pick from Default (Light), Dark and FR-Style solour schemes for the main window."/>
+                            <LineBreak/>
+                            <Run Text="Default Search lets you set the search you currently have set in the main window as the search that will automatically apply when you open the software. This can be 'reset' by clearing all filters and then setting the default search again."/>
+                            <LineBreak/>
+                            <LineBreak/>
+                        </TextBlock>
+                    </ScrollViewer>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Results Menu">
+                <Grid Margin="10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Grid.Column="0" FontSize="16" FontWeight="Bold" Text="Options Menu"/>
+                    <ScrollViewer Grid.Row="1" Grid.Column="0" VerticalScrollBarVisibility="Auto" Height="370">
+                        <TextBlock TextWrapping="Wrap" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Auto">
+                            <Run Text="This section is a guide to the Results Menu."/>
+                            <LineBreak/>
+                            <LineBreak/>
+                            <Run FontSize="14" FontWeight="Bold" Text="Copyable Results List"/>
+                            <LineBreak/>
+                            <Run Text="Clicking this option will open a window that gives you the option to Clear Bookmarks or Close. The Clear Bookmarks option is only available if there are bookmarks set, and will remove all bookmarks."/>
+                            <LineBreak/>
+                            <LineBreak/>
+                            <Run FontWeight="Bold" Text="Set Results To Owned/>
+                            <LineBreak/>
+                            <Run Text="Sets all familiars in the current results list to Owned"/>
+                            <LineBreak/>
+                            <LineBreak/>
+                            <Run FontWeight="Bold" Text="Set Results To Not Owned/>
+                            <LineBreak/>
+                            <Run Text="Sets all familiars in the current results list to Not Owned"/>
+                            <LineBreak/>
+                            <LineBreak/>
+                            <Run FontWeight="Bold" Text="Set Results To Awakened/>
+                            <LineBreak/>
+                            <Run Text="Sets all familiars in the current results list that are Owned to Awakened. Not Owned familiars are unaffected"/>
+                            <LineBreak/>
+                            <LineBreak/>
+                            <Run FontWeight="Bold" Text="Set Results To Wary/>
+                            <LineBreak/>
+                            <Run Text="Sets all familiars in the current results list that are Owned to Wary. Not Owned familiars are unaffected"/>
                             <LineBreak/>
                             <LineBreak/>
                         </TextBlock>

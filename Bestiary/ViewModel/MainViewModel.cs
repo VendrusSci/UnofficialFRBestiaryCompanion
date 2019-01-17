@@ -332,6 +332,8 @@ namespace Bestiary.ViewModel
                             FamiliarParameters.AvailabilityInvert = false;
                             FamiliarParameters.BondingLevelInvert = false;
                             FamiliarParameters.LocationInvert = false;
+
+                            SearchText = "";
                         }
                     );
                 }
@@ -549,7 +551,7 @@ namespace Bestiary.ViewModel
                 {
                     m_OpenSettingsWindow = new OpenDialogCommand<SettingsWindow>(
                         Window,
-                        _ => new SettingsWindow(FamiliarParameters, SearchText, m_Settings),
+                        _ => new SettingsWindow(FamiliarParameters, SearchText, m_Settings, Theme),
                         afterClosed: _ =>
                         {
                             m_Settings.FetchSettings();

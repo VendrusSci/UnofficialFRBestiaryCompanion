@@ -12,6 +12,7 @@ namespace Bestiary.ViewModel.OptionsViews
         public List<ThemeDisplayer> ThemeList { get; private set; }
         private ThemeDisplayer m_CurrentTheme;
         public bool SetEnabled => m_CurrentTheme == SelectedTheme;
+        public bool? DialogResult { get; private set; }
 
         public ThemeSelectorViewModel(SettingsHandler settings)
         {
@@ -20,8 +21,6 @@ namespace Bestiary.ViewModel.OptionsViews
             ThemeList.Add(new ThemeDisplayer(m_Settings.Default, "Default"));
             ThemeList.Add(new ThemeDisplayer(m_Settings.Dark, "Dark"));
             ThemeList.Add(new ThemeDisplayer(m_Settings.Official, "FR-Style"));
-            //ThemeList.Add(new ThemeDisplayer(m_Settings.Bluegreen, "Blue-green"));
-            //ThemeList.Add(new ThemeDisplayer(m_Settings.Rainbow, "Rainbow"));
         }
 
         private LambdaCommand m_SaveTheme;
@@ -37,6 +36,7 @@ namespace Bestiary.ViewModel.OptionsViews
                             m_CurrentTheme = SelectedTheme;
                             m_Settings.SelectedTheme = SelectedTheme.Theme;
                             m_Settings.SaveSettings();
+                            DialogResult = true;
                         }
                     );
                 }

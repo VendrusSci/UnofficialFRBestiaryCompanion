@@ -6,6 +6,8 @@
         xmlns:local="clr-namespace:Bestiary.OptionsWindows"
         xmlns:local_c="clr-namespace:Bestiary.ViewModel.Converters"
         mc:Ignorable="d"
+        xmlns:xc="clr-namespace:Bestiary.Services"
+        xc:DialogCloser.DialogResult="{Binding DialogResult}"
         Title="Theme Selector" Height="220" Width="400">
     <Window.Resources>
         <local_c:BrushToColourConverter x:Key="BrushToColour"/>

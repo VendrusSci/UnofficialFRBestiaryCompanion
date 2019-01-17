@@ -11,13 +11,15 @@ namespace Bestiary.ViewModel
         private FamiliarFilters m_Filters;
         private string m_SearchText;
         private SettingsHandler m_Settings;
-        public SettingsViewModel(FamiliarFilters familiarFilters, string searchText, SettingsHandler settings)
+        public Theme Theme { get; set; }
+        public SettingsViewModel(FamiliarFilters familiarFilters, string searchText, SettingsHandler settings, Theme theme)
         {
             m_Filters = familiarFilters;
             FilterDefaultButtonText = "Set Current Filter as Default";
             FilterDefaultSetAvailable = true;
             m_Settings = settings;
             m_SearchText = searchText;
+            Theme = theme;
         }
 
         public string FilterDefaultButtonText { get; private set; }
@@ -75,6 +77,8 @@ namespace Bestiary.ViewModel
                         {
                             ThemeSelectorWindow window = new ThemeSelectorWindow(m_Settings);
                             window.ShowDialog();
+                            m_Settings.FetchSettings();
+                            Theme = m_Settings.SelectedTheme;
                         }
                     );
                 }

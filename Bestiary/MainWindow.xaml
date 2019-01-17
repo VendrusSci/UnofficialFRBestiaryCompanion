@@ -229,8 +229,7 @@
                                         <Label Grid.Column="0" Style="{DynamicResource LabelInItemsControl}" Content="{Binding Name}"/>
                                         <ComboBox Grid.Column="1" Margin="5" ItemsSource="{Binding AvailableOptions}" SelectedItem="{Binding SelectedOption}" 
                                                   HorizontalAlignment="Stretch" Style="{DynamicResource ComboBoxInItemsControl}"
-                                                  Template="{DynamicResource ComboBoxControlThemedItemsControl}" ItemContainerStyle="{DynamicResource ComboBoxItemThemedItemsControl}"
-                                                  x:Name="Fish">
+                                                  Template="{DynamicResource ComboBoxControlThemedItemsControl}" ItemContainerStyle="{DynamicResource ComboBoxItemThemedItemsControl}">
                                             <ComboBox.ItemTemplate>
                                                 <DataTemplate>
                                                     <TextBlock Style="{DynamicResource TextBlockInComboBox}" Text="{Binding Converter={StaticResource DescConverter}, Mode=OneTime}"/>
@@ -244,7 +243,7 @@
                         </ItemsControl>
                     </Grid>
                 </GroupBox>
-                <Button Grid.Row="4" Content="Go" Margin="5" Template="{DynamicResource ThemedButtonInItemsControl}" Command="{Binding FetchFamiliars}"/>
+                <Button Grid.Row="4" Content="Go" Margin="5" Template="{DynamicResource ThemedButton}" Command="{Binding FetchFamiliars}"/>
             </Grid>
             <GroupBox Grid.Column="1" Header="Familiars" Margin="5">
                 <Grid>

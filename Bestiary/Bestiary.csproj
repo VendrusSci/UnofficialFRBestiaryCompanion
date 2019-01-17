@@ -166,6 +166,7 @@
     <Compile Include="OtherWindows\UserGuideWindow.xaml.cs">
       <DependentUpon>UserGuideWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Services\DialogCloser.cs" />
     <Compile Include="Services\Settings.cs" />
     <Compile Include="ViewModel\AboutViewModel.cs" />
     <Compile Include="ViewModel\Converters\BondLevelToColourConverter.cs" />

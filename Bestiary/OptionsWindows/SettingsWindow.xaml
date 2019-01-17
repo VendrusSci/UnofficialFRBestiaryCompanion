@@ -6,6 +6,14 @@
         xmlns:local="clr-namespace:Bestiary.OptionsWindows"
         mc:Ignorable="d"
         Title="Settings" Height="250" Width="400">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../ResourceDictionaries/ComboBoxResources.xaml"/>
+                <ResourceDictionary Source="../ResourceDictionaries/MainViewStyles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -15,15 +23,15 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <TextBlock Grid.Row="0" Margin="5 10 5 10" HorizontalAlignment="Center" TextAlignment="Center" FontWeight="Bold">
+        <TextBlock Grid.Row="0" Margin="5 10 5 10" HorizontalAlignment="Center" TextAlignment="Center" FontWeight="Bold" Background="Transparent">
             <Run Text="These options let you set defaults that will apply "/>
             <LineBreak/>
             <Run Text="the next time you run the UBC"/>
         </TextBlock>
-        <TextBlock Grid.Row="1" Margin="5 10 5 5" HorizontalAlignment="Center" 
+        <TextBlock Grid.Row="1" Margin="5 10 5 5" HorizontalAlignment="Center" Background="Transparent"
                    Text="Select the colour scheme theme from available presets"/>
         <Button Grid.Row="2" Content="Select Theme" Margin="20 5 20 5" Command="{Binding OpenThemeSelectorWindow}"/>
-        <TextBlock Grid.Row="3" Margin="5 10 5 5" HorizontalAlignment="Center">
+        <TextBlock Grid.Row="3" Margin="5 10 5 5" HorizontalAlignment="Center" Background="Transparent">
             <Run Text="Set the currently applied filter and search options "/>
             <LineBreak/>
             <Run Text="to be the options that apply on opening the UBC"/>

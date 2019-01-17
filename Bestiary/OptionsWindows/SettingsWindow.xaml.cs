@@ -10,10 +10,10 @@ namespace Bestiary.OptionsWindows
     /// </summary>
     public partial class SettingsWindow : Window
     {
-        public SettingsWindow(FamiliarFilters familiarFilters, string searchText, SettingsHandler settings)
+        public SettingsWindow(FamiliarFilters familiarFilters, string searchText, SettingsHandler settings, Theme theme)
         {
             InitializeComponent();
-            DataContext = new SettingsViewModel(familiarFilters, searchText, settings);
+            DataContext = new SettingsViewModel(familiarFilters, searchText, settings, theme);
         }
     }
 }
