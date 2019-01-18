@@ -337,22 +337,22 @@
                             <Run Text="Clicking this option will open a window that gives you the option to Clear Bookmarks or Close. The Clear Bookmarks option is only available if there are bookmarks set, and will remove all bookmarks."/>
                             <LineBreak/>
                             <LineBreak/>
-                            <Run FontWeight="Bold" Text="Set Results To Owned/>
+                            <Run FontWeight="Bold" Text="Set Results To Owned"/>
                             <LineBreak/>
                             <Run Text="Sets all familiars in the current results list to Owned"/>
                             <LineBreak/>
                             <LineBreak/>
-                            <Run FontWeight="Bold" Text="Set Results To Not Owned/>
+                            <Run FontWeight="Bold" Text="Set Results To Not Owned"/>
                             <LineBreak/>
                             <Run Text="Sets all familiars in the current results list to Not Owned"/>
                             <LineBreak/>
                             <LineBreak/>
-                            <Run FontWeight="Bold" Text="Set Results To Awakened/>
+                            <Run FontWeight="Bold" Text="Set Results To Awakened"/>
                             <LineBreak/>
                             <Run Text="Sets all familiars in the current results list that are Owned to Awakened. Not Owned familiars are unaffected"/>
                             <LineBreak/>
                             <LineBreak/>
-                            <Run FontWeight="Bold" Text="Set Results To Wary/>
+                            <Run FontWeight="Bold" Text="Set Results To Wary"/>
                             <LineBreak/>
                             <Run Text="Sets all familiars in the current results list that are Owned to Wary. Not Owned familiars are unaffected"/>
                             <LineBreak/>
