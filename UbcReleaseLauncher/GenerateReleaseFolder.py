@@ -47,6 +47,17 @@ def generate_full_software_zip(bestiary_resources, bestiary_main, bestiary_launc
     shutil.rmtree(basedir)
 
 
+def generate_win7_familiar_zip(bestiary_resources, output_folder):
+    basedir = os.path.join(os.getcwd(), 'FamiliarUpdate')
+    os.makedirs(basedir)
+    shutil.copytree(os.path.join(bestiary_resources, "FamiliarData"), "FamiliarData")
+    shutil.copytree(os.path.join(bestiary_resources, "Icons"), "Icons")
+    shutil.copytree(os.path.join(bestiary_resources, "Images"), "Images")
+    shutil.make_archive("FamiliarUpdate", 'zip', os.getcwd())
+    shutil.move("FamiliarUpdate.zip", output_folder)
+    shutil.rmtree(basedir)
+
+
 def generate_zip_of_files(zip_name, root_folder, contents):
     gen_zip = zipfile.ZipFile(zip_name + '.zip', mode='w')
     for item in contents:
@@ -92,6 +103,7 @@ def main():
 
     generate_full_software_zip(bestiary_resources, bestiary_main, bestiary_launcher,
                                bestiary_launcher_resources, args.output_folder)
+    generate_win7_familiar_zip(bestiary_resources, args.output_folder)
 
     GenerateManifest.generate_manifest(args.output_folder)
 

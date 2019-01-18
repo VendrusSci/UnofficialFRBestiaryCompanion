@@ -56,6 +56,7 @@
         <Style TargetType="{x:Type DataGridRow}">
             <EventSetter Event="Control.PreviewMouseDoubleClick" Handler="ChangeSelectedRow"/>
             <EventSetter Event="UIElement.PreviewMouseLeftButtonDown" Handler="ChangeSelectedRow"/>
+            <EventSetter Event="UIElement.PreviewMouseLeftButtonDown" Handler="ChangeSelectedRow"/>
             <Style.Triggers>
                 <Trigger Property="IsSelected" Value="true">
                     <Setter Property="BorderBrush" Value="Black"/>
@@ -85,12 +86,20 @@
         <Menu Grid.Row="0" Height="20">
             <MenuItem Width="Auto" Header="Options">
                 <MenuItem Width="Auto" Header="Clear Bookmarks" Command="{Binding OpenClearBookmarksWindow}"/>
-                <MenuItem Width="Auto" Header="Copyable Results List" Command="{Binding OpenResultListWindow}"/>
+                <MenuItem Width="Auto" Header="Import New Familiar Data" Command="{Binding OpenFamiliarImportWindow}"/>
                 <MenuItem Width="Auto" Header="Import from Old Version" Command="{Binding OpenFolderImportWindow}"/>
             </MenuItem>
             <MenuItem Width="Auto" Header="Views">
                 <MenuItem Width="Auto" Header="Flight Rising Bestiary" Command="{Binding OpenFRBestiaryView}"/>
                 <MenuItem Width="Auto" Header="Coliseum" Command="{Binding OpenColiseumView}"/>
+                <MenuItem Width="Auto" Header="Gathering" Command="{Binding OpenGatheringView}"/>
+            </MenuItem>
+            <MenuItem Width="Auto" Header="Results">
+                <MenuItem Width="Auto" Header="Copyable Results List" Command="{Binding OpenResultListWindow}"/>
+                <MenuItem Width="Auto" Header="Set Results to Owned" Command="{Binding SetOwned}"/>
+                <MenuItem Width="Auto" Header="Set Results to Not Owned" Command="{Binding SetNotOwned}"/>
+                <MenuItem Width="Auto" Header="Set Results to Awakened" Command="{Binding SetAwakened}"/>
+                <MenuItem Width="Auto" Header="Set Results to Wary" Command="{Binding SetWary}"/>
             </MenuItem>
             <MenuItem Width="Auto" Header="Advanced">
                 <MenuItem Width="Auto" Header="Add new Familiar" Command="{Binding OpenAddFamiliarWindow}"/>
@@ -322,15 +331,22 @@
                         <DataGrid.InputBindings>
                             <MouseBinding MouseAction="LeftDoubleClick" Command="{Binding OpenDataFamiliarWindow}" CommandParameter="{Binding FilteredFamiliars/}"/>
                         </DataGrid.InputBindings>
-                        <DataGrid.ContextMenu>
-                            <ContextMenu ItemsSource="{Binding ResultsActions}">
-                                <ContextMenu.ItemTemplate>
-                                    <DataTemplate DataType="MenuItem">
-                                        <MenuItem Header="{Binding Name}" Command="{Binding Action}"/>
-                                    </DataTemplate>
-                                </ContextMenu.ItemTemplate>
-                            </ContextMenu>
-                        </DataGrid.ContextMenu>
+                        <DataGrid.RowStyle>
+                            <Style TargetType="{x:Type DataGridRow}">
+                                <Setter Property="ContextMenu">
+                                    <Setter.Value>
+                                        <ContextMenu ItemsSource="{Binding ResultsActions}">
+                                            <ContextMenu.ItemTemplate>
+                                                <DataTemplate DataType="MenuItem">
+                                                    <MenuItem Header="{Binding Name}" Command="{Binding Action}"/>
+                                                </DataTemplate>
+                                            </ContextMenu.ItemTemplate>
+                                        </ContextMenu>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                            
+                        </DataGrid.RowStyle>
                         <DataGrid.Columns>
                             <DataGridTemplateColumn Header="Icon" Width="Auto" IsReadOnly="True">
                                 <DataGridTemplateColumn.CellTemplate>

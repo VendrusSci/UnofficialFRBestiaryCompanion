@@ -68,7 +68,7 @@ namespace Bestiary.Model
         Awakened
     }
 
-    enum GatherTypes
+    public enum GatherTypes
     {
         Hunting,
         Fishing,

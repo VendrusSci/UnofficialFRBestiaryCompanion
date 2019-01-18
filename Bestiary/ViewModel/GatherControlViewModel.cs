@@ -1,9 +1,5 @@
 ﻿using Bestiary.Model;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Bestiary.ViewModel
 {
@@ -18,11 +14,11 @@ namespace Bestiary.ViewModel
 
         public List<Flights> GetSelectedFlights()
         {
-            List < Flights > flightList = new List<Flights>();
+            List<Flights> flightList = new List<Flights>();
 
-            for(int i = 0; i < FlightSelections.Length; i++)
+            for (int i = 0; i < FlightSelections.Length; i++)
             {
-                if(FlightSelections[i])
+                if (FlightSelections[i])
                 {
                     flightList.Add((Flights)i);
                 }

@@ -151,6 +151,9 @@
     <Compile Include="OptionsWindows\ClearBookmarksWindow.xaml.cs">
       <DependentUpon>ClearBookmarksWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="OptionsWindows\FamiliarImportWindow.xaml.cs">
+      <DependentUpon>FamiliarImportWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="OptionsWindows\ImportFromOldWindow.xaml.cs">
       <DependentUpon>ImportFromOldWindow.xaml</DependentUpon>
     </Compile>
@@ -158,11 +161,13 @@
       <DependentUpon>UserGuideWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModel\AboutViewModel.cs" />
-    <Compile Include="ViewModel\ClearBookmarksViewModel.cs" />
+    <Compile Include="ViewModel\GatherControlViewModel.cs" />
+    <Compile Include="ViewModel\OptionsViews\ClearBookmarksViewModel.cs" />
     <Compile Include="ViewModel\Converters\EnemyTypeToColourConverter.cs" />
     <Compile Include="ViewModel\Converters\OwnedToBoolConverter.cs" />
     <Compile Include="ViewModel\Dataviews\ColiseumViewModel.cs" />
-    <Compile Include="ViewModel\ImportFromOldViewModel.cs" />
+    <Compile Include="ViewModel\OptionsViews\FamiliarImportViewModel.cs" />
+    <Compile Include="ViewModel\OptionsViews\ImportFromOldViewModel.cs" />
     <Compile Include="ViewModel\UserGuideViewModel.cs" />
     <Compile Include="ViewWindows\ColiseumView.xaml.cs">
       <DependentUpon>ColiseumView.xaml</DependentUpon>
@@ -173,10 +178,20 @@
     <Compile Include="ViewWindows\FRBestiaryView.xaml.cs">
       <DependentUpon>FRBestiaryView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewWindows\GatherTypeControl.xaml.cs">
+      <DependentUpon>GatherTypeControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewWindows\GatherView.xaml.cs">
+      <DependentUpon>GatherView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewWindows\VenueControl.xaml.cs">
       <DependentUpon>VenueControl.xaml</DependentUpon>
     </Compile>
     <Page Include="OptionsWindows\ClearBookmarksWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="OptionsWindows\FamiliarImportWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -214,14 +229,13 @@
     <Compile Include="ViewModel\Converters\BookmarkStateToIconConverter.cs" />
     <Compile Include="ViewModel\Dataviews\FRBestiaryViewModel.cs" />
     <Compile Include="ViewModel\SupportClasses\EditDistance.cs" />
-    <Compile Include="ViewModel\FetchUpdateViewModel.cs" />
     <Compile Include="ViewModel\Converters\FlightToIconConverter.cs" />
     <Compile Include="ViewModel\Converters\ItemToDescriptionConverter.cs" />
-    <Compile Include="ViewModel\FamiliarAddViewModel.cs" />
-    <Compile Include="ViewModel\FamiliarDeleteViewModel.cs" />
+    <Compile Include="ViewModel\AdvancedViews\FamiliarAddViewModel.cs" />
+    <Compile Include="ViewModel\AdvancedViews\FamiliarDeleteViewModel.cs" />
     <Compile Include="ViewModel\FamiliarViewModel.cs" />
     <Compile Include="ViewModel\FamiliarDataViewModel.cs" />
-    <Compile Include="ViewModel\GatherControlViewModel.cs" />
+    <Compile Include="ViewModel\Dataviews\GatherViewModel.cs" />
     <Compile Include="ViewModel\Converters\LongestItemToWidthConverter.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="AdvancedWindows\FamiliarAddWindow.xaml.cs">
@@ -231,7 +245,7 @@
       <DependentUpon>FamiliarDeleteWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModel\SupportClasses\OpenDialogCommand.cs" />
-    <Compile Include="ViewModel\ResultListViewModel.cs" />
+    <Compile Include="ViewModel\OptionsViews\ResultListViewModel.cs" />
     <Compile Include="ViewModel\SupportViewModel.cs" />
     <Page Include="FamiliarDataWindow.xaml">
       <SubType>Designer</SubType>
@@ -286,6 +300,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ViewWindows\FRBestiaryView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ViewWindows\GatherTypeControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ViewWindows\GatherView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

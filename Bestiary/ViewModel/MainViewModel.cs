@@ -354,11 +354,27 @@ namespace Bestiary.ViewModel
                     m_openDataFamiliarWindow = new OpenDialogCommand<FamiliarDataWindow>(
                         Window,
                         p => new FamiliarDataWindow((FamiliarViewModel)p, m_Model),
-                        canExecute: p => p.GetType() == typeof(FamiliarViewModel),
+                        canExecute: p => p!= null ? p.GetType() == typeof(FamiliarViewModel) : false,
                         afterClosed: _ => FetchFamiliars.Execute(null)
                     );
                 }
                 return m_openDataFamiliarWindow;
+            }
+        }
+
+        private BaseCommand m_OpenGatheringView;
+        public ICommand OpenGatheringView
+        {
+            get
+            {
+                if (m_OpenGatheringView == null)
+                {
+                    m_OpenGatheringView = new OpenDialogCommand<GatherView>(
+                        Window,
+                        _ => new GatherView(m_Model, FamiliarParameters.AvailableOwnedStatus, FamiliarParameters.AvailableBondingLevels, FamiliarParameters.AvailableLocationTypes)
+                    );
+                }
+                return m_OpenGatheringView;
             }
         }
 
@@ -489,6 +505,22 @@ namespace Bestiary.ViewModel
                     );
                 }
                 return m_OpenFolderImportWindow;
+            }
+        }
+
+        private BaseCommand m_OpenFamiliarImportWindow;
+        public ICommand OpenFamiliarImportWindow
+        {
+            get
+            {
+                if (m_OpenFamiliarImportWindow == null)
+                {
+                    m_OpenFamiliarImportWindow = new OpenDialogCommand<FamiliarImportWindow>(
+                        Window,
+                        _ => new FamiliarImportWindow()
+                    );
+                }
+                return m_OpenFamiliarImportWindow;
             }
         }
 
@@ -632,26 +664,27 @@ namespace Bestiary.ViewModel
             }
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("OwnedCount"));
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("AwakenedCount"));
+            FetchFamiliars.Execute(null);
         }
 
         public ObservableCollection<ResultsAction> ResultsActions { get; private set; }
         private void SetResultsActions()
         {
             ResultsActions = new ObservableCollection<ResultsAction>();
-            ResultsActions.Add(new ResultsAction("Set to Owned", SetResultsOwned));
-            ResultsActions.Add(new ResultsAction("Set to Not Owned", SetResultsNotOwned));
-            ResultsActions.Add(new ResultsAction("Set to Awakened", SetResultsAwakened));
-            ResultsActions.Add(new ResultsAction("Set to Wary", SetResultsWary));
+            ResultsActions.Add(new ResultsAction("Set to Owned", SetOwned));
+            ResultsActions.Add(new ResultsAction("Set to Not Owned", SetNotOwned));
+            ResultsActions.Add(new ResultsAction("Set to Awakened", SetAwakened));
+            ResultsActions.Add(new ResultsAction("Set to Wary", SetWary));
         }
 
-        private LambdaCommand m_SetResultsAwakened;
-        public ICommand SetResultsAwakened
+        private LambdaCommand m_SetAwakened;
+        public ICommand SetAwakened
         {
             get
             {
-                if(m_SetResultsAwakened == null)
+                if(m_SetAwakened == null)
                 {
-                    m_SetResultsAwakened = new LambdaCommand(
+                    m_SetAwakened = new LambdaCommand(
                         onExecute: (p) =>
                         {
                             foreach(var familiar in FilteredFamiliars)
@@ -664,18 +697,18 @@ namespace Bestiary.ViewModel
                         }
                     );
                 }
-                return m_SetResultsAwakened;
+                return m_SetAwakened;
             }
         }
 
-        private LambdaCommand m_SetResultsWary;
-        public ICommand SetResultsWary
+        private LambdaCommand m_SetWary;
+        public ICommand SetWary
         {
             get
             {
-                if (m_SetResultsWary == null)
+                if (m_SetWary == null)
                 {
-                    m_SetResultsWary = new LambdaCommand(
+                    m_SetWary = new LambdaCommand(
                         onExecute: (p) =>
                         {
                             foreach (var familiar in FilteredFamiliars)
@@ -688,18 +721,18 @@ namespace Bestiary.ViewModel
                         }
                     );
                 }
-                return m_SetResultsWary;
+                return m_SetWary;
             }
         }
 
-        private LambdaCommand m_SetResultsOwned;
-        public ICommand SetResultsOwned
+        private LambdaCommand m_SetOwned;
+        public ICommand SetOwned
         {
             get
             {
-                if (m_SetResultsOwned == null)
+                if (m_SetOwned == null)
                 {
-                    m_SetResultsOwned = new LambdaCommand(
+                    m_SetOwned = new LambdaCommand(
                         onExecute: (p) =>
                         {
                             foreach (var familiar in FilteredFamiliars)
@@ -712,18 +745,18 @@ namespace Bestiary.ViewModel
                         }
                     );
                 }
-                return m_SetResultsOwned;
+                return m_SetOwned;
             }
         }
 
-        private LambdaCommand m_SetResultsNotOwned;
-        public ICommand SetResultsNotOwned
+        private LambdaCommand m_SetNotOwned;
+        public ICommand SetNotOwned
         {
             get
             {
-                if (m_SetResultsNotOwned == null)
+                if (m_SetNotOwned == null)
                 {
-                    m_SetResultsNotOwned = new LambdaCommand(
+                    m_SetNotOwned = new LambdaCommand(
                         onExecute: (p) =>
                         {
                             foreach (var familiar in FilteredFamiliars)
@@ -737,7 +770,7 @@ namespace Bestiary.ViewModel
                         }
                     );
                 }
-                return m_SetResultsNotOwned;
+                return m_SetNotOwned;
             }
         }
 
@@ -745,20 +778,4 @@ namespace Bestiary.ViewModel
 
         public static readonly log4net.ILog UserActionLog = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
     }
-
-
-    class ResultsAction : INotifyPropertyChanged
-    {
-        public string Name { get; private set; }
-        public ICommand Action { get; private set; }
-
-        public ResultsAction(string name, ICommand action)
-        {
-            Name = name;
-            Action = action;
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-    }
-
 }
