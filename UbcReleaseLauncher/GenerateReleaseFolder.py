@@ -50,10 +50,10 @@ def generate_full_software_zip(bestiary_resources, bestiary_main, bestiary_launc
 def generate_win7_familiar_zip(bestiary_resources, output_folder):
     basedir = os.path.join(os.getcwd(), 'FamiliarUpdate')
     os.makedirs(basedir)
-    shutil.copytree(os.path.join(bestiary_resources, "FamiliarData"), "FamiliarData")
-    shutil.copytree(os.path.join(bestiary_resources, "Icons"), "Icons")
-    shutil.copytree(os.path.join(bestiary_resources, "Images"), "Images")
-    shutil.make_archive("FamiliarUpdate", 'zip', os.getcwd())
+    shutil.copytree(os.path.join(bestiary_resources, "FamiliarData"), "FamiliarUpdate\\FamiliarData")
+    shutil.copytree(os.path.join(bestiary_resources, "Icons"), "FamiliarUpdate\\Icons")
+    shutil.copytree(os.path.join(bestiary_resources, "Images"), "FamiliarUpdate\\Images")
+    shutil.make_archive("FamiliarUpdate", 'zip', os.path.join(os.getcwd(), "FamiliarUpdate"))
     shutil.move("FamiliarUpdate.zip", output_folder)
     shutil.rmtree(basedir)
 
