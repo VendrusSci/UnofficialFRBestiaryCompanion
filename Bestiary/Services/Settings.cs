@@ -56,7 +56,6 @@ namespace Bestiary.Services
             BorderDisabledColour = (SolidColorBrush)(new BrushConverter().ConvertFrom("#BFBFBF")),
             ControlDisabledColour = (SolidColorBrush)(new BrushConverter().ConvertFrom("#EFECE6"))
         };
-            
 
 
         public Theme SelectedTheme { get; set; }
@@ -77,8 +76,8 @@ namespace Bestiary.Services
                     BondLevelExclude = false,
                     LocationExclude = false,
                     AvailabilityExclude = false,
-                    Year = 0,
-                    MinLevel = 0,
+                    Year = null,
+                    MinLevel = null,
                 };
             }
         }

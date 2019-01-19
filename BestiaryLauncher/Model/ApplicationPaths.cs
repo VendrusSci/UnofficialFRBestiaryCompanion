@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.IO;
 
 namespace BestiaryLauncher.Model
 {
@@ -17,7 +12,8 @@ namespace BestiaryLauncher.Model
 
         public static string RemoteFRDataFile = "https://raw.githubusercontent.com/VendrusSci/UnofficialFRBestiaryCompanion/master/Bestiary/Resources/FRData.xml";
         public static string RemoteGitReleasePath = "https://github.com/VendrusSci/UnofficialFRBestiaryCompanion/releases/download/";
-        public static string RemoteGitReleaseInfoPath = "https://api.github.com/repos/VendrusSci/UnofficialFRBestiaryCompanion/releases/latest";
+        //public static string RemoteGitReleaseInfoPath = "https://api.github.com/repos/VendrusSci/UnofficialFRBestiaryCompanion/releases/latest";
+        public static string RemoteGitReleaseInfoPath = "https://api.github.com/repos/VendrusSci/UnofficialFRBestiaryCompanion/releases";
 
         public static string GetLauncherDirectory()
         {

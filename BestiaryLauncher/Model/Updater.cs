@@ -1,7 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
-using System.Linq;
+using System.Runtime.Serialization.Json;
 using BestiaryLauncher.ViewModels;
 
 namespace BestiaryLauncher.Model
@@ -332,16 +333,21 @@ namespace BestiaryLauncher.Model
         private string FetchLatestVersion()
         {
             string releaseInfoJsonText = m_FileDownloader.DownloadAsString(ApplicationPaths.RemoteGitReleaseInfoPath);
-            var fieldSplit = releaseInfoJsonText.Split(',');
-            string versionField = Array.Find(fieldSplit, s => s.Contains("tag_name"));
-            var tagSplit = versionField.Split(':');
-            var quoteSplit = tagSplit[1].Split('\"');
-            string version = quoteSplit[1];
 
-            if(version != null)
+            var releases = new List<ReleaseJson>();
+            MemoryStream ms = new MemoryStream(m_FileDownloader.Download(ApplicationPaths.RemoteGitReleaseInfoPath));
+            DataContractJsonSerializer ser = new DataContractJsonSerializer(releases.GetType());
+            releases = ser.ReadObject(ms) as List<ReleaseJson>;
+            ms.Close();
+
+            foreach(var release in releases)
             {
-                return version;
+                if(release.target_commitish == "master")
+                {
+                    return release.tag_name;
+                }
             }
+
             return null;
         }
 

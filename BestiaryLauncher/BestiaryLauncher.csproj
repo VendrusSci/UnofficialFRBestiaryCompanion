@@ -71,6 +71,7 @@
     <Compile Include="Model\LambdaCommand.cs" />
     <Compile Include="Model\Manifest.cs" />
     <Compile Include="Model\Interfaces.cs" />
+    <Compile Include="Model\ReleaseJson.cs" />
     <Compile Include="Model\Updater.cs" />
     <Compile Include="Model\TestDownloader.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />

@@ -19,6 +19,7 @@
             <local_c:BondLevelToIconConverter x:Key="BondLevelToIcon"/>
             <local_c:BondLevelToColourConverter x:Key="BondLevelToColour"/>
             <local_c:BookmarkStateToIconConverter x:Key="BookmarkedToIcon"/>
+            <local_c:BoolToVisibilityConverter x:Key="BoolToVisibility"/>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="ResourceDictionaries/ComboBoxResources.xaml"/>
                 <ResourceDictionary Source="ResourceDictionaries/MainViewStyles.xaml"/>
@@ -214,11 +215,15 @@
                         <Grid.Resources>
                             <FrameworkElement x:Key="ProxyElement" DataContext="{Binding}"/>
                         </Grid.Resources>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="204*"/>
+                            <ColumnDefinition Width="151*"/>
+                        </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
-                        <ItemsControl Grid.Row="0" ItemsSource="{Binding FamiliarParameters.SubFilterList}" Visibility="{Binding FamiliarParameters.SourceInvert, Converter={StaticResource BoolToVisibility}}">
+                        <ItemsControl Grid.Row="0" ItemsSource="{Binding FamiliarParameters.SubFilterList}" Visibility="{Binding FamiliarParameters.SourceInvert, Converter={StaticResource BoolToVisibility}}" Grid.ColumnSpan="2">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
                                     <Grid>
@@ -240,8 +245,8 @@
                                             </ComboBox.ItemTemplate>
                                         </ComboBox>
                                         <Button Grid.Column="2" Margin="5" Content="Clear" Template="{DynamicResource ThemedButtonInItemsControl}" Command="{Binding Clear}" Style="{DynamicResource ButtonInItemsControlStyle}"/>
-                                        <Label Grid.Column="3" Margin="5" Content="Exclude:"/>
-                                        <CheckBox Grid.Column="4" Margin="5" IsChecked="{Binding Invert}"/>
+                                        <Label Grid.Column="3" Margin="5" Content="Exclude:" Style="{DynamicResource LabelInItemsControl}"/>
+                                        <CheckBox Grid.Column="4" Margin="5" IsChecked="{Binding Invert}" Style="{DynamicResource CheckBoxInItemsControl}"/>
                                     </Grid>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
