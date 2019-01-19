@@ -785,11 +785,11 @@ namespace Bestiary.ViewModel
             SearchText = m_Settings.SelectedDefaultSearch.SearchText;
             FamiliarParameters.SelectedAvailability = m_Settings.SelectedDefaultSearch.Availability;
             FamiliarParameters.SelectedBondingLevel = m_Settings.SelectedDefaultSearch.BondLevel;
-            FamiliarParameters.SelectedCycleYear = new CycleYear(m_Settings.SelectedDefaultSearch.Year != null ? m_Settings.SelectedDefaultSearch.Year.Value : 0);
+            FamiliarParameters.SelectedCycleYear =  m_Settings.SelectedDefaultSearch.Year != null ? new CycleYear(m_Settings.SelectedDefaultSearch.Year.Value) : null;
             FamiliarParameters.SelectedEnemyType = m_Settings.SelectedDefaultSearch.EnemyType;
             FamiliarParameters.SelectedFlight = m_Settings.SelectedDefaultSearch.Flight;
             FamiliarParameters.SelectedGatherType = m_Settings.SelectedDefaultSearch.GatherType;
-            FamiliarParameters.SelectedLevel = m_Settings.SelectedDefaultSearch.MinLevel != null ? m_Settings.SelectedDefaultSearch.MinLevel.Value : 0;
+            FamiliarParameters.SelectedLevel = m_Settings.SelectedDefaultSearch.MinLevel;
             FamiliarParameters.SelectedLocationType = m_Settings.SelectedDefaultSearch.Location;
             FamiliarParameters.SelectedMarketPlaceType = m_Settings.SelectedDefaultSearch.MarketPlace;
             FamiliarParameters.SelectedOwnedStatus = m_Settings.SelectedDefaultSearch.Ownership;
