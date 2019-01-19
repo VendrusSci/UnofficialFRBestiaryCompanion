@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Bestiary.OptionsWindows"
         mc:Ignorable="d"
-        Title="Update Familiar Data" Height="300" Width="500">
+        Title="Update Familiar Data" Height="300" Width="500"
+        WindowStartupLocation="CenterOwner">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition/>

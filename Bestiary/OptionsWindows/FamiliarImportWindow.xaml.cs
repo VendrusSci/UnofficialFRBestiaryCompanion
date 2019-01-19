@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Bestiary.ViewModel.OptionsViews;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,6 +23,7 @@ namespace Bestiary.OptionsWindows
         public FamiliarImportWindow()
         {
             InitializeComponent();
+            DataContext = new FamiliarImportViewModel();
         }
     }
 }

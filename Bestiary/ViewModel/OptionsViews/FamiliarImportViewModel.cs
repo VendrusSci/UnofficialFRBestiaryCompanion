@@ -27,21 +27,21 @@ namespace Bestiary.ViewModel.OptionsViews
                 m_GetImportDirectory = new LambdaCommand(
                     onExecute: (p) =>
                     {
-                        VistaFolderBrowserDialog dlg = new VistaFolderBrowserDialog();
-                        dlg.SelectedPath = Directory.GetCurrentDirectory();
-                        dlg.ShowNewFolderButton = false;
+                        VistaOpenFileDialog dlg = new VistaOpenFileDialog();
+                        dlg.DefaultExt = ".zip";
+                        dlg.InitialDirectory = Directory.GetCurrentDirectory();
 
                         if (dlg.ShowDialog().Value == true)
                         {
-                            string path = dlg.SelectedPath;
-                            if (Path.GetFileName(path) == "FamiliarUpdate")
+                            string zipFile = dlg.FileName;
+                            if (Path.GetFileNameWithoutExtension(zipFile) == "FamiliarUpdate")
                             {
                                 //FamiliarUpdate contains FamiliarData, Icons and Images
                                 HandleBackup("FamiliarData");
                                 HandleBackup("Icons");
                                 HandleBackup("Images");
 
-                                using (ZipArchive archive = ZipFile.OpenRead(path))
+                                using (ZipArchive archive = ZipFile.OpenRead(zipFile))
                                 {
                                     try
                                     {
