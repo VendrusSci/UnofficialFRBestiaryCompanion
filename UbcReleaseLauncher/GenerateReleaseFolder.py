@@ -8,7 +8,7 @@ import GenerateManifest
 ubc_folder = "UnofficialBestiaryCompanion"
 ubc_files = ["Bestiary.exe", "log4net.dll", "log4net.config", "Ookii.Dialogs.Wpf.dll"]
 launcher_folder = "UBCLauncher"
-launcher_files = ["BestiaryLauncher.exe", "log4net.dll", "log4net.config"]
+launcher_files = ["BestiaryLauncher.exe", "log4net.dll", "log4net.config", "Newtonsoft.Json.dll"]
 launcher_images = "LauncherImages"
 images = "Images"
 icons = "Icons"
@@ -41,8 +41,20 @@ def generate_full_software_zip(bestiary_resources, bestiary_main, bestiary_launc
     shutil.copy(os.path.join(bestiary_launcher, "BestiaryLauncher.exe"), "UBC\\")
     shutil.copy(os.path.join(bestiary_launcher, "log4net.dll"), "UBC\\")
     shutil.copy(os.path.join(bestiary_launcher, "log4net.config"), "UBC\\")
+    shutil.copy(os.path.join(bestiary_launcher, "Newtonsoft.Json.dll"), "UBC\\")
     shutil.make_archive("UBC", 'zip', os.getcwd(), "UBC")
     shutil.move("UBC.zip", output_folder)
+    shutil.rmtree(basedir)
+
+
+def generate_win7_familiar_zip(bestiary_resources, output_folder):
+    basedir = os.path.join(os.getcwd(), 'FamiliarUpdate')
+    os.makedirs(basedir)
+    shutil.copytree(os.path.join(bestiary_resources, "FamiliarData"), "FamiliarUpdate\\FamiliarData")
+    shutil.copytree(os.path.join(bestiary_resources, "Icons"), "FamiliarUpdate\\Icons")
+    shutil.copytree(os.path.join(bestiary_resources, "Images"), "FamiliarUpdate\\Images")
+    shutil.make_archive("FamiliarUpdate", 'zip', os.path.join(os.getcwd(), "FamiliarUpdate"))
+    shutil.move("FamiliarUpdate.zip", output_folder)
     shutil.rmtree(basedir)
 
 
@@ -91,6 +103,7 @@ def main():
 
     generate_full_software_zip(bestiary_resources, bestiary_main, bestiary_launcher,
                                bestiary_launcher_resources, args.output_folder)
+    generate_win7_familiar_zip(bestiary_resources, args.output_folder)
 
     GenerateManifest.generate_manifest(args.output_folder)
 
