@@ -77,7 +77,7 @@ namespace Bestiary.ViewModel.OptionsViews
             {
                 Directory.Delete(bkup_dir);
             }
-            if (Directory.Exists(dirPath)
+            if (Directory.Exists(dirPath))
             {
                 Directory.Move(dirPath, bkup_dir);
             }
