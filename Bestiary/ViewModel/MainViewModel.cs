@@ -76,10 +76,14 @@ namespace Bestiary.ViewModel
                             UserActionLog.Info("Applying filters");
                             var tempFamiliars = ApplyFilters(familiars);
                             UserActionLog.Info("Applying subfilters");
-                            foreach (var subFilter in FamiliarParameters.SubFilterList)
+                            if(FamiliarParameters.SourceInvert != true)
                             {
-                                tempFamiliars = subFilter.Apply(tempFamiliars);
+                                foreach (var subFilter in FamiliarParameters.SubFilterList)
+                                {
+                                    tempFamiliars = subFilter.Apply(tempFamiliars);
+                                }
                             }
+                            
                             UserActionLog.Info("Applying search");
                             tempFamiliars = ApplySearch(tempFamiliars);
                             var tempFamiliarViewModels = tempFamiliars
