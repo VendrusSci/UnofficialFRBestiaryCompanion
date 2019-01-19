@@ -173,6 +173,7 @@
     <Compile Include="ViewModel\Converters\BrushToColourConverter.cs" />
     <Compile Include="ViewModel\Converters\EnemyTypeToColourConverter.cs" />
     <Compile Include="ViewModel\Dataviews\GatherViewModel.cs" />
+    <Compile Include="ViewModel\Converters\BoolToVisibilityConverter.cs" />
     <Compile Include="ViewModel\OptionsViews\ClearBookmarksViewModel.cs" />
     <Compile Include="ViewModel\Converters\OwnedToBoolConverter.cs" />
     <Compile Include="ViewModel\Dataviews\ColiseumViewModel.cs" />

@@ -295,7 +295,7 @@ namespace Bestiary.ViewModel
             {
                 UserActionLog.Info($"    Filter: Source {FamiliarParameters.SelectedSource.Value}");
                 var lookingFor = FamiliarParameters.SourceMap[FamiliarParameters.SelectedSource.Value];
-                filteredFamiliars = filteredFamiliars.Where(f => f.Familiar.Source.GetType() == lookingFor);
+                filteredFamiliars = FamiliarParameters.SourceInvert ? filteredFamiliars.Where(f => f.Familiar.Source.GetType() != lookingFor) : filteredFamiliars.Where(f => f.Familiar.Source.GetType() == lookingFor);
             }
 
             return filteredFamiliars;

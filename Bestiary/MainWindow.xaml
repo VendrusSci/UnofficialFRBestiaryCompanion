@@ -201,10 +201,12 @@
                         <Label Grid.Column="3" Grid.Row="2" Content="Exclude:"/>
                         <Label Grid.Column="3" Grid.Row="3" Content="Exclude:"/>
                         <Label Grid.Column="3" Grid.Row="4" Content="Exclude:"/>
+                        <Label Grid.Column="3" Grid.Row="5" Content="Exclude:"/>
 
                         <CheckBox Grid.Column="4"  Grid.Row="2" IsChecked="{Binding FamiliarParameters.BondingLevelInvert}"/>
                         <CheckBox Grid.Column="4"  Grid.Row="3" IsChecked="{Binding FamiliarParameters.LocationInvert}"/>
                         <CheckBox Grid.Column="4"  Grid.Row="4" IsChecked="{Binding FamiliarParameters.AvailabilityInvert}"/>
+                        <CheckBox Grid.Column="4"  Grid.Row="5" IsChecked="{Binding FamiliarParameters.SourceInvert}"/>
                     </Grid>
                 </GroupBox>
                 <GroupBox Grid.Row="2" Header="Subfilters" Margin="5">
@@ -216,14 +218,15 @@
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
-                        <ContentControl Visibility="Collapsed" Content="{StaticResource ProxyElement}"/>
-                        <ItemsControl Grid.Row="0" ItemsSource="{Binding FamiliarParameters.SubFilterList}">
+                        <ItemsControl Grid.Row="0" ItemsSource="{Binding FamiliarParameters.SubFilterList}" Visibility="{Binding FamiliarParameters.SourceInvert, Converter={StaticResource BoolToVisibility}}">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
                                     <Grid>
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition SharedSizeGroup="A"/>
                                             <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="Auto"/>
                                             <ColumnDefinition Width="Auto"/>
                                         </Grid.ColumnDefinitions>
                                         <Label Grid.Column="0" Style="{DynamicResource LabelInItemsControl}" Content="{Binding Name}"/>
@@ -237,6 +240,8 @@
                                             </ComboBox.ItemTemplate>
                                         </ComboBox>
                                         <Button Grid.Column="2" Margin="5" Content="Clear" Template="{DynamicResource ThemedButtonInItemsControl}" Command="{Binding Clear}" Style="{DynamicResource ButtonInItemsControlStyle}"/>
+                                        <Label Grid.Column="3" Margin="5" Content="Exclude:"/>
+                                        <CheckBox Grid.Column="4" Margin="5" IsChecked="{Binding Invert}"/>
                                     </Grid>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>

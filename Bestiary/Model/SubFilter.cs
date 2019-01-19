@@ -12,6 +12,7 @@ namespace Bestiary.Model
     {
         IEnumerable<FamiliarInfo> Apply(IEnumerable<FamiliarInfo> toFilter);
         ICommand Clear { get; }
+        bool Invert { get; set; }
     }
 
     public class SubFilter<T, SourceType> : IAmSubFilter, INotifyPropertyChanged
@@ -19,6 +20,7 @@ namespace Bestiary.Model
         where SourceType : class
     {
         public string Name { get; set; }
+        public bool Invert { get; set; }
         public T[] AvailableOptions { get; set; }
 
         private T m_SelectedOption = null;
@@ -86,7 +88,10 @@ namespace Bestiary.Model
 
                     var key = m_GetKey(source);
                     var matches = m_Compare(key, SelectedOption);
-
+                    if(Invert)
+                    {
+                        matches = !matches;
+                    }
                     return matches;
                 });
         }
@@ -103,6 +108,7 @@ namespace Bestiary.Model
         where SourceType : class
     {
         public string Name { get; set; }
+        public bool Invert { get; set; }
         public T[] AvailableOptions { get; set; }
         private T? m_SelectedOption = null;
         public T? SelectedOption
@@ -170,6 +176,11 @@ namespace Bestiary.Model
                     var key = m_GetKey(source);
                     var matches = m_Compare(key, SelectedOption.Value);
 
+                    if(Invert)
+                    {
+                        matches = !matches;
+                    }
+
                     return matches;
                 });
         }
@@ -186,6 +197,7 @@ namespace Bestiary.Model
     where SourceType : class
     {
         public string Name { get; set; }
+        public bool Invert { get; set; }
         public T[] AvailableOptions { get; set; }
         private T? m_SelectedOption = null;
         public T? SelectedOption
@@ -229,7 +241,10 @@ namespace Bestiary.Model
 
                     var key = m_GetKey(source);
                     var matches = m_Compare(key, SelectedOption.Value);
-
+                    if(Invert)
+                    {
+                        matches = !matches;
+                    }
                     return matches;
                 });
         }
