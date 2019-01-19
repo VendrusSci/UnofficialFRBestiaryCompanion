@@ -161,6 +161,7 @@
       <DependentUpon>UserGuideWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModel\AboutViewModel.cs" />
+    <Compile Include="ViewModel\Converters\BoolToVisibilityConverter.cs" />
     <Compile Include="ViewModel\GatherControlViewModel.cs" />
     <Compile Include="ViewModel\OptionsViews\ClearBookmarksViewModel.cs" />
     <Compile Include="ViewModel\Converters\EnemyTypeToColourConverter.cs" />

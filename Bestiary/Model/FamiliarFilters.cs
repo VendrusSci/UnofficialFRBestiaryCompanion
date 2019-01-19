@@ -34,6 +34,7 @@ namespace Bestiary.Model
         public bool LocationInvert { get; set; }
         public Sources[] AvailableSources => ListEnumValues<Sources>();
         public Sources? m_SelectedSource;
+        public bool SourceInvert { get; set; }
         public Sources? SelectedSource
         {
             get
