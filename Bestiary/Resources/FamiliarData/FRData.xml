@@ -1196,7 +1196,7 @@
       <Id>340</Id>
       <Name>Cockatrice</Name>
       <Source xmlns:d4p1="http://example.com" i:type="d4p1:Coliseum">
-        <EnemyType>Boss</EnemyType>
+        <EnemyType>Normal</EnemyType>
         <VenueName>Woodland Path</VenueName>
       </Source>
     </Familiar>
@@ -1827,7 +1827,7 @@
       </Source>
     </Familiar>
     <Familiar>
-      <Availability>Cycling</Availability>
+      <Availability>Always</Availability>
       <FlavourText>Bonepicker gryphons stockpile bones for later consumption.</FlavourText>
       <Id>18437</Id>
       <Name>Duskthicket Bonepicker</Name>
@@ -2041,7 +2041,7 @@
           <Flights>Plague</Flights>
           <Flights>Nature</Flights>
         </Flights>
-        <GatherType>Scavenging</GatherType>
+        <GatherType>Digging</GatherType>
         <MinLevel>10</MinLevel>
       </Source>
     </Familiar>
@@ -2450,7 +2450,6 @@
           <Flights>Wind</Flights>
           <Flights>Shadow</Flights>
           <Flights>Lightning</Flights>
-          <Flights>Nature</Flights>
           <Flights>Arcane</Flights>
         </Flights>
         <GatherType>InsectCatching</GatherType>
@@ -3443,6 +3442,7 @@
           <Flights>Shadow</Flights>
           <Flights>Lightning</Flights>
           <Flights>Arcane</Flights>
+          <Flights>Wind</Flights>
         </Flights>
         <GatherType>Hunting</GatherType>
         <MinLevel>10</MinLevel>
@@ -4702,6 +4702,12 @@
           <Flights>Ice</Flights>
           <Flights>Light</Flights>
           <Flights>Plague</Flights>
+          <Flights>Earth</Flights>
+          <Flights>Lightning</Flights>
+          <Flights>Nature</Flights>
+          <Flights>Arcane</Flights>
+          <Flights>Water</Flights>
+          <Flights>Shadow</Flights>
         </Flights>
         <GatherType>Foraging</GatherType>
         <MinLevel>1</MinLevel>
@@ -7551,6 +7557,49 @@
         </Flights>
         <GatherType>Fishing</GatherType>
         <MinLevel>1</MinLevel>
+      </Source>
+    </Familiar>
+    <Familiar>
+      <Availability>JoxarBox</Availability>
+      <FlavourText>The Longneck of the Southern Icefield have a storied history of coexisting with dragonkind, and many are happy to guide trekking clans through the most dangerous mountain passes.</FlavourText>
+      <Id>29064</Id>
+      <Name>Glitterfreeze Ambassador</Name>
+      <Source xmlns:d4p1="http://example.com" i:type="d4p1:Festival">
+        <Flight>Ice</Flight>
+        <Year>
+          <YearNumber>6</YearNumber>
+        </Year>
+      </Source>
+    </Familiar>
+    <Familiar>
+      <Availability>Festival</Availability>
+      <FlavourText>Most Longneck clans are peaceful, but if you look hard enough, one can find a handful that use this preconception to nefarious ends.</FlavourText>
+      <Id>29065</Id>
+      <Name>Longneck Lampooner</Name>
+      <Source xmlns:d4p1="http://example.com" i:type="d4p1:JoxarSpareInventory" />
+    </Familiar>
+    <Familiar>
+      <Availability>Cycling</Availability>
+      <FlavourText>A noggle as sweet as you are!</FlavourText>
+      <Id>29247</Id>
+      <Name>Chocolate Noggle</Name>
+      <Source xmlns:d4p1="http://example.com" i:type="d4p1:SiteEvent">
+        <EventName>Valentines</EventName>
+        <Year>
+          <YearNumber>6</YearNumber>
+        </Year>
+      </Source>
+    </Familiar>
+    <Familiar>
+      <Availability>Cycling</Availability>
+      <FlavourText>A familiar with a sweet disposition.</FlavourText>
+      <Id>29248</Id>
+      <Name>Strawberry Noggle</Name>
+      <Source xmlns:d4p1="http://example.com" i:type="d4p1:SiteEvent">
+        <EventName>Valentines</EventName>
+        <Year>
+          <YearNumber>6</YearNumber>
+        </Year>
       </Source>
     </Familiar>
   </Values>
