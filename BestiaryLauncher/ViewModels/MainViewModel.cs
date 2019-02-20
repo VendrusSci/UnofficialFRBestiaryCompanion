@@ -91,6 +91,7 @@ namespace BestiaryLauncher.ViewModels
             }
         }
 
+        private bool m_UpdateInProgress = false;
         private LambdaCommand m_UpdateLauncher;
         public ICommand UpdateLauncher
         {
@@ -101,6 +102,7 @@ namespace BestiaryLauncher.ViewModels
                     m_UpdateLauncher = new LambdaCommand(
                         onExecute: (p) =>
                         {
+                            m_UpdateInProgress = true;
                             UserActionLog.Info("Updating launcher...");
                             if (m_Updater.UpdateLauncher())
                             {
@@ -118,10 +120,11 @@ namespace BestiaryLauncher.ViewModels
                                 UserActionLog.Error("Launcher update failed");
                                 UpdateStatusText = "Launcher update failed";
                             }
+                            m_UpdateInProgress = false;
                         },
                         onCanExecute: (p) =>
                         {
-                            return m_Updater.LauncherUpdateAvailable();
+                            return (m_Updater.LauncherUpdateAvailable() && !m_UpdateInProgress);
                         }
                     );
                 }
@@ -139,34 +142,33 @@ namespace BestiaryLauncher.ViewModels
                     m_UpdateFamiliars = new LambdaCommand(
                         onExecute: (p) =>
                         {
-                            Task.Run(() =>
+                            m_UpdateInProgress = true;
+                            UserActionLog.Info("Updating familiars...");
+                            UpdateStatusText = "Updating Familiars...";
+                            if (m_Updater.UpdateFamiliars())
                             {
-                                UserActionLog.Info("Updating familiars...");
-                                UpdateStatusText = "Updating Familiars...";
-                                if(m_Updater.UpdateFamiliars())
-                                {
-                                    UserActionLog.Info("Familiar update succeeded");
-                                    UpdateStatusText = m_UpdateSuccess;
-                                }
-                                else
-                                {
-                                    UserActionLog.Error("Familiar update failed");
-                                    UpdateStatusText = m_UpdateFail;
-                                }
-                                if (!CheckForUbcUpdates())
-                                {
-                                    UbcExists = true;
-                                    LaunchButtonText = m_LaunchButtonNoUpdateAvailable;
-                                }
-                                if (!m_Updater.AnyUpdatesRemaining())
-                                {
-                                    m_Updater.UpdateVersion();
-                                }
-                            });
+                                UserActionLog.Info("Familiar update succeeded");
+                                UpdateStatusText = m_UpdateSuccess;
+                            }
+                            else
+                            {
+                                UserActionLog.Error("Familiar update failed");
+                                UpdateStatusText = m_UpdateFail;
+                            }
+                            if (!CheckForUbcUpdates())
+                            {
+                                UbcExists = true;
+                                LaunchButtonText = m_LaunchButtonNoUpdateAvailable;
+                            }
+                            if (!m_Updater.AnyUpdatesRemaining())
+                            {
+                                m_Updater.UpdateVersion();
+                            }
+                            m_UpdateInProgress = false;
                         },
                         onCanExecute: (p) =>
                         {
-                            return m_Updater.FamiliarUpdateAvailable();
+                            return (m_Updater.FamiliarUpdateAvailable() && !m_UpdateInProgress);
                         }
                     );
                 }
@@ -184,58 +186,57 @@ namespace BestiaryLauncher.ViewModels
                     m_UpdateSoftware = new LambdaCommand(
                         onExecute: (p) =>
                         {
-                            Task.Run(() =>
+                            m_UpdateInProgress = true;
+                            //If the folder structure does not exist, need to create it
+                            if (!m_DirectoryManipulator.Exists(ApplicationPaths.GetBestiaryDirectory()))
                             {
-                                //If the folder structure does not exist, need to create it
-                                if (!m_DirectoryManipulator.Exists(ApplicationPaths.GetBestiaryDirectory()))
-                                {
-                                    UserActionLog.Info("Base directory structure does not exists, creating folders");
-                                    m_DirectoryManipulator.Create(ApplicationPaths.GetBestiaryDirectory());
-                                    m_DirectoryManipulator.Create(ApplicationPaths.GetBestiaryResourcesDirectory());
-                                    m_DirectoryManipulator.Create(ApplicationPaths.GetBestiaryUserDataDirectory());
-                                }
+                                UserActionLog.Info("Base directory structure does not exists, creating folders");
+                                m_DirectoryManipulator.Create(ApplicationPaths.GetBestiaryDirectory());
+                                m_DirectoryManipulator.Create(ApplicationPaths.GetBestiaryResourcesDirectory());
+                                m_DirectoryManipulator.Create(ApplicationPaths.GetBestiaryUserDataDirectory());
+                            }
 
-                                UserActionLog.Info("Updating software...");
-                                UpdateStatusText = "Updating Software...";
-                                bool result = m_Updater.UpdateUbcSoftware();
-                                if(result)
-                                {
-                                    UserActionLog.Info("UBC update succeeded");
-                                    UpdateStatusText = m_UpdateSuccess;
-                                }
-                                else
-                                {
-                                    UserActionLog.Error("UBC update failed");
-                                    UpdateStatusText = m_UpdateFail;
-                                }
-                                if (m_Updater.FamiliarUpdateAvailable())
-                                {
-                                    UserActionLog.Info("Updating familiars...");
-                                    UpdateStatusText = "Updating Familiars...";
-                                    result &= m_Updater.UpdateFamiliars();
-                                    UpdateStatusText = result ? m_UpdateSuccess : m_UpdateFail;
-                                }
-                                if(result)
-                                {
-                                    UserActionLog.Info("Familiar update succeeded");
-                                    UpdateStatusText = "Update complete!";
-                                    UbcExists = true;
-                                    LaunchButtonText = "Launch UBC";
-                                }
-                                else
-                                {
-                                    UserActionLog.Error("Familiar update failed");
-                                }
-                                if(!m_Updater.AnyUpdatesRemaining())
-                                {
-                                    m_Updater.UpdateVersion();
-                                }
-                            });
+                            UserActionLog.Info("Updating software...");
+                            UpdateStatusText = "Updating Software...";
+                            bool result = m_Updater.UpdateUbcSoftware();
+                            if(result)
+                            {
+                                UserActionLog.Info("UBC update succeeded");
+                                UpdateStatusText = m_UpdateSuccess;
+                            }
+                            else
+                            {
+                                UserActionLog.Error("UBC update failed");
+                                UpdateStatusText = m_UpdateFail;
+                            }
+                            if (m_Updater.FamiliarUpdateAvailable())
+                            {
+                                UserActionLog.Info("Updating familiars...");
+                                UpdateStatusText = "Updating Familiars...";
+                                result &= m_Updater.UpdateFamiliars();
+                                UpdateStatusText = result ? m_UpdateSuccess : m_UpdateFail;
+                            }
+                            if(result)
+                            {
+                                UserActionLog.Info("Familiar update succeeded");
+                                UpdateStatusText = "Update complete!";
+                                UbcExists = true;
+                                LaunchButtonText = "Launch UBC";
+                            }
+                            else
+                            {
+                                UserActionLog.Error("Familiar update failed");
+                            }
+                            if(!m_Updater.AnyUpdatesRemaining())
+                            {
+                                m_Updater.UpdateVersion();
+                            }
                             HeaderImage = ImageLoader.LoadImage(ApplicationPaths.GetHeaderImagePath());
+                            m_UpdateInProgress = false;
                         },
                         onCanExecute: (p) =>
                         {
-                            return m_Updater.UbcUpdateAvailable() | (!UbcExists);
+                            return (m_Updater.UbcUpdateAvailable() | (!UbcExists)) && !m_UpdateInProgress;
                         }
                     );
                 }
