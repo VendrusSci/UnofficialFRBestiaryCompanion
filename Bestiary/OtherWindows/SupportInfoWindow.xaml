@@ -16,16 +16,16 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
-                <TextBlock Grid.Row="0" Margin="10" HorizontalAlignment="Center" Text="Found a bug? Want to request a new feature?"/>
+                <TextBlock Grid.Row="0" Margin="10" HorizontalAlignment="Center" Text="Issues?"/>
                 <TextBlock Grid.Row="1" Margin="2" HorizontalAlignment="Center">
-                    <Hyperlink Command="{Binding NavigateToUri}" CommandParameter="http://www1.flightrising.com/forums/gde/2577833">
-                        Post in the Guides forum thread
-                    </Hyperlink>
-                </TextBlock>
-                <TextBlock Grid.Row="3" Margin="2" HorizontalAlignment="Center" Text="or"/>
-                <TextBlock Grid.Row="4" Margin="2" HorizontalAlignment="Center">
                     <Hyperlink Command="{Binding NavigateToUri}" CommandParameter="http://www1.flightrising.com/msgs/new?to=Vendrus">
                         Message Vendrus (#4101)
+                    </Hyperlink>
+                </TextBlock>
+                <TextBlock Grid.Row="3" Margin="2" HorizontalAlignment="Center" Text="Need to re-download? It's the UBC.zip file:"/>
+                <TextBlock Grid.Row="4" Margin="2" HorizontalAlignment="Center">
+                    <Hyperlink Command="{Binding NavigateToUri}" CommandParameter="https://github.com/VendrusSci/UnofficialFRBestiaryCompanion/releases">
+                        Repository Releases Page
                     </Hyperlink>
                 </TextBlock>
             </Grid>
